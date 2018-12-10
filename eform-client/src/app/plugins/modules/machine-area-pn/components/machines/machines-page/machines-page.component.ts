@@ -40,14 +40,15 @@ export class MachinesPageComponent implements OnInit {
   }
 
   updateLocalPageSettings() {
+    debugger;
     this.sharedPnService.updateLocalPageSettings
     ('machinesPnSettings', this.localPageSettings, 'Machines');
-    this.getAllMachines();
+    this.getLocalPageSettings();
   }
 
   getAllInitialData() {
-    // this.getAllMachines();
-    // this.getMappedAreas();
+    this.getAllMachines();
+    this.getMappedAreas();
   }
 
   getAllMachines() {

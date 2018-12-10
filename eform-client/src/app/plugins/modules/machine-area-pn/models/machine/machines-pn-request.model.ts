@@ -3,4 +3,5 @@ export class MachinesPnRequestModel {
   pageSize: number;
   sort: string;
   isSortDsc: boolean;
+  offset = 0;
 }

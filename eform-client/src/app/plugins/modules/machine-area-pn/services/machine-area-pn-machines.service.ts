@@ -24,7 +24,7 @@ export class MachineAreaPnMachinesService extends BaseService {
   }
 
   getAllMachines(model: MachinesPnRequestModel): Observable<OperationDataResult<MachinesPnModel>> {
-    return this.post(MachineAreaPnMachineMethods.Machines + '/get-all', model);
+    return this.get(MachineAreaPnMachineMethods.Machines, model);
   }
 
   getSingleMachine(machineId: number): Observable<OperationDataResult<MachinePnModel>> {

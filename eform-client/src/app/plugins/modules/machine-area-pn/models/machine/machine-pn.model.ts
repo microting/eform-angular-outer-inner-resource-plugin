@@ -1,6 +1,6 @@
 export class MachinesPnModel {
   total: number;
-  machines: Array<MachinePnModel> = [];
+  machineList: Array<MachinePnModel> = [];
 }
 
 export class MachinePnModel {

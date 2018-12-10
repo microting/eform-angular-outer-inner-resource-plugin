@@ -8,7 +8,7 @@ export const MachineAreaPnLocalSettings = [
       name: 'Areas',
       settings: new PageSettingsModel({
         pageSize: 10,
-        sort: 'id',
+        sort: 'Id',
         isSortDsc: false
       })
     }
@@ -17,7 +17,7 @@ export const MachineAreaPnLocalSettings = [
       name: 'Machines',
       settings: new PageSettingsModel({
         pageSize: 10,
-        sort: 'id',
+        sort: 'Id',
         isSortDsc: false
       })
     }

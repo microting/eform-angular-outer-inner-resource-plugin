@@ -17,22 +17,22 @@
             (click)="sortTable('id')">
           <div class="d-flex align-items-center justify-content-center">
             ID
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Id'">unfold_more</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'id' && !areasRequestModel.isSortDsc">expand_less</i>
+               *ngIf="localPageSettings.sort == 'Id' && !areasRequestModel.isSortDsc">expand_less</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'id' && areasRequestModel.isSortDsc">expand_more</i>
+               *ngIf="localPageSettings.sort == 'Id' && areasRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="nameTableHeader"
-            (click)="sortTable('id')">
+            (click)="sortTable('Name')">
           <div class="d-flex align-items-center justify-content-center">
             {{'Name' | translate}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'name'">unfold_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Name'">unfold_more</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'name' && !areasRequestModel.isSortDsc">expand_less</i>
+               *ngIf="localPageSettings.sort == 'Name' && !areasRequestModel.isSortDsc">expand_less</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'name' && areasRequestModel.isSortDsc">expand_more</i>
+               *ngIf="localPageSettings.sort == 'Name' && areasRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
 
@@ -42,7 +42,7 @@
       </tr>
       </thead>
       <tbody id="tableBody">
-      <tr *ngFor="let area of areas">
+      <tr *ngFor="let area of areasModel.areaList">
         <td>
           {{area.id}}
         </td>
@@ -83,7 +83,7 @@
       <pagination-pn *ngIf="areasModel.total > areasRequestModel.pageSize"
                      [limit]="areasRequestModel.pageSize"
                      [size]="areasModel.total"
-                     [offset]="areasRequestModel.pageSize * areasRequestModel.pageIndex"
+                     [offset]="areasRequestModel.offset"
                      (onPageChanged)="changePage($event)"></pagination-pn>
     </div>
   </div>

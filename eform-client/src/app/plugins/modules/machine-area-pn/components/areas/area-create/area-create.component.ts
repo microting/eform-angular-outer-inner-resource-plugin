@@ -11,7 +11,7 @@ import {MachineAreaPnAreasService} from '../../../services';
 export class AreaCreateComponent implements OnInit {
   @ViewChild('frame') frame;
   @Input() mappingMachines: MachinesPnModel = new MachinesPnModel();
-  @Output() onNewAreaCreated: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onAreaCreated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
   newAreaModel: AreaPnCreateModel = new AreaPnCreateModel();
 
@@ -27,9 +27,19 @@ export class AreaCreateComponent implements OnInit {
   createArea() {
     this.spinnerStatus = true;
     this.machineAreaPnAreasService.createArea(this.newAreaModel).subscribe((data) => {
-      this.onNewAreaCreated.emit();
-      this.newAreaModel = new AreaPnCreateModel();
-      this.spinnerStatus = false;
+      if (data && data.success) {
+        this.onAreaCreated.emit();
+        this.newAreaModel = new AreaPnCreateModel();
+        this.frame.hide();
+      } this.spinnerStatus = false;
     });
+  }
+
+  addToArray(e: any, machineId: number) {
+    if (e.target.checked) {
+      this.newAreaModel.relatedMachinesIds.push(machineId);
+    } else {
+      this.newAreaModel.relatedMachinesIds = this.newAreaModel.relatedMachinesIds.filter(x => x !== machineId);
+    }
   }
 }

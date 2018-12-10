@@ -25,25 +25,43 @@ export class MachineEditComponent implements OnInit {
   }
 
   show(machineModel: MachinePnModel) {
-    // this.getSelectedArea(areaModel.id);
+    this.getSelectedMachine(machineModel.id);
     this.frame.show();
   }
 
   getSelectedMachine(id: number) {
+    this.spinnerStatus = true;
     this.machineAreaPnMachinesService.getSingleMachine(id).subscribe((data) => {
       if (data && data.success) {
         this.selectedMachineModel = data.model;
-      }
+      } this.spinnerStatus = false;
     });
   }
 
   updateMachine() {
-    this.machineAreaPnMachinesService.updateMachine(new MachinePnUpdateModel()).subscribe((data) => {
+    this.spinnerStatus = true;
+    this.machineAreaPnMachinesService.updateMachine(new MachinePnUpdateModel(this.selectedMachineModel))
+      .subscribe((data) => {
       if (data && data.success) {
         this.onMachineUpdated.emit();
         this.selectedMachineModel = new MachinePnModel();
-      }
+        this.frame.hide();
+      } this.spinnerStatus = false;
     });
+  }
+
+  addToEditMapping(e: any, areaId: number) {
+    if (e.target.checked) {
+      this.selectedMachineModel.relatedAreasIds.push(areaId);
+    } else {
+      this.selectedMachineModel.relatedAreasIds = this.selectedMachineModel.relatedAreasIds.filter(x => x !== areaId);
+    }
+  }
+
+  isChecked(areaId: number) {
+    if (this.selectedMachineModel.relatedAreasIds && this.selectedMachineModel.relatedAreasIds.length > 0) {
+      return this.selectedMachineModel.relatedAreasIds.findIndex(x => x === areaId) !== -1;
+    } return false;
   }
 
 }

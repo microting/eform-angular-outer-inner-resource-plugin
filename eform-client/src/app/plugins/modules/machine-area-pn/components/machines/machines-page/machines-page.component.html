@@ -9,30 +9,30 @@
 </subheader-pn>
 
 <div class="container-fluid">
-  <div class="row p-1 table-responsive no-gutters">
+  <div class="row p-1 mt-4 table-responsive no-gutters">
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
         <th scope="col" class="table-header-sortable" id="idTableHeader"
-            (click)="sortTable('id')">
+            (click)="sortTable('Id')">
           <div class="d-flex align-items-center justify-content-center">
             ID
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Id'">unfold_more</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'id' && !machinesRequestModel.isSortDsc">expand_less</i>
+               *ngIf="localPageSettings.sort == 'Id' && !machinesRequestModel.isSortDsc">expand_less</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'id' && machinesRequestModel.isSortDsc">expand_more</i>
+               *ngIf="localPageSettings.sort == 'Id' && machinesRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="nameTableHeader"
-            (click)="sortTable('id')">
+            (click)="sortTable('Name')">
           <div class="d-flex align-items-center justify-content-center">
             {{'Name' | translate}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'name'">unfold_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Name'">unfold_more</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'name' && !machinesRequestModel.isSortDsc">expand_less</i>
+               *ngIf="localPageSettings.sort == 'Name' && !machinesRequestModel.isSortDsc">expand_less</i>
             <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'name' && machinesRequestModel.isSortDsc">expand_more</i>
+               *ngIf="localPageSettings.sort == 'Name' && machinesRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
 
@@ -42,7 +42,7 @@
       </tr>
       </thead>
       <tbody id="tableBody">
-      <tr *ngFor="let machine of machinesModel.machines">
+      <tr *ngFor="let machine of machinesModel.machineList">
         <td>
           {{machine.id}}
         </td>
@@ -83,7 +83,7 @@
       <pagination-pn *ngIf="machinesModel.total > machinesRequestModel.pageSize"
                      [limit]="machinesRequestModel.pageSize"
                      [size]="machinesModel.total"
-                     [offset]="machinesRequestModel.pageSize * machinesRequestModel.pageIndex"
+                     [offset]="machinesRequestModel.offset"
                      (onPageChanged)="changePage($event)"></pagination-pn>
     </div>
   </div>

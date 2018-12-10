@@ -32,7 +32,6 @@ export class AreasPageComponent implements OnInit {
   }
 
   getLocalPageSettings() {
-    debugger;
     this.localPageSettings = this.sharedPnService.getLocalPageSettings
     ('machinesPnSettings', 'Areas').settings;
     this.getAllInitialData();
@@ -45,8 +44,8 @@ export class AreasPageComponent implements OnInit {
   }
 
   getAllInitialData() {
-    // this.getAllAreas();
-    // this.getMachinesForMapping();
+    this.getAllAreas();
+    this.getMachinesForMapping();
   }
 
   getAllAreas() {

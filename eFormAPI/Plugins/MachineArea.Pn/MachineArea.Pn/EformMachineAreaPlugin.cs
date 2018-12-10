@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Data;
 using MachineArea.Pn.Infrastructure.Data.Factories;
@@ -55,7 +56,35 @@ namespace MachineArea.Pn
             {
                 Name = "Machine Area",
                 E2EId = "",
-                Link = "/plugins/machine-area-pn"
+                Link = "",
+                MenuItems = new List<MenuItemModel>()
+                {
+                    new MenuItemModel()
+                    {
+                        Name = "Machines",
+                        E2EId = "machine-area-pn-machines",
+                        Link = "/plugins/machine-area-pn",
+                        Position = 0,
+                    },
+                    new MenuItemModel()
+                    {
+                        Name = "Areas",
+                        E2EId = "machine-area-pn-areas",
+                        Link = "/plugins/machine-area-pn/areas",
+                        Position = 1,
+                    },
+                    new MenuItemModel()
+                    {
+                        Name = "Settings",
+                        E2EId = "case-management-pn-settings",
+                        Link = "/plugins/case-management-pn/settings",
+                        Position = 2,
+                        Guards = new List<string>()
+                        {
+                            "admin"
+                        }
+                    },
+                }
             });
             return result;
         }

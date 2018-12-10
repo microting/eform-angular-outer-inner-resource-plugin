@@ -23,11 +23,13 @@ export class MachineDeleteComponent implements OnInit {
   }
 
   deleteMachine() {
+    this.spinnerStatus = true;
     this.machineAreaPnMachinesService.deleteMachine(this.selectedMachineModel.id).subscribe((data) => {
       if (data && data.success) {
         this.onMachineDeleted.emit();
         this.selectedMachineModel = new MachinePnModel();
-      }
+        this.frame.hide();
+      } this.spinnerStatus = false;
     });
   }
 

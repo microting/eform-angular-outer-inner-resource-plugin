@@ -23,11 +23,13 @@ export class AreaDeleteComponent implements OnInit {
   }
 
   deleteArea() {
+    this.spinnerStatus = true;
     this.machineAreaPnAreasService.deleteArea(this.selectedAreaModel.id).subscribe((data) => {
       if (data && data.success) {
         this.onAreaDeleted.emit();
         this.selectedAreaModel = new AreaPnModel();
-      }
+        this.frame.hide();
+      } this.spinnerStatus = false;
     });
   }
 }

@@ -62,9 +62,6 @@ namespace MachineArea.Pn.Services
                         .Take((int)requestModel.PageSize);
                 }
 
-                
-
-
                 var areas = await areasQuery.Select(x => new AreaModel()
                 {
                     Name = x.Name,
@@ -81,7 +78,7 @@ namespace MachineArea.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<AreasModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorObtainAreas"));
             }
         }
 
@@ -93,14 +90,14 @@ namespace MachineArea.Pn.Services
                     {
                         Name = x.Name,
                         Id = x.Id,
-                        RelateMachinesIds = x.MachineAreas.Select(y => y.Machine.Id).ToList()
+                        RelatedMachinesIds = x.MachineAreas.Select(y => y.Machine.Id).ToList()
                     })
                     .FirstOrDefaultAsync(x => x.Id == areaId);
 
                 if (area == null)
                 {
                     return new OperationDataResult<AreaModel>(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("AreaWithIdNotExist", areaId));
                 }
 
                 return new OperationDataResult<AreaModel>(true, area);
@@ -110,7 +107,7 @@ namespace MachineArea.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<AreaModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorObtainArea"));
             }
         }
 
@@ -135,14 +132,15 @@ namespace MachineArea.Pn.Services
 
                 await _dbContext.Areas.AddAsync(newArea);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(true, 
+                    _localizationService.GetString("AreaCreatedSuccesfully", model.Name));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorCreatingArea"));
             }
         }
 
@@ -155,7 +153,7 @@ namespace MachineArea.Pn.Services
                 if (areaForUpdate == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("AreaWithIdNotExist", model.Id));
                 }
 
                 areaForUpdate.Name = model.Name;
@@ -187,14 +185,14 @@ namespace MachineArea.Pn.Services
                 }
 
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(true, _localizationService.GetString("AreaUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorUpdatingArea"));
             }
         }
 
@@ -207,19 +205,19 @@ namespace MachineArea.Pn.Services
                 if (areaForDelete == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("AreaWithIdNotExist"));
                 }
 
                 _dbContext.Areas.Remove(areaForDelete);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(true, _localizationService.GetString("AreaDeletedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileDeletingArea"));
             }
         }
     }

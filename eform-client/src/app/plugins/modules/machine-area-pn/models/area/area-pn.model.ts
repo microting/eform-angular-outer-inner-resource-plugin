@@ -1,6 +1,6 @@
 export class AreasPnModel {
   total: number;
-  areas: Array<AreaPnModel> = [];
+  areaList: Array<AreaPnModel> = [];
 }
 
 export class AreaPnModel {

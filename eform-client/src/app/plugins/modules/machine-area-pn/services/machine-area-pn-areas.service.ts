@@ -15,7 +15,7 @@ import {
 } from '../models';
 
 export let MachineAreaPnAreaMethods = {
-  Areas: 'api/machine-area-pn/machines',
+  Areas: 'api/machine-area-pn/areas',
 };
 
 @Injectable()
@@ -25,7 +25,7 @@ export class MachineAreaPnAreasService extends BaseService {
   }
 
   getAllAreas(model: AreasPnRequestModel): Observable<OperationDataResult<AreasPnModel>> {
-    return this.post(MachineAreaPnAreaMethods.Areas + '/get-all', model);
+    return this.get(MachineAreaPnAreaMethods.Areas, model);
   }
 
   getSingleArea(areaId: number): Observable<OperationDataResult<AreaPnModel>> {
