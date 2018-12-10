@@ -63,7 +63,7 @@ namespace MachineArea.Pn
                     {
                         Name = "Machines",
                         E2EId = "machine-area-pn-machines",
-                        Link = "/plugins/machine-area-pn",
+                        Link = "/plugins/machine-area-pn/machines",
                         Position = 0,
                     },
                     new MenuItemModel()
@@ -72,18 +72,7 @@ namespace MachineArea.Pn
                         E2EId = "machine-area-pn-areas",
                         Link = "/plugins/machine-area-pn/areas",
                         Position = 1,
-                    },
-                    new MenuItemModel()
-                    {
-                        Name = "Settings",
-                        E2EId = "case-management-pn-settings",
-                        Link = "/plugins/case-management-pn/settings",
-                        Position = 2,
-                        Guards = new List<string>()
-                        {
-                            "admin"
-                        }
-                    },
+                    }
                 }
             });
             return result;

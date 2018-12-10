@@ -6,6 +6,6 @@ namespace MachineArea.Pn.Infrastructure.Models.Areas
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<int> RelateMachinesIds { get; set; }
+        public List<int> RelatedMachinesIds { get; set; } = new List<int>();
     }
 }

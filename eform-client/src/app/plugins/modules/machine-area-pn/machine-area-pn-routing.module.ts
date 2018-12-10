@@ -10,7 +10,7 @@ export const routes: Routes = [
     component: MachineAreaPnLayoutComponent,
     children: [
       {
-        path: '',
+        path: 'machines',
         canActivate: [AuthGuard],
         component: MachinesPageComponent
       },

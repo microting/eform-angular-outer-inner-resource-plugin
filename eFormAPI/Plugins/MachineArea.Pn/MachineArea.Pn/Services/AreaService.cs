@@ -162,17 +162,17 @@ namespace MachineArea.Pn.Services
                 areaForUpdate.UpdatedAt = DateTime.UtcNow;
 
                 var areasForDelete = await _dbContext.MachineAreas
-                    .Where(x => !model.RelateMachinesIds.Contains(x.MachineId) && x.AreaId == model.Id)
+                    .Where(x => !model.RelatedMachinesIds.Contains(x.MachineId) && x.AreaId == model.Id)
                     .ToListAsync();
 
                 var machineIds = await _dbContext.MachineAreas
-                    .Where(x => model.RelateMachinesIds.Contains(x.MachineId) && x.AreaId == model.Id)
+                    .Where(x => model.RelatedMachinesIds.Contains(x.MachineId) && x.AreaId == model.Id)
                     .Select(x => x.MachineId)
                     .ToListAsync();
 
                 _dbContext.RemoveRange(areasForDelete);
 
-                foreach (var machineId in model.RelateMachinesIds)
+                foreach (var machineId in model.RelatedMachinesIds)
                 {
                     if (!machineIds.Contains(machineId))
                     {

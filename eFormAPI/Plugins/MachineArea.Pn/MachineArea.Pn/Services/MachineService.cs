@@ -78,7 +78,7 @@ namespace MachineArea.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<MachinesModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorObtainMachines"));
             }
         }
 
@@ -97,7 +97,7 @@ namespace MachineArea.Pn.Services
                 if (machine == null)
                 {
                     return new OperationDataResult<MachineModel>(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("MachineWithIdNotExist"));
                 }
 
                 return new OperationDataResult<MachineModel>(true, machine);
@@ -107,7 +107,7 @@ namespace MachineArea.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<MachineModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorObtainMachine"));
             }
         }
 
@@ -132,14 +132,14 @@ namespace MachineArea.Pn.Services
 
                 await _dbContext.Machines.AddAsync(newMachine);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(true, _localizationService.GetString("MachineCreatedSuccesfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorCreatingMachine"));
             }
         }
 
@@ -161,17 +161,17 @@ namespace MachineArea.Pn.Services
                 machineForUpdate.UpdatedAt = DateTime.UtcNow;
 
                 var machinesForDelete = await _dbContext.MachineAreas
-                    .Where(x => !model.RelateAreasIds.Contains(x.AreaId) && x.MachineId == model.Id)
+                    .Where(x => !model.RelatedAreasIds.Contains(x.AreaId) && x.MachineId == model.Id)
                     .ToListAsync();
 
                 var areaIds = await _dbContext.MachineAreas
-                    .Where(x => model.RelateAreasIds.Contains(x.AreaId) && x.MachineId == model.Id)
+                    .Where(x => model.RelatedAreasIds.Contains(x.AreaId) && x.MachineId == model.Id)
                     .Select(x => x.AreaId)
                     .ToListAsync();
 
                 _dbContext.RemoveRange(machinesForDelete);
 
-                foreach (var areaId in model.RelateAreasIds)
+                foreach (var areaId in model.RelatedAreasIds)
                 {
                     if (!areaIds.Contains(areaId))
                     {
@@ -184,14 +184,14 @@ namespace MachineArea.Pn.Services
                 }
 
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(true, _localizationService.GetString("MachineUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorUpdatingMachine"));
             }
         }
 
@@ -204,19 +204,19 @@ namespace MachineArea.Pn.Services
                 if (machineForDelete == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("MachineWithIdNotExist"));
                 }
 
                 _dbContext.Machines.Remove(machineForDelete);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(true, _localizationService.GetString("MachineDeletedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileDeletingMachine"));
             }
         }
     }
