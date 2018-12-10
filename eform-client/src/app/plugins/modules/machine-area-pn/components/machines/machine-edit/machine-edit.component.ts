@@ -1,4 +1,12 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AreaPnModel, AreasPnModel,
+  MachinePnModel,
+  MachinePnUpdateModel
+} from '../../../models';
+import {
+  MachineAreaPnMachinesService
+} from '../../../services';
 
 @Component({
   selector: 'app-machine-area-pn-machine-edit',
@@ -7,23 +15,35 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 })
 export class MachineEditComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Output() onNewMachineUpdated: EventEmitter<void> = new EventEmitter<void>();
+  @Input() mappingAreas: AreasPnModel = new AreasPnModel();
+  @Output() onMachineUpdated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
-  selectedMachineModel: {
-    id: 1,
-    name: ''
-  };
-  constructor() { }
+  selectedMachineModel: MachinePnModel = new MachinePnModel();
+  constructor(private machineAreaPnMachinesService: MachineAreaPnMachinesService) { }
 
   ngOnInit() {
   }
 
-  show() {
+  show(machineModel: MachinePnModel) {
+    // this.getSelectedArea(areaModel.id);
     this.frame.show();
   }
 
-  updateMachine() {
+  getSelectedMachine(id: number) {
+    this.machineAreaPnMachinesService.getSingleMachine(id).subscribe((data) => {
+      if (data && data.success) {
+        this.selectedMachineModel = data.model;
+      }
+    });
+  }
 
+  updateMachine() {
+    this.machineAreaPnMachinesService.updateMachine(new MachinePnUpdateModel()).subscribe((data) => {
+      if (data && data.success) {
+        this.onMachineUpdated.emit();
+        this.selectedMachineModel = new MachinePnModel();
+      }
+    });
   }
 
 }

@@ -6,4 +6,5 @@ export class MachinesPnModel {
 export class MachinePnModel {
   id: number;
   name: string;
+  relatedAreasIds: Array<number> = [];
 }

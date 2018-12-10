@@ -61,7 +61,7 @@
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete Area' | translate }}"
                     (click)="showDeleteAreaModal(area)">
-              <i class="material-icons" >
+              <i class="material-icons">
                 delete_forever
               </i>
             </button>
@@ -75,17 +75,16 @@
     <div class="col-md-1">
       <page-size-pn
         [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="localPageSettings.pageSize = $event;
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; areasRequestModel.pageIndex = 1;
         updateLocalPageSettings()">
-        <!--customersRequestModel.pageIndex = 1;-->
       </page-size-pn>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <!--<pagination-pn *ngIf="customersModel.total > customersRequestModel.pageSize"-->
-      <!--[limit]="customersRequestModel.pageSize"-->
-      <!--[size]="customersModel.total"-->
-      <!--[offset]="customersRequestModel.offset"-->
-      <!--(onPageChanged)="changePage($event)"></pagination-pn>-->
+      <pagination-pn *ngIf="areasModel.total > areasRequestModel.pageSize"
+                     [limit]="areasRequestModel.pageSize"
+                     [size]="areasModel.total"
+                     [offset]="areasRequestModel.pageSize * areasRequestModel.pageIndex"
+                     (onPageChanged)="changePage($event)"></pagination-pn>
     </div>
   </div>
 </div>
@@ -93,9 +92,11 @@
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
 <app-machine-area-pn-area-create #createAreaModal
-                                (onAreaCreated)="getAllAreas()">
+                                 [mappingMachines]="mappingMachines"
+                                 (onAreaCreated)="getAllAreas()">
 </app-machine-area-pn-area-create>
 <app-machine-area-pn-area-edit #editAreaModal
-                              (onAreaUpdated)="getAllAreas()"></app-machine-area-pn-area-edit>
+                               [mappingMachines]="mappingMachines"
+                               (onAreaUpdated)="getAllAreas()"></app-machine-area-pn-area-edit>
 <app-machine-area-pn-area-delete #deleteAreaModal
-                                (onAreaDeleted)="getAllAreas()"></app-machine-area-pn-area-delete>
+                                 (onAreaDeleted)="getAllAreas()"></app-machine-area-pn-area-delete>

@@ -1,5 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PageSettingsModel} from 'src/app/common/models/settings';
+import {AreasPnRequestModel, AreasPnModel, AreaPnModel} from 'src/app/plugins/modules/machine-area-pn/models/area';
+import {MachinesPnRequestModel, MachinesPnModel} from 'src/app/plugins/modules/machine-area-pn/models/machine';
+import {
+  MachineAreaPnAreasService,
+  MachineAreaPnMachinesService
+} from 'src/app/plugins/modules/machine-area-pn/services';
 import {SharedPnService} from 'src/app/plugins/modules/shared/services';
 
 @Component({
@@ -12,24 +18,14 @@ export class AreasPageComponent implements OnInit {
   @ViewChild('editAreaModal') editAreaModal;
   @ViewChild('deleteAreaModal') deleteAreaModal;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  areas = [
-    {
-      id: 1,
-      name: 'First'
-    },
-    {
-      id: 2,
-      name: 'Second'
-    }
-  ];
-  areasRequestModel = {
-    sort: '',
-    isSortDsc: false,
-    pageSize: 10
-  };
+  areasModel: AreasPnModel = new AreasPnModel();
+  mappingMachines: MachinesPnModel = new MachinesPnModel();
+  areasRequestModel: AreasPnRequestModel = new AreasPnRequestModel();
   spinnerStatus = false;
 
-  constructor(private sharedPnService: SharedPnService) { }
+  constructor(private sharedPnService: SharedPnService,
+              private machineAreaPnAreasService: MachineAreaPnAreasService,
+              private machineAreaPnMachinesService: MachineAreaPnMachinesService) { }
 
   ngOnInit() {
     this.getLocalPageSettings();
@@ -49,19 +45,37 @@ export class AreasPageComponent implements OnInit {
   }
 
   getAllInitialData() {
-
+    // this.getAllAreas();
+    // this.getMachinesForMapping();
   }
 
   getAllAreas() {
-
+    this.spinnerStatus = true;
+    this.areasRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
+    this.areasRequestModel.sort = this.localPageSettings.sort;
+    this.areasRequestModel.pageSize = this.localPageSettings.pageSize;
+    this.machineAreaPnAreasService.getAllAreas(this.areasRequestModel).subscribe((data) => {
+      if (data && data.success) {
+        this.areasModel = data.model;
+      } this.spinnerStatus = false;
+    });
   }
 
-  showEditAreaModal(machine: { id: number; name: string }) {
-    this.editAreaModal.show();
+  getMachinesForMapping() {
+    this.spinnerStatus = true;
+    this.machineAreaPnMachinesService.getAllMachines(new MachinesPnRequestModel()).subscribe((data) => {
+      if (data && data.success) {
+        this.mappingMachines = data.model;
+      } this.spinnerStatus = false;
+    });
   }
 
-  showDeleteAreaModal(machine: { id: number; name: string }) {
-    this.deleteAreaModal.show();
+  showEditAreaModal(area: AreaPnModel) {
+    this.editAreaModal.show(area);
+  }
+
+  showDeleteAreaModal(area: AreaPnModel) {
+    this.deleteAreaModal.show(area);
   }
 
   showCreateAreaModal() {
@@ -76,6 +90,18 @@ export class AreasPageComponent implements OnInit {
       this.localPageSettings.sort = sort;
     }
     this.updateLocalPageSettings();
+  }
+
+  changePage(e: any) {
+    if (e || e === 0) {
+      if (e === 0) {
+        this.areasRequestModel.pageIndex = 0;
+      } else {
+        this.areasRequestModel.pageIndex
+          = Math.floor(e / this.areasRequestModel.pageSize);
+      }
+      this.getAllAreas();
+    }
   }
 
 }

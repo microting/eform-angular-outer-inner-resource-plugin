@@ -1,5 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PageSettingsModel} from 'src/app/common/models/settings';
+import {
+  MachinesPnRequestModel,
+  MachinesPnModel,
+  AreasPnModel,
+  AreasPnRequestModel,
+  MachinePnModel
+} from '../../../models';
+import {MachineAreaPnAreasService, MachineAreaPnMachinesService} from '../../../services';
 import {SharedPnService} from '../../../../shared/services';
 
 @Component({
@@ -12,24 +20,14 @@ export class MachinesPageComponent implements OnInit {
   @ViewChild('editMachineModal') editMachineModal;
   @ViewChild('deleteMachineModal') deleteMachineModal;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  machines = [
-    {
-      id: 1,
-      name: 'First'
-    },
-    {
-      id: 2,
-      name: 'Second'
-    }
-  ];
-  machinesRequestModel = {
-    sort: '',
-    isSortDsc: false,
-    pageSize: 10
-  };
+  machinesModel: MachinesPnModel = new MachinesPnModel();
+  machinesRequestModel: MachinesPnRequestModel = new MachinesPnRequestModel();
+  mappingAreas: AreasPnModel = new AreasPnModel();
   spinnerStatus = false;
 
-  constructor(private sharedPnService: SharedPnService) { }
+  constructor(private sharedPnService: SharedPnService,
+              private machineAreaPnMachinesService: MachineAreaPnMachinesService,
+              private machineAreaPnAreasService: MachineAreaPnAreasService) { }
 
   ngOnInit() {
     this.getLocalPageSettings();
@@ -48,19 +46,37 @@ export class MachinesPageComponent implements OnInit {
   }
 
   getAllInitialData() {
-
+    // this.getAllMachines();
+    // this.getMappedAreas();
   }
 
   getAllMachines() {
-
+    this.spinnerStatus = true;
+    this.machinesRequestModel.pageSize = this.localPageSettings.pageSize;
+    this.machinesRequestModel.sort = this.localPageSettings.sort;
+    this.machinesRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
+    this.machineAreaPnMachinesService.getAllMachines(this.machinesRequestModel).subscribe((data) => {
+      if (data && data.success) {
+        this.machinesModel = data.model;
+      } this.spinnerStatus = false;
+    });
   }
 
-  showEditMachineModal(machine: { id: number; name: string }) {
-    this.editMachineModal.show();
+  getMappedAreas() {
+    this.spinnerStatus = true;
+    this.machineAreaPnAreasService.getAllAreas(new AreasPnRequestModel()).subscribe((data) => {
+      if (data && data.success) {
+        this.mappingAreas = data.model;
+      } this.spinnerStatus = false;
+    });
   }
 
-  showDeleteMachineModal(machine: { id: number; name: string }) {
-    this.deleteMachineModal.show();
+  showEditMachineModal(machine: MachinePnModel) {
+    this.editMachineModal.show(machine);
+  }
+
+  showDeleteMachineModal(machine: MachinePnModel) {
+    this.deleteMachineModal.show(machine);
   }
 
   showCreateMachineModal() {
@@ -75,5 +91,17 @@ export class MachinesPageComponent implements OnInit {
       this.localPageSettings.sort = sort;
     }
     this.updateLocalPageSettings();
+  }
+
+  changePage(e: any) {
+    if (e || e === 0) {
+      if (e === 0) {
+        this.machinesRequestModel.pageIndex = 0;
+      } else {
+        this.machinesRequestModel.pageIndex
+          = Math.floor(e / this.machinesRequestModel.pageSize);
+      }
+      this.getAllMachines();
+    }
   }
 }

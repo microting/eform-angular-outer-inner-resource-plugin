@@ -1,4 +1,9 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  MachineAreaPnAreasService,
+  MachineAreaPnMachinesService
+} from 'src/app/plugins/modules/machine-area-pn/services';
+import {AreaPnCreateModel, AreasPnModel, MachinePnCreateModel, MachinesPnModel} from '../../../models';
 
 @Component({
   selector: 'app-machine-area-pn-machine-create',
@@ -7,12 +12,12 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 })
 export class MachineCreateComponent implements OnInit {
   @ViewChild('frame') frame;
+  @Input() mappingAreas: AreasPnModel = new AreasPnModel();
   @Output() onNewMachineCreated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
-  newMachineModel: {
-    name: ''
-  };
-  constructor() { }
+  newMachineModel: MachinePnCreateModel = new MachinePnCreateModel();
+
+  constructor(private machineAreaPnMachinesService: MachineAreaPnMachinesService) { }
 
   ngOnInit() {
   }
@@ -22,6 +27,11 @@ export class MachineCreateComponent implements OnInit {
   }
 
   createMachine() {
-
+    this.spinnerStatus = true;
+    this.machineAreaPnMachinesService.createMachine(this.newMachineModel).subscribe((data) => {
+      this.onNewMachineCreated.emit();
+      this.newMachineModel = new MachinePnCreateModel();
+      this.spinnerStatus = false;
+    });
   }
 }

@@ -1,4 +1,4 @@
-export class AreaPnRequestModel {
+export class AreasPnRequestModel {
   pageIndex: number;
   pageSize: number;
   sort: string;

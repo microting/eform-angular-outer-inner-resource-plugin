@@ -1,4 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AreaPnModel, AreaPnUpdateModel} from 'src/app/plugins/modules/machine-area-pn/models/area';
+import {MachineAreaPnAreasService} from 'src/app/plugins/modules/machine-area-pn/services';
 
 @Component({
   selector: 'app-machine-area-pn-area-delete',
@@ -7,22 +9,25 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 })
 export class AreaDeleteComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Output() onNewAreaDeleted: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onAreaDeleted: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
-  selectedAreaModel: {
-    id: 1,
-    name: ''
-  };
-  constructor() { }
+  selectedAreaModel: AreaPnModel = new AreaPnModel();
+  constructor(private machineAreaPnAreasService: MachineAreaPnAreasService) { }
 
   ngOnInit() {
   }
 
-  show() {
+  show(areaModel: AreaPnModel) {
+    this.selectedAreaModel = areaModel;
     this.frame.show();
   }
 
   deleteArea() {
-
+    this.machineAreaPnAreasService.deleteArea(this.selectedAreaModel.id).subscribe((data) => {
+      if (data && data.success) {
+        this.onAreaDeleted.emit();
+        this.selectedAreaModel = new AreaPnModel();
+      }
+    });
   }
 }

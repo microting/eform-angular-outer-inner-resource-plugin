@@ -1,4 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {MachinePnModel} from '../../../models';
+import {MachineAreaPnMachinesService} from '../../../services';
 
 @Component({
   selector: 'app-machine-area-pn-machine-delete',
@@ -7,23 +9,26 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 })
 export class MachineDeleteComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Output() onNewMachineDeleted: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onMachineDeleted: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
-  selectedMachineModel: {
-    id: 1,
-    name: ''
-  };
-  constructor() { }
+  selectedMachineModel: MachinePnModel = new MachinePnModel();
+  constructor(private machineAreaPnMachinesService: MachineAreaPnMachinesService) { }
 
   ngOnInit() {
   }
 
-  show() {
+  show(machineModel: MachinePnModel) {
+    this.selectedMachineModel = machineModel;
     this.frame.show();
   }
 
   deleteMachine() {
-
+    this.machineAreaPnMachinesService.deleteMachine(this.selectedMachineModel.id).subscribe((data) => {
+      if (data && data.success) {
+        this.onMachineDeleted.emit();
+        this.selectedMachineModel = new MachinePnModel();
+      }
+    });
   }
 
 }

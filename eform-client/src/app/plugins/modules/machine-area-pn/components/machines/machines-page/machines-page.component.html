@@ -13,17 +13,17 @@
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
-          <th scope="col" class="table-header-sortable" id="idTableHeader"
-              (click)="sortTable('id')">
-            <div class="d-flex align-items-center justify-content-center">
-              ID
-              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
-              <i class="material-icons"
-                 *ngIf="localPageSettings.sort == 'id' && !machinesRequestModel.isSortDsc">expand_less</i>
-              <i class="material-icons"
-                 *ngIf="localPageSettings.sort == 'id' && machinesRequestModel.isSortDsc">expand_more</i>
-            </div>
-          </th>
+        <th scope="col" class="table-header-sortable" id="idTableHeader"
+            (click)="sortTable('id')">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'id' && !machinesRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'id' && machinesRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
         <th scope="col" class="table-header-sortable" id="nameTableHeader"
             (click)="sortTable('id')">
           <div class="d-flex align-items-center justify-content-center">
@@ -42,7 +42,7 @@
       </tr>
       </thead>
       <tbody id="tableBody">
-      <tr *ngFor="let machine of machines">
+      <tr *ngFor="let machine of machinesModel.machines">
         <td>
           {{machine.id}}
         </td>
@@ -61,7 +61,7 @@
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete Machine' | translate }}"
                     (click)="showDeleteMachineModal(machine)">
-              <i class="material-icons" >
+              <i class="material-icons">
                 delete_forever
               </i>
             </button>
@@ -75,17 +75,16 @@
     <div class="col-md-1">
       <page-size-pn
         [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="localPageSettings.pageSize = $event;
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; machinesRequestModel.pageIndex = 1;
         updateLocalPageSettings()">
-        <!--customersRequestModel.pageIndex = 1;-->
       </page-size-pn>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <!--<pagination-pn *ngIf="customersModel.total > customersRequestModel.pageSize"-->
-                     <!--[limit]="customersRequestModel.pageSize"-->
-                     <!--[size]="customersModel.total"-->
-                     <!--[offset]="customersRequestModel.offset"-->
-                     <!--(onPageChanged)="changePage($event)"></pagination-pn>-->
+      <pagination-pn *ngIf="machinesModel.total > machinesRequestModel.pageSize"
+                     [limit]="machinesRequestModel.pageSize"
+                     [size]="machinesModel.total"
+                     [offset]="machinesRequestModel.pageSize * machinesRequestModel.pageIndex"
+                     (onPageChanged)="changePage($event)"></pagination-pn>
     </div>
   </div>
 </div>
@@ -93,9 +92,11 @@
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
 <app-machine-area-pn-machine-create #createMachineModal
-                     (onMachineCreated)="getAllMachines()">
+                                    [mappingAreas]="mappingAreas"
+                                    (onMachineCreated)="getAllMachines()">
 </app-machine-area-pn-machine-create>
 <app-machine-area-pn-machine-edit #editMachineModal
-                              (onMachineUpdated)="getAllMachines()"></app-machine-area-pn-machine-edit>
+                                  [mappingAreas]="mappingAreas"
+                                  (onMachineUpdated)="getAllMachines()"></app-machine-area-pn-machine-edit>
 <app-machine-area-pn-machine-delete #deleteMachineModal
-                                (onMachineDeleted)="getAllMachines()"></app-machine-area-pn-machine-delete>
+                                    (onMachineDeleted)="getAllMachines()"></app-machine-area-pn-machine-delete>

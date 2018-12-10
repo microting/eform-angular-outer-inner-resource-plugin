@@ -6,9 +6,5 @@ export class AreasPnModel {
 export class AreaPnModel {
   id: number;
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
-  workflowState: string;
-  createdByUserId: number;
-  updatedByUserId: number;
+  relatedMachinesIds: Array<number> = [];
 }

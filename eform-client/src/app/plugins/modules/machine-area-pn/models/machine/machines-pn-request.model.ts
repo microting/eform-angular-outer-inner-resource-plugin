@@ -1,4 +1,4 @@
-export class MachinePnRequestModel {
+export class MachinesPnRequestModel {
   pageIndex: number;
   pageSize: number;
   sort: string;
