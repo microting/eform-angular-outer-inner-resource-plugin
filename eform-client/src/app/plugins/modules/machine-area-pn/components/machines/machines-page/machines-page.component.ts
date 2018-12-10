@@ -96,6 +96,7 @@ export class MachinesPageComponent implements OnInit {
 
   changePage(e: any) {
     if (e || e === 0) {
+      this.machinesRequestModel.offset = e;
       if (e === 0) {
         this.machinesRequestModel.pageIndex = 0;
       } else {

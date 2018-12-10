@@ -93,6 +93,7 @@ export class AreasPageComponent implements OnInit {
 
   changePage(e: any) {
     if (e || e === 0) {
+      this.areasRequestModel.offset = e;
       if (e === 0) {
         this.areasRequestModel.pageIndex = 0;
       } else {
