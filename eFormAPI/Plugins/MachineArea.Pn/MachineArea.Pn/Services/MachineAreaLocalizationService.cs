@@ -10,8 +10,7 @@ namespace MachineArea.Pn.Services
  
         public MachineAreaLocalizationService(IStringLocalizerFactory factory)
         {
-            _localizer = factory.Create("MachineAreaResources",
-                Assembly.GetEntryAssembly().FullName);
+            _localizer = factory.Create(typeof(EformMachineAreaPlugin));
         }
  
         public string GetString(string key)
