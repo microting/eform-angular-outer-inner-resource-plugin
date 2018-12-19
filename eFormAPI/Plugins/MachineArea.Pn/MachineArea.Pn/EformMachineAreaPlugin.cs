@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Data;
@@ -49,12 +50,15 @@ namespace MachineArea.Pn
         {
         }
 
-        public MenuModel HeaderMenu()
+        public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
+            var localizationService = (IMachineAreaLocalizationService) serviceProvider
+                .GetService(typeof(MachineAreaLocalizationService));
+
             var result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
             {
-                Name = "Machine Area",
+                Name = localizationService.GetString("Machine Area"),
                 E2EId = "",
                 Link = "",
                 MenuItems = new List<MenuItemModel>()
