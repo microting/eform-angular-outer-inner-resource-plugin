@@ -1,5 +1,26 @@
 ﻿[
   {
+    "Key": "MachineArea",
+    "LocalizedValue": {
+      "da": "Maskinområde",
+      "en-US": "Machine Area"
+    }
+  },
+  {
+    "Key": "Machine",
+    "LocalizedValue": {
+      "da": "Maskiner",
+      "en-US": "Machine"
+    }
+  },
+  {
+    "Key": "Area",
+    "LocalizedValue": {
+      "da": "Områder",
+      "en-US": "Area"
+    }
+  },
+  {
     "Key": "AreaCreatedSuccesfully",
     "LocalizedValue": {
       "da": "Område {0} blev oprettet med succes",
