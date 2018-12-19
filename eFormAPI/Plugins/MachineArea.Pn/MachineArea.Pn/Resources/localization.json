@@ -7,14 +7,14 @@
     }
   },
   {
-    "Key": "Machine",
+    "Key": "Machines",
     "LocalizedValue": {
       "da": "Maskiner",
       "en-US": "Machine"
     }
   },
   {
-    "Key": "Area",
+    "Key": "Areas",
     "LocalizedValue": {
       "da": "Områder",
       "en-US": "Area"

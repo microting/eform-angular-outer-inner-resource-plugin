@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using MachineArea.Pn.Abstractions;
 using Microsoft.Extensions.Localization;
+using Microting.eFormApi.BasePn.Localization.Abstractions;
 
 namespace MachineArea.Pn.Services
 {
@@ -8,7 +9,7 @@ namespace MachineArea.Pn.Services
     {
         private readonly IStringLocalizer _localizer;
  
-        public MachineAreaLocalizationService(IStringLocalizerFactory factory)
+        public MachineAreaLocalizationService(IEformLocalizerFactory factory)
         {
             _localizer = factory.Create(typeof(EformMachineAreaPlugin));
         }
