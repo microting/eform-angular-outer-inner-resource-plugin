@@ -8,7 +8,7 @@ namespace MachineArea.Pn.Infrastructure.Data
 
         public MachineAreaPnDbContext() { }
 
-        public MachineAreaPnDbContext(DbContextOptions options) : base(options)
+        public MachineAreaPnDbContext(DbContextOptions<MachineAreaPnDbContext> options) : base(options)
         {
 
         }

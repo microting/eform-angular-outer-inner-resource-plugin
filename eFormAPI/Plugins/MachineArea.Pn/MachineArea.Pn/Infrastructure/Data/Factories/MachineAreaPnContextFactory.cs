@@ -8,7 +8,7 @@ namespace MachineArea.Pn.Infrastructure.Data.Factories
     {
         public MachineAreaPnDbContext CreateDbContext(string[] args)
         {
-            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<MachineAreaPnDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<MachineAreaPnDbContext>();
             if (args.Any())
             {
                 optionsBuilder.UseSqlServer(args.FirstOrDefault());
