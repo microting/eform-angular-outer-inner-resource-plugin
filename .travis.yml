@@ -1,0 +1,26 @@
+dist: xenial
+language: csharp
+solution: MachineArea.Pn.sln
+mono: none
+dotnet: 2.2
+services:
+  - mysql
+script:
+  - dotnet restore eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/MachineArea.Pn.Test.csproj
+  - dotnet build eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/MachineArea.Pn.Test.csproj
+  - dotnet test -v n eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/MachineArea.Pn.Test.csproj
+  - cd ../..
+  - ls -lah
+  - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
+  - cp -av microting/eform-angular-machinearea-plugin/eform-client/src/app/plugins/modules/machine-area-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn
+  - cd microting/eform-angular-frontend
+  - dotnet restore -v q eFormAPI/eFormAPI.sln
+  - dotnet build eFormAPI/eFormAPI.sln
+  - cd ../..
+  - ls -lah
+  - pwd
+  - ls -lah microting/eform-angular-machinearea-plugin/eFormAPI/eFormAPI.Web/Plugins/MachineArea
+  - ls -lah microting/eform-angular-frontend/eFormAPI/eFormAPI.Web
+  - mkdir -p microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
+  - ls -lah microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
+  - cp -av microting/eform-angular-machinearea-plugin/eFormAPI/eFormAPI.Web/Plugins/MachineArea microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/MachineArea
