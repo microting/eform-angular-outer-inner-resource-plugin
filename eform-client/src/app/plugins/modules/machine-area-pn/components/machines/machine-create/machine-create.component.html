@@ -37,7 +37,7 @@
                 </td>
                 <td>
                   <div class="mat-checkbox">
-                    <input id="checkbox{{area.id}}" (change)="addToArray($event, area.id)"
+                    <input id="checkbox{{area.id}}" (change)="addToArray($event, area.id)" [checked]="isChecked(area.id)"
                            color="primary" type="checkbox">
                     <label for="checkbox{{area.id}}"></label>
                   </div>

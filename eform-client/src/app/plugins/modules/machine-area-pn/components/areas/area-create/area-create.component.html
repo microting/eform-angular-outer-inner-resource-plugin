@@ -38,6 +38,7 @@
                 <td>
                   <div class="mat-checkbox">
                     <input id="checkbox{{machine.id}}" (change)="addToArray($event, machine.id)"
+                           [checked]="isChecked(machine.id)"
                            color="primary" type="checkbox">
                     <label for="checkbox{{machine.id}}"></label>
                   </div>
