@@ -42,4 +42,8 @@ export class AreaCreateComponent implements OnInit {
       this.newAreaModel.relatedMachinesIds = this.newAreaModel.relatedMachinesIds.filter(x => x !== machineId);
     }
   }
+
+  isChecked(relatedMachineId: number) {
+    return this.newAreaModel.relatedMachinesIds.indexOf(relatedMachineId) !== -1;
+  }
 }
