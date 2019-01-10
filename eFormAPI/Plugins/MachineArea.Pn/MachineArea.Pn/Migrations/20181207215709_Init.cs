@@ -7,13 +7,24 @@ namespace MachineArea.Pn.Migrations
     public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        {            
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+
+            // Setup for MySQL Provider
+            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
+            {
+                DbConfig.IsMySQL = true;
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
+            
             migrationBuilder.CreateTable(
                 name: "Areas",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
@@ -31,7 +42,7 @@ namespace MachineArea.Pn.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
@@ -49,7 +60,7 @@ namespace MachineArea.Pn.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     MachineId = table.Column<int>(nullable: false),
                     AreaId = table.Column<int>(nullable: false)
                 },

@@ -16,16 +16,23 @@ namespace MachineArea.Pn.Migrations
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
             modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.Area", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -56,7 +63,7 @@ namespace MachineArea.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -87,7 +94,7 @@ namespace MachineArea.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("AreaId");
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -11,11 +12,17 @@ namespace MachineArea.Pn.Infrastructure.Data.Factories
             var optionsBuilder = new DbContextOptionsBuilder<MachineAreaPnDbContext>();
             if (args.Any())
             {
-                optionsBuilder.UseSqlServer(args.FirstOrDefault());
-            }
+                if (args.FirstOrDefault().ToLower().Contains("convert zero datetime"))
+                {
+                    optionsBuilder.UseMySql(args.FirstOrDefault());
+                }
+                else
+                {
+                    optionsBuilder.UseSqlServer(args.FirstOrDefault());
+                }            }
             else
             {
-                optionsBuilder.UseSqlServer("...");
+                throw new ArgumentNullException("Connection string not present");
             }
             return new MachineAreaPnDbContext(optionsBuilder.Options);
         }

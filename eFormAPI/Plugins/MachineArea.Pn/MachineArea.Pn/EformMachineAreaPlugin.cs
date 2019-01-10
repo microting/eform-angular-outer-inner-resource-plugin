@@ -34,14 +34,20 @@ namespace MachineArea.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<MachineAreaPnDbContext>(o => o.UseSqlServer(connectionString,
-                b => b.MigrationsAssembly(PluginAssembly().FullName)));
+            if (connectionString.ToLower().Contains("convert zero datetime"))
+            {
+                services.AddDbContext<MachineAreaPnDbContext>(o => o.UseMySql(connectionString,
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
+            }
+            else
+            {                
+                services.AddDbContext<MachineAreaPnDbContext>(o => o.UseSqlServer(connectionString,
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
+            }
 
             MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
-            using (MachineAreaPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString }))
-            {
-                context.Database.Migrate();
-            }
+            var context = contextFactory.CreateDbContext(new[] {connectionString});
+            context.Database.Migrate();
 
             // Seed database
             SeedDatabase(connectionString);
