@@ -7,6 +7,11 @@ namespace MachineArea.Pn.Infrastructure.Data.Entities
 {
     public class Area : BaseEntity
     {
+        public Area()
+        {
+            this.MachineAreas = new HashSet<MachineArea>();
+        }
+
         [StringLength(250)]
         public string Name { get; set; }
 
@@ -16,6 +21,6 @@ namespace MachineArea.Pn.Infrastructure.Data.Entities
         public string WorkflowState { get; set; }
         public int CreatedByUserId { get; set; }
         public int UpdatedByUserId { get; set; }
-        public List<MachineArea> MachineAreas { get; set; } = new List<MachineArea>();
+        public virtual ICollection<MachineArea> MachineAreas { get; set; }
     }
 }

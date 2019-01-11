@@ -41,11 +41,14 @@ export class MachineCreateComponent implements OnInit {
   }
 
   addToArray(e: any, areaId: number) {
-    debugger;
     if (e.target.checked) {
       this.newMachineModel.relatedAreasIds.push(areaId);
     } else {
       this.newMachineModel.relatedAreasIds = this.newMachineModel.relatedAreasIds.filter(x => x !== areaId);
     }
+  }
+
+  isChecked(relatedAreaId: number) {
+    return this.newMachineModel.relatedAreasIds.indexOf(relatedAreaId) !== -1;
   }
 }

@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MachineArea.Pn.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
-        {            
+        {
             string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
             object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
 
@@ -18,7 +18,6 @@ namespace MachineArea.Pn.Migrations
                 autoIDGenStrategy = "MySql:ValueGenerationStrategy";
                 autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
-            
             migrationBuilder.CreateTable(
                 name: "Areas",
                 columns: table => new
@@ -35,6 +34,19 @@ namespace MachineArea.Pn.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Areas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MachineAreaSetting",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
+                    RelatedEntityGroupId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MachineAreaSetting", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +74,13 @@ namespace MachineArea.Pn.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     MachineId = table.Column<int>(nullable: false),
-                    AreaId = table.Column<int>(nullable: false)
+                    AreaId = table.Column<int>(nullable: false),
+                    MicrotingeFormSdkId = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true),
+                    WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -126,6 +144,9 @@ namespace MachineArea.Pn.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MachineAreas");
+
+            migrationBuilder.DropTable(
+                name: "MachineAreaSetting");
 
             migrationBuilder.DropTable(
                 name: "Areas");
