@@ -2,7 +2,7 @@
 {
     public class MachineAreaSettingsModel
     {
-        public int? SelectedTemplateId { get; set; }
-        public string SelectedTemplateName { get; set; }
+        public int? SelectedeFormId { get; set; }
+        public string SelectedeFormName { get; set; }
     }
 }

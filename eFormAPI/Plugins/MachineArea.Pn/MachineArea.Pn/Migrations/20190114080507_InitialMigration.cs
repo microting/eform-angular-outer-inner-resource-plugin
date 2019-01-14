@@ -18,6 +18,7 @@ namespace MachineArea.Pn.Migrations
                 autoIDGenStrategy = "MySql:ValueGenerationStrategy";
                 autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
+
             migrationBuilder.CreateTable(
                 name: "Areas",
                 columns: table => new
@@ -37,16 +38,17 @@ namespace MachineArea.Pn.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MachineAreaSetting",
+                name: "MachineAreaSettings",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
-                    RelatedEntityGroupId = table.Column<int>(nullable: true)
+                    SelectedeFormId = table.Column<int>(nullable: true),
+                    SelectedeFormName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MachineAreaSetting", x => x.Id);
+                    table.PrimaryKey("PK_MachineAreaSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -146,7 +148,7 @@ namespace MachineArea.Pn.Migrations
                 name: "MachineAreas");
 
             migrationBuilder.DropTable(
-                name: "MachineAreaSetting");
+                name: "MachineAreaSettings");
 
             migrationBuilder.DropTable(
                 name: "Areas");

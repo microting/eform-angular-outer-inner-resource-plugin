@@ -119,11 +119,13 @@ namespace MachineArea.Pn.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("RelatedEntityGroupId");
+                    b.Property<int?>("SelectedeFormId");
+
+                    b.Property<string>("SelectedeFormName");
 
                     b.HasKey("Id");
 
-                    b.ToTable("MachineAreaSetting");
+                    b.ToTable("MachineAreaSettings");
                 });
 
             modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.MachineArea", b =>

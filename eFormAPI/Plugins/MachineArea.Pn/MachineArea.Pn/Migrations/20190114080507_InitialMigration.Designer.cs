@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineArea.Pn.Migrations
 {
     [DbContext(typeof(MachineAreaPnDbContext))]
-    [Migration("20190110124845_InitialMigration")]
+    [Migration("20190114080507_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,7 @@ namespace MachineArea.Pn.Migrations
                 autoIDGenStrategy = "MySql:ValueGenerationStrategy";
                 autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
+
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -63,7 +64,7 @@ namespace MachineArea.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -94,7 +95,7 @@ namespace MachineArea.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("AreaId");
 
@@ -126,13 +127,15 @@ namespace MachineArea.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
-                    b.Property<int?>("RelatedEntityGroupId");
+                    b.Property<int?>("SelectedeFormId");
+
+                    b.Property<string>("SelectedeFormName");
 
                     b.HasKey("Id");
 
-                    b.ToTable("MachineAreaSetting");
+                    b.ToTable("MachineAreaSettings");
                 });
 
             modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.MachineArea", b =>

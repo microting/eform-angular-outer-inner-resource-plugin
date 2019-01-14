@@ -37,14 +37,14 @@ namespace MachineArea.Pn.Services
             {
                 MachineAreaSettingsModel result = new MachineAreaSettingsModel();
                 MachineAreaSetting machineAreaSettings = _dbContext.MachineAreaSettings.FirstOrDefault();
-                if(machineAreaSettings.SelectedTemplateId != null)
+                if(machineAreaSettings.SelectedeFormId != null)
                 {
-                    result.SelectedTemplateId = (int)machineAreaSettings.SelectedTemplateId;
-                    result.SelectedTemplateName = machineAreaSettings.SelectedTemplateName;
+                    result.SelectedeFormId = (int)machineAreaSettings.SelectedeFormId;
+                    result.SelectedeFormName = machineAreaSettings.SelectedeFormName;
                 }
                 else
                 {
-                    result.SelectedTemplateId = null;
+                    result.SelectedeFormId = null;
                 }
 
                 return new OperationDataResult<MachineAreaSettingsModel>(true, result);
@@ -62,7 +62,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                if (machineAreaSettingsModel.SelectedTemplateId == 0)
+                if (machineAreaSettingsModel.SelectedeFormId == 0)
                 {
                     return new OperationResult(true);
                 }
@@ -71,20 +71,20 @@ namespace MachineArea.Pn.Services
                 {
                     machineAreaSettings = new MachineAreaSetting()
                     {
-                        SelectedTemplateId = machineAreaSettingsModel.SelectedTemplateId,
+                        SelectedeFormId = machineAreaSettingsModel.SelectedeFormId,
                     };
                     _dbContext.MachineAreaSettings.Add(machineAreaSettings);
                 }
                 else
                 {
-                    machineAreaSettings.SelectedTemplateId = machineAreaSettingsModel.SelectedTemplateId;
+                    machineAreaSettings.SelectedeFormId = machineAreaSettingsModel.SelectedeFormId;
                 }
 
-                if (machineAreaSettingsModel.SelectedTemplateId != null) 
+                if (machineAreaSettingsModel.SelectedeFormId != null) 
                 {
                     Core core = _coreHelper.GetCore();
-                    MainElement template = core.TemplateRead((int)machineAreaSettingsModel.SelectedTemplateId);
-                    machineAreaSettings.SelectedTemplateName = template.Label;
+                    MainElement template = core.TemplateRead((int)machineAreaSettingsModel.SelectedeFormId);
+                    machineAreaSettings.SelectedeFormName = template.Label;
                 }
 
                 _dbContext.SaveChanges();
