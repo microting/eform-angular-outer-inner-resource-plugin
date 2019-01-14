@@ -42,4 +42,5 @@ export class MachineAreaPnMachinesService extends BaseService {
   deleteMachine(machineId: number): Observable<OperationResult> {
     return this.delete(MachineAreaPnMachineMethods.Machines + '/' + machineId);
   }
+
 }

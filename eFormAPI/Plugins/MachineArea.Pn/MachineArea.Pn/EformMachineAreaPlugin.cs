@@ -30,6 +30,7 @@ namespace MachineArea.Pn
             services.AddSingleton<IMachineAreaLocalizationService, MachineAreaLocalizationService>();
             services.AddTransient<IAreaService, AreaService>();
             services.AddTransient<IMachineService, MachineService>();
+            services.AddTransient<IMachineAreaSettingsService, MachineAreaSettingsService>();
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
@@ -84,6 +85,13 @@ namespace MachineArea.Pn
                         E2EId = "machine-area-pn-areas",
                         Link = "/plugins/machine-area-pn/areas",
                         Position = 1,
+                    },
+                    new MenuItemModel()
+                    {
+                        Name = localizationService.GetString("Settings"),
+                        E2EId = "machine-area-pn-settings",
+                        Link = "/plugins/machine-area-pn/settings",
+                        Position = 2,
                     }
                 }
             });
