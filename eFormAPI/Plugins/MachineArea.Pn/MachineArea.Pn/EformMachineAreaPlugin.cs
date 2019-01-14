@@ -74,7 +74,7 @@ namespace MachineArea.Pn
                 {
                     new MenuItemModel()
                     {
-                        Name =  localizationService.GetString("Machines"),
+                        Name =  localizationService.GetString("Machines"), 
                         E2EId = "machine-area-pn-machines",
                         Link = "/plugins/machine-area-pn/machines",
                         Position = 0,
