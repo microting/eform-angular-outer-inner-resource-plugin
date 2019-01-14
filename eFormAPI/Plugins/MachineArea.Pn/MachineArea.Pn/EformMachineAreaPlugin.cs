@@ -16,7 +16,7 @@ namespace MachineArea.Pn
 {
     public class EformMachineAreaPlugin : IEformPlugin
     {
-        public string Name => "Microting MachineArea plugin";
+        public string Name => "Microting Machine Area plugin";
         public string PluginId => "EFormMachineAreaPn";
         public string PluginPath => PluginAssembly().Location;
 
