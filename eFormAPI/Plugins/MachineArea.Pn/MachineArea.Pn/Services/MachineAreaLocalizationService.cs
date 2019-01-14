@@ -9,6 +9,7 @@ namespace MachineArea.Pn.Services
     {
         private readonly IStringLocalizer _localizer;
  
+        // ReSharper disable once SuggestBaseTypeForParameter
         public MachineAreaLocalizationService(IEformLocalizerFactory factory)
         {
             _localizer = factory.Create(typeof(EformMachineAreaPlugin));

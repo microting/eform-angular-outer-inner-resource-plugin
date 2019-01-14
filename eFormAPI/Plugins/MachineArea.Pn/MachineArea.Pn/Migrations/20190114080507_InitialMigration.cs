@@ -4,16 +4,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MachineArea.Pn.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+
+            // Setup for MySQL Provider
+            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
+            {
+                DbConfig.IsMySQL = true;
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
+
             migrationBuilder.CreateTable(
                 name: "Areas",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
@@ -27,11 +38,25 @@ namespace MachineArea.Pn.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MachineAreaSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
+                    SelectedeFormId = table.Column<int>(nullable: true),
+                    SelectedeFormName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MachineAreaSettings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Machines",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
@@ -49,9 +74,15 @@ namespace MachineArea.Pn.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     MachineId = table.Column<int>(nullable: false),
-                    AreaId = table.Column<int>(nullable: false)
+                    AreaId = table.Column<int>(nullable: false),
+                    MicrotingeFormSdkId = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true),
+                    WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,6 +146,9 @@ namespace MachineArea.Pn.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MachineAreas");
+
+            migrationBuilder.DropTable(
+                name: "MachineAreaSettings");
 
             migrationBuilder.DropTable(
                 name: "Areas");

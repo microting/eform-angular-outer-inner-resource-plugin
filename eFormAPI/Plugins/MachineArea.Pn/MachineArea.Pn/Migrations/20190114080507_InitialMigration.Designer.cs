@@ -10,22 +10,30 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MachineArea.Pn.Migrations
 {
     [DbContext(typeof(MachineAreaPnDbContext))]
-    [Migration("20181207215709_Init")]
-    partial class Init
+    [Migration("20190114080507_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
+
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
             modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.Area", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -56,7 +64,7 @@ namespace MachineArea.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -87,11 +95,24 @@ namespace MachineArea.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("AreaId");
 
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int>("CreatedByUserId");
+
                     b.Property<int>("MachineId");
+
+                    b.Property<int>("MicrotingeFormSdkId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<int>("UpdatedByUserId");
+
+                    b.Property<string>("WorkflowState")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -102,15 +123,30 @@ namespace MachineArea.Pn.Migrations
                     b.ToTable("MachineAreas");
                 });
 
+            modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.MachineAreaSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
+
+                    b.Property<int?>("SelectedeFormId");
+
+                    b.Property<string>("SelectedeFormName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MachineAreaSettings");
+                });
+
             modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.MachineArea", b =>
                 {
                     b.HasOne("MachineArea.Pn.Infrastructure.Data.Entities.Area", "Area")
-                        .WithMany()
+                        .WithMany("MachineAreas")
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MachineArea.Pn.Infrastructure.Data.Entities.Machine", "Machine")
-                        .WithMany()
+                        .WithMany("MachineAreas")
                         .HasForeignKey("MachineId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

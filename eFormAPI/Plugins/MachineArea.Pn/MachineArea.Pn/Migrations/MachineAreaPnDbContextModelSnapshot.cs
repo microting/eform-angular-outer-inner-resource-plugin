@@ -4,6 +4,7 @@ using MachineArea.Pn.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MachineArea.Pn.Migrations
 {
@@ -14,7 +15,7 @@ namespace MachineArea.Pn.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -88,7 +89,20 @@ namespace MachineArea.Pn.Migrations
 
                     b.Property<int>("AreaId");
 
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int>("CreatedByUserId");
+
                     b.Property<int>("MachineId");
+
+                    b.Property<int>("MicrotingeFormSdkId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<int>("UpdatedByUserId");
+
+                    b.Property<string>("WorkflowState")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -99,15 +113,30 @@ namespace MachineArea.Pn.Migrations
                     b.ToTable("MachineAreas");
                 });
 
+            modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.MachineAreaSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("SelectedeFormId");
+
+                    b.Property<string>("SelectedeFormName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MachineAreaSettings");
+                });
+
             modelBuilder.Entity("MachineArea.Pn.Infrastructure.Data.Entities.MachineArea", b =>
                 {
                     b.HasOne("MachineArea.Pn.Infrastructure.Data.Entities.Area", "Area")
-                        .WithMany()
+                        .WithMany("MachineAreas")
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MachineArea.Pn.Infrastructure.Data.Entities.Machine", "Machine")
-                        .WithMany()
+                        .WithMany("MachineAreas")
                         .HasForeignKey("MachineId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

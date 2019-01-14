@@ -9,6 +9,7 @@ import {
 } from '../../../models';
 import {MachineAreaPnAreasService, MachineAreaPnMachinesService} from '../../../services';
 import {SharedPnService} from '../../../../shared/services';
+import {AuthService} from '../../../../../../common/services/auth';
 
 @Component({
   selector: 'app-machine-area-pn-machines-page',
@@ -27,8 +28,11 @@ export class MachinesPageComponent implements OnInit {
 
   constructor(private sharedPnService: SharedPnService,
               private machineAreaPnMachinesService: MachineAreaPnMachinesService,
+              private authService: AuthService,
               private machineAreaPnAreasService: MachineAreaPnAreasService) { }
-
+  get currentRole(): string {
+    return this.authService.currentRole;
+  }
   ngOnInit() {
     this.getLocalPageSettings();
   }

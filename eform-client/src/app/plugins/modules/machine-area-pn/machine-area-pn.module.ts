@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 import {
   MachineAreaPnAreasService,
-  MachineAreaPnMachinesService
+  MachineAreaPnMachinesService,
+  MachineAreaPnSettingsService
 } from './services';
 import {MachineAreaPnLayoutComponent} from './layouts';
 import {MachineAreaPnRouting} from './machine-area-pn-routing.module';
@@ -21,6 +23,7 @@ import {
   MachinesPageComponent,
   MachineEditComponent
 } from './components';
+import { MachineAreaSettingsComponent } from './components/machine-area-settings';
 
 @NgModule({
   imports: [
@@ -29,7 +32,8 @@ import {
     MDBBootstrapModule,
     MachineAreaPnRouting,
     TranslateModule,
-    FormsModule
+    FormsModule,
+    NgSelectModule
   ],
   declarations: [
     AreasPageComponent,
@@ -40,8 +44,10 @@ import {
     MachineCreateComponent,
     MachineEditComponent,
     MachineDeleteComponent,
-    MachineAreaPnLayoutComponent
+    MachineAreaPnLayoutComponent,
+    MachineAreaSettingsComponent
   ],
-  providers: [MachineAreaPnAreasService, MachineAreaPnMachinesService]
+  providers: [MachineAreaPnAreasService, MachineAreaPnMachinesService,   MachineAreaPnSettingsService
+  ]
 })
 export class MachineAreaPnModule { }

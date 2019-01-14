@@ -16,7 +16,7 @@ namespace MachineArea.Pn
 {
     public class EformMachineAreaPlugin : IEformPlugin
     {
-        public string Name => "Microting MachineArea plugin";
+        public string Name => "Microting Machine Area plugin";
         public string PluginId => "EFormMachineAreaPn";
         public string PluginPath => PluginAssembly().Location;
 
@@ -30,18 +30,25 @@ namespace MachineArea.Pn
             services.AddSingleton<IMachineAreaLocalizationService, MachineAreaLocalizationService>();
             services.AddTransient<IAreaService, AreaService>();
             services.AddTransient<IMachineService, MachineService>();
+            services.AddTransient<IMachineAreaSettingsService, MachineAreaSettingsService>();
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<MachineAreaPnDbContext>(o => o.UseSqlServer(connectionString,
-                b => b.MigrationsAssembly(PluginAssembly().FullName)));
+            if (connectionString.ToLower().Contains("convert zero datetime"))
+            {
+                services.AddDbContext<MachineAreaPnDbContext>(o => o.UseMySql(connectionString,
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
+            }
+            else
+            {                
+                services.AddDbContext<MachineAreaPnDbContext>(o => o.UseSqlServer(connectionString,
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
+            }
 
             MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
-            using (MachineAreaPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString }))
-            {
-                context.Database.Migrate();
-            }
+            var context = contextFactory.CreateDbContext(new[] {connectionString});
+            context.Database.Migrate();
 
             // Seed database
             SeedDatabase(connectionString);
@@ -67,7 +74,7 @@ namespace MachineArea.Pn
                 {
                     new MenuItemModel()
                     {
-                        Name =  localizationService.GetString("Machines"),
+                        Name =  localizationService.GetString("Machines"), 
                         E2EId = "machine-area-pn-machines",
                         Link = "/plugins/machine-area-pn/machines",
                         Position = 0,
@@ -78,6 +85,13 @@ namespace MachineArea.Pn
                         E2EId = "machine-area-pn-areas",
                         Link = "/plugins/machine-area-pn/areas",
                         Position = 1,
+                    },
+                    new MenuItemModel()
+                    {
+                        Name = localizationService.GetString("Settings"),
+                        E2EId = "machine-area-pn-settings",
+                        Link = "/plugins/machine-area-pn/settings",
+                        Position = 2,
                     }
                 }
             });

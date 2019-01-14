@@ -16,6 +16,7 @@ namespace MachineArea.Pn.Infrastructure.Data
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<Entities.MachineArea> MachineAreas { get; set; }
+        public DbSet<MachineAreaSetting> MachineAreaSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

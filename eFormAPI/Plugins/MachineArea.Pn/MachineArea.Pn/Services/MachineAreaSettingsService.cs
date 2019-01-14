@@ -1,0 +1,103 @@
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Data;
+using MachineArea.Pn.Infrastructure.Data.Entities;
+using MachineArea.Pn.Infrastructure.Models;
+using eFormCore;
+using eFormData;
+using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
+namespace MachineArea.Pn.Services
+{
+    public class MachineAreaSettingsService : IMachineAreaSettingsService
+    {
+        private readonly ILogger<MachineAreaSettingsService> _logger;
+        private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
+        private readonly MachineAreaPnDbContext _dbContext;
+        private readonly IEFormCoreService _coreHelper;
+        
+        public MachineAreaSettingsService(ILogger<MachineAreaSettingsService> logger,
+            MachineAreaPnDbContext dbContext,
+            IEFormCoreService coreHelper,
+            IMachineAreaLocalizationService machineAreaLocalizationService)
+        {
+            _logger = logger;
+            _dbContext = dbContext;
+            _coreHelper = coreHelper;
+            _machineAreaLocalizationService = machineAreaLocalizationService;
+        }
+
+        public OperationDataResult<MachineAreaSettingsModel> GetSettings()
+        {
+            try
+            {
+                MachineAreaSettingsModel result = new MachineAreaSettingsModel();
+                MachineAreaSetting machineAreaSettings = _dbContext.MachineAreaSettings.FirstOrDefault();
+                if(machineAreaSettings.SelectedeFormId != null)
+                {
+                    result.SelectedTemplateId = (int)machineAreaSettings.SelectedeFormId;
+                    result.SelectedTemplateName = machineAreaSettings.SelectedeFormName;
+                }
+                else
+                {
+                    result.SelectedTemplateId = null;
+                }
+
+                return new OperationDataResult<MachineAreaSettingsModel>(true, result);
+            }
+            catch(Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<MachineAreaSettingsModel>(false,
+                    _machineAreaLocalizationService.GetString("ErrorWhileOptainingMachineareaSettings"));
+            }
+        }
+        
+        public OperationResult UpdateSettings(MachineAreaSettingsModel machineAreaSettingsModel)
+        {
+            try
+            {
+                if (machineAreaSettingsModel.SelectedTemplateId == 0)
+                {
+                    return new OperationResult(true);
+                }
+                MachineAreaSetting machineAreaSettings = _dbContext.MachineAreaSettings.FirstOrDefault();
+                if (machineAreaSettings == null)
+                {
+                    machineAreaSettings = new MachineAreaSetting()
+                    {
+                        SelectedeFormId = machineAreaSettingsModel.SelectedTemplateId,
+                    };
+                    _dbContext.MachineAreaSettings.Add(machineAreaSettings);
+                }
+                else
+                {
+                    machineAreaSettings.SelectedeFormId = machineAreaSettingsModel.SelectedTemplateId;
+                }
+
+                if (machineAreaSettingsModel.SelectedTemplateId != null) 
+                {
+                    Core core = _coreHelper.GetCore();
+                    MainElement template = core.TemplateRead((int)machineAreaSettingsModel.SelectedTemplateId);
+                    machineAreaSettings.SelectedeFormName = template.Label;
+                }
+
+                _dbContext.SaveChanges();
+                return new OperationResult(true,
+                    _machineAreaLocalizationService.GetString("SettingsHasBeenUpdatedSuccesfully"));
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _machineAreaLocalizationService.GetString("ErrorWhileUpdatingMachineAreaSettings"));
+            }
+        }
+    }
+}
