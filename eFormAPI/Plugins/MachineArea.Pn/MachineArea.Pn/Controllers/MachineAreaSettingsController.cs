@@ -17,7 +17,7 @@ namespace MachineArea.Pn.Controllers
         }
 
         [HttpGet]
-//        [Authorize(Roles = EformRole.Admin)]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/machine-area-pn/settings")]
         public OperationDataResult<MachineAreaSettingsModel> GetSettings()
         {
@@ -26,7 +26,7 @@ namespace MachineArea.Pn.Controllers
 
 
         [HttpPost]
-//        [Authorize(Roles = EformRole.Admin)]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/machine-area-pn/settings")]
         public OperationResult UpdateSettings([FromBody] MachineAreaSettingsModel machineAreaSettingsModel)
         {
