@@ -16,7 +16,7 @@
           <div class="col-md-6">
             <ng-select [items]="templatesModel.templates"
                        bindLabel="label"
-                       [placeholder]=" machineAreaPnsettingsModel.selectedTemplateName || ('Selected template' | translate)"
+                       [placeholder]=" settingsModel.selectedTemplateName || ('Selected template' | translate)"
                        bindValue="id"
                        [typeahead]="typeahead"
                        (change)="onSelectedChanged($event)">

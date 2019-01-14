@@ -39,12 +39,12 @@ namespace MachineArea.Pn.Services
                 MachineAreaSetting machineAreaSettings = _dbContext.MachineAreaSettings.FirstOrDefault();
                 if(machineAreaSettings.SelectedeFormId != null)
                 {
-                    result.SelectedeFormId = (int)machineAreaSettings.SelectedeFormId;
-                    result.SelectedeFormName = machineAreaSettings.SelectedeFormName;
+                    result.SelectedTemplateId = (int)machineAreaSettings.SelectedeFormId;
+                    result.SelectedTemplateName = machineAreaSettings.SelectedeFormName;
                 }
                 else
                 {
-                    result.SelectedeFormId = null;
+                    result.SelectedTemplateId = null;
                 }
 
                 return new OperationDataResult<MachineAreaSettingsModel>(true, result);
@@ -62,7 +62,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                if (machineAreaSettingsModel.SelectedeFormId == 0)
+                if (machineAreaSettingsModel.SelectedTemplateId == 0)
                 {
                     return new OperationResult(true);
                 }
@@ -71,19 +71,19 @@ namespace MachineArea.Pn.Services
                 {
                     machineAreaSettings = new MachineAreaSetting()
                     {
-                        SelectedeFormId = machineAreaSettingsModel.SelectedeFormId,
+                        SelectedeFormId = machineAreaSettingsModel.SelectedTemplateId,
                     };
                     _dbContext.MachineAreaSettings.Add(machineAreaSettings);
                 }
                 else
                 {
-                    machineAreaSettings.SelectedeFormId = machineAreaSettingsModel.SelectedeFormId;
+                    machineAreaSettings.SelectedeFormId = machineAreaSettingsModel.SelectedTemplateId;
                 }
 
-                if (machineAreaSettingsModel.SelectedeFormId != null) 
+                if (machineAreaSettingsModel.SelectedTemplateId != null) 
                 {
                     Core core = _coreHelper.GetCore();
-                    MainElement template = core.TemplateRead((int)machineAreaSettingsModel.SelectedeFormId);
+                    MainElement template = core.TemplateRead((int)machineAreaSettingsModel.SelectedTemplateId);
                     machineAreaSettings.SelectedeFormName = template.Label;
                 }
 

@@ -15,7 +15,7 @@ import {EFormService} from '../../../../../common/services/eform';
 export class MachineAreaSettingsComponent implements OnInit {
   spinnerStatus = false;
   typeahead = new EventEmitter<string>();
-  machineAreaPnsettingsModel: MachineAreaSettingsModel = new MachineAreaSettingsModel();
+  settingsModel: MachineAreaSettingsModel = new MachineAreaSettingsModel();
   templatesModel: TemplateListModel = new TemplateListModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel();
 
@@ -44,26 +44,26 @@ export class MachineAreaSettingsComponent implements OnInit {
   }
 
   getSettings() {
-    debugger;
     this.spinnerStatus = true;
     this.machineAreaSettingsService.getAllSettings().subscribe((data) => {
       if (data && data.success) {
-        this.machineAreaPnsettingsModel = data.model;
+        // debugger;
+        this.settingsModel = data.model;
       } this.spinnerStatus = false;
     });
   }
   updateSettings() {
-    debugger;
+    // debugger;
     this.spinnerStatus = true;
-    this.machineAreaSettingsService.updateSettings(this.machineAreaPnsettingsModel).subscribe((data) => {
-      if (data && data.success) {
-        this.spinnerStatus = true;
-        //     this.router.navigate(['/plugins/machine-area-pn']).then();
-      } this.spinnerStatus = false;
-    });
+    this.machineAreaSettingsService.updateSettings(this.settingsModel)
+      .subscribe((data) => {
+        if (data && data.success) {
+
+        } this.spinnerStatus = false;
+      });
   }
   onSelectedChanged(e: any) {
     // debugger;
-    this.machineAreaPnsettingsModel.selectedTemplateId = e.id;
+    this.settingsModel.selectedTemplateId = e.id;
   }
 }
