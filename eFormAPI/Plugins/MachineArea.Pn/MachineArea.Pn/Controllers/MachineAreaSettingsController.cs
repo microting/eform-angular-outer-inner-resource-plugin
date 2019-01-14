@@ -28,7 +28,7 @@ namespace MachineArea.Pn.Controllers
         [HttpPost]
 //        [Authorize(Roles = EformRole.Admin)]
         [Route("api/machine-area-pn/settings")]
-        public OperationResult UpdateSettings(MachineAreaSettingsModel machineAreaSettingsModel)
+        public OperationResult UpdateSettings([FromBody] MachineAreaSettingsModel machineAreaSettingsModel)
         {
             return _machineAreaSettingsService.UpdateSettings(machineAreaSettingsModel);
         }
