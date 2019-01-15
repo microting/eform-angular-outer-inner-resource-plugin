@@ -4,7 +4,7 @@ Build status
 
 ## NOTICE! this is not a standalone project and needs to be used with eForm Angular Frontend.
 
-## Translating eForm Angular Frontend
+## Translating eform-angular-machinearea-plugin
 
 | Language | C# part | Angular part |
 | ------------- |:-----:|:-----:|
