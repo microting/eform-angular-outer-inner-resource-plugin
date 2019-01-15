@@ -1,3 +1,16 @@
+# eform-angular-machinearea-plugin
+Build status
+[![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
+
+## NOTICE! this is not a standalone project and needs to be used with eForm Angular Frontend.
+
+## Translating eForm Angular Frontend
+
+| Language | C# part | Angular part |
+| English | 100% | 100%|
+| Danish | 100% | 100% |
+| German | 0% | 0% |
+
 # Plugin installation tutorial
 Extract zip content to a root application directory.
 On front-end part plugins will be included into `eform-client/src/app/plugins/modules` To include module into front-end application add routing block to plugins.routing.module.ts
