@@ -7,6 +7,7 @@ Build status
 ## Translating eForm Angular Frontend
 
 | Language | C# part | Angular part |
+| ------------- |:-----:|:-----:|
 | English | 100% | 100%|
 | Danish | 100% | 100% |
 | German | 0% | 0% |
