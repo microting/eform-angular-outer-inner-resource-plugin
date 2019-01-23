@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ReportPnGenerateModel} from 'src/app/plugins/modules/machine-area-pn/models/report/report-pn-generate.model';
-import {MachineAreaPnReportsService} from 'src/app/plugins/modules/machine-area-pn/services';
+import {ReportPnGenerateModel} from '../../../models';
+import {MachineAreaPnReportsService} from '../../../services';
 
 @Component({
   selector: 'app-machine-area-pn-report-generator',
@@ -8,6 +8,7 @@ import {MachineAreaPnReportsService} from 'src/app/plugins/modules/machine-area-
   styleUrls: ['./report-generator-container.component.scss']
 })
 export class ReportGeneratorContainerComponent implements OnInit {
+  reportData = {};
   spinnerStatus = false;
   constructor(private reportService: MachineAreaPnReportsService) {}
 
@@ -17,6 +18,15 @@ export class ReportGeneratorContainerComponent implements OnInit {
   onGenerateReport(model: ReportPnGenerateModel) {
     this.spinnerStatus = true;
     this.reportService.generateReport(model).subscribe((data) => {
+      if (data && data.success) {
+        this.reportData = data.model;
+      } this.spinnerStatus = false;
+    });
+  }
+
+  onSaveReport(model: ReportPnGenerateModel) {
+    this.spinnerStatus = true;
+    this.reportService.getGeneratedReport(model).subscribe((data) => {
       if (data && data.success) {
 
       } this.spinnerStatus = false;

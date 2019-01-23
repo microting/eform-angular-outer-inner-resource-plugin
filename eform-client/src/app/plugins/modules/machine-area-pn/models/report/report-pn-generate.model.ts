@@ -1,5 +1,6 @@
 export class ReportPnGenerateModel {
   type: number;
   relationship: number;
-  dateRange: string;
+  dateTo: string;
+  dateFrom: string;
 }

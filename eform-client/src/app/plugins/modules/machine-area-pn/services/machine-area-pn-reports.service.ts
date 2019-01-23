@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {OperationDataResult, OperationResult} from 'src/app/common/models/operation.models';
 import {BaseService} from 'src/app/common/services/base.service';
+import {ReportPnFullModel, ReportPnGenerateModel} from '../models';
 
 export let MachineAreaPnReportsMethods = {
   Reports: 'api/machine-area-pn/reports',
@@ -17,8 +18,12 @@ export class MachineAreaPnReportsService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  generateReport(model: any): Observable<OperationDataResult<any>> {
+  generateReport(model: ReportPnGenerateModel): Observable<OperationDataResult<ReportPnFullModel>> {
     return this.post(MachineAreaPnReportsMethods.Reports, model);
+  }
+
+  getGeneratedReport(model: ReportPnGenerateModel): Observable<OperationDataResult<any>> {
+    return this.get(MachineAreaPnReportsMethods.Reports, model);
   }
 
 }

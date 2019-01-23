@@ -31,6 +31,8 @@ namespace MachineArea.Pn
             services.AddTransient<IAreaService, AreaService>();
             services.AddTransient<IMachineService, MachineService>();
             services.AddTransient<IMachineAreaSettingsService, MachineAreaSettingsService>();
+            services.AddTransient<IMachineAreaReportService, MachineAreaReportService>();
+
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
