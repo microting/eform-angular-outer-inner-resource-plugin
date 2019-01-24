@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Data;
 using MachineArea.Pn.Infrastructure.Models.Report;
+using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace MachineArea.Pn.Services
 {
@@ -24,11 +30,10 @@ namespace MachineArea.Pn.Services
             _machineAreaLocalizationService = machineAreaLocalizationService;
         }
 
-        public OperationDataResult<ReportModel> GenerateReport(GenerateReportModel model)
+        public async Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel model)
         {
             try
             {
-              
 
                 return new OperationDataResult<ReportModel>(true, new ReportModel());
             }
@@ -41,7 +46,7 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public OperationResult GenerateReportFile(GenerateReportModel model)
+        public async Task<OperationResult> GenerateReportFile(GenerateReportModel model)
         {
             try
             {

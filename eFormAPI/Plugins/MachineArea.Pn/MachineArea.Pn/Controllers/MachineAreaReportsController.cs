@@ -14,9 +14,9 @@ namespace MachineArea.Pn.Controllers
     {
         private readonly IMachineAreaReportService _machineAreaReportService;
 
-        public MachinesController(IMachineAreaReportService machineAreaReportService)
+        public MachineAreaReportsController(IMachineAreaReportService machineAreaReportService)
         {
-            _machineAreaReportService = _machineAreaReportService;
+            _machineAreaReportService = machineAreaReportService;
         }
 
         [HttpGet]
@@ -28,7 +28,7 @@ namespace MachineArea.Pn.Controllers
 
         [HttpGet]
         [Route("api/machine-area-pn/reports/excel")]
-        public async Task<OperationDataResult<MachineModel>> GenerateReportFile(GenerateReportModel requestModel)
+        public async Task<OperationResult> GenerateReportFile(GenerateReportModel requestModel)
         {
             return await _machineAreaReportService.GenerateReportFile(requestModel);
         }

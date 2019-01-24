@@ -1,12 +1,14 @@
-﻿using MachineArea.Pn.Infrastructure.Models;
+﻿using System.Threading.Tasks;
+using MachineArea.Pn.Infrastructure.Models;
+using MachineArea.Pn.Infrastructure.Models.Report;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace MachineArea.Pn.Abstractions
 {
     public interface IMachineAreaReportService
     {
-        OperationDataResult<ReportFullModel> GenerateReport(GenerateReportModel model);
-        OperationResult GenerateReportFile(GenerateReportModel model);
+        Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel model);
+        Task<OperationResult> GenerateReportFile(GenerateReportModel model);
 
     }
 }
