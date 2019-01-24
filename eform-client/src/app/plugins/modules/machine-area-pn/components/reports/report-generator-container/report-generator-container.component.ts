@@ -16,6 +16,7 @@ export class ReportGeneratorContainerComponent implements OnInit {
   }
 
   onGenerateReport(model: ReportPnGenerateModel) {
+    debugger;
     this.spinnerStatus = true;
     this.reportService.generateReport(model).subscribe((data) => {
       if (data && data.success) {

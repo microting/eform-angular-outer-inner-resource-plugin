@@ -1,14 +1,14 @@
-<form #generateForm="ngForm" (ngSubmit)="onSubmit(generateForm.value)">
-<div class="row pl-1">
+<form [formGroup]="generateForm" (ngSubmit)="onSubmit()">
+  <div class="row pl-1">
 
     <div class="col-md-3">
       <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
         <i class="material-icons prefix">
           calendar_today
         </i>
-        <input mdbInputDirective [mdbValidate]="false" ngModel
+        <input mdbInputDirective [mdbValidate]="false" formControlName="dateRange"
                name="dateRange" required
-               type="text"   [owlDateTime]="dateRangePicker"
+               type="text" [owlDateTime]="dateRangePicker" [selectMode]="'range'"
                class="form-control input-sm" id="dateFormInput">
         <label for="dateFormInput">{{'Selected date range' | translate}}</label>
       </div>
@@ -17,14 +17,13 @@
       <ng-select
         class="custom"
         dropdownPosition="'bottom'"
-        ngModel
+        formControlName="type"
         required
-        name="type"
         [placeholder]="'Type' | translate"
         [items]="[
-        {id: 1, name: 'Month'},
-        {id: 2, name: 'Week'},
-        {id: 3, name: 'Day'}
+        {id: reportType.Month, name: reportType[reportType.Month] | translate},
+        {id: reportType.Week, name: reportType[reportType.Week] | translate},
+        {id: reportType.Day, name: reportType[reportType.Day] | translate}
         ]"
         [clearable]="false"
         [bindLabel]="'name'"
@@ -35,14 +34,11 @@
       <ng-select
         class="custom"
         dropdownPosition="'bottom'"
-        ngModel
+        formControlName="relationship"
         required
-        name="relationship"
         [placeholder]="'Relationship' | translate"
         [items]="[
-        {id: reportType.Month, name: reportType[reportType.Month] | translate },
-        {id: reportType.Week, name: reportType[reportType.Week] | translate},
-        {id: reportType.Day, name: reportType[reportType.Day] | translate}
+        {id: relationshipTypes.MachineArea, name: relationshipTypes[relationshipTypes.MachineArea] | translate}
         ]"
         [clearable]="false"
         [bindLabel]="'name'"
@@ -50,18 +46,17 @@
         id="relationshipSelector"></ng-select>
     </div>
     <div class="col-md-3 text-center pt-3">
-      <button class="btn btn-group btn-success" type="submit">
+      <button class="btn btn-success" [disabled]="generateForm.invalid" type="submit">
         {{'Generate' | translate}}
       </button>
-      <button class="btn btn-group btn-success btn-icon" (click)="onSave(generateForm.value)">
+      <button class="btn btn-success" [disabled]="generateForm.invalid" (click)="onSave()">
         {{ 'Save' | translate }}
       </button>
     </div>
 
 
-</div>
+  </div>
 </form>
 
 
-<owl-date-time
-  [pickerType]="'calendar'"  #dateRangePicker></owl-date-time>
+<owl-date-time [pickerType]="'calendar'" #dateRangePicker></owl-date-time>
