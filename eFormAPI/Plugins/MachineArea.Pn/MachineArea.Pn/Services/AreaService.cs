@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using eFormShared;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Data;
-using MachineArea.Pn.Infrastructure.Data.Entities;
 using MachineArea.Pn.Infrastructure.Models.Areas;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormMachineAreaBase.Infrastructure.Data;
+using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Services
 {
@@ -124,7 +124,7 @@ namespace MachineArea.Pn.Services
                     UpdatedAt = DateTime.UtcNow,
                     WorkflowState = Constants.WorkflowStates.Created,
                     MachineAreas = model.RelatedMachinesIds
-                        .Select(x => new Infrastructure.Data.Entities.MachineArea()
+                        .Select(x => new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
                         {
                             MachineId = x
                         }).ToList()
@@ -176,7 +176,7 @@ namespace MachineArea.Pn.Services
                 {
                     if (!machineIds.Contains(machineId))
                     {
-                        areaForUpdate.MachineAreas.Add(new Infrastructure.Data.Entities.MachineArea()
+                        areaForUpdate.MachineAreas.Add(new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
                         {
                             AreaId = model.Id,
                             MachineId = machineId

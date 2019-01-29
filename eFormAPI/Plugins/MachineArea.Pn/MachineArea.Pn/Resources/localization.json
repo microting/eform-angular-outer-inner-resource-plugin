@@ -3,147 +3,168 @@
     "Key": "MachineArea",
     "LocalizedValue": {
       "da": "Maskinområde",
-      "en-US": "Machine Area"
+      "en-US": "Machine Area",
+      "de-De": "Maschinenbereich"
     }
   },
   {
     "Key": "Machines",
     "LocalizedValue": {
       "da": "Maskiner",
-      "en-US": "Machine"
+      "en-US": "Machine",
+      "de-De": "Maschine"
     }
   },
   {
     "Key": "Areas",
     "LocalizedValue": {
       "da": "Områder",
-      "en-US": "Area"
+      "en-US": "Area",
+      "de-De": "Bereich"
     }
   },
   {
     "Key": "AreaCreatedSuccesfully",
     "LocalizedValue": {
       "da": "Område {0} blev oprettet med succes",
-      "en-US": "Area {0} created successfully"
+      "en-US": "Area {0} created successfully",
+      "de-De": "Bereich {0} wurde erfolgreich erstellt"
     }
   },
   {
     "Key": "AreaDeletedSuccessfully",
     "LocalizedValue": {
       "da": "Området er slettet korrekt",
-      "en-US": "Area deleted successfully"
+      "en-US": "Area deleted successfully",
+      "de-De": "Bereich erfolgreich gelöscht"
     }
   },
   {
     "Key": "AreaUpdatedSuccessfully",
     "LocalizedValue": {
       "da": "Område opdateret med succes",
-      "en-US": "Area updated successfully"
+      "en-US": "Area updated successfully",
+      "de-DE": "Bereich erfolgreich aktualisiert"
     }
   },
   {
     "Key": "AreaWithIdNotExist",
     "LocalizedValue": {
       "da": "Område med {0} id eksisterer ikke",
-      "en-US": "Area with {0} id does not exist"
+      "en-US": "Area with {0} id does not exist",
+      "de-De": "Bereich mit der ID {0} ist nicht vorhanden"
     }
   },
   {
     "Key": "ErrorCreatingArea",
     "LocalizedValue": {
       "da": "Fejl under oprettelse af område",
-      "en-US": "Error while creating area"
+      "en-US": "Error while creating area",
+      "de-DE": "Fehler beim Erstellen eines Bereichs"
     }
   },
   {
     "Key": "ErrorCreatingMachine",
     "LocalizedValue": {
       "da": "Fejl under oprettelse af maskine",
-      "en-US": "Error while creating machine"
+      "en-US": "Error while creating machine",
+      "de-DE": "Fehler beim Erstellen der Maschine"
     }
   },
   {
     "Key": "ErrorObtainArea",
     "LocalizedValue": {
       "da": "Fejl under opnåelse af områder",
-      "en-US": "Error while obtaining area"
+      "en-US": "Error while obtaining area",
+      "de-DE": "Fehler beim Abrufen des Bereichs"
     }
   },
   {
     "Key": "ErrorObtainAreas",
     "LocalizedValue": {
       "da": "Fejl under opnåelse af områder",
-      "en-US": "Error while obtaining areas"
+      "en-US": "Error while obtaining areas",
+      "de-DE": "Fehler beim Abrufen von Bereichen"
     }
   },
   {
     "Key": "ErrorObtainMachine",
     "LocalizedValue": {
       "da": "Fejl under opnåelse af maskine",
-      "en-US": "Error while obtaining machine"
+      "en-US": "Error while obtaining machine",
+      "de-DE": "Fehler beim Abrufen der Maschine"
     }
   },
   {
     "Key": "ErrorObtainMachines",
     "LocalizedValue": {
       "da": "Fejl under opnåelse af maskiner",
-      "en-US": "Error while obtaining machines"
+      "en-US": "Error while obtaining machines",
+      "de-DE": "Fehler beim Abrufen von Maschinen"
     }
   },
   {
     "Key": "ErrorUpdatingArea",
     "LocalizedValue": {
       "da": "Fejl under opdatering af område",
-      "en-US": "Error while updating area"
+      "en-US": "Error while updating area",
+      "de-DE": "Fehler beim Aktualisieren des Bereichs"
     }
   },
   {
     "Key": "ErrorUpdatingMachine",
     "LocalizedValue": {
       "da": "Fejl under opdatering af maskine",
-      "en-US": "Error while updating machine"
+      "en-US": "Error while updating machine",
+      "de-DE": "Fehler beim Aktualisieren der Maschine"
     }
   },
   {
     "Key": "ErrorWhileDeletingArea",
     "LocalizedValue": {
       "da": "Fejl under sletning af område",
-      "en-US": "Error while deleting area"
+      "en-US": "Error while deleting area",
+      "de-DE": "Fehler beim Löschen des Bereichs"
     }
   },
   {
     "Key": "ErrorWhileDeletingMachine",
     "LocalizedValue": {
       "da": "Fejl under sletning af maskine",
-      "en-US": "Error while deleting machine"
+      "en-US": "Error while deleting machine",
+      "de-DE": "Fehler beim Löschen der Maschine"
     }
   },
   {
     "Key": "MachineCreatedSuccesfully",
     "LocalizedValue": {
       "da": "Maskine {0} blev oprettet med succes",
-      "en-US": "Machine {0} created successfully"
+      "en-US": "Machine {0} created successfully",
+      "de-DE": "Maschine {0} wurde erfolgreich erstellt"
     }
   },
   {
     "Key": "MachineDeletedSuccessfully",
     "LocalizedValue": {
       "da": "Maskinen er slettet korrekt",
-      "en-US": "Machine deleted successfully"
+      "en-US": "Machine deleted successfully",
+      "de-DE": "Maschine erfolgreich gelöscht"
     }
   },
   {
     "Key": "MachineUpdatedSuccessfully",
     "LocalizedValue": {
       "da": "Maskinen opdateres med succes",
-      "en-US": "Machine updated successfully"
+      "en-US": "Machine updated successfully",
+      "de-DE": "Maschine erfolgreich aktualisiert"
     }
   },
   {
     "Key": "MachineWithIdNotExist",
     "LocalizedValue": {
       "da": "Maskin med {0} id eksisterer ikke",
-      "en-US": "Machine with {0} id does not exist"
+      "en-US": "Machine with {0} id does not exist",
+      "de-DE": "Maschine mit der ID {0} ist nicht vorhanden"
     }
   }
 ]
