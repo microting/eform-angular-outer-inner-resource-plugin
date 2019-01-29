@@ -4,8 +4,9 @@ using System.Text;
 
 namespace MachineArea.Pn.Infrastructure.Models.Report
 {
-    public class ReportModel
+    public class ReportEntityHeaderModel
     {
-        public object Data { get; set; }
+        public string HeaderName { get; set; }
+        public string HeaderValue { get; set; }
     }
 }
