@@ -1,4 +1,9 @@
+import {ReportEntityHeaderModel} from './report-entity-header.model';
+import {ReportEntityModel} from './report-entity.model';
+
 export class ReportPnFullModel {
-  id: number;
-  data = {};
+  reportHeaders: Array<ReportEntityHeaderModel> = [];
+  entities: Array<ReportEntityModel> = [];
+  totalTime: number;
+  totalTimePerTimeUnit: number[];
 }

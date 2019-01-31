@@ -2,24 +2,41 @@
   <table class="table table-sm table-striped text-center z-depth-1">
     <thead>
     <tr>
-      <th>Machine</th>
-      <th></th>
-      <th></th>
+      <th>{{'Entity' | translate}}</th>
+      <th>{{'Relationship' | translate}}</th>
+      <th>Sum</th>
+      <th *ngFor="let header of reportData.reportHeaders">{{header.headerValue}}</th>
     </tr>
     </thead>
     <tbody id="tableBody">
-    <tr>
+    <tr *ngFor="let entityModel of reportData.entities">
       <td>
-        Machine
+        {{entityModel.entityName}}
       </td>
       <td>
-        10
       </td>
       <td>
-        10
+        {{entityModel.totalTime}}
       </td>
-
+      <td *ngFor="let time of entityModel.timePerTimeUnit">
+        {{time}}
+      </td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <td>
+      </td>
+      <td>
+        <strong>Sum</strong>
+      </td>
+      <td>
+        <strong>{{reportData.totalTime}}</strong>
+      </td>
+      <td *ngFor="let timeUnit of reportData.totalTimePerTimeUnit">
+        <strong>{{timeUnit}}</strong>
+      </td>
+    </tr>
+    </tfoot>
   </table>
 </div>

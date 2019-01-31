@@ -9,6 +9,6 @@ namespace MachineArea.Pn.Infrastructure.Models.Report
         public List<ReportEntityHeaderModel> ReportHeaders { get; set; }
         public List<ReportEntityModel> Entities { get; set; }
         public int TotalTime { get; set; }
-        public List<int> TotalTimePerTimeUnit { get; set; }
+        public List<decimal> TotalTimePerTimeUnit { get; set; }
     }
 }

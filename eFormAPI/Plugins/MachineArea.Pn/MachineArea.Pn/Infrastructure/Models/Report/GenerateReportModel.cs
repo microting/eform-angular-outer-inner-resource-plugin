@@ -9,7 +9,7 @@ namespace MachineArea.Pn.Infrastructure.Models.Report
     {
         public int Type { get; set; }
         public int Relationship { get; set; }
-        public Date DateFrom { get; set; }
-        public Date DateTo { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
     }
 }

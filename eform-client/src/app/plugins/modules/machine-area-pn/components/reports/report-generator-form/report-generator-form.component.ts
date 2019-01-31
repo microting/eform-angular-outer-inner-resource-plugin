@@ -32,8 +32,8 @@ export class ReportGeneratorFormComponent implements OnInit {
   ngOnInit() {
     this.generateForm = this.formBuilder.group({
       dateRange: ['', Validators.required],
-      type: ['', Validators.required],
-      relationship: ['', Validators.required]
+      type: [null, Validators.required],
+      relationship: [null, Validators.required]
     });
   }
 

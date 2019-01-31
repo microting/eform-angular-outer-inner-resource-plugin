@@ -40,7 +40,10 @@ namespace MachineArea.Pn.Services
                  var core = _coreHelper.GetCore();
                  var sitesList = core.SiteReadAll(false);
 
-                 var jobsList = await _dbContext.MachineAreaTimeRegistrations.ToListAsync();
+                 Debugger.Break();
+                 var jobsList = await _dbContext.MachineAreaTimeRegistrations
+                     .Where(x => x.DoneAt >= model.DateFrom && x.DoneAt <= model.DateTo)
+                     .ToListAsync();
                  var reportEntitiesList = new List<ReportEntityModel>();
                  
                  switch (model.Type)
@@ -51,8 +54,8 @@ namespace MachineArea.Pn.Services
                              {
                                  EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
                                  EntityId = x.Key,
-                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Month).Select(g => g.Sum(s => s.TimeInMinutes)).ToList(),
-                                 TotalTime = x.Sum(z => z.TimeInMinutes)
+                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Month).Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
+                                 TotalTime = x.Sum(z => z.TimeInSeconds / 60)
                              })
                              .ToList();
                          break;
@@ -64,8 +67,8 @@ namespace MachineArea.Pn.Services
                                  EntityId = x.Key,
                                  TimePerTimeUnit = x.GroupBy(d => DateTimeFormatInfo.CurrentInfo.Calendar
                                      .GetWeekOfYear(d.DoneAt, CalendarWeekRule.FirstDay, DayOfWeek.Monday))
-                                     .Select(g => g.Sum(s => s.TimeInMinutes)).ToList(),
-                                 TotalTime = x.Sum(z => z.TimeInMinutes)
+                                     .Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
+                                 TotalTime = x.Sum(z => z.TimeInSeconds / 60)
                              })
                              .ToList();
                          break;
@@ -75,14 +78,14 @@ namespace MachineArea.Pn.Services
                              {
                                  EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
                                  EntityId = x.Key,
-                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Day).Select(g => g.Sum(s => s.TimeInMinutes)).ToList(),
-                                 TotalTime = x.Sum(z => z.TimeInMinutes)
+                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Day).Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
+                                 TotalTime = x.Sum(z => z.TimeInSeconds / 60)
                              })
                              .ToList();
                          break;
                  }
                  
-                 var sumByTimeUnit = new List<int>();
+                 var sumByTimeUnit = new List<decimal>();
 
                  foreach (var reportEntity in reportEntitiesList)
                  {

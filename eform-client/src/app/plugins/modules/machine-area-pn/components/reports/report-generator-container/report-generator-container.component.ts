@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ReportPnGenerateModel} from '../../../models';
+import {ReportPnFullModel, ReportPnGenerateModel} from '../../../models';
 import {MachineAreaPnReportsService} from '../../../services';
 
 @Component({
@@ -8,7 +8,7 @@ import {MachineAreaPnReportsService} from '../../../services';
   styleUrls: ['./report-generator-container.component.scss']
 })
 export class ReportGeneratorContainerComponent implements OnInit {
-  reportData = {};
+  reportModel: ReportPnFullModel = new ReportPnFullModel();
   spinnerStatus = false;
   constructor(private reportService: MachineAreaPnReportsService) {}
 
@@ -20,7 +20,7 @@ export class ReportGeneratorContainerComponent implements OnInit {
     this.spinnerStatus = true;
     this.reportService.generateReport(model).subscribe((data) => {
       if (data && data.success) {
-        this.reportData = data.model;
+        this.reportModel = data.model;
       } this.spinnerStatus = false;
     });
   }
