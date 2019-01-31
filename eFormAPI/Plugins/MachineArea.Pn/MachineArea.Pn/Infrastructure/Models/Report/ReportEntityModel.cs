@@ -9,5 +9,6 @@ namespace MachineArea.Pn.Infrastructure.Models.Report
         public int TotalTime { get; set; }
         public List<int> TimePerTimeUnit { get; set; }
         public string EntityName { get; set; }
+        public int EntityId { get; set; }
     }
 }
