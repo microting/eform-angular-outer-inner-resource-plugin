@@ -190,5 +190,13 @@
       "en-US": "Report",
       "de-DE": "Bericht"
     }
+  },
+  {
+    "Key": "DateTo",
+    "LocalizedValue": {
+      "da": "Periode FRA",
+      "en-US": "Date To",
+      "de-DE": "Datum Bis"
+    }
   }
 ]

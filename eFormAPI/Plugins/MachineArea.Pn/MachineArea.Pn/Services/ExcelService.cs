@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Security.Claims;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Consts;
@@ -41,12 +42,12 @@ namespace MachineArea.Pn.Services
             {
                 var worksheet = package.Workbook.Worksheets[ExcelConsts.MachineAreaReportSheetNumber];
                 // Fill base info
-                var periodFromTitle = _machineAreaLocalizationService.GetString("ww");//TODO
+                var periodFromTitle = _machineAreaLocalizationService.GetString("DateFrom");
                 worksheet.Cells[ExcelConsts.PeriodFromTitleRow, ExcelConsts.PeriodFromTitleCol].Value = periodFromTitle;
                 var periodFromDate = generateReportModel.DateFrom.ToString(CultureInfo.CurrentCulture);
                 worksheet.Cells[ExcelConsts.PeriodFromRow, ExcelConsts.PeriodFromCol].Value = periodFromDate;
                 //
-                var periodToTitle = _machineAreaLocalizationService.GetString("ee");//TODO
+                var periodToTitle = _machineAreaLocalizationService.GetString("DateTo");
                 worksheet.Cells[ExcelConsts.PeriodToTitleRow, ExcelConsts.PeriodToTitleCol].Value = periodToTitle;
                 var periodToDate = generateReportModel.DateFrom.ToString(CultureInfo.CurrentCulture);
                 worksheet.Cells[ExcelConsts.PeriodToRow, ExcelConsts.PeriodToCol].Value = periodToDate;        
@@ -112,12 +113,21 @@ namespace MachineArea.Pn.Services
                 {
                     throw new ArgumentNullException(nameof(userId));
                 }
-                var sourceFile = Path.Combine(
-                    _hostingEnvironment.ContentRootPath,
-                    ExcelConsts.ExcelTemplatesDir,
-                    $"{templateName.ToLower()}");
+
+                var assembly = typeof(EformMachineAreaPlugin).GetTypeInfo().Assembly;
+                var resourceStream = assembly.GetManifestResourceStream(
+                    $"MachineArea.Pn.Resources.Templates.{templateName}");
+
                 destFile = GetFilePathForUser(userId);
-                File.Copy(sourceFile, destFile, true);
+                if (File.Exists(destFile))
+                {
+                    File.Delete(destFile);
+                }
+                using (var fileStream = File.Create(destFile))
+                {
+                    resourceStream.Seek(0, SeekOrigin.Begin);
+                    resourceStream.CopyTo(fileStream);
+                }
                 return destFile;
             }
             catch (Exception e)

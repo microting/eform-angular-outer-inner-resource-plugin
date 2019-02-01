@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Enums;
+using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -160,7 +161,7 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public async Task<OperationResult> GenerateReportFile(GenerateReportModel model)
+        public async Task<OperationDataResult<FileStreamModel>> GenerateReportFile(GenerateReportModel model)
         {
             string excelFile = null;
             try
@@ -169,7 +170,7 @@ namespace MachineArea.Pn.Services
                 var reportDataResult = await GenerateReport(model);
                 if (!reportDataResult.Success)
                 {
-                    return new OperationResult(false, reportDataResult.Message);
+                    return new OperationDataResult<FileStreamModel>(false, reportDataResult.Message);
                 }
                 excelFile = _excelService.CopyTemplateForNewAccount("report_template.xlsx");
                 var writeResult = _excelService.WriteRecordsExportModelsToExcelFile(
@@ -182,8 +183,13 @@ namespace MachineArea.Pn.Services
                     throw new Exception($"Error while writing excel file {excelFile}");
                 }
 
-                return new OperationResult(true,
-                    _machineAreaLocalizationService.GetString(""));
+                var result = new FileStreamModel()
+                {
+                    FilePath = excelFile,
+                    FileStream = new FileStream(excelFile, FileMode.Open),
+                };
+
+                return new OperationDataResult<FileStreamModel>(true, result);
             }
             catch (Exception e)
             {
@@ -193,8 +199,8 @@ namespace MachineArea.Pn.Services
                 }
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationResult(false,
-                    _machineAreaLocalizationService.GetString(""));
+                return new OperationDataResult<FileStreamModel>(false,
+                    _machineAreaLocalizationService.GetString("")); // TODO:
             }
         }
 
