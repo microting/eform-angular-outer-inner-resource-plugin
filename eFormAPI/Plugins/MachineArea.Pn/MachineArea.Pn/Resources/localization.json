@@ -166,5 +166,29 @@
       "en-US": "Machine with {0} id does not exist",
       "de-DE": "Maschine mit der ID {0} ist nicht vorhanden"
     }
+  },
+  {
+    "Key": "DateFrom",
+    "LocalizedValue": {
+      "da": "Periode FRA",
+      "en-US": "Date From",
+      "de-DE": "Datum Aus"
+    }
+  },
+  {
+    "Key": "ShowDataBy",
+    "LocalizedValue": {
+      "da": "Vis data som",
+      "en-US": "Show data by",
+      "de-DE": "Daten anzeigen als"
+    }
+  },
+  {
+    "Key": "Report",
+    "LocalizedValue": {
+      "da": "Rapport",
+      "en-US": "Report",
+      "de-DE": "Bericht"
+    }
   }
 ]
