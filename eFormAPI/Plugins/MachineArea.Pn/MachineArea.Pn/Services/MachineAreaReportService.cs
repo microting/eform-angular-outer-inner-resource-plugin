@@ -54,7 +54,7 @@ namespace MachineArea.Pn.Services
                              {
                                  EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
                                  EntityId = x.Key,
-                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Month).Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
+                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Day).Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
                                  TotalTime = x.Sum(z => z.TimeInSeconds / 60)
                              })
                              .ToList();
@@ -78,7 +78,7 @@ namespace MachineArea.Pn.Services
                              {
                                  EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
                                  EntityId = x.Key,
-                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Day).Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
+                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Month).Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
                                  TotalTime = x.Sum(z => z.TimeInSeconds / 60)
                              })
                              .ToList();
