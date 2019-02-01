@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Services;
@@ -32,7 +31,7 @@ namespace MachineArea.Pn
             services.AddTransient<IMachineService, MachineService>();
             services.AddTransient<IMachineAreaSettingsService, MachineAreaSettingsService>();
             services.AddTransient<IMachineAreaReportService, MachineAreaReportService>();
-
+            services.AddTransient<IExcelService, ExcelService>();
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)

@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using MachineArea.Pn.Abstractions;
+﻿using MachineArea.Pn.Abstractions;
 using Microsoft.Extensions.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 

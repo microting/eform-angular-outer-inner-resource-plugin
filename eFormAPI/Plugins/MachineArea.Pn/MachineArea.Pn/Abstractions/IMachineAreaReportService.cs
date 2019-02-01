@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 

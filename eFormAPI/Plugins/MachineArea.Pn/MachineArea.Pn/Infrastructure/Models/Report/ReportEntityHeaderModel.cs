@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MachineArea.Pn.Infrastructure.Models.Report
+﻿namespace MachineArea.Pn.Infrastructure.Models.Report
 {
     public class ReportEntityHeaderModel
     {

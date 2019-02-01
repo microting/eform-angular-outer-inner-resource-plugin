@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models.Areas;
-using MachineArea.Pn.Infrastructure.Models.Machines;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

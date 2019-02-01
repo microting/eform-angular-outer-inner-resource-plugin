@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,18 +20,21 @@ namespace MachineArea.Pn.Services
     {
         private readonly ILogger<MachineAreaReportService> _logger;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
+        private readonly IExcelService _excelService;
         private readonly MachineAreaPnDbContext _dbContext;
         private readonly IEFormCoreService _coreHelper;
 
         public MachineAreaReportService(ILogger<MachineAreaReportService> logger,
             MachineAreaPnDbContext dbContext,
             IEFormCoreService coreHelper,
-            IMachineAreaLocalizationService machineAreaLocalizationService)
+            IMachineAreaLocalizationService machineAreaLocalizationService,
+            IExcelService excelService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _coreHelper = coreHelper;
             _machineAreaLocalizationService = machineAreaLocalizationService;
+            _excelService = excelService;
         }
 
         public async Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel model)
@@ -51,7 +55,7 @@ namespace MachineArea.Pn.Services
 
                  switch (model.Type)
                  {
-                     case 1:
+                     case ReportType.Day:
                         for (DateTime date = model.DateFrom; date <= model.DateTo; date = date.AddDays(1))
                             reportDates.Add(date);
 
@@ -68,18 +72,18 @@ namespace MachineArea.Pn.Services
                                  TimePerTimeUnit = reportDates.Select(z => 
                                          x
                                              .Where(j => j.DoneAt.Day == z.Day)
-                                             .Sum(s => (decimal)s.TimeInSeconds)
+                                             .Sum(s => (decimal)s.TimeInSeconds / 60)
                                          )
                                      .ToList(),
                                  // TimePerTimeUnit = x
                                  //     .GroupBy(d => d.DoneAt.Day)
                                  //     .Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60))
                                  //     .ToList(),
-                                 TotalTime = x.Sum(z => z.TimeInSeconds)
+                                 TotalTime = x.Sum(z => z.TimeInSeconds / 60)
                              })
                              .ToList();
                          break;
-                     case 2:
+                     case ReportType.Week:
                          for (DateTime date = model.DateFrom; date <= model.DateTo; date = date.AddDays(7))
                              reportDates.Add(date);
 
@@ -95,7 +99,7 @@ namespace MachineArea.Pn.Services
                              })
                              .ToList();
                          break;
-                     case 3:
+                     case ReportType.Month:
                          for (DateTime date = model.DateFrom; date <= model.DateTo; date = date.AddMonths(1))
                              reportDates.Add(date);
 
@@ -158,14 +162,35 @@ namespace MachineArea.Pn.Services
 
         public async Task<OperationResult> GenerateReportFile(GenerateReportModel model)
         {
+            string excelFile = null;
             try
             {
-                
+                Debugger.Break();
+                var reportDataResult = await GenerateReport(model);
+                if (!reportDataResult.Success)
+                {
+                    return new OperationResult(false, reportDataResult.Message);
+                }
+                excelFile = _excelService.CopyTemplateForNewAccount("report_template.xlsx");
+                var writeResult = _excelService.WriteRecordsExportModelsToExcelFile(
+                    reportDataResult.Model,
+                    model,
+                    excelFile);
+
+                if (!writeResult)
+                {
+                    throw new Exception($"Error while writing excel file {excelFile}");
+                }
+
                 return new OperationResult(true,
                     _machineAreaLocalizationService.GetString(""));
             }
             catch (Exception e)
             {
+                if (!string.IsNullOrEmpty(excelFile) && File.Exists(excelFile))
+                {
+                    File.Delete(excelFile);
+                }
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
