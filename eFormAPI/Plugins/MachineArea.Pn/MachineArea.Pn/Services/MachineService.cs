@@ -188,7 +188,7 @@ namespace MachineArea.Pn.Services
                 if (machineForUpdate == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("MachineWithIdNotExist", model.Id));
                 }
 
                 machineForUpdate.Name = model.Name;
