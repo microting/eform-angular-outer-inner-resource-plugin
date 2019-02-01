@@ -16,10 +16,10 @@
       <td>
       </td>
       <td>
-        {{entityModel.totalTime}}
+        {{entityModel.totalTime | number: 1.0-2}}
       </td>
       <td *ngFor="let time of entityModel.timePerTimeUnit">
-        {{time}}
+        {{time | number: 1.0-2}}
       </td>
     </tr>
     </tbody>
@@ -31,10 +31,10 @@
         <strong>Sum</strong>
       </td>
       <td>
-        <strong>{{reportData.totalTime}}</strong>
+        <strong>{{reportData.totalTime | number: 1.0-2}}</strong>
       </td>
       <td *ngFor="let timeUnit of reportData.totalTimePerTimeUnit">
-        <strong>{{timeUnit}}</strong>
+        <strong>{{timeUnit | number: 1.0-2}}</strong>
       </td>
     </tr>
     </tfoot>
