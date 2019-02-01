@@ -23,7 +23,7 @@ export class MachineAreaPnReportsService extends BaseService {
   }
 
   getGeneratedReport(model: ReportPnGenerateModel): Observable<OperationDataResult<any>> {
-    return this.get(MachineAreaPnReportsMethods.Reports, model);
+    return this.getBlobData(MachineAreaPnReportsMethods.Reports, model);
   }
 
 }
