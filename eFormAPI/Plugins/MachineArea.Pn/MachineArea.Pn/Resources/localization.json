@@ -198,5 +198,45 @@
       "en-US": "Date To",
       "de-DE": "Datum Bis"
     }
+  },
+  {
+    "Key": "Day",
+    "LocalizedValue": {
+      "da": "Dag",
+      "en-US": "Day",
+      "de-DE": "Tag"
+    }
+  },
+  {
+    "Key": "Week",
+    "LocalizedValue": {
+      "da": "Uge",
+      "en-US": "Week",
+      "de-DE": "Woche"
+    }
+  },
+  {
+    "Key": "Month",
+    "LocalizedValue": {
+      "da": "Måned",
+      "en-US": "Month",
+      "de-DE": "Monat"
+    }
+  },
+  {
+    "Key": "ErrorWhileGeneratingReportFile",
+    "LocalizedValue": {
+      "da": "Fejl under generering af rapportfil",
+      "en-US": "Error while generating report file",
+      "de-DE": "Fehler beim Generieren der Berichtsdatei"
+    }
+  },
+  {
+    "Key": "ErrorWhileGeneratingReport",
+    "LocalizedValue": {
+      "da": "Fejl under generering af rapport",
+      "en-US": "Error while generating report",
+      "de-DE": "Fehler beim Generieren des Berichts"
+    }
   }
 ]

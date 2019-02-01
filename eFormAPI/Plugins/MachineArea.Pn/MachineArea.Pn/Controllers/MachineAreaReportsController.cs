@@ -41,30 +41,41 @@ namespace MachineArea.Pn.Controllers
             var buffer = new byte[bufferSize];
             Response.OnStarting(async () =>
             {
-                if (!result.Success)
+                try
                 {
-                    Response.ContentLength = result.Message.Length;
-                    Response.ContentType = "text/plain";
-                    Response.StatusCode = 400;
-                    var bytes = Encoding.UTF8.GetBytes(result.Message);
-                    await Response.Body.WriteAsync(bytes, 0, result.Message.Length);
-                    await Response.Body.FlushAsync();
-                }
-                else
-                {
-                    using (var excelStream = result.Model.FileStream)
+                    if (!result.Success)
                     {
-                        int bytesReaded;
-                        Response.ContentLength = excelStream.Length;
-                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        while ((bytesReaded = excelStream.Read(buffer, 0, buffer.Length)) > 0 &&
-                               !HttpContext.RequestAborted.IsCancellationRequested)
-                        {
-                            await Response.Body.WriteAsync(buffer, 0, bytesReaded);
-                            await Response.Body.FlushAsync();
-                        }
+                        Response.ContentLength = result.Message.Length;
+                        Response.ContentType = "text/plain";
+                        Response.StatusCode = 400;
+                        var bytes = Encoding.UTF8.GetBytes(result.Message);
+                        await Response.Body.WriteAsync(bytes, 0, result.Message.Length);
+                        await Response.Body.FlushAsync();
                     }
-                    System.IO.File.Delete(result.Model.FilePath);
+                    else
+                    {
+                        using (var excelStream = result.Model.FileStream)
+                        {
+                            int bytesReaded;
+                            Response.ContentLength = excelStream.Length;
+                            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                            while ((bytesReaded = excelStream.Read(buffer, 0, buffer.Length)) > 0 &&
+                                   !HttpContext.RequestAborted.IsCancellationRequested)
+                            {
+                                await Response.Body.WriteAsync(buffer, 0, bytesReaded);
+                                await Response.Body.FlushAsync();
+                            }
+                        }
+                    
+                    }
+                }
+                finally
+                {
+                    if (!string.IsNullOrEmpty(result?.Model?.FilePath)
+                        && System.IO.File.Exists(result.Model.FilePath))
+                    {
+                        System.IO.File.Delete(result.Model.FilePath);
+                    }
                 }
             });
         }

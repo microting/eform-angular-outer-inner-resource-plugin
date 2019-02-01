@@ -26,25 +26,35 @@
         public static int PeriodTypeCol = 3;
 
         // Report name
-        public static int ReportTitleRow = 8;
+        public static int ReportTitleRow = 6;
         public static int ReportTitleCol = 2;
-        public static int ReportNameRow = 8;
+        public static int ReportNameRow = 6;
         public static int ReportNameCol = 3;
 
         // Sitename start position
-        public static int SiteNameStartRow = 8;
-        public static int SiteNameStartCol = 3;
+        public static int SiteNameStartRow = 9;
+        public static int SiteNameStartCol = 2;
 
         // Vertical sum start position
-        public static int VerticalSumStartRow = 8;
+        public static int VerticalSumStartRow = 9;
         public static int VerticalSumStartCol = 5;
+        public static int VerticalSumTitleRow = 8;
+        public static int VerticalSumTitleCol = 5;
 
         // Horizontal sum start position
         public static int HorizontalSumStartCol = 6;
 
         // Header start position
-        public static int HeaderStartRow = 10;
+        public static int HeaderStartRow = 8;
         public static int HeaderStartCol = 6;
+
+        // Data start position
+        public static int DataStartRow = 9;
+        public static int DataStartCol = 6;
+        
+        // Report SUM position
+        public static int TotalSumCol = 5;
+        public static int TotalSumTitleCol = 4;
 
         #endregion
     }

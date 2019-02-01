@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Globalization;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Security.Claims;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Consts;
+using MachineArea.Pn.Infrastructure.Extensions;
 using MachineArea.Pn.Infrastructure.Models.Report;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
@@ -16,18 +16,15 @@ namespace MachineArea.Pn.Services
 {
     public class ExcelService : IExcelService
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IHttpContextAccessor _httpAccessor;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
         private readonly ILogger<ExcelService> _logger;
 
         public ExcelService(
-            IHostingEnvironment hostingEnvironment,
             ILogger<ExcelService> logger,
             IMachineAreaLocalizationService machineAreaLocalizationService,
             IHttpContextAccessor httpAccessor)
         {
-            _hostingEnvironment = hostingEnvironment;
             _logger = logger;
             _machineAreaLocalizationService = machineAreaLocalizationService;
             _httpAccessor = httpAccessor;
@@ -44,14 +41,77 @@ namespace MachineArea.Pn.Services
                 // Fill base info
                 var periodFromTitle = _machineAreaLocalizationService.GetString("DateFrom");
                 worksheet.Cells[ExcelConsts.PeriodFromTitleRow, ExcelConsts.PeriodFromTitleCol].Value = periodFromTitle;
-                var periodFromDate = generateReportModel.DateFrom.ToString(CultureInfo.CurrentCulture);
-                worksheet.Cells[ExcelConsts.PeriodFromRow, ExcelConsts.PeriodFromCol].Value = periodFromDate;
-                //
+                worksheet.Cells[ExcelConsts.PeriodFromRow, ExcelConsts.PeriodFromCol].Value = generateReportModel.DateFrom;
+
                 var periodToTitle = _machineAreaLocalizationService.GetString("DateTo");
                 worksheet.Cells[ExcelConsts.PeriodToTitleRow, ExcelConsts.PeriodToTitleCol].Value = periodToTitle;
-                var periodToDate = generateReportModel.DateFrom.ToString(CultureInfo.CurrentCulture);
-                worksheet.Cells[ExcelConsts.PeriodToRow, ExcelConsts.PeriodToCol].Value = periodToDate;        
+                worksheet.Cells[ExcelConsts.PeriodToRow, ExcelConsts.PeriodToCol].Value = generateReportModel.DateFrom;        
 
+                var showDataByTitle = _machineAreaLocalizationService.GetString("ShowDataBy");
+                worksheet.Cells[ExcelConsts.PeriodTypeTitleRow, ExcelConsts.PeriodTypeTitleCol].Value = showDataByTitle;        
+                var showDataByValue = _machineAreaLocalizationService.GetString(generateReportModel.Type.ToString());
+                worksheet.Cells[ExcelConsts.PeriodTypeRow, ExcelConsts.PeriodTypeCol].Value = showDataByValue;        
+                
+                var reportTitle = _machineAreaLocalizationService.GetString("Report");
+                worksheet.Cells[ExcelConsts.ReportTitleRow, ExcelConsts.ReportTitleCol].Value = reportTitle;
+                var reportName = "Medarbejder"; // TODO translate
+                worksheet.Cells[ExcelConsts.ReportNameRow, ExcelConsts.ReportNameCol].Value = reportName;        
+
+                // sitenames
+                for (var i = 0; i < reportModel.Entities.Count; i++)
+                {
+                    var rowIndex = ExcelConsts.SiteNameStartRow + i;
+                    var reportEntity = reportModel.Entities[i];
+                    worksheet.UpdateValue(rowIndex, ExcelConsts.SiteNameStartCol, reportEntity?.EntityName, true);
+                }
+
+                // headers
+                for (var i = 0; i < reportModel.ReportHeaders.Count; i++)
+                {
+                    var reportHeader = reportModel.ReportHeaders[i];
+                    var colIndex = ExcelConsts.HeaderStartCol + i;
+                    worksheet.UpdateValue(ExcelConsts.HeaderStartRow, colIndex, reportHeader?.HeaderValue, true, true, Color.Wheat);
+                }
+
+                // vertical sum
+                for (var i = 0; i < reportModel.Entities.Count; i++)
+                {
+                    var rowIndex = ExcelConsts.VerticalSumStartRow + i;
+                    var reportEntity = reportModel.Entities[i];
+                    worksheet.UpdateValue(rowIndex, ExcelConsts.VerticalSumStartCol, reportEntity?.TotalTime, true, "0");
+                }
+
+                // vertical sum title
+                worksheet.UpdateValue(ExcelConsts.VerticalSumTitleRow, ExcelConsts.VerticalSumTitleCol, "Sum", true);
+
+                // data
+                for (var i = 0; i < reportModel.Entities.Count; i++)
+                {
+                    var reportEntity = reportModel.Entities[i];
+                    var rowIndex = ExcelConsts.DataStartRow + i;
+                    for (var y = 0; y < reportEntity.TimePerTimeUnit.Count; y++)
+                    {
+                        var time = reportEntity.TimePerTimeUnit[y];
+                        var colIndex = ExcelConsts.DataStartCol + y;
+                        worksheet.UpdateValue(rowIndex, colIndex, time, true, "0");
+                    }
+                }
+
+                // horizontal sum
+                var horizontalSumRowIndex = ExcelConsts.DataStartRow + reportModel.Entities.Count;
+                for (var i = 0; i < reportModel.TotalTimePerTimeUnit.Count; i++)
+                {
+                    var time = reportModel.TotalTimePerTimeUnit[i];
+                    var colIndex = ExcelConsts.HorizontalSumStartCol + i;
+                    worksheet.UpdateValue(horizontalSumRowIndex, colIndex, time, true, "0");
+                }
+                
+                // Report sum
+                var totalSumRowIndex = ExcelConsts.DataStartRow + reportModel.Entities.Count;
+                var totalSum = reportModel.TotalTime;
+                worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.TotalSumCol, totalSum, true);
+                worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.TotalSumTitleCol, "Sum", true);
+                
                 package.Save(); //Save the workbook.
             }
             return true;
