@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Enums;
+using MachineArea.Pn.Infrastructure.Extensions;
 using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,19 @@ namespace MachineArea.Pn.Services
                 switch (model.Type)
                 {
                     case ReportType.Day:
-                        for (var date = model.DateFrom; date <= model.DateTo; date = date.AddDays(1))
+                        var dateFrom = new DateTime(
+                            model.DateFrom.Year,
+                            model.DateFrom.Month,
+                            model.DateFrom.Day,
+                            0,0,0);
+
+                        var dateTo = new DateTime(
+                            model.DateTo.Year,
+                            model.DateTo.Month,
+                            model.DateTo.Day,
+                            23,59,59);
+
+                        for (var date = dateFrom; date <= dateTo; date = date.AddDays(1))
                         {
                             reportDates.Add(date);
                         }
@@ -83,7 +96,23 @@ namespace MachineArea.Pn.Services
                             .ToList();
                         break;
                     case ReportType.Week:
-                        for (var date = model.DateFrom; date <= model.DateTo; date = date.AddDays(7))
+
+                        var firstDayOfWeek = model.DateFrom.FirstDayOfWeek(DayOfWeek.Monday);
+                        var lastDayOfWeek = model.DateTo.LastDayOfWeek(DayOfWeek.Monday);
+
+                        var dateFromWeek = new DateTime(
+                            firstDayOfWeek.Year,
+                            firstDayOfWeek.Month,
+                            firstDayOfWeek.Day,
+                            0,0,0);
+
+                        var dateToWeek = new DateTime(
+                            lastDayOfWeek.Year,
+                            lastDayOfWeek.Month,
+                            lastDayOfWeek.Day,
+                            23,59,59);
+
+                        for (var date = dateFromWeek; date <= dateToWeek; date = date.AddDays(7))
                         {
                             reportDates.Add(date);
                         }
@@ -103,7 +132,7 @@ namespace MachineArea.Pn.Services
                                 EntityId = x.Key,
                                 TimePerTimeUnit = reportDates.Select(z =>
                                         x
-                                            .Where(j => j.DoneAt > z
+                                            .Where(j => j.DoneAt >= z
                                                         && j.DoneAt < z.AddDays(7))
                                             .Sum(s => (decimal) TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                     )
@@ -113,7 +142,23 @@ namespace MachineArea.Pn.Services
                             .ToList();
                         break;
                     case ReportType.Month:
-                        for (var date = model.DateFrom; date <= model.DateTo; date = date.AddMonths(1))
+
+                        var firstDayOfMonth = model.DateFrom.FirstDayOfMonth();
+                        var lastDayOfMonth = model.DateTo.LastDayOfMonth();
+
+                        var dateFromMonth = new DateTime(
+                            firstDayOfMonth.Year,
+                            firstDayOfMonth.Month,
+                            firstDayOfMonth.Day,
+                            0,0,0);
+
+                        var dateToMonth = new DateTime(
+                            lastDayOfMonth.Year,
+                            lastDayOfMonth.Month,
+                            lastDayOfMonth.Day,
+                            23,59,59);
+
+                        for (var date = dateFromMonth; date <= dateToMonth; date = date.AddMonths(1))
                         {
                             reportDates.Add(date);
                         }
@@ -133,7 +178,7 @@ namespace MachineArea.Pn.Services
                                 EntityId = x.Key,
                                 TimePerTimeUnit = reportDates.Select(z =>
                                         x
-                                            .Where(j => j.DoneAt > z
+                                            .Where(j => j.DoneAt >= z
                                                         && j.DoneAt < z.AddMonths(1))
                                             .Sum(s => (decimal) TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                     )
