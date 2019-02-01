@@ -45,22 +45,45 @@ namespace MachineArea.Pn.Services
                      .Where(x => x.DoneAt >= model.DateFrom && x.DoneAt <= model.DateTo)
                      .ToListAsync();
                  var reportEntitiesList = new List<ReportEntityModel>();
-                 
+                 var reportDates = new List<DateTime>();
+                 var reportHeaders = new List<ReportEntityHeaderModel>();
+
+
                  switch (model.Type)
                  {
                      case 1:
-                         reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
+                        for (DateTime date = model.DateFrom; date <= model.DateTo; date = date.AddDays(1))
+                            reportDates.Add(date);
+
+                        foreach (var reportDate in reportDates)
+                        {
+                            reportHeaders.Add(new ReportEntityHeaderModel { HeaderValue = reportDate.ToString("dd/MM/yy") });
+                        }
+
+                        reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                              .Select(x => new ReportEntityModel()
                              {
                                  EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
                                  EntityId = x.Key,
-                                 TimePerTimeUnit = x.GroupBy(d => d.DoneAt.Day).Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60)).ToList(),
-                                 TotalTime = x.Sum(z => z.TimeInSeconds / 60)
+                                 TimePerTimeUnit = reportDates.Select(z => 
+                                         x
+                                             .Where(j => j.DoneAt.Day == z.Day)
+                                             .Sum(s => (decimal)s.TimeInSeconds)
+                                         )
+                                     .ToList(),
+                                 // TimePerTimeUnit = x
+                                 //     .GroupBy(d => d.DoneAt.Day)
+                                 //     .Select(g => g.Sum(s => (decimal)s.TimeInSeconds / 60))
+                                 //     .ToList(),
+                                 TotalTime = x.Sum(z => z.TimeInSeconds)
                              })
                              .ToList();
                          break;
                      case 2:
-                         reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
+                         for (DateTime date = model.DateFrom; date <= model.DateTo; date = date.AddDays(7))
+                             reportDates.Add(date);
+
+                        reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                              .Select(x => new ReportEntityModel()
                              {
                                  EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
@@ -73,7 +96,15 @@ namespace MachineArea.Pn.Services
                              .ToList();
                          break;
                      case 3:
-                         reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
+                         for (DateTime date = model.DateFrom; date <= model.DateTo; date = date.AddMonths(1))
+                             reportDates.Add(date);
+
+                         foreach (var reportDate in reportDates)
+                         {
+                             reportHeaders.Add(new ReportEntityHeaderModel { HeaderValue = reportDate.ToString("MM/yy") });
+                         }
+
+                        reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                              .Select(x => new ReportEntityModel()
                              {
                                  EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
@@ -84,6 +115,8 @@ namespace MachineArea.Pn.Services
                              .ToList();
                          break;
                  }
+
+
                  
                  var sumByTimeUnit = new List<decimal>();
 
@@ -107,7 +140,7 @@ namespace MachineArea.Pn.Services
                  var finalModel = new ReportModel()
                  {
                      Entities = reportEntitiesList,
-                     ReportHeaders = new List<ReportEntityHeaderModel>(),
+                     ReportHeaders = reportHeaders,
                      TotalTime = reportEntitiesList.Sum(x => x.TotalTime),
                      TotalTimePerTimeUnit = sumByTimeUnit
                  };
