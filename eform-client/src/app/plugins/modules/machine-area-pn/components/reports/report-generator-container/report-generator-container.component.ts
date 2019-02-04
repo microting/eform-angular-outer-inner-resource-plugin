@@ -32,6 +32,7 @@ export class ReportGeneratorContainerComponent implements OnInit {
   onSaveReport(model: ReportPnGenerateModel) {
     this.spinnerStatus = true;
     this.reportService.getGeneratedReport(model).subscribe(((data) => {
+      debugger;
       saveAs(data, model.dateFrom + '_' + model.dateTo + '_report.xlsx');
       this.spinnerStatus = false;
     }), error => {
