@@ -192,6 +192,14 @@
     }
   },
   {
+    "Key": "Reports",
+    "LocalizedValue": {
+      "da": "Rapporter",
+      "en-US": "Reports",
+      "de-DE": "Berichte"
+    }
+  },
+  {
     "Key": "DateTo",
     "LocalizedValue": {
       "da": "Periode FRA",

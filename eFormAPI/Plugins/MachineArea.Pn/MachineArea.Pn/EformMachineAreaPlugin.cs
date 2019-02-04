@@ -89,10 +89,17 @@ namespace MachineArea.Pn
                     },
                     new MenuItemModel()
                     {
+                        Name =  localizationService.GetString("Reports"),
+                        E2EId = "machine-area-pn-reports",
+                        Link = "/plugins/machine-area-pn/reports",
+                        Position = 2,
+                    },
+                    new MenuItemModel()
+                    {
                         Name = localizationService.GetString("Settings"),
                         E2EId = "machine-area-pn-settings",
                         Link = "/plugins/machine-area-pn/settings",
-                        Position = 2,
+                        Position = 3,
                     }
                 }
             });

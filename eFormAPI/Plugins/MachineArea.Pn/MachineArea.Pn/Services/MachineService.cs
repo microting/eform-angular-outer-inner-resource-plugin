@@ -183,8 +183,16 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var machineForUpdate = await _dbContext.Machines.FirstOrDefaultAsync(x => x.Id == model.Id);
+                var machineAreaSettings = await _dbContext.MachineAreaSettings
+                    .FirstOrDefaultAsync();
+                
+                if (machineAreaSettings.SelectedeFormId == null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("ErrorUpdatingMachine"));
+                }
 
+                var machineForUpdate = await _dbContext.Machines.FirstOrDefaultAsync(x => x.Id == model.Id);
                 if (machineForUpdate == null)
                 {
                     return new OperationResult(false,
@@ -205,17 +213,34 @@ namespace MachineArea.Pn.Services
                     .Select(x => x.AreaId)
                     .ToListAsync();
 
+                var core = _coreService.GetCore();
+                var mainElement = core.TemplateRead((int)machineAreaSettings.SelectedeFormId);
+                var sites = core.SiteReadAll(false);
+                // delete cases
+                foreach (var machineForDelete in machinesForDelete)
+                {
+                    core.CaseDelete(
+                        (int)machineAreaSettings.SelectedeFormId,
+                        machineForDelete.MicrotingeFormSdkId);
+                }
+
                 _dbContext.RemoveRange(machinesForDelete);
 
                 foreach (var areaId in model.RelatedAreasIds)
                 {
                     if (!areaIds.Contains(areaId))
                     {
-                        machineForUpdate.MachineAreas.Add(new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
-                        {
-                            AreaId = areaId,
-                            MachineId = model.Id
-                        });
+                        var newAreaMachineArea =
+                            new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
+                            {
+                                AreaId = areaId,
+                                MachineId = model.Id
+                            };
+                        // Add case
+                        var caseId = core.CaseCreate(mainElement, "", sites.Select(x => x.SiteId).ToList(), "")
+                            .FirstOrDefault();
+                        newAreaMachineArea.MicrotingeFormSdkId = int.Parse(caseId);
+                        machineForUpdate.MachineAreas.Add(newAreaMachineArea);
                     }
                 }
 

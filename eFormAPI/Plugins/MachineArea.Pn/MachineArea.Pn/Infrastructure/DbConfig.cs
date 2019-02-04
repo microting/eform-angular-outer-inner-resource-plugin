@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MachineArea.Pn
+namespace MachineArea.Pn.Infrastructure
 {
     class DbConfig
     {

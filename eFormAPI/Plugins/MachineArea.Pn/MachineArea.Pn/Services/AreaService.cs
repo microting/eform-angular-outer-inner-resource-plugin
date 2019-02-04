@@ -153,7 +153,7 @@ namespace MachineArea.Pn.Services
                 foreach (var newAreaMachineArea in newArea.MachineAreas)
                 {
                    newAreaMachineArea.MicrotingeFormSdkId = 
-                        Int32.Parse(core.CaseCreate(mainElement, "", sites.Select(x => x.SiteId).ToList(), "").FirstOrDefault());
+                        int.Parse(core.CaseCreate(mainElement, "", sites.Select(x => x.SiteId).ToList(), "").FirstOrDefault());
                 }
 
 
@@ -176,8 +176,16 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var areaForUpdate = await _dbContext.Areas.FirstOrDefaultAsync(x => x.Id == model.Id);
+                var machineAreaSettings = await _dbContext.MachineAreaSettings
+                    .FirstOrDefaultAsync();
+                
+                if (machineAreaSettings.SelectedeFormId == null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("ErrorUpdatingArea"));
+                }
 
+                var areaForUpdate = await _dbContext.Areas.FirstOrDefaultAsync(x => x.Id == model.Id);
                 if (areaForUpdate == null)
                 {
                     return new OperationResult(false,
@@ -189,7 +197,7 @@ namespace MachineArea.Pn.Services
                 areaForUpdate.UpdatedByUserId = 2;
                 areaForUpdate.UpdatedAt = DateTime.UtcNow;
 
-                var areasForDelete = await _dbContext.MachineAreas
+                var machinesForDelete = await _dbContext.MachineAreas
                     .Where(x => !model.RelatedMachinesIds.Contains(x.MachineId) && x.AreaId == model.Id)
                     .ToListAsync();
 
@@ -198,17 +206,33 @@ namespace MachineArea.Pn.Services
                     .Select(x => x.MachineId)
                     .ToListAsync();
 
-                _dbContext.RemoveRange(areasForDelete);
+                var core = _coreService.GetCore();
+                var mainElement = core.TemplateRead((int)machineAreaSettings.SelectedeFormId);
+                var sites = core.SiteReadAll(false);
+                // delete cases
+                foreach (var machineForDelete in machinesForDelete)
+                {
+                    core.CaseDelete(
+                        (int)machineAreaSettings.SelectedeFormId,
+                        machineForDelete.MicrotingeFormSdkId);
+                }
 
+                _dbContext.RemoveRange(machinesForDelete);
                 foreach (var machineId in model.RelatedMachinesIds)
                 {
                     if (!machineIds.Contains(machineId))
                     {
-                        areaForUpdate.MachineAreas.Add(new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
-                        {
-                            AreaId = model.Id,
-                            MachineId = machineId
-                        });
+                        var newAreaMachineArea =
+                            new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
+                            {
+                                AreaId = model.Id,
+                                MachineId = machineId
+                            };
+                        // Add case
+                        var caseId = core.CaseCreate(mainElement, "", sites.Select(x => x.SiteId).ToList(), "")
+                            .FirstOrDefault();
+                        newAreaMachineArea.MicrotingeFormSdkId = int.Parse(caseId);
+                        areaForUpdate.MachineAreas.Add(newAreaMachineArea);
                     }
                 }
 
