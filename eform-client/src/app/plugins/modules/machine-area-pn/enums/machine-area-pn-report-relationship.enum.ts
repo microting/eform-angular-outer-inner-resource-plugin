@@ -1,3 +1,3 @@
 export enum MachineAreaPnReportRelationshipEnum {
-  MachineArea = 1
+  Employee = 1
 }

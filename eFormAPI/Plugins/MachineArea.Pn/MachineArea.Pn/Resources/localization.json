@@ -246,5 +246,13 @@
       "en-US": "Error while generating report",
       "de-DE": "Fehler beim Generieren des Berichts"
     }
+  },
+  {
+    "Key": "Employee",
+    "LocalizedValue": {
+      "da": "Medarbejder",
+      "en-US": "Employee",
+      "de-DE": "Mitarbeiter"
+    }
   }
 ]

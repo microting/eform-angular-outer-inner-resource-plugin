@@ -12,5 +12,15 @@
   "Edit Machine": "Edit Machine",
   "Update Machine": "Update Machine",
   "Delete Machine": "Delete Machine",
-  "Related Machine": "Related Machine"
+  "Related Machine": "Related Machine",
+  "Employee": "Employee",
+  "Selected date range": "Selected date range",
+  "Type": "Type",
+  "Relationship": "Relationship",
+  "Generate": "Generate",
+  "Day": "Day",
+  "Month": "Month",
+  "Week": "Week",
+  "Generate Report": "Generate Report",
+  "Download": "Download"
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {LocaleService} from 'src/app/common/services/auth';
 import {MachineAreaPnLocalSettings} from '../enums';
@@ -9,7 +9,7 @@ declare var require: any;
   selector: 'app-machine-area-pn-layout',
   template: `<router-outlet></router-outlet>`
 })
-export class MachineAreaPnLayoutComponent implements AfterViewInit, OnInit {
+export class MachineAreaPnLayoutComponent implements AfterViewChecked, OnInit {
 
   constructor(private localeService: LocaleService,
               private translateService: TranslateService,
@@ -22,7 +22,7 @@ export class MachineAreaPnLayoutComponent implements AfterViewInit, OnInit {
   }
 
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     setTimeout(() => {
       const lang = this.localeService.getCurrentUserLocale();
       const i18n = require(`../i18n/${lang}.json`);

@@ -38,7 +38,7 @@
         required
         [placeholder]="'Relationship' | translate"
         [items]="[
-        {id: relationshipTypes.MachineArea, name: relationshipTypes[relationshipTypes.MachineArea] | translate}
+        {id: relationshipTypes.Employee, name: relationshipTypes[relationshipTypes.Employee] | translate}
         ]"
         [clearable]="false"
         [bindLabel]="'name'"
@@ -50,7 +50,7 @@
         {{'Generate' | translate}}
       </button>
       <button class="btn btn-success" [disabled]="generateForm.invalid" (click)="onSave()">
-        {{ 'Save' | translate }}
+        {{ 'Download' | translate }}
       </button>
     </div>
 

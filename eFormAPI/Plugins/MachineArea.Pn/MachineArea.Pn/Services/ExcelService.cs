@@ -45,7 +45,7 @@ namespace MachineArea.Pn.Services
 
                 var periodToTitle = _machineAreaLocalizationService.GetString("DateTo");
                 worksheet.Cells[ExcelConsts.PeriodToTitleRow, ExcelConsts.PeriodToTitleCol].Value = periodToTitle;
-                worksheet.Cells[ExcelConsts.PeriodToRow, ExcelConsts.PeriodToCol].Value = generateReportModel.DateFrom;        
+                worksheet.Cells[ExcelConsts.PeriodToRow, ExcelConsts.PeriodToCol].Value = generateReportModel.DateTo;        
 
                 var showDataByTitle = _machineAreaLocalizationService.GetString("ShowDataBy");
                 worksheet.Cells[ExcelConsts.PeriodTypeTitleRow, ExcelConsts.PeriodTypeTitleCol].Value = showDataByTitle;        
@@ -54,7 +54,7 @@ namespace MachineArea.Pn.Services
                 
                 var reportTitle = _machineAreaLocalizationService.GetString("Report");
                 worksheet.Cells[ExcelConsts.ReportTitleRow, ExcelConsts.ReportTitleCol].Value = reportTitle;
-                var reportName = "Medarbejder"; // TODO translate
+                var reportName = _machineAreaLocalizationService.GetString("Employee"); // TODO make changable
                 worksheet.Cells[ExcelConsts.ReportNameRow, ExcelConsts.ReportNameCol].Value = reportName;        
 
                 // sitenames
