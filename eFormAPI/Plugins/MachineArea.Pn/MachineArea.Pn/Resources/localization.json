@@ -166,5 +166,93 @@
       "en-US": "Machine with {0} id does not exist",
       "de-DE": "Maschine mit der ID {0} ist nicht vorhanden"
     }
+  },
+  {
+    "Key": "DateFrom",
+    "LocalizedValue": {
+      "da": "Periode FRA",
+      "en-US": "Date From",
+      "de-DE": "Datum Aus"
+    }
+  },
+  {
+    "Key": "ShowDataBy",
+    "LocalizedValue": {
+      "da": "Vis data som",
+      "en-US": "Show data by",
+      "de-DE": "Daten anzeigen als"
+    }
+  },
+  {
+    "Key": "Report",
+    "LocalizedValue": {
+      "da": "Rapport",
+      "en-US": "Report",
+      "de-DE": "Bericht"
+    }
+  },
+  {
+    "Key": "Reports",
+    "LocalizedValue": {
+      "da": "Rapporter",
+      "en-US": "Reports",
+      "de-DE": "Berichte"
+    }
+  },
+  {
+    "Key": "DateTo",
+    "LocalizedValue": {
+      "da": "Periode FRA",
+      "en-US": "Date To",
+      "de-DE": "Datum Bis"
+    }
+  },
+  {
+    "Key": "Day",
+    "LocalizedValue": {
+      "da": "Dag",
+      "en-US": "Day",
+      "de-DE": "Tag"
+    }
+  },
+  {
+    "Key": "Week",
+    "LocalizedValue": {
+      "da": "Uge",
+      "en-US": "Week",
+      "de-DE": "Woche"
+    }
+  },
+  {
+    "Key": "Month",
+    "LocalizedValue": {
+      "da": "Måned",
+      "en-US": "Month",
+      "de-DE": "Monat"
+    }
+  },
+  {
+    "Key": "ErrorWhileGeneratingReportFile",
+    "LocalizedValue": {
+      "da": "Fejl under generering af rapportfil",
+      "en-US": "Error while generating report file",
+      "de-DE": "Fehler beim Generieren der Berichtsdatei"
+    }
+  },
+  {
+    "Key": "ErrorWhileGeneratingReport",
+    "LocalizedValue": {
+      "da": "Fejl under generering af rapport",
+      "en-US": "Error while generating report",
+      "de-DE": "Fehler beim Generieren des Berichts"
+    }
+  },
+  {
+    "Key": "Employee",
+    "LocalizedValue": {
+      "da": "Medarbejder",
+      "en-US": "Employee",
+      "de-DE": "Mitarbeiter"
+    }
   }
 ]

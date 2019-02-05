@@ -47,13 +47,11 @@ export class MachineAreaSettingsComponent implements OnInit {
     this.spinnerStatus = true;
     this.machineAreaSettingsService.getAllSettings().subscribe((data) => {
       if (data && data.success) {
-        // debugger;
         this.settingsModel = data.model;
       } this.spinnerStatus = false;
     });
   }
   updateSettings() {
-    // debugger;
     this.spinnerStatus = true;
     this.machineAreaSettingsService.updateSettings(this.settingsModel)
       .subscribe((data) => {
@@ -63,7 +61,6 @@ export class MachineAreaSettingsComponent implements OnInit {
       });
   }
   onSelectedChanged(e: any) {
-    // debugger;
     this.settingsModel.selectedTemplateId = e.id;
   }
 }

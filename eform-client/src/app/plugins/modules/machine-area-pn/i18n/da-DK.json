@@ -12,5 +12,15 @@
   "Edit Machine": "Rediger Maskine",
   "Update Machine": "Opdater Maskine",
   "Delete Machine": "Slet Maskine",
-  "Related Machine": "Relateret Maskine"
+  "Related Machine": "Relateret Maskine",
+  "Employee": "Medarbejder",
+  "Selected date range": "Udvalgt datointerval",
+  "Type": "Typ",
+  "Relationship": "Slægtskab",
+  "Generate": "Frembringe",
+  "Day": "Dag",
+  "Month": "Måned",
+  "Week": "Uge",
+  "Generate Report": "Generer Rapport",
+  "Download": "Hent"
 }

@@ -44,7 +44,6 @@ export class MachinesPageComponent implements OnInit {
   }
 
   updateLocalPageSettings() {
-    debugger;
     this.sharedPnService.updateLocalPageSettings
     ('machinesPnSettings', this.localPageSettings, 'Machines');
     this.getLocalPageSettings();

@@ -1,0 +1,62 @@
+<form [formGroup]="generateForm">
+  <div class="row pl-1">
+
+    <div class="col-md-3">
+      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
+        <i class="material-icons prefix">
+          calendar_today
+        </i>
+        <input mdbInputDirective [mdbValidate]="false" formControlName="dateRange"
+               name="dateRange" required
+               type="text" [owlDateTime]="dateRangePicker" [selectMode]="'range'"
+               class="form-control input-sm" id="dateFormInput">
+        <label for="dateFormInput">{{'Selected date range' | translate}}</label>
+      </div>
+    </div>
+    <div class="col-md-3 ng-select-wrapper">
+      <ng-select
+        class="custom"
+        dropdownPosition="'bottom'"
+        formControlName="type"
+        required
+        [placeholder]="'Type' | translate"
+        [items]="[
+        {id: reportType.Month, name: reportType[reportType.Month] | translate},
+        {id: reportType.Week, name: reportType[reportType.Week] | translate},
+        {id: reportType.Day, name: reportType[reportType.Day] | translate}
+        ]"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        id="typeSelector"></ng-select>
+    </div>
+    <div class="col-md-3 ng-select-wrapper">
+      <ng-select
+        class="custom"
+        dropdownPosition="'bottom'"
+        formControlName="relationship"
+        required
+        [placeholder]="'Relationship' | translate"
+        [items]="[
+        {id: relationshipTypes.Employee, name: relationshipTypes[relationshipTypes.Employee] | translate}
+        ]"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        id="relationshipSelector"></ng-select>
+    </div>
+    <div class="col-md-3 text-center pt-3">
+      <button class="btn btn-success" [disabled]="generateForm.invalid" (click)="onSubmit()">
+        {{'Generate' | translate}}
+      </button>
+      <button class="btn btn-success" [disabled]="generateForm.invalid" (click)="onSave()">
+        {{ 'Download' | translate }}
+      </button>
+    </div>
+
+
+  </div>
+</form>
+
+
+<owl-date-time [pickerType]="'calendar'" #dateRangePicker></owl-date-time>

@@ -1,0 +1,42 @@
+<div class="row p-1 mt-2 table-responsive no-gutters">
+  <table class="table table-sm table-striped text-center z-depth-1">
+    <thead>
+    <tr>
+      <th>{{'Entity' | translate}}</th>
+      <th>{{'Relationship' | translate}}</th>
+      <th>Sum</th>
+      <th *ngFor="let header of reportData.reportHeaders">{{header.headerValue}}</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    <tr *ngFor="let entityModel of reportData.entities">
+      <td>
+        {{entityModel.entityName}}
+      </td>
+      <td>
+      </td>
+      <td>
+        {{entityModel.totalTime | number: '1.0-2'}}
+      </td>
+      <td *ngFor="let time of entityModel.timePerTimeUnit">
+        {{time | number: '1.0-2'}}
+      </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td>
+      </td>
+      <td>
+        <strong>Sum</strong>
+      </td>
+      <td>
+        <strong>{{reportData.totalTime | number: '1.0-2'}}</strong>
+      </td>
+      <td *ngFor="let timeUnit of reportData.totalTimePerTimeUnit">
+        <strong>{{timeUnit | number: '1.0-2'}}</strong>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>

@@ -45,7 +45,6 @@ export class AreaEditComponent implements OnInit {
   }
 
   addToEditMapping(e: any, machineId: number) {
-    debugger;
     if (e.target.checked) {
       this.selectedAreaModel.relatedMachinesIds.push(machineId);
     } else {

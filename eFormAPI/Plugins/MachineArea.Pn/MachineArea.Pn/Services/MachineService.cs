@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using eFormCore;
+using eFormData;
 using eFormShared;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Models.Machines;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
@@ -19,14 +23,16 @@ namespace MachineArea.Pn.Services
         private readonly MachineAreaPnDbContext _dbContext;
         private readonly IMachineAreaLocalizationService _localizationService;
         private readonly ILogger<MachineService> _logger;
+        private readonly IEFormCoreService _coreService;
 
         public MachineService(MachineAreaPnDbContext dbContext,
             IMachineAreaLocalizationService localizationService,
-            ILogger<MachineService> logger)
+            ILogger<MachineService> logger, IEFormCoreService coreService)
         {
             _dbContext = dbContext;
             _localizationService = localizationService;
             _logger = logger;
+            _coreService = coreService;
         }
 
         public async Task<OperationDataResult<MachinesModel>> GetAllMachines(MachineRequestModel requestModel)
@@ -130,6 +136,36 @@ namespace MachineArea.Pn.Services
                         }).ToList()
                 };
 
+                // Obtaining SDK template for machine-area relationship
+                MachineAreaSetting machineAreaSettings = await _dbContext.MachineAreaSettings.FirstOrDefaultAsync();
+                if (machineAreaSettings.SelectedeFormId == null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("ErrorCreatingMachine", model.Name));
+                }
+
+                Core core = _coreService.GetCore();
+
+                MainElement mainElement = core.TemplateRead((int)machineAreaSettings.SelectedeFormId);
+                List<Site_Dto> sites = core.SiteReadAll(false);
+
+                // Foreach machine-area binding pass sites and get id
+                List<string> sdkIds = core.CaseCreate(mainElement, "", sites.Select(x => x.SiteId).ToList(), "");
+
+                if (sdkIds.Count != newMachine.MachineAreas.Count)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("ErrorCreatingMachine", model.Name));
+                }
+
+                int i = 0;
+                foreach (var newMachineArea in newMachine.MachineAreas)
+                {
+                    newMachineArea.MicrotingeFormSdkId = Int32.Parse(sdkIds[i]);
+                    i++;
+                }
+
+
                 await _dbContext.Machines.AddAsync(newMachine);
                 await _dbContext.SaveChangesAsync();
                 return new OperationResult(true, _localizationService.GetString("MachineCreatedSuccesfully"));
@@ -147,12 +183,20 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var machineForUpdate = await _dbContext.Machines.FirstOrDefaultAsync(x => x.Id == model.Id);
+                var machineAreaSettings = await _dbContext.MachineAreaSettings
+                    .FirstOrDefaultAsync();
+                
+                if (machineAreaSettings.SelectedeFormId == null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("ErrorUpdatingMachine"));
+                }
 
+                var machineForUpdate = await _dbContext.Machines.FirstOrDefaultAsync(x => x.Id == model.Id);
                 if (machineForUpdate == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("MachineWithIdNotExist", model.Id));
                 }
 
                 machineForUpdate.Name = model.Name;
@@ -169,17 +213,34 @@ namespace MachineArea.Pn.Services
                     .Select(x => x.AreaId)
                     .ToListAsync();
 
+                var core = _coreService.GetCore();
+                var mainElement = core.TemplateRead((int)machineAreaSettings.SelectedeFormId);
+                var sites = core.SiteReadAll(false);
+                // delete cases
+                foreach (var machineForDelete in machinesForDelete)
+                {
+                    core.CaseDelete(
+                        (int)machineAreaSettings.SelectedeFormId,
+                        machineForDelete.MicrotingeFormSdkId);
+                }
+
                 _dbContext.RemoveRange(machinesForDelete);
 
                 foreach (var areaId in model.RelatedAreasIds)
                 {
                     if (!areaIds.Contains(areaId))
                     {
-                        machineForUpdate.MachineAreas.Add(new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
-                        {
-                            AreaId = areaId,
-                            MachineId = model.Id
-                        });
+                        var newAreaMachineArea =
+                            new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
+                            {
+                                AreaId = areaId,
+                                MachineId = model.Id
+                            };
+                        // Add case
+                        var caseId = core.CaseCreate(mainElement, "", sites.Select(x => x.SiteId).ToList(), "")
+                            .FirstOrDefault();
+                        newAreaMachineArea.MicrotingeFormSdkId = int.Parse(caseId);
+                        machineForUpdate.MachineAreas.Add(newAreaMachineArea);
                     }
                 }
 
@@ -199,12 +260,31 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var machineForDelete = await _dbContext.Machines.FirstOrDefaultAsync(x => x.Id == machineId);
+                // Obtaining SDK template for machine-area relationship
+                MachineAreaSetting machineAreaSettings = await _dbContext.MachineAreaSettings.FirstOrDefaultAsync();
+                if (machineAreaSettings.SelectedeFormId == null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("ErrorWhileDeletingMachine"));
+                }
 
+                var machineForDelete = await _dbContext.Machines.FirstOrDefaultAsync(x => x.Id == machineId);
                 if (machineForDelete == null)
                 {
                     return new OperationResult(false,
                         _localizationService.GetString("MachineWithIdNotExist"));
+                }
+
+                var machineAreasForDelete = await _dbContext.MachineAreas
+                    .Where(x => x.MachineId == machineId)
+                    .ToListAsync();
+
+                Core core = _coreService.GetCore();
+
+                // Removing cases
+                foreach (var machineArea in machineAreasForDelete)
+                {
+                    core.CaseDelete((int) machineAreaSettings.SelectedeFormId, machineArea.MicrotingeFormSdkId);
                 }
 
                 _dbContext.Machines.Remove(machineForDelete);
