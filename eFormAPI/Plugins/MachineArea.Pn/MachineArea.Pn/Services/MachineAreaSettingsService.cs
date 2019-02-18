@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Models;
 using eFormCore;
 using eFormData;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -36,15 +38,20 @@ namespace MachineArea.Pn.Services
             try
             {
                 MachineAreaSettingsModel result = new MachineAreaSettingsModel();
-                MachineAreaSetting machineAreaSettings = _dbContext.MachineAreaSettings.FirstOrDefault();
-                if(machineAreaSettings.SelectedeFormId != null)
+                List<MachineAreaSetting> machineAreaSettings = _dbContext.MachineAreaSettings.ToList();
+                if (machineAreaSettings.Count < 7)
                 {
-                    result.SelectedTemplateId = (int)machineAreaSettings.SelectedeFormId;
-                    result.SelectedTemplateName = machineAreaSettings.SelectedeFormName;
+                    MachineAreaSettingsModel.SettingCreateDefaults(_dbContext);                    
+                    machineAreaSettings = _dbContext.MachineAreaSettings.AsNoTracking().ToList();
                 }
-                else
+                result.machineAreaSettingsList = new List<MachineAreaSettingModel>();
+                foreach (MachineAreaSetting machineAreaSettingModel in machineAreaSettings)
                 {
-                    result.SelectedTemplateId = null;
+                    MachineAreaSettingModel settingModel = new MachineAreaSettingModel();
+                    settingModel.Id = machineAreaSettingModel.Id;
+                    settingModel.Name = machineAreaSettingModel.Name;
+                    settingModel.Value = machineAreaSettingModel.Value;
+                    result.machineAreaSettingsList.Add(settingModel);
                 }
 
                 return new OperationDataResult<MachineAreaSettingsModel>(true, result);
@@ -54,49 +61,29 @@ namespace MachineArea.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<MachineAreaSettingsModel>(false,
-                    _machineAreaLocalizationService.GetString("ErrorWhileOptainingMachineareaSettings"));
+                    _machineAreaLocalizationService.GetString("ErrorWhileObtainingTrashInspectionSettings"));
             }
         }
-        
+
         public OperationResult UpdateSettings(MachineAreaSettingsModel machineAreaSettingsModel)
         {
             try
             {
-                if (machineAreaSettingsModel.SelectedTemplateId == 0)
+                foreach (MachineAreaSettingModel settingsModel in machineAreaSettingsModel
+                    .machineAreaSettingsList)
                 {
-                    return new OperationResult(true);
+                    settingsModel.Update(_dbContext);
                 }
-                MachineAreaSetting machineAreaSettings = _dbContext.MachineAreaSettings.FirstOrDefault();
-                if (machineAreaSettings == null)
-                {
-                    machineAreaSettings = new MachineAreaSetting()
-                    {
-                        SelectedeFormId = machineAreaSettingsModel.SelectedTemplateId,
-                    };
-                    _dbContext.MachineAreaSettings.Add(machineAreaSettings);
-                }
-                else
-                {
-                    machineAreaSettings.SelectedeFormId = machineAreaSettingsModel.SelectedTemplateId;
-                }
-
-                if (machineAreaSettingsModel.SelectedTemplateId != null) 
-                {
-                    Core core = _coreHelper.GetCore();
-                    MainElement template = core.TemplateRead((int)machineAreaSettingsModel.SelectedTemplateId);
-                    machineAreaSettings.SelectedeFormName = template.Label;
-                }
-
-                _dbContext.SaveChanges();
+                
                 return new OperationResult(true,
-                    _machineAreaLocalizationService.GetString("SettingsHasBeenUpdatedSuccesfully"));
+                    _machineAreaLocalizationService.GetString("SettingsHaveBeenUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _machineAreaLocalizationService.GetString("ErrorWhileUpdatingMachineAreaSettings"));
+                    _machineAreaLocalizationService.GetString("ErrorWhileUpdatingSettings"));
             }
         }
     }
