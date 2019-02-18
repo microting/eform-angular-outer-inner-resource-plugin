@@ -20,7 +20,7 @@ export class MachineAreaSettingsComponent implements OnInit {
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel();
 
   constructor(
-    private machineAreaSettingsService: MachineAreaPnSettingsService,
+    private machineAreaPnSettingsService: MachineAreaPnSettingsService,
     private router: Router,
     private eFormService: EFormService,
     private entitySearchService: EntitySearchService,
@@ -45,7 +45,7 @@ export class MachineAreaSettingsComponent implements OnInit {
 
   getSettings() {
     this.spinnerStatus = true;
-    this.machineAreaSettingsService.getAllSettings().subscribe((data) => {
+    this.machineAreaPnSettingsService.getAllSettings().subscribe((data) => {
       if (data && data.success) {
         this.settingsModel = data.model;
       } this.spinnerStatus = false;
@@ -53,7 +53,7 @@ export class MachineAreaSettingsComponent implements OnInit {
   }
   updateSettings() {
     this.spinnerStatus = true;
-    this.machineAreaSettingsService.updateSettings(this.settingsModel)
+    this.machineAreaPnSettingsService.updateSettings(this.settingsModel)
       .subscribe((data) => {
         if (data && data.success) {
 
@@ -61,6 +61,6 @@ export class MachineAreaSettingsComponent implements OnInit {
       });
   }
   onSelectedChanged(e: any) {
-    this.settingsModel.selectedTemplateId = e.id;
+    this.settingsModel.machineAreaSettingsList[6].value = e.id;
   }
 }
