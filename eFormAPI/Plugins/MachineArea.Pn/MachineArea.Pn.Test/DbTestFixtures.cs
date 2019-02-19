@@ -39,14 +39,14 @@ namespace MachineArea.Pn.Test
         [SetUp]
         public void Setup()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=machine-area-pn-tests;Integrated Security=True";
-            }
-            else
-            {
+//            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+//            {
+//                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=machine-area-pn-tests;Integrated Security=True";
+//            }
+//            else
+//            {
                 ConnectionString = @"Server = localhost; port = 3306; Database = machine-area-pn-tests; user = root; Convert Zero Datetime = true;";
-            }
+//            }
 
 
             GetContext(ConnectionString);
