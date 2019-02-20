@@ -7,6 +7,7 @@ using eFormCore;
 using eFormData;
 using eFormShared;
 using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Machines;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -117,10 +118,17 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public async Task<OperationResult> CreateMachine(MachineCreateModel model)
+        public async Task<OperationResult> CreateMachine(MachineModel model)
         {
             try
             {
+                model.Save(_dbContext);
+                string eFormId = _dbContext.MachineAreaSettings.FirstOrDefault(x => x.Name == MachineAreaSettingsModel.Settings.SdkeFormId.ToString()).Value;
+
+                foreach (int areasId in model.RelatedAreasIds)
+                {
+                    
+                }
 //                var newMachine = new Machine()
 //                {
 //                    Name = model.Name,
@@ -174,12 +182,11 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public async Task<OperationResult> UpdateMachine(MachineUpdateModel model)
+        public async Task<OperationResult> UpdateMachine(MachineModel model)
         {
             try
             {
-                var machineAreaSettings = await _dbContext.MachineAreaSettings
-                    .FirstOrDefaultAsync();
+                string eFormId = _dbContext.MachineAreaSettings.FirstOrDefault(x => x.Name == MachineAreaSettingsModel.Settings.SdkeFormId.ToString()).Value;
                 
 //                if (machineAreaSettings.SelectedeFormId == null)
 //                {
