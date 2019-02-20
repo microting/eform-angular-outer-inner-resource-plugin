@@ -33,14 +33,14 @@ namespace MachineArea.Pn.Controllers
 
         [HttpPost]
         [Route("api/machine-area-pn/machines")]
-        public async Task<OperationResult> CreateMachine([FromBody] MachineCreateModel model)
+        public async Task<OperationResult> CreateMachine([FromBody] MachineModel model)
         {
             return await _machineService.CreateMachine(model);
         }
 
         [HttpPut]
         [Route("api/machine-area-pn/machines")]
-        public async Task<OperationResult> UpdateMachines([FromBody] MachineUpdateModel model)
+        public async Task<OperationResult> UpdateMachines([FromBody] MachineModel model)
         {
             return await _machineService.UpdateMachine(model);
         }
