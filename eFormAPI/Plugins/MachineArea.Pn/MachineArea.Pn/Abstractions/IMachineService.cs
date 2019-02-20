@@ -6,10 +6,10 @@ namespace MachineArea.Pn.Abstractions
 {
     public interface IMachineService
     {
-        Task<OperationResult> CreateMachine(MachineCreateModel model);
+        Task<OperationResult> CreateMachine(MachineModel model);
         Task<OperationResult> DeleteMachine(int machineId);
         Task<OperationDataResult<MachinesModel>> GetAllMachines(MachineRequestModel requestModel);
         Task<OperationDataResult<MachineModel>> GetSingleMachine(int machineId);
-        Task<OperationResult> UpdateMachine(MachineUpdateModel model);
+        Task<OperationResult> UpdateMachine(MachineModel model);
     }
 }
