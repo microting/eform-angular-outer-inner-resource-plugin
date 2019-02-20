@@ -1,4 +1,9 @@
 export class MachineAreaSettingsModel {
-  selectedTemplateId: number;
-  selectedTemplateName: string;
+  machineAreaSettingsList: Array<MachineAreaSettingModel> = [];
+}
+
+export class MachineAreaSettingModel {
+  id: number;
+  name: number;
+  value: string;
 }
