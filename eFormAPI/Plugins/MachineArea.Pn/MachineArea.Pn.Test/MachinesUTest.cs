@@ -58,8 +58,8 @@ namespace MachineArea.Pn.Test
             //Assert
             
             Assert.NotNull(dbMachine);
-            Assert.AreEqual(1, machineList);
-            Assert.AreEqual(1, versionList);
+            Assert.AreEqual(1, machineList.Count());
+            Assert.AreEqual(1, versionList.Count());
             
             Assert.AreEqual(machineModel.Name, dbMachine.Name);
         }
@@ -88,8 +88,8 @@ namespace MachineArea.Pn.Test
             // Assert
             
             Assert.NotNull(dbMachine);
-            Assert.AreEqual(1, machineList);
-            Assert.AreEqual(1, versionList);
+            Assert.AreEqual(1, machineList.Count());
+            Assert.AreEqual(1, versionList.Count());
             
             Assert.AreEqual(dbMachine.Name, machineModel.Name);
             Assert.AreEqual(dbMachine.WorkflowState, Constants.WorkflowStates.Removed);
