@@ -64,7 +64,7 @@ namespace MachineArea.Pn.Services
 
                 if (requestModel.PageSize != null)
                 {
-                    machinesQuery = machinesQuery
+                    machinesQuery = machinesQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Skip(requestModel.Offset)
                         .Take((int)requestModel.PageSize);
                 }
