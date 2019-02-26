@@ -7,6 +7,7 @@ using eFormCore;
 using eFormData;
 using eFormShared;
 using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Machines;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -117,10 +118,49 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public async Task<OperationResult> CreateMachine(MachineCreateModel model)
+        public async Task<OperationResult> CreateMachine(MachineModel model)
         {
             try
             {
+                model.Save(_dbContext);
+                string eFormId = _dbContext.MachineAreaSettings
+                    .FirstOrDefault(x => 
+                        x.Name == MachineAreaSettingsModel.Settings.SdkeFormId.ToString())?.Value;
+
+                Core core = _coreService.GetCore();
+                MainElement mainElement = core.TemplateRead(int.Parse(eFormId));
+                List<Site_Dto> sites = core.SiteReadAll(false);
+                
+                foreach (int areasId in model.RelatedAreasIds)
+                {
+                    MachineAreaModel machineArea =
+                        new MachineAreaModel();
+                    machineArea.MachineId = model.Id;
+                    machineArea.AreaId = areasId;
+                    machineArea.Save(_dbContext);
+                    mainElement.Label = model.Name;
+
+                    Area area = _dbContext.Areas.SingleOrDefault(x => x.Id == areasId);
+
+                    mainElement.CheckListFolderName = area.Name;
+                    
+                    foreach (Site_Dto siteDto in sites)
+                    {
+
+                        string sdkCaseId = core.CaseCreate(mainElement, "", siteDto.SiteId);
+
+                        if (string.IsNullOrEmpty(sdkCaseId))
+                        {
+                            MachineAreaSiteModel machineAreaSiteModel = new MachineAreaSiteModel();
+                            machineAreaSiteModel.MachineAreaId = machineArea.Id;
+                            machineAreaSiteModel.SdkSiteId = siteDto.SiteId;
+                            machineAreaSiteModel.SdkCaseId = int.Parse(sdkCaseId);
+                            machineAreaSiteModel.Save(_dbContext);
+                        }                        
+                    }
+
+                }
+
 //                var newMachine = new Machine()
 //                {
 //                    Name = model.Name,
@@ -174,12 +214,11 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public async Task<OperationResult> UpdateMachine(MachineUpdateModel model)
+        public async Task<OperationResult> UpdateMachine(MachineModel model)
         {
             try
             {
-                var machineAreaSettings = await _dbContext.MachineAreaSettings
-                    .FirstOrDefaultAsync();
+                string eFormId = _dbContext.MachineAreaSettings.FirstOrDefault(x => x.Name == MachineAreaSettingsModel.Settings.SdkeFormId.ToString()).Value;
                 
 //                if (machineAreaSettings.SelectedeFormId == null)
 //                {

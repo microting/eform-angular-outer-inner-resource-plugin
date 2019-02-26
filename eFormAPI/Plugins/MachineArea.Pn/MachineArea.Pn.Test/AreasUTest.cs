@@ -59,8 +59,8 @@ namespace MachineArea.Pn.Test
             //Assert
             
             Assert.NotNull(dbArea);
-            Assert.AreEqual(1, areaList);
-            Assert.AreEqual(1, versionList);
+            Assert.AreEqual(1, areaList.Count());
+            Assert.AreEqual(1, versionList.Count());
             
             Assert.AreEqual(areaModel.Name, dbArea.Name);
         }
@@ -82,15 +82,15 @@ namespace MachineArea.Pn.Test
 
             await areaModel.Delete(DbContext);
             
-            Area dbArea = DbContext.Areas.AsNoTracking().First();
+            Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.Area dbArea = DbContext.Areas.AsNoTracking().First();
             List<Area> areaList = DbContext.Areas.AsNoTracking().ToList();
             List<AreaVersion> versionList = DbContext.AreaVersions.AsNoTracking().ToList();
             
             // Assert
             
             Assert.NotNull(dbArea);
-            Assert.AreEqual(1, areaList);
-            Assert.AreEqual(1, versionList);
+            Assert.AreEqual(1, areaList.Count());
+            Assert.AreEqual(1, versionList.Count());
             
             Assert.AreEqual(dbArea.Name, areaModel.Name);
             Assert.AreEqual(dbArea.WorkflowState, Constants.WorkflowStates.Removed);

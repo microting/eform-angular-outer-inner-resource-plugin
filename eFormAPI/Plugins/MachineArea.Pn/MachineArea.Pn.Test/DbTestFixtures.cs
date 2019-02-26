@@ -39,14 +39,14 @@ namespace MachineArea.Pn.Test
         [SetUp]
         public void Setup()
         {
-//            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-//            {
-//                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=machine-area-pn-tests;Integrated Security=True";
-//            }
-//            else
-//            {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=machine-area-pn-tests;Integrated Security=True";
+            }
+            else
+            {
                 ConnectionString = @"Server = localhost; port = 3306; Database = machine-area-pn-tests; user = root; Convert Zero Datetime = true;";
-//            }
+            }
 
 
             GetContext(ConnectionString);
@@ -81,10 +81,18 @@ namespace MachineArea.Pn.Test
         {
             List<string> modelNames = new List<string>();
             modelNames.Add("Areas");
+            modelNames.Add("AreaVersions");
             modelNames.Add("MachineAreaSettings");
+            modelNames.Add("MachineAreaSettingVersions");
             modelNames.Add("Machines");
+            modelNames.Add("MachineVersions");
             modelNames.Add("MachineAreas");
+            modelNames.Add("MachineAreas");
+            modelNames.Add("MachineAreaVersions");
+            modelNames.Add("MachineAreaSites");
+            modelNames.Add("MachineAreaSiteVersions");
             modelNames.Add("MachineAreaTimeRegistrations");
+            modelNames.Add("MachineAreaTimeRegistrationVersions");
 
 
 
@@ -96,7 +104,7 @@ namespace MachineArea.Pn.Test
                     string sqlCmd = string.Empty;
                     if (DbContext.Database.IsMySql())
                     {
-                        sqlCmd = string.Format("SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{0}`.`{1}`", "customers-pn-tests", modelName);
+                        sqlCmd = string.Format("SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{0}`.`{1}`", "machine-area-pn-tests", modelName);
                     }
                     else
                     {
