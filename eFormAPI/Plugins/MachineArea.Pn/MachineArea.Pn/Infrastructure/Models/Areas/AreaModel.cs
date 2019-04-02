@@ -18,12 +18,17 @@ namespace MachineArea.Pn.Infrastructure.Models.Areas
         {
             Area area = new Area();
             area.Name = Name;
+            area.CreatedAt = DateTime.Now;
+            area.UpdatedAt = DateTime.Now;
+            area.Version = 1;
+            area.WorkflowState = Constants.WorkflowStates.Created;
 
             _dbContext.Areas.Add(area);
             _dbContext.SaveChanges();
 
             _dbContext.AreaVersions.Add(MapAreaVersion(_dbContext, area));
             _dbContext.SaveChanges();
+            Id = area.Id;
         }
 
         public async Task Update(MachineAreaPnDbContext _dbContext)
@@ -75,6 +80,8 @@ namespace MachineArea.Pn.Infrastructure.Models.Areas
             areaVer.Name = area.Name; 
             areaVer.Version = area.Version;
             areaVer.AreaId = area.Id;
+            areaVer.CreatedAt = area.CreatedAt;
+            areaVer.UpdatedAt = area.UpdatedAt;
 
 
             return areaVer;

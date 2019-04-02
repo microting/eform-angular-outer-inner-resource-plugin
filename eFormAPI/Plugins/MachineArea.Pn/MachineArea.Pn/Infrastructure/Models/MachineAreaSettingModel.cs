@@ -31,11 +31,12 @@ namespace MachineArea.Pn.Infrastructure.Models
             }
 
             machineAreaSetting.CreatedByUserId = CreatedByUserId;
+            machineAreaSetting.UpdatedByUserId = UpdatedByUserId;
+            machineAreaSetting.CreatedAt = DateTime.Now;
+            machineAreaSetting.UpdatedAt = DateTime.Now;
             machineAreaSetting.Name = Name;
             machineAreaSetting.Value = Value;
-            machineAreaSetting.UpdatedAt = DateTime.Now;
-            machineAreaSetting.UpdatedByUserId = UpdatedByUserId;
-            machineAreaSetting.Version = Version;
+            machineAreaSetting.Version = 1;
             machineAreaSetting.WorkflowState = Constants.WorkflowStates.Created;
 
 

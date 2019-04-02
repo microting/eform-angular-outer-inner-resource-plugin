@@ -34,14 +34,14 @@ namespace MachineArea.Pn.Controllers
 
         [HttpPost]
         [Route("api/machine-area-pn/areas")]
-        public async Task<OperationResult> CreateArea([FromBody] AreaCreateModel model)
+        public async Task<OperationResult> CreateArea([FromBody] AreaModel model)
         {
             return await _areaService.CreateArea(model);
         }
 
         [HttpPut]
         [Route("api/machine-area-pn/areas")]
-        public async Task<OperationResult> UpdateArea([FromBody] AreaUpdateModel model)
+        public async Task<OperationResult> UpdateArea([FromBody] AreaModel model)
         {
             return await _areaService.UpdateArea(model);
         }

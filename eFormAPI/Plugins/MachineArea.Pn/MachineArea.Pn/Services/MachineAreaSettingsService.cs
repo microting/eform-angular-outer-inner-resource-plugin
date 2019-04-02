@@ -39,7 +39,7 @@ namespace MachineArea.Pn.Services
             {
                 MachineAreaSettingsModel result = new MachineAreaSettingsModel();
                 List<MachineAreaSetting> machineAreaSettings = _dbContext.MachineAreaSettings.ToList();
-                if (machineAreaSettings.Count < 7)
+                if (machineAreaSettings.Count < 8)
                 {
                     MachineAreaSettingsModel.SettingCreateDefaults(_dbContext);                    
                     machineAreaSettings = _dbContext.MachineAreaSettings.AsNoTracking().ToList();
