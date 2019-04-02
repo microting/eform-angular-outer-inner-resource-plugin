@@ -6,10 +6,10 @@ namespace MachineArea.Pn.Abstractions
 {
     public interface IAreaService
     {
-        Task<OperationResult> CreateArea(AreaCreateModel model);
+        Task<OperationResult> CreateArea(AreaModel model);
         Task<OperationResult> DeleteArea(int areaId);
         Task<OperationDataResult<AreasModel>> GetAllAreas(AreaRequestModel requestModel);
         Task<OperationDataResult<AreaModel>> GetSingleArea(int areaId);
-        Task<OperationResult> UpdateArea(AreaUpdateModel model);
+        Task<OperationResult> UpdateArea(AreaModel model);
     }
 }

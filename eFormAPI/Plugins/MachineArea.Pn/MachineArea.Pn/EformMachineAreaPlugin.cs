@@ -16,8 +16,9 @@ namespace MachineArea.Pn
     public class EformMachineAreaPlugin : IEformPlugin
     {
         public string Name => "Microting Machine Area plugin";
-        public string PluginId => "EFormMachineAreaPn";
+        public string PluginId => "eform-angular-machinearea-plugin";
         public string PluginPath => PluginAssembly().Location;
+        private string _connectionString;
 
         public Assembly PluginAssembly()
         {
@@ -32,10 +33,12 @@ namespace MachineArea.Pn
             services.AddTransient<IMachineAreaSettingsService, MachineAreaSettingsService>();
             services.AddTransient<IMachineAreaReportService, MachineAreaReportService>();
             services.AddTransient<IExcelService, ExcelService>();
+            services.AddSingleton<IRebusService, RebusService>();
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
+            _connectionString = connectionString;
             if (connectionString.ToLower().Contains("convert zero datetime"))
             {
                 services.AddDbContext<MachineAreaPnDbContext>(o => o.UseMySql(connectionString,
@@ -57,6 +60,10 @@ namespace MachineArea.Pn
 
         public void Configure(IApplicationBuilder appBuilder)
         {
+            var serviceProvider = appBuilder.ApplicationServices;
+            IRebusService rebusService = serviceProvider.GetService<IRebusService>();
+            rebusService.Start(_connectionString);
+
         }
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)

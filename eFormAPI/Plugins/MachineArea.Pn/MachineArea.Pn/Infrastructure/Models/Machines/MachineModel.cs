@@ -19,12 +19,17 @@ namespace MachineArea.Pn.Infrastructure.Models.Machines
         {
             Machine machine = new Machine();
             machine.Name = Name;
+            machine.CreatedAt = DateTime.Now;
+            machine.UpdatedAt = DateTime.Now;
+            machine.Version = 1;
+            machine.WorkflowState = Constants.WorkflowStates.Created;
             
             _dbContext.Machines.Add(machine);
             _dbContext.SaveChanges();
 
             _dbContext.MachineVersions.Add(MapMachineVersion(_dbContext, machine));
             _dbContext.SaveChanges();
+            Id = machine.Id;
         }
 
         public async Task Update(MachineAreaPnDbContext _dbContext)
@@ -76,6 +81,8 @@ namespace MachineArea.Pn.Infrastructure.Models.Machines
             machineVer.Name = machine.Name;
             machineVer.Machine = machine;
             machineVer.Version = machine.Version;
+            machineVer.CreatedAt = machine.CreatedAt;
+            machineVer.UpdatedAt = machine.UpdatedAt;
             machineVer.MachineId = machine.Id;
             
             

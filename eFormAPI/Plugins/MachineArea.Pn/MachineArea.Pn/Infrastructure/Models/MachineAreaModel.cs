@@ -21,6 +21,10 @@ namespace MachineArea.Pn.Infrastructure.Models
                 Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea();
             machineArea.MachineId = MachineId;
             machineArea.AreaId = AreaId;
+            machineArea.CreatedAt = DateTime.Now;
+            machineArea.UpdatedAt = DateTime.Now;
+            machineArea.Version = 1;
+            machineArea.WorkflowState = Constants.WorkflowStates.Created;
 
             _dbContext.MachineAreas.Add(machineArea);
             _dbContext.SaveChanges();
@@ -84,7 +88,7 @@ namespace MachineArea.Pn.Infrastructure.Models
 
             machineAreaVersion.MachineId = machineArea.MachineId; 
             machineAreaVersion.Version = machineArea.Version;
-            machineAreaVersion.AreaId = machineArea.Id;
+            machineAreaVersion.AreaId = machineArea.AreaId;
             machineAreaVersion.MachineAreaId = machineArea.Id;
 
 
