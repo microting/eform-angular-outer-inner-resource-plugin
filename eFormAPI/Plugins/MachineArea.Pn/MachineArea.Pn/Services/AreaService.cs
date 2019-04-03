@@ -146,6 +146,8 @@ namespace MachineArea.Pn.Services
         {
             try
             {
+                await model.Update(_dbContext);
+                _bus.SendLocal(new MachineAreaUpdate(null, model));
                 return new OperationResult(true, _localizationService.GetString("AreaUpdatedSuccessfully"));
             }
             catch (Exception e)
@@ -161,7 +163,11 @@ namespace MachineArea.Pn.Services
         {
             try
             {
+                AreaModel model = new AreaModel();
+                model.Id = areaId;
                 
+                await model.Delete(_dbContext);
+                _bus.SendLocal(new MachineAreaDelete(null, model));
                 return new OperationResult(true, _localizationService.GetString("AreaDeletedSuccessfully"));
             }
             catch (Exception e)
