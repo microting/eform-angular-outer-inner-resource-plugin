@@ -127,9 +127,22 @@ namespace MachineArea.Pn.Services
         public async Task<OperationResult> CreateMachine(MachineModel model)
         {
             try
-            {                
-                await model.Save(_dbContext);
-                _bus.SendLocal(new MachineAreaCreate(model, null));
+            {
+                // Map machine areas
+                var machineAreas = model.RelatedAreasIds.Select(x =>
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
+                    {
+                        Id = x
+                    }).ToList();
+
+                Machine newMachine = new Machine()
+                {
+                    Name = model.Name,
+                    MachineAreas = machineAreas
+                };
+
+                await newMachine.Save(_dbContext);
+                await _bus.SendLocal(new MachineAreaCreate(model, null));
                 return new OperationResult(true, _localizationService.GetString("MachineCreatedSuccesfully"));
             }
             catch (Exception e)
@@ -145,8 +158,20 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                await model.Update(_dbContext);
-                _bus.SendLocal(new MachineAreaUpdate(model, null));
+                var machineAreas = model.RelatedAreasIds.Select(x =>
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
+                    {
+                        Id = x
+                    }).ToList();
+
+                Machine selectedMachine = new Machine()
+                {
+                    Name = model.Name,
+                    MachineAreas = machineAreas
+                };
+
+                await selectedMachine.Update(_dbContext);
+                await _bus.SendLocal(new MachineAreaUpdate(model, null));
                 return new OperationResult(true, _localizationService.GetString("MachineUpdatedSuccessfully"));
             }
             catch (Exception e)
@@ -162,11 +187,13 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                MachineModel model = new MachineModel();
-                model.Id = machineId;
+                Machine selectedMachine = new Machine()
+                {
+                    Id = machineId
+                };
                 
-                await model.Delete(_dbContext);
-                _bus.SendLocal(new MachineAreaDelete(model, null));
+                await selectedMachine.Delete(_dbContext);
+                await _bus.SendLocal(new MachineAreaDelete(new MachineModel() { Id = machineId }, null));
                 return new OperationResult(true, _localizationService.GetString("MachineDeletedSuccessfully"));
             }
             catch (Exception e)

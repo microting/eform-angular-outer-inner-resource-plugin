@@ -6,6 +6,7 @@ using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Models;
 using eFormCore;
 using eFormData;
+using MachineArea.Pn.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -20,16 +21,13 @@ namespace MachineArea.Pn.Services
         private readonly ILogger<MachineAreaSettingsService> _logger;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
         private readonly MachineAreaPnDbContext _dbContext;
-        private readonly IEFormCoreService _coreHelper;
         
         public MachineAreaSettingsService(ILogger<MachineAreaSettingsService> logger,
             MachineAreaPnDbContext dbContext,
-            IEFormCoreService coreHelper,
             IMachineAreaLocalizationService machineAreaLocalizationService)
         {
             _logger = logger;
             _dbContext = dbContext;
-            _coreHelper = coreHelper;
             _machineAreaLocalizationService = machineAreaLocalizationService;
         }
 
@@ -39,20 +37,19 @@ namespace MachineArea.Pn.Services
             {
                 MachineAreaSettingsModel result = new MachineAreaSettingsModel();
                 List<MachineAreaSetting> machineAreaSettings = _dbContext.MachineAreaSettings.ToList();
+
                 if (machineAreaSettings.Count < 8)
                 {
-                    MachineAreaSettingsModel.SettingCreateDefaults(_dbContext);                    
+                    SettingsHelper.SettingCreateDefaults(_dbContext);                    
                     machineAreaSettings = _dbContext.MachineAreaSettings.AsNoTracking().ToList();
                 }
-                result.machineAreaSettingsList = new List<MachineAreaSettingModel>();
-                foreach (MachineAreaSetting machineAreaSettingModel in machineAreaSettings)
+
+                result.MachineAreaSettingsList = machineAreaSettings.Select(x => new MachineAreaSettingModel()
                 {
-                    MachineAreaSettingModel settingModel = new MachineAreaSettingModel();
-                    settingModel.Id = machineAreaSettingModel.Id;
-                    settingModel.Name = machineAreaSettingModel.Name;
-                    settingModel.Value = machineAreaSettingModel.Value;
-                    result.machineAreaSettingsList.Add(settingModel);
-                }
+                    Id = x.Id,
+                    Name = x.Name,
+                    Value = x.Value
+                }).ToList();
 
                 return new OperationDataResult<MachineAreaSettingsModel>(true, result);
             }
@@ -70,9 +67,15 @@ namespace MachineArea.Pn.Services
             try
             {
                 foreach (MachineAreaSettingModel settingsModel in machineAreaSettingsModel
-                    .machineAreaSettingsList)
+                    .MachineAreaSettingsList)
                 {
-                    settingsModel.Update(_dbContext);
+                    var setting = new MachineAreaSetting()
+                    {
+                        Id = settingsModel.Id,
+                        Value = settingsModel.Value,
+                        Name = settingsModel.Name
+                    };
+                    setting.Update(_dbContext);
                 }
                 
                 return new OperationResult(true,
