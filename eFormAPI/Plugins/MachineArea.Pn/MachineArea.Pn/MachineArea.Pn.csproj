@@ -22,12 +22,12 @@
     <PackageReference Include="ExcelDataReader" Version="3.4.0" />
     <PackageReference Include="Automapper" Version="6.1.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.97" />
-    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.20" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.127" />
+    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.24" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
-    <PackageReference Include="Microting.eForm" Version="3.0.161" />
+    <PackageReference Include="Microting.eForm" Version="3.0.209" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
   </ItemGroup>

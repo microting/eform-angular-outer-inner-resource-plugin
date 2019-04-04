@@ -17,14 +17,14 @@ namespace MachineArea.Pn.Test
         protected MachineAreaPnDbContext DbContext;
         protected string ConnectionString;
 
-
+#pragma warning disable 414
         private static string userName = "__USER_NAME__";
         private static string password = "__PASSWORD__";
         private static string databaseName = "__DBNAME__";
         private static string databaseServerId = "__DB_SERVER_ID__";
         private static string directoryId = "__DIRECTORY_ID__";
         private static string applicationId = "__APPLICATION_ID__";
-
+#pragma warning restore 414
         //public RentableItemsPnDbAnySql db;
 
         public void GetContext(string connectionStr)
