@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Models.Settings;
 using Microsoft.AspNetCore.Http;
@@ -49,11 +50,11 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public OperationResult UpdateSettings(MachineAreaBaseSettings machineAreaSettingsModel)
+        public async Task<OperationResult> UpdateSettings(MachineAreaBaseSettings machineAreaSettingsModel)
         {
             try
             {
-                _options.UpdateDb(settings =>
+                await _options.UpdateDb(settings =>
                 {
                     settings.EnabledSiteIds = machineAreaSettingsModel.EnabledSiteIds;
                     settings.LogLevel = machineAreaSettingsModel.LogLevel;

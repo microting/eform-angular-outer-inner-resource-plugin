@@ -44,20 +44,20 @@ namespace MachineArea.Pn
 
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
         {
-            //var seedData = new MachineAreaConfigurationSeedData();
-            //var contextFactory = new MachineAreaPnContextFactory();
-            //builder.AddPluginConfiguration(
-            //    connectionString,
-            //    seedData,
-            //    contextFactory);
+            var seedData = new MachineAreaConfigurationSeedData();
+            var contextFactory = new MachineAreaPnContextFactory();
+            builder.AddPluginConfiguration(
+                connectionString,
+                seedData,
+                contextFactory);
         }
 
         public void ConfigureOptionsServices(
             IServiceCollection services,
             IConfiguration configuration)
         {
-            //services.ConfigurePluginDbOptions<MachineAreaBaseSettings>(
-            //    configuration.GetSection("MachineAreaBaseSettings"));
+            services.ConfigurePluginDbOptions<MachineAreaBaseSettings>(
+                configuration.GetSection("MachineAreaBaseSettings"));
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
@@ -141,12 +141,12 @@ namespace MachineArea.Pn
         public void SeedDatabase(string connectionString)
         {
             // Get DbContext
-            //var contextFactory = new MachineAreaPnContextFactory();
-            //using (var context = contextFactory.CreateDbContext(new[] {connectionString}))
-            //{
-            //    // Seed configuration
-            //    MachineAreaPluginSeed.SeedData(context);
-            //}
+            var contextFactory = new MachineAreaPnContextFactory();
+            using (var context = contextFactory.CreateDbContext(new[] { connectionString }))
+            {
+                // Seed configuration
+                MachineAreaPluginSeed.SeedData(context);
+            }
         }
     }
 }
