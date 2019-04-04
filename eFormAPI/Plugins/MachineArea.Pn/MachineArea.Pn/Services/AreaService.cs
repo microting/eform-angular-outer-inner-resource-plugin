@@ -128,8 +128,22 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                await model.Save(_dbContext);
-                _bus.SendLocal(new MachineAreaCreate(null, model));
+                // Map machine areas
+                var machineAreas = model.RelatedMachinesIds.Select(x =>
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
+                    {
+                        Id = x
+                    }).ToList();
+
+                Area newArea = new Area()
+                {
+                    Name = model.Name,
+                    MachineAreas = machineAreas
+                };
+
+                await newArea.Save(_dbContext);
+                await _bus.SendLocal(new MachineAreaCreate(null, model));
+
                 return new OperationResult(true, 
                     _localizationService.GetString("AreaCreatedSuccesfully", model.Name));
             }
@@ -146,8 +160,21 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                await model.Update(_dbContext);
-                _bus.SendLocal(new MachineAreaUpdate(null, model));
+                // Map machine areas
+                var machineAreas = model.RelatedMachinesIds.Select(x =>
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
+                    {
+                        Id = x
+                    }).ToList();
+
+                Area selectedArea = new Area()
+                {
+                    Name = model.Name,
+                    MachineAreas = machineAreas
+                };
+
+                await selectedArea.Update(_dbContext);
+                await _bus.SendLocal(new MachineAreaUpdate(null, model));
                 return new OperationResult(true, _localizationService.GetString("AreaUpdatedSuccessfully"));
             }
             catch (Exception e)
@@ -163,11 +190,13 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                AreaModel model = new AreaModel();
-                model.Id = areaId;
+                Area selectedArea = new Area()
+                {
+                    Id = areaId
+                };
                 
-                await model.Delete(_dbContext);
-                _bus.SendLocal(new MachineAreaDelete(null, model));
+                await selectedArea.Delete(_dbContext);
+                await _bus.SendLocal(new MachineAreaDelete(null, new AreaModel() { Id = areaId }));
                 return new OperationResult(true, _localizationService.GetString("AreaDeletedSuccessfully"));
             }
             catch (Exception e)

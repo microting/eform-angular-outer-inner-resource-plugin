@@ -35,6 +35,7 @@ using MachineArea.Pn.Infrastructure.Models.Machines;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
+using Microting.eFormMachineAreaBase.Infrastructure.Data.Consts;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 using Rebus.Handlers;
 
@@ -68,14 +69,14 @@ namespace MachineArea.Pn.Handlers
         {
             string eFormId = _dbContext.MachineAreaSettings
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsModel.Settings.SdkeFormId.ToString())?.Value;
+                    x.Name == MachineAreaSettingsEnum.SdkeFormId.ToString())?.Value;
 
             MainElement mainElement = _core.TemplateRead(int.Parse(eFormId));
             List<Site_Dto> sites = new List<Site_Dto>();
 
             string sdkSiteIds = _dbContext.MachineAreaSettings
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsModel.Settings.EnabledSiteIds.ToString())?.Value;
+                    x.Name == MachineAreaSettingsEnum.EnabledSiteIds.ToString())?.Value;
             foreach (string siteId in sdkSiteIds.Split(","))
             {
                 sites.Add(_core.SiteRead(int.Parse(siteId)));
@@ -92,14 +93,14 @@ namespace MachineArea.Pn.Handlers
         {
             string eFormId = _dbContext.MachineAreaSettings
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsModel.Settings.SdkeFormId.ToString())?.Value;
+                    x.Name == MachineAreaSettingsEnum.SdkeFormId.ToString())?.Value;
 
             MainElement mainElement = _core.TemplateRead(int.Parse(eFormId));
             List<Site_Dto> sites = new List<Site_Dto>();
             
             string sdkSiteIds = _dbContext.MachineAreaSettings
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsModel.Settings.EnabledSiteIds.ToString())?.Value;
+                    x.Name == MachineAreaSettingsEnum.EnabledSiteIds.ToString())?.Value;
             foreach (string siteId in sdkSiteIds.Split(","))
             {
                 sites.Add(_core.SiteRead(int.Parse(siteId)));
