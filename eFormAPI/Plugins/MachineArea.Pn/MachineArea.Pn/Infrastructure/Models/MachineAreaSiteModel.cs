@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormShared;
+using MachineArea.Pn.Messages;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 
@@ -13,8 +14,9 @@ namespace MachineArea.Pn.Infrastructure.Models
 
         public int Id { get; set; }
         public int MachineAreaId { get; set; }
-        public int SdkSiteId { get; set; }
-        public int SdkCaseId { get; set; }
+        public int MicrotingSdkSiteId { get; set; }
+        public int MicrotingSdkCaseId { get; set; }
+        public int MicrotingSdkeFormId { get; set; }
         public string WorkflowState { get; set; }
 
         public async Task Save(MachineAreaPnDbContext _dbContext)
@@ -22,8 +24,13 @@ namespace MachineArea.Pn.Infrastructure.Models
             MachineAreaSite machineAreaSite = new 
                 MachineAreaSite();
             machineAreaSite.MachineAreaId = MachineAreaId;
-            machineAreaSite.MicrotingSdkSiteId = SdkSiteId;
-            machineAreaSite.MicrotingEFormSdkId = SdkCaseId;
+            machineAreaSite.MicrotingSdkSiteId = MicrotingSdkSiteId;
+            machineAreaSite.MicrotingSdkCaseId = MicrotingSdkCaseId;
+            machineAreaSite.MicrotingSdkeFormId = MicrotingSdkeFormId;
+            machineAreaSite.CreatedAt = DateTime.Now;
+            machineAreaSite.UpdatedAt = DateTime.Now;
+            machineAreaSite.Version = 1;
+            machineAreaSite.WorkflowState = eFormShared.Constants.WorkflowStates.Created;
 
             _dbContext.MachineAreaSites.Add(machineAreaSite);
             _dbContext.SaveChanges();
@@ -85,7 +92,7 @@ namespace MachineArea.Pn.Infrastructure.Models
 
             machineAreaVersion.MachineAreaId = machineAreaSite.MachineAreaId; 
             machineAreaVersion.Version = machineAreaSite.Version;
-            machineAreaVersion.MicrotingEFormSdkId = machineAreaSite.MicrotingEFormSdkId;
+            machineAreaVersion.MicrotingSdkeFormId = machineAreaSite.MicrotingSdkeFormId;
             machineAreaVersion.MicrotingSdkSiteId = machineAreaSite.MicrotingSdkSiteId;
             machineAreaVersion.MachineAreaSiteId = machineAreaSite.Id;
 
