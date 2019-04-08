@@ -13,11 +13,11 @@
       <subheader-pn [title]="'Settings' | translate" [heandingSizeRem]="1">
       </subheader-pn>
       <div class="container-fluid">
-        <div class="row" *ngIf="settingsModel.machineAreaSettingsList.length > 0">
+        <div class="row">
           <div class="col-md-12">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false" [(ngModel)]="settingsModel.machineAreaSettingsList[0].value"
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.sdkConnectionString"
                      type="text" name="sdkconnectionstring" #sdkconnectionstring="ngModel"
                      id="sdkconnectionstring" class="form-control">
               <label for="sdkconnectionstring">{{'SDK connection string' | translate}}</label>
@@ -26,7 +26,7 @@
           <div class="col-md-12">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false" [(ngModel)]="settingsModel.machineAreaSettingsList[1].value"
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.logLevel"
                      type="text" name="loglevel" #loglevel="ngModel"
                      id="loglevel" class="form-control">
               <label for="loglevel">{{'Log Level' | translate}}</label>
@@ -35,7 +35,7 @@
           <div class="col-md-12">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false" [(ngModel)]="settingsModel.machineAreaSettingsList[2].value"
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.logLimit"
                      type="text" name="loglimit" #loglimit="ngModel"
                      id="loglimit" class="form-control">
               <label for="loglimit">{{'Log Limit' | translate}}</label>
@@ -44,7 +44,7 @@
           <div class="col-md-12">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false" [(ngModel)]="settingsModel.machineAreaSettingsList[3].value"
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.maxParallelism"
                      type="text" name="maxparallelism" #maxparallelism="ngModel"
                      id="maxparallelism" class="form-control">
               <label for="maxparallelism">{{'Max parallelism' | translate}}</label>
@@ -53,7 +53,7 @@
           <div class="col-md-12">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false" [(ngModel)]="settingsModel.machineAreaSettingsList[4].value"
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.numberOfWorkers"
                      type="text" name="numberofworkers" #numberofworkers="ngModel"
                      id="numberofworkers" class="form-control">
               <label for="numberofworkers">{{'Number of workers' | translate}}</label>
@@ -62,7 +62,7 @@
           <div class="col-md-12">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false" [(ngModel)]="settingsModel.machineAreaSettingsList[5].value"
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.token"
                      type="text" name="token" #token="ngModel"
                      id="token" class="form-control">
               <label for="token">{{'Token' | translate}}</label>
@@ -72,7 +72,7 @@
             <div class="md-form input-group">
               <ng-select [items]="templatesModel.templates"
                          bindLabel="label"
-                         [placeholder]="settingsModel.machineAreaSettingsList[6].value || ('Selected template' | translate)"
+                         [placeholder]="settingsModel.sdkeFormId || ('Selected template' | translate)"
                          bindValue="id"
                          [typeahead]="typeahead"
                          (change)="onSelectedChanged($event)">
@@ -83,7 +83,7 @@
           <div class="col-md-12">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false" [(ngModel)]="settingsModel.machineAreaSettingsList[7].value"
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.enabledSiteIds"
                      type="text" name="sdkSiteIds" #sdkSiteIds="ngModel"
                      id="sdkSiteIds" class="form-control">
               <label for="sdkSiteIds">{{'SDK site ids' | translate}}</label>

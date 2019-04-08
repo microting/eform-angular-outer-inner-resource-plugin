@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, EventEmitter, OnInit} from '@angular/core';
 import { MachineAreaPnSettingsService} from '../../services';
 import {Router} from '@angular/router';
-import {MachineAreaSettingsModel} from '../../models';
+import {MachineAreaBaseSettingsModel, MachineAreaSettingsModel} from '../../models';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {EntitySearchService} from '../../../../../common/services/advanced';
 import {TemplateListModel, TemplateRequestModel} from '../../../../../common/models/eforms';
@@ -15,7 +15,7 @@ import {EFormService} from '../../../../../common/services/eform';
 export class MachineAreaSettingsComponent implements OnInit {
   spinnerStatus = false;
   typeahead = new EventEmitter<string>();
-  settingsModel: MachineAreaSettingsModel = new MachineAreaSettingsModel();
+  settingsModel: MachineAreaBaseSettingsModel = new MachineAreaBaseSettingsModel();
   templatesModel: TemplateListModel = new TemplateListModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel();
 
@@ -60,7 +60,8 @@ export class MachineAreaSettingsComponent implements OnInit {
         } this.spinnerStatus = false;
       });
   }
+
   onSelectedChanged(e: any) {
-    this.settingsModel.machineAreaSettingsList[6].value = e.id;
+    this.settingsModel.sdkeFormId = e.id;
   }
 }
