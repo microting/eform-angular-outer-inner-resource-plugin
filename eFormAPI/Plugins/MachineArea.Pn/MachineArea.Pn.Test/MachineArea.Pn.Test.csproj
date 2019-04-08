@@ -15,10 +15,4 @@
     <ProjectReference Include="..\MachineArea.Pn\MachineArea.Pn.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microting.eFormMachineAreaBase">
-      <HintPath>..\..\..\..\..\eform-machinearea-dotnet\eForm-MachineArea-dotnet\eForm-MachineArea-dotnet\bin\Debug\netstandard2.0\Microting.eFormMachineAreaBase.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

@@ -46,7 +46,7 @@ namespace MachineArea.Pn.Services
         private MachineAreaPnDbContext GetContext()
         {
 
-            DbContextOptionsBuilder dbContextOptionsBuilder = new DbContextOptionsBuilder<MachineAreaPnDbContext>();
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<MachineAreaPnDbContext>();
 
             if (_connectionString.ToLower().Contains("convert zero datetime"))
             {
