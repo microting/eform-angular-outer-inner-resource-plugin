@@ -1,13 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using eFormShared;
-using System.Linq;
-using System.Threading.Tasks;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Infrastructure.Models
 {
+    [Obsolete]
     public class MachineAreaSettingModel
     {
         public int Id { get; set; }

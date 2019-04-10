@@ -9,6 +9,7 @@ using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Infrastructure.Helpers
 {
+    [Obsolete]
     public static class SettingsHelper
     {
         public static bool SettingCreateDefaults(MachineAreaPnDbContext _dbcontext)
