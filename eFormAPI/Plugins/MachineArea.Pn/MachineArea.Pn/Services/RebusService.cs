@@ -7,6 +7,7 @@ using Rebus.Bus;
 using eFormCore;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
+using Microting.eFormMachineAreaBase.Infrastructure.Data.Factories;
 
 namespace MachineArea.Pn.Services
 {
@@ -45,19 +46,8 @@ namespace MachineArea.Pn.Services
         
         private MachineAreaPnDbContext GetContext()
         {
-
-            DbContextOptionsBuilder dbContextOptionsBuilder = new DbContextOptionsBuilder<MachineAreaPnDbContext>();
-
-            if (_connectionString.ToLower().Contains("convert zero datetime"))
-            {
-                dbContextOptionsBuilder.UseMySql(_connectionString);
-            }
-            else
-            {
-                dbContextOptionsBuilder.UseSqlServer(_connectionString);
-            }
-            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
-            return new MachineAreaPnDbContext(dbContextOptionsBuilder.Options);
+            MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
+            return contextFactory.CreateDbContext(new[] {_connectionString});
 
         }        
     }
