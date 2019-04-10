@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,9 +65,11 @@ namespace MachineArea.Pn.Services
                         .OrderBy(x => x.Id);
                 }
 
+                areasQuery = areasQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+
                 if (requestModel.PageSize != null)
                 {
-                    areasQuery = areasQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    areasQuery = areasQuery
                         .Skip(requestModel.Offset)
                         .Take((int)requestModel.PageSize);
                 }
@@ -98,15 +101,23 @@ namespace MachineArea.Pn.Services
                 AreaModel area = await _dbContext.Areas.Select(x => new AreaModel()
                     {
                         Name = x.Name,
-                        Id = x.Id,
-                        RelatedMachinesIds = x.MachineAreas.Select(y => y.Machine.Id).ToList()
+                        Id = x.Id
                     })
                     .FirstOrDefaultAsync(x => x.Id == areaId);
-
+                                
                 if (area == null)
                 {
                     return new OperationDataResult<AreaModel>(false,
                         _localizationService.GetString("AreaWithIdNotExist", areaId));
+                }
+
+                var machineAreas = _dbContext.MachineAreas
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.AreaId == area.Id).ToList();
+
+                area.RelatedMachinesIds = new List<int>();
+                foreach (var machineArea in machineAreas)
+                {
+                    area.RelatedMachinesIds.Add(machineArea.MachineId);
                 }
 
                 return new OperationDataResult<AreaModel>(true, area);

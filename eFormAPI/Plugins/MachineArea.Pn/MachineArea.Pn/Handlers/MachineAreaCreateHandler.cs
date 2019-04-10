@@ -67,19 +67,24 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateFromMachine(MachineModel model)
         {
-            string eFormId = _dbContext.MachineAreaSettings
+            var result = _dbContext.PluginConfigurationValues.ToList();
+
+            string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.SdkeFormId.ToString()}"; 
+            
+            string eFormId = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsEnum.SdkeFormId.ToString())?.Value;
+                    x.Name == lookup)?.Value;
 
             MainElement mainElement = _core.TemplateRead(int.Parse(eFormId));
             List<Site_Dto> sites = new List<Site_Dto>();
 
-            string sdkSiteIds = _dbContext.MachineAreaSettings
+            lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
+            string sdkSiteIds = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsEnum.EnabledSiteIds.ToString())?.Value;
-            foreach (string siteId in sdkSiteIds.Split(","))
+                    x.Name == lookup)?.Value;
+            foreach (string microtingUid in sdkSiteIds.Split(","))
             {
-                sites.Add(_core.SiteRead(int.Parse(siteId)));
+                sites.Add(_core.SiteRead(int.Parse(microtingUid)));
             }
             
             foreach (int areaId in model.RelatedAreasIds)
@@ -91,16 +96,19 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateFromArea(AreaModel model)
         {
-            string eFormId = _dbContext.MachineAreaSettings
+            string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.SdkeFormId.ToString()}"; 
+            
+            string eFormId = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsEnum.SdkeFormId.ToString())?.Value;
+                    x.Name == lookup)?.Value;
 
             MainElement mainElement = _core.TemplateRead(int.Parse(eFormId));
             List<Site_Dto> sites = new List<Site_Dto>();
             
-            string sdkSiteIds = _dbContext.MachineAreaSettings
+            lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
+            string sdkSiteIds = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
-                    x.Name == MachineAreaSettingsEnum.EnabledSiteIds.ToString())?.Value;
+                    x.Name == lookup)?.Value;
             foreach (string siteId in sdkSiteIds.Split(","))
             {
                 sites.Add(_core.SiteRead(int.Parse(siteId)));
@@ -128,8 +136,35 @@ namespace MachineArea.Pn.Handlers
                     mainElement.ElementList[0].Label = machineName;
                     
                     mainElement.EnableQuickSync = true;
-                    mainElement.CheckListFolderName = areaName;
-                
+                    List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
+
+                    bool folderAlreadyExist = false;
+                    int _microtingUId = 0;
+                    foreach (Folder_Dto folderDto in folderDtos)
+                    {
+                        if (folderDto.Name == areaName)
+                        {
+                            folderAlreadyExist = true;
+                            _microtingUId = (int)folderDto.MicrotingUId;
+                        }
+                    }
+
+                    if (!folderAlreadyExist)
+                    {
+                        _core.FolderCreate(areaName, "", null);
+                        folderDtos = _core.FolderGetAll(true);
+                    
+                        foreach (Folder_Dto folderDto in folderDtos)
+                        {
+                            if (folderDto.Name == areaName)
+                            {
+                                _microtingUId = (int)folderDto.MicrotingUId;
+                            }
+                        }
+                    }
+                    
+                    mainElement.CheckListFolderName = _microtingUId.ToString();
+                    
                     foreach (Site_Dto siteDto in sites)
                     {
                         var siteMatch = await _dbContext.MachineAreaSites.SingleOrDefaultAsync(x =>

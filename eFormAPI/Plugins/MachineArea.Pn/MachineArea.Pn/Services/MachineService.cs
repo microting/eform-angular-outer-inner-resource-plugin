@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,9 +65,11 @@ namespace MachineArea.Pn.Services
                         .OrderBy(x => x.Id);
                 }
 
+                machinesQuery = machinesQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+
                 if (requestModel.PageSize != null)
                 {
-                    machinesQuery = machinesQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    machinesQuery = machinesQuery
                         .Skip(requestModel.Offset)
                         .Take((int)requestModel.PageSize);
                 }
@@ -95,20 +98,28 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var machine = await _dbContext.Machines.Select(x => new MachineModel()
+                MachineModel machine = await _dbContext.Machines.Select(x => new MachineModel()
                     {
                         Name = x.Name,
-                        Id = x.Id,
-                        RelatedAreasIds = x.MachineAreas.Select(y => y.Area.Id).ToList()
+                        Id = x.Id
                     })
                     .FirstOrDefaultAsync(x => x.Id == machineId);
-
+                                
                 if (machine == null)
                 {
                     return new OperationDataResult<MachineModel>(false,
                         _localizationService.GetString("MachineWithIdNotExist"));
                 }
+                
+                var machineAreas = _dbContext.MachineAreas
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.MachineId == machine.Id).ToList();
 
+                machine.RelatedAreasIds = new List<int>();
+                foreach (var machineArea in machineAreas)
+                {
+                    machine.RelatedAreasIds.Add(machineArea.AreaId);
+                }
+                
                 return new OperationDataResult<MachineModel>(true, machine);
             }
             catch (Exception e)
@@ -138,6 +149,7 @@ namespace MachineArea.Pn.Services
                 };
 
                 await newMachine.Save(_dbContext);
+                model.Id = newMachine.Id;
                 await _bus.SendLocal(new MachineAreaCreate(model, null));
                 return new OperationResult(true, _localizationService.GetString("MachineCreatedSuccesfully"));
             }
