@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using eFormCore;
-using eFormData;
 using eFormShared;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Areas;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;

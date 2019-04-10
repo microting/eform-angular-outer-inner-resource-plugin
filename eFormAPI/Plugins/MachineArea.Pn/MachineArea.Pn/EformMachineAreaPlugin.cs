@@ -2,12 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Data.Seed;
+using MachineArea.Pn.Infrastructure.Data.Seed.Data;
+using MachineArea.Pn.Infrastructure.Models.Settings;
 using MachineArea.Pn.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Factories;
 
@@ -36,6 +42,24 @@ namespace MachineArea.Pn
             services.AddSingleton<IRebusService, RebusService>();
         }
 
+        public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
+        {
+            var seedData = new MachineAreaConfigurationSeedData();
+            var contextFactory = new MachineAreaPnContextFactory();
+            builder.AddPluginConfiguration(
+                connectionString,
+                seedData,
+                contextFactory);
+        }
+
+        public void ConfigureOptionsServices(
+            IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.ConfigurePluginDbOptions<MachineAreaBaseSettings>(
+                configuration.GetSection("MachineAreaBaseSettings"));
+        }
+
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
             _connectionString = connectionString;
@@ -45,14 +69,17 @@ namespace MachineArea.Pn
                     b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
             else
-            {                
+            {
                 services.AddDbContext<MachineAreaPnDbContext>(o => o.UseSqlServer(connectionString,
                     b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
 
             MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
-            var context = contextFactory.CreateDbContext(new[] {connectionString});
-            context.Database.Migrate();
+
+            using (var context = contextFactory.CreateDbContext(new[] {connectionString}))
+            {  
+                context.Database.Migrate();
+            }
 
             // Seed database
             SeedDatabase(connectionString);
@@ -63,7 +90,6 @@ namespace MachineArea.Pn
             var serviceProvider = appBuilder.ApplicationServices;
             IRebusService rebusService = serviceProvider.GetService<IRebusService>();
             rebusService.Start(_connectionString);
-
         }
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
@@ -74,7 +100,6 @@ namespace MachineArea.Pn
             var result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
             {
-                
                 Name = localizationService.GetString("MachineArea"),
                 E2EId = "",
                 Link = "",
@@ -82,21 +107,21 @@ namespace MachineArea.Pn
                 {
                     new MenuItemModel()
                     {
-                        Name =  localizationService.GetString("Machines"), 
+                        Name = localizationService.GetString("Machines"),
                         E2EId = "machine-area-pn-machines",
                         Link = "/plugins/machine-area-pn/machines",
                         Position = 0,
                     },
                     new MenuItemModel()
                     {
-                        Name =  localizationService.GetString("Areas"),
+                        Name = localizationService.GetString("Areas"),
                         E2EId = "machine-area-pn-areas",
                         Link = "/plugins/machine-area-pn/areas",
                         Position = 1,
                     },
                     new MenuItemModel()
                     {
-                        Name =  localizationService.GetString("Reports"),
+                        Name = localizationService.GetString("Reports"),
                         E2EId = "machine-area-pn-reports",
                         Link = "/plugins/machine-area-pn/reports",
                         Position = 2,
@@ -115,7 +140,13 @@ namespace MachineArea.Pn
 
         public void SeedDatabase(string connectionString)
         {
-           
+            // Get DbContext
+            var contextFactory = new MachineAreaPnContextFactory();
+            using (var context = contextFactory.CreateDbContext(new[] { connectionString }))
+            {
+                // Seed configuration
+                MachineAreaPluginSeed.SeedData(context);
+            }
         }
     }
 }

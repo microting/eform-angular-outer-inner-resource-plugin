@@ -1,5 +1,6 @@
-﻿using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models;
+﻿using System.Threading.Tasks;
+using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Models.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -19,7 +20,7 @@ namespace MachineArea.Pn.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/machine-area-pn/settings")]
-        public OperationDataResult<MachineAreaSettingsModel> GetSettings()
+        public OperationDataResult<MachineAreaBaseSettings> GetSettings()
         {
             return _machineAreaSettingsService.GetSettings();
         }
@@ -28,9 +29,9 @@ namespace MachineArea.Pn.Controllers
         [HttpPost]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/machine-area-pn/settings")]
-        public OperationResult UpdateSettings([FromBody] MachineAreaSettingsModel machineAreaSettingsModel)
+        public async Task<OperationResult> UpdateSettings([FromBody] MachineAreaBaseSettings machineAreaSettingsModel)
         {
-            return _machineAreaSettingsService.UpdateSettings(machineAreaSettingsModel);
+            return await _machineAreaSettingsService.UpdateSettings(machineAreaSettingsModel);
         }
     }
 }

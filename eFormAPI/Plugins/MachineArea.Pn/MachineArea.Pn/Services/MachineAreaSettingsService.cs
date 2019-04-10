@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models;
-using eFormCore;
-using eFormData;
-using MachineArea.Pn.Infrastructure.Helpers;
-using Microsoft.EntityFrameworkCore;
+using MachineArea.Pn.Infrastructure.Models.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Services
 {
@@ -21,62 +17,54 @@ namespace MachineArea.Pn.Services
         private readonly ILogger<MachineAreaSettingsService> _logger;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
         private readonly MachineAreaPnDbContext _dbContext;
-        
-        public MachineAreaSettingsService(ILogger<MachineAreaSettingsService> logger,
+        private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public MachineAreaSettingsService(
+            ILogger<MachineAreaSettingsService> logger,
             MachineAreaPnDbContext dbContext,
-            IMachineAreaLocalizationService machineAreaLocalizationService)
+            IMachineAreaLocalizationService machineAreaLocalizationService,
+            IPluginDbOptions<MachineAreaBaseSettings> options,
+            IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _dbContext = dbContext;
             _machineAreaLocalizationService = machineAreaLocalizationService;
+            _options = options;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public OperationDataResult<MachineAreaSettingsModel> GetSettings()
+        public OperationDataResult<MachineAreaBaseSettings> GetSettings()
         {
             try
             {
-                MachineAreaSettingsModel result = new MachineAreaSettingsModel();
-                List<MachineAreaSetting> machineAreaSettings = _dbContext.MachineAreaSettings.ToList();
-
-                if (machineAreaSettings.Count < 8)
-                {
-                    SettingsHelper.SettingCreateDefaults(_dbContext);                    
-                    machineAreaSettings = _dbContext.MachineAreaSettings.AsNoTracking().ToList();
-                }
-
-                result.MachineAreaSettingsList = machineAreaSettings.Select(x => new MachineAreaSettingModel()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Value = x.Value
-                }).ToList();
-
-                return new OperationDataResult<MachineAreaSettingsModel>(true, result);
+                var result = _options.Value;
+                return new OperationDataResult<MachineAreaBaseSettings>(true, result);
             }
             catch(Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<MachineAreaSettingsModel>(false,
+                return new OperationDataResult<MachineAreaBaseSettings>(false,
                     _machineAreaLocalizationService.GetString("ErrorWhileObtainingTrashInspectionSettings"));
             }
         }
 
-        public OperationResult UpdateSettings(MachineAreaSettingsModel machineAreaSettingsModel)
+        public async Task<OperationResult> UpdateSettings(MachineAreaBaseSettings machineAreaSettingsModel)
         {
             try
             {
-                foreach (MachineAreaSettingModel settingsModel in machineAreaSettingsModel
-                    .MachineAreaSettingsList)
+                await _options.UpdateDb(settings =>
                 {
-                    var setting = new MachineAreaSetting()
-                    {
-                        Id = settingsModel.Id,
-                        Value = settingsModel.Value,
-                        Name = settingsModel.Name
-                    };
-                    setting.Update(_dbContext);
-                }
+                    settings.EnabledSiteIds = machineAreaSettingsModel.EnabledSiteIds;
+                    settings.LogLevel = machineAreaSettingsModel.LogLevel;
+                    settings.LogLimit = machineAreaSettingsModel.LogLimit;
+                    settings.MaxParallelism = machineAreaSettingsModel.MaxParallelism;
+                    settings.NumberOfWorkers = machineAreaSettingsModel.NumberOfWorkers;
+                    settings.SdkConnectionString = machineAreaSettingsModel.SdkConnectionString;
+                    settings.SdkeFormId = machineAreaSettingsModel.SdkeFormId;
+                    settings.Token = machineAreaSettingsModel.Token;
+                }, _dbContext, UserId);
                 
                 return new OperationResult(true,
                     _machineAreaLocalizationService.GetString("SettingsHaveBeenUpdatedSuccessfully"));
@@ -87,6 +75,14 @@ namespace MachineArea.Pn.Services
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
                     _machineAreaLocalizationService.GetString("ErrorWhileUpdatingSettings"));
+            }
+        }
+        public int UserId
+        {
+            get
+            {
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                return value == null ? 0 : int.Parse(value);
             }
         }
     }

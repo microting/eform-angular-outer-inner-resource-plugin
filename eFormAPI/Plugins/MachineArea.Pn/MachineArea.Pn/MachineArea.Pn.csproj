@@ -18,17 +18,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="ExcelDataReader" Version="3.4.0" />
     <PackageReference Include="Automapper" Version="6.1.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.127" />
-    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.24" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.134" />
+    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.26" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
     <PackageReference Include="Microting.eForm" Version="3.0.209" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.134" />
+    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.26" />
   </ItemGroup>
+
 </Project>
