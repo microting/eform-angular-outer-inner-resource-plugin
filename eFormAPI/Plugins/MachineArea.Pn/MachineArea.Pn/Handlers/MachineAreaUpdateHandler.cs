@@ -101,6 +101,10 @@ namespace MachineArea.Pn.Handlers
                     {
                         await DeleteRelationship(machineArea.Id, machineAreaSite.MicrotingSdkCaseId);
                     }
+                    
+                    MachineAreaModel machineAreaModel = new MachineAreaModel();
+                    machineAreaModel.Id = machineArea.Id;
+                    await machineAreaModel.Delete(_dbContext);
                 }
             }
 
@@ -137,6 +141,10 @@ namespace MachineArea.Pn.Handlers
                     {
                         await DeleteRelationship(machineArea.Id, machineAreaSite.MicrotingSdkCaseId);
                     }
+                    
+                    MachineAreaModel machineAreaModel = new MachineAreaModel();
+                    machineAreaModel.Id = machineArea.Id;
+                    await machineAreaModel.Delete(_dbContext);
                 }
             }
 

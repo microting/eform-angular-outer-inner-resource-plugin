@@ -135,7 +135,6 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                // Map machine areas
                 var machineAreas = model.RelatedAreasIds.Select(x =>
                     new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
                     {
@@ -175,7 +174,8 @@ namespace MachineArea.Pn.Services
                 Machine selectedMachine = new Machine()
                 {
                     Name = model.Name,
-                    MachineAreas = machineAreas
+                    MachineAreas = machineAreas,
+                    Id = model.Id
                 };
 
                 await selectedMachine.Update(_dbContext);
