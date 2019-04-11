@@ -54,55 +54,14 @@ namespace MachineArea.Pn.Handlers
         
         #pragma warning disable 1998
         public async Task Handle(MachineAreaCreate message)
-        {
-            if (message.MachineModel != null)
-            {
-                await CreateFromMachine(message.MachineModel);
-            }
-            else
-            {
-                await CreateFromArea(message.AreaModel);
-            }            
-        }
-
-        private async Task CreateFromMachine(MachineModel model)
-        {
-            var result = _dbContext.PluginConfigurationValues.ToList();
-
+        {            
             string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.SdkeFormId.ToString()}"; 
             
-            string eFormId = _dbContext.PluginConfigurationValues
+            int eFormId = int.Parse(_dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
-                    x.Name == lookup)?.Value;
+                    x.Name == lookup)?.Value);
 
-            MainElement mainElement = _core.TemplateRead(int.Parse(eFormId));
-            List<Site_Dto> sites = new List<Site_Dto>();
-
-            lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
-            string sdkSiteIds = _dbContext.PluginConfigurationValues
-                .FirstOrDefault(x => 
-                    x.Name == lookup)?.Value;
-            foreach (string microtingUid in sdkSiteIds.Split(","))
-            {
-                sites.Add(_core.SiteRead(int.Parse(microtingUid)));
-            }
-            
-            foreach (int areaId in model.RelatedAreasIds)
-            {                
-                Area area = _dbContext.Areas.SingleOrDefault(x => x.Id == areaId);
-                await CreateRelationships(model.Id, areaId, model.Name, area.Name, mainElement, sites, int.Parse(eFormId));              
-            }
-        }
-
-        private async Task CreateFromArea(AreaModel model)
-        {
-            string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.SdkeFormId.ToString()}"; 
-            
-            string eFormId = _dbContext.PluginConfigurationValues
-                .FirstOrDefault(x => 
-                    x.Name == lookup)?.Value;
-
-            MainElement mainElement = _core.TemplateRead(int.Parse(eFormId));
+            MainElement mainElement = _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
             lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
@@ -114,10 +73,31 @@ namespace MachineArea.Pn.Handlers
                 sites.Add(_core.SiteRead(int.Parse(siteId)));
             }
             
-            foreach (int machineId in model.RelatedMachinesIds)
+            if (message.MachineModel != null)
+            {
+                await CreateFromMachine(message.MachineModel, mainElement, sites, eFormId);
+            }
+            else
+            {
+                await CreateFromArea(message.AreaModel, mainElement, sites, eFormId);
+            }            
+        }
+
+        private async Task CreateFromMachine(MachineModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        {
+            foreach (int areaId in model.RelatedAreasIds)
+            {                
+                Area area = _dbContext.Areas.SingleOrDefault(x => x.Id == areaId);
+                await CreateRelationships(model.Id, areaId, model.Name, area.Name, mainElement, sites, eFormId);              
+            }
+        }
+
+        private async Task CreateFromArea(AreaModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        {
+           foreach (int machineId in model.RelatedMachinesIds)
             {
                 Machine machine = _dbContext.Machines.SingleOrDefault(x => x.Id == machineId);
-                await CreateRelationships(machineId, model.Id, machine.Name, model.Name, mainElement, sites, int.Parse(eFormId));
+                await CreateRelationships(machineId, model.Id, machine.Name, model.Name, mainElement, sites, eFormId);
             }
         }
 
@@ -125,66 +105,66 @@ namespace MachineArea.Pn.Handlers
         {
             var match = await _dbContext.MachineAreas.SingleOrDefaultAsync(x =>
                     x.MachineId == machineId && x.AreaId == areaId);
-                if (match == null)
-                {
-                    MachineAreaModel machineArea =
-                        new MachineAreaModel();
-                    machineArea.AreaId = areaId;
-                    machineArea.MachineId = machineId;
-                    await machineArea.Save(_dbContext);
-                    mainElement.Label = machineName;
-                    mainElement.ElementList[0].Label = machineName;
-                    
-                    mainElement.EnableQuickSync = true;
-                    List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
+            if (match == null)
+            {
+                MachineAreaModel machineArea =
+                    new MachineAreaModel();
+                machineArea.AreaId = areaId;
+                machineArea.MachineId = machineId;
+                await machineArea.Save(_dbContext);
+                mainElement.Label = machineName;
+                mainElement.ElementList[0].Label = machineName;
+                
+                mainElement.EnableQuickSync = true;
+                List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
 
-                    bool folderAlreadyExist = false;
-                    int _microtingUId = 0;
+                bool folderAlreadyExist = false;
+                int _microtingUId = 0;
+                foreach (Folder_Dto folderDto in folderDtos)
+                {
+                    if (folderDto.Name == areaName)
+                    {
+                        folderAlreadyExist = true;
+                        _microtingUId = (int)folderDto.MicrotingUId;
+                    }
+                }
+
+                if (!folderAlreadyExist)
+                {
+                    _core.FolderCreate(areaName, "", null);
+                    folderDtos = _core.FolderGetAll(true);
+                
                     foreach (Folder_Dto folderDto in folderDtos)
                     {
                         if (folderDto.Name == areaName)
                         {
-                            folderAlreadyExist = true;
                             _microtingUId = (int)folderDto.MicrotingUId;
                         }
                     }
-
-                    if (!folderAlreadyExist)
+                }
+                
+                mainElement.CheckListFolderName = _microtingUId.ToString();
+                
+                foreach (Site_Dto siteDto in sites)
+                {
+                    var siteMatch = await _dbContext.MachineAreaSites.SingleOrDefaultAsync(x =>
+                        x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id);
+                    if (siteMatch == null)
                     {
-                        _core.FolderCreate(areaName, "", null);
-                        folderDtos = _core.FolderGetAll(true);
-                    
-                        foreach (Folder_Dto folderDto in folderDtos)
+                        string sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
+
+                        if (!string.IsNullOrEmpty(sdkCaseId))
                         {
-                            if (folderDto.Name == areaName)
-                            {
-                                _microtingUId = (int)folderDto.MicrotingUId;
-                            }
-                        }
+                            MachineAreaSiteModel machineAreaSiteModel = new MachineAreaSiteModel();
+                            machineAreaSiteModel.MachineAreaId = machineArea.Id;
+                            machineAreaSiteModel.MicrotingSdkSiteId = siteDto.SiteId;
+                            machineAreaSiteModel.MicrotingSdkCaseId = int.Parse(sdkCaseId);
+                            machineAreaSiteModel.MicrotingSdkeFormId = eFormId;
+                            await machineAreaSiteModel.Save(_dbContext);
+                        }    
                     }
-                    
-                    mainElement.CheckListFolderName = _microtingUId.ToString();
-                    
-                    foreach (Site_Dto siteDto in sites)
-                    {
-                        var siteMatch = await _dbContext.MachineAreaSites.SingleOrDefaultAsync(x =>
-                            x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id);
-                        if (siteMatch == null)
-                        {
-                            string sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
-
-                            if (!string.IsNullOrEmpty(sdkCaseId))
-                            {
-                                MachineAreaSiteModel machineAreaSiteModel = new MachineAreaSiteModel();
-                                machineAreaSiteModel.MachineAreaId = machineArea.Id;
-                                machineAreaSiteModel.MicrotingSdkSiteId = siteDto.SiteId;
-                                machineAreaSiteModel.MicrotingSdkCaseId = int.Parse(sdkCaseId);
-                                machineAreaSiteModel.MicrotingSdkeFormId = eFormId;
-                                await machineAreaSiteModel.Save(_dbContext);
-                            }    
-                        }
-                    }    
-                }     
+                }    
+            }     
         }
     }
 }
