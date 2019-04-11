@@ -18,7 +18,7 @@ su ubuntu -c \
 "dotnet publish eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.sln -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 
 su ubuntu -c \
-"cp -av /var/www/microting/eform-angular-machinearea-plugin/eform-client/src/app/plugins/modules/trash-inspection-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/trash-inspection-pn"
+"cp -av /var/www/microting/eform-angular-machinearea-plugin/eform-client/src/app/plugins/modules/machine-area-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn"
 su ubuntu -c \
 "mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/"
 su ubuntu -c \
