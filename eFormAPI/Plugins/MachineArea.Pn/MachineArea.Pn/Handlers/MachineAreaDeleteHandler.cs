@@ -89,9 +89,7 @@ namespace MachineArea.Pn.Handlers
                         bool result = _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId.ToString());
                         if (result)
                         {
-                            MachineAreaSiteModel machineAreaSiteModel = new MachineAreaSiteModel();
-                            machineAreaSiteModel.Id = machineAreaSite.Id;
-                            await machineAreaSiteModel.Delete(_dbContext);
+                            await machineAreaSite.Delete(_dbContext);
                             sitesDeleted += 1;
                         }
                     }
@@ -104,9 +102,7 @@ namespace MachineArea.Pn.Handlers
 
                 if (numSites == sitesDeleted)
                 {
-                    MachineAreaModel machineAreaModel = new MachineAreaModel();
-                    machineAreaModel.Id = machineArea.Id;
-                    await machineAreaModel.Delete(_dbContext);
+                    await machineArea.Delete(_dbContext);
                 }
             }
         }

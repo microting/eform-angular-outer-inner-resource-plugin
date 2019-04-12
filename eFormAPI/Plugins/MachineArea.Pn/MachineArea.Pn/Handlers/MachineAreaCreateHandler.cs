@@ -107,8 +107,8 @@ namespace MachineArea.Pn.Handlers
                     x.MachineId == machineId && x.AreaId == areaId);
             if (match == null)
             {
-                MachineAreaModel machineArea =
-                    new MachineAreaModel();
+                Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea =
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea();
                 machineArea.AreaId = areaId;
                 machineArea.MachineId = machineId;
                 await machineArea.Save(_dbContext);
@@ -155,12 +155,12 @@ namespace MachineArea.Pn.Handlers
 
                         if (!string.IsNullOrEmpty(sdkCaseId))
                         {
-                            MachineAreaSiteModel machineAreaSiteModel = new MachineAreaSiteModel();
-                            machineAreaSiteModel.MachineAreaId = machineArea.Id;
-                            machineAreaSiteModel.MicrotingSdkSiteId = siteDto.SiteId;
-                            machineAreaSiteModel.MicrotingSdkCaseId = int.Parse(sdkCaseId);
-                            machineAreaSiteModel.MicrotingSdkeFormId = eFormId;
-                            await machineAreaSiteModel.Save(_dbContext);
+                            MachineAreaSite machineAreaSite = new MachineAreaSite();
+                            machineAreaSite.MachineAreaId = machineArea.Id;
+                            machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
+                            machineAreaSite.MicrotingSdkCaseId = int.Parse(sdkCaseId);
+                            machineAreaSite.MicrotingSdkeFormId = eFormId;
+                            await machineAreaSite.Save(_dbContext);
                         }    
                     }
                 }    

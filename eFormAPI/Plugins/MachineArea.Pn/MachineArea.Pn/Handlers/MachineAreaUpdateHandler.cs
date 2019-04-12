@@ -102,9 +102,7 @@ namespace MachineArea.Pn.Handlers
                         await DeleteRelationship(machineArea.Id, machineAreaSite.MicrotingSdkCaseId);
                     }
                     
-                    MachineAreaModel machineAreaModel = new MachineAreaModel();
-                    machineAreaModel.Id = machineArea.Id;
-                    await machineAreaModel.Delete(_dbContext);
+                    await machineArea.Delete(_dbContext);
                 }
             }
 
@@ -141,10 +139,7 @@ namespace MachineArea.Pn.Handlers
                     {
                         await DeleteRelationship(machineArea.Id, machineAreaSite.MicrotingSdkCaseId);
                     }
-                    
-                    MachineAreaModel machineAreaModel = new MachineAreaModel();
-                    machineAreaModel.Id = machineArea.Id;
-                    await machineAreaModel.Delete(_dbContext);
+                    await machineArea.Delete(_dbContext);
                 }
             }
 
@@ -164,68 +159,74 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            var match = await _dbContext.MachineAreas.SingleOrDefaultAsync(x =>
+            var machineArea = await _dbContext.MachineAreas.SingleOrDefaultAsync(x =>
                     x.MachineId == machineId && x.AreaId == areaId);
-            if (match == null)
+
+            if (machineArea != null)
             {
-                MachineAreaModel machineArea =
-                    new MachineAreaModel();
+                machineArea.WorkflowState = Constants.WorkflowStates.Created;
+                await machineArea.Save(_dbContext);
+            }
+            else
+            {
+                machineArea =
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea();
                 machineArea.AreaId = areaId;
                 machineArea.MachineId = machineId;
-                await machineArea.Save(_dbContext);
-                mainElement.Label = machineName;
-                mainElement.ElementList[0].Label = machineName;
-                
-                mainElement.EnableQuickSync = true;
-                List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
+            }
+            
+            mainElement.Label = machineName;
+            mainElement.ElementList[0].Label = machineName;
+            
+            mainElement.EnableQuickSync = true;
+            List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
 
-                bool folderAlreadyExist = false;
-                int _microtingUId = 0;
+            bool folderAlreadyExist = false;
+            int _microtingUId = 0;
+            foreach (Folder_Dto folderDto in folderDtos)
+            {
+                if (folderDto.Name == areaName)
+                {
+                    folderAlreadyExist = true;
+                    _microtingUId = (int)folderDto.MicrotingUId;
+                }
+            }
+
+            if (!folderAlreadyExist)
+            {
+                _core.FolderCreate(areaName, "", null);
+                folderDtos = _core.FolderGetAll(true);
+            
                 foreach (Folder_Dto folderDto in folderDtos)
                 {
                     if (folderDto.Name == areaName)
                     {
-                        folderAlreadyExist = true;
                         _microtingUId = (int)folderDto.MicrotingUId;
                     }
                 }
-
-                if (!folderAlreadyExist)
+            }
+            
+            mainElement.CheckListFolderName = _microtingUId.ToString();
+            
+            foreach (Site_Dto siteDto in sites)
+            {
+                MachineAreaSite siteMatch = await _dbContext.MachineAreaSites.SingleOrDefaultAsync(x =>
+                    x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id && x.WorkflowState == Constants.WorkflowStates.Created);
+                if (siteMatch == null)
                 {
-                    _core.FolderCreate(areaName, "", null);
-                    folderDtos = _core.FolderGetAll(true);
-                
-                    foreach (Folder_Dto folderDto in folderDtos)
+                    string sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
+
+                    if (!string.IsNullOrEmpty(sdkCaseId))
                     {
-                        if (folderDto.Name == areaName)
-                        {
-                            _microtingUId = (int)folderDto.MicrotingUId;
-                        }
-                    }
+                        MachineAreaSite machineAreaSite = new MachineAreaSite();
+                        machineAreaSite.MachineAreaId = machineArea.Id;
+                        machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
+                        machineAreaSite.MicrotingSdkCaseId = int.Parse(sdkCaseId);
+                        machineAreaSite.MicrotingSdkeFormId = eFormId;
+                        await machineAreaSite.Save(_dbContext);
+                    }    
                 }
-                
-                mainElement.CheckListFolderName = _microtingUId.ToString();
-                
-                foreach (Site_Dto siteDto in sites)
-                {
-                    var siteMatch = await _dbContext.MachineAreaSites.SingleOrDefaultAsync(x =>
-                        x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id);
-                    if (siteMatch == null)
-                    {
-                        string sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
-
-                        if (!string.IsNullOrEmpty(sdkCaseId))
-                        {
-                            MachineAreaSiteModel machineAreaSiteModel = new MachineAreaSiteModel();
-                            machineAreaSiteModel.MachineAreaId = machineArea.Id;
-                            machineAreaSiteModel.MicrotingSdkSiteId = siteDto.SiteId;
-                            machineAreaSiteModel.MicrotingSdkCaseId = int.Parse(sdkCaseId);
-                            machineAreaSiteModel.MicrotingSdkeFormId = eFormId;
-                            await machineAreaSiteModel.Save(_dbContext);
-                        }    
-                    }
-                }    
-            }     
+            }    
         }
 
         private async Task DeleteRelationship(int machineAreaId, int microtingSdkCaseId)
@@ -237,9 +238,7 @@ namespace MachineArea.Pn.Handlers
                 bool result = _core.CaseDelete(microtingSdkCaseId.ToString());
                 if (result)
                 {
-                    MachineAreaSiteModel machineAreaSiteModel = new MachineAreaSiteModel();
-                    machineAreaSiteModel.Id = machineAreaSite.Id;
-                    await machineAreaSiteModel.Delete(_dbContext);
+                    await machineAreaSite.Delete(_dbContext);
                 }
             }
         }
