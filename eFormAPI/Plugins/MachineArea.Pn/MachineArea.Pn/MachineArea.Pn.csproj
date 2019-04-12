@@ -24,7 +24,7 @@
     <PackageReference Include="Automapper" Version="6.1.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.140" />
-    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.30" />
+    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.31" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />

@@ -159,7 +159,7 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            var machineArea = await _dbContext.MachineAreas.SingleOrDefaultAsync(x =>
+            var machineArea = _dbContext.MachineAreas.SingleOrDefault(x =>
                     x.MachineId == machineId && x.AreaId == areaId);
 
             if (machineArea != null)
@@ -173,6 +173,7 @@ namespace MachineArea.Pn.Handlers
                     new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea();
                 machineArea.AreaId = areaId;
                 machineArea.MachineId = machineId;
+                await machineArea.Save(_dbContext);
             }
             
             mainElement.Label = machineName;
@@ -210,7 +211,7 @@ namespace MachineArea.Pn.Handlers
             
             foreach (Site_Dto siteDto in sites)
             {
-                MachineAreaSite siteMatch = await _dbContext.MachineAreaSites.SingleOrDefaultAsync(x =>
+                MachineAreaSite siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
                     x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id && x.WorkflowState == Constants.WorkflowStates.Created);
                 if (siteMatch == null)
                 {
@@ -231,8 +232,8 @@ namespace MachineArea.Pn.Handlers
 
         private async Task DeleteRelationship(int machineAreaId, int microtingSdkCaseId)
         {
-            MachineAreaSite machineAreaSite = await 
-                _dbContext.MachineAreaSites.SingleOrDefaultAsync(x => x.MachineAreaId == machineAreaId && x.MicrotingSdkCaseId == microtingSdkCaseId);
+            MachineAreaSite machineAreaSite =  
+                _dbContext.MachineAreaSites.SingleOrDefault(x => x.MachineAreaId == machineAreaId && x.MicrotingSdkCaseId == microtingSdkCaseId);
             if (machineAreaSite != null)
             {
                 bool result = _core.CaseDelete(microtingSdkCaseId.ToString());

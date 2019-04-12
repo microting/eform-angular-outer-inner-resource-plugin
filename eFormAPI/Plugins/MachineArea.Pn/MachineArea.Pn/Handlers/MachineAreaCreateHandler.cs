@@ -103,7 +103,7 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            var match = await _dbContext.MachineAreas.SingleOrDefaultAsync(x =>
+            var match = _dbContext.MachineAreas.SingleOrDefault(x =>
                     x.MachineId == machineId && x.AreaId == areaId);
             if (match == null)
             {
@@ -147,7 +147,7 @@ namespace MachineArea.Pn.Handlers
                 
                 foreach (Site_Dto siteDto in sites)
                 {
-                    var siteMatch = await _dbContext.MachineAreaSites.SingleOrDefaultAsync(x =>
+                    var siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
                         x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id);
                     if (siteMatch == null)
                     {
