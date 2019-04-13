@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -29,6 +30,7 @@ using System.Threading.Tasks;
 using eFormCore;
 using eFormData;
 using eFormShared;
+using eFormSqlController;
 using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Areas;
 using MachineArea.Pn.Infrastructure.Models.Machines;
@@ -57,19 +59,32 @@ namespace MachineArea.Pn.Handlers
         {            
             string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.SdkeFormId.ToString()}"; 
             
-            int eFormId = int.Parse(_dbContext.PluginConfigurationValues
-                .FirstOrDefault(x => 
-                    x.Name == lookup)?.Value);
+            LogEvent($"lookup is {lookup}");
+
+            string result = _dbContext.PluginConfigurationValues
+                .FirstOrDefault(x =>
+                    x.Name == lookup)
+                ?.Value;
+            
+            LogEvent($"result is {result}");
+            
+            int eFormId = int.Parse(result);
 
             MainElement mainElement = _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
             lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
+            LogEvent($"lookup is {lookup}");
+
             string sdkSiteIds = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;
+            
+            LogEvent($"sdkSiteIds is {sdkSiteIds}");
+            
             foreach (string siteId in sdkSiteIds.Split(","))
             {
+                LogEvent($"found siteId {siteId}");
                 sites.Add(_core.SiteRead(int.Parse(siteId)));
             }
             
@@ -165,6 +180,35 @@ namespace MachineArea.Pn.Handlers
                     }
                 }    
             }     
+        }
+        
+        private void LogEvent(string appendText)
+        {
+            try
+            {                
+                var oldColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("[DBG] " + appendText);
+                Console.ForegroundColor = oldColor;
+            }
+            catch
+            {
+            }
+        }
+
+        private void LogException(string appendText)
+        {
+            try
+            {
+                var oldColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[ERR] " + appendText);
+                Console.ForegroundColor = oldColor;
+            }
+            catch
+            {
+
+            }
         }
     }
 }
