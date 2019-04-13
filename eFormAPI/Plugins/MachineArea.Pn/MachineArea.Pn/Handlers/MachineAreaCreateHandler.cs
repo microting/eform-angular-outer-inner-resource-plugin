@@ -61,7 +61,7 @@ namespace MachineArea.Pn.Handlers
             
             LogEvent($"lookup is {lookup}");
 
-            string result = _dbContext.PluginConfigurationValues
+            string result = _dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x =>
                     x.Name == lookup)
                 ?.Value;
@@ -76,7 +76,7 @@ namespace MachineArea.Pn.Handlers
             lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
             LogEvent($"lookup is {lookup}");
 
-            string sdkSiteIds = _dbContext.PluginConfigurationValues
+            string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;
             
