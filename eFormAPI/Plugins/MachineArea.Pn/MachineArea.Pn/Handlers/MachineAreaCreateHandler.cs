@@ -129,6 +129,9 @@ namespace MachineArea.Pn.Handlers
                 await machineArea.Save(_dbContext);
                 mainElement.Label = machineName;
                 mainElement.ElementList[0].Label = machineName;
+                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+                mainElement.StartDate = DateTime.Now.ToUniversalTime();
+                mainElement.Repeated = 0;
                 
                 mainElement.EnableQuickSync = true;
                 List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
