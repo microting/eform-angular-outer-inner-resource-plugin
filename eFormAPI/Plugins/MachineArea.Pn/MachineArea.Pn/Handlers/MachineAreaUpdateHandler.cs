@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -165,7 +166,7 @@ namespace MachineArea.Pn.Handlers
             if (machineArea != null)
             {
                 machineArea.WorkflowState = Constants.WorkflowStates.Created;
-                await machineArea.Save(_dbContext);
+                await machineArea.Update(_dbContext);
             }
             else
             {
@@ -178,6 +179,9 @@ namespace MachineArea.Pn.Handlers
             
             mainElement.Label = machineName;
             mainElement.ElementList[0].Label = machineName;
+            mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+            mainElement.StartDate = DateTime.Now.ToUniversalTime();
+            mainElement.Repeated = 0;
             
             mainElement.EnableQuickSync = true;
             List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
