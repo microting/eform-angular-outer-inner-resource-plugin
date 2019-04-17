@@ -28,8 +28,10 @@ import {
   ReportPreviewTableComponent,
   ReportGeneratorFormComponent,
   MachineAreaSettingsComponent,
-  ReportGeneratorContainerComponent
+  ReportGeneratorContainerComponent,
 } from './components';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   imports: [
@@ -43,7 +45,8 @@ import {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   declarations: [
     AreasPageComponent,
