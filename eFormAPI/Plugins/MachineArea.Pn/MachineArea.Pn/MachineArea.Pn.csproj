@@ -21,7 +21,6 @@
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="ExcelDataReader" Version="3.4.0" />
-    <PackageReference Include="Automapper" Version="6.1.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.142" />
     <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.32" />
