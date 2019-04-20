@@ -44,8 +44,20 @@ namespace MachineArea.Pn.Services
             {
                 var core = _coreHelper.GetCore();
                 var sitesList = core.SiteReadAll(false);
+                var modelDateFrom = new DateTime(
+                    model.DateFrom.Year,
+                    model.DateFrom.Month,
+                    model.DateFrom.Day,
+                    0,0,0);
+
+                var modelDateTo = new DateTime(
+                    model.DateTo.Year,
+                    model.DateTo.Month,
+                    model.DateTo.Day,
+                    23,59,59);
+                
                 var jobsList = await _dbContext.MachineAreaTimeRegistrations
-                    .Where(x => x.DoneAt >= model.DateFrom && x.DoneAt <= model.DateTo)
+                    .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                     .ToListAsync();
                 var reportEntitiesList = new List<ReportEntityModel>();
                 var reportDates = new List<DateTime>();
