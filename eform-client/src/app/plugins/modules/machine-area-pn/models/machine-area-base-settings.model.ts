@@ -7,4 +7,5 @@ export class MachineAreaBaseSettingsModel {
   token: string;
   sdkeFormId: string;
   enabledSiteIds: string;
+  quickSyncEnabled: boolean;
 }
