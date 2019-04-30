@@ -23,7 +23,7 @@
     <PackageReference Include="ExcelDataReader" Version="3.4.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.144" />
-    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.34" />
+    <PackageReference Include="Microting.eFormMachineAreaBase" Version="1.1.37" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />

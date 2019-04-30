@@ -183,7 +183,16 @@ namespace MachineArea.Pn.Handlers
             mainElement.StartDate = DateTime.Now.ToUniversalTime();
             mainElement.Repeated = 0;
             
-            mainElement.EnableQuickSync = true;
+            string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.QuickSyncEnabled.ToString()}"; 
+
+            bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
+                                        .FirstOrDefault(x => 
+                                            x.Name == lookup)?.Value == "true";
+
+            if (quickSyncEnabled)
+            {
+                mainElement.EnableQuickSync = true;    
+            }
             List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
 
             bool folderAlreadyExist = false;
