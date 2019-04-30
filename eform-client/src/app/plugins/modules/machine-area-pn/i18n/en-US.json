@@ -22,5 +22,7 @@
   "Month": "Month",
   "Week": "Week",
   "Generate Report": "Generate Report",
-  "Download": "Download"
+  "Download": "Download",
+  "EmployeeArea": "Employee-Area",
+  "EmployeeMachine": "Employee-Machine"
 }
