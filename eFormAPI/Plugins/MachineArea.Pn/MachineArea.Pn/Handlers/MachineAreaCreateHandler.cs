@@ -132,7 +132,7 @@ namespace MachineArea.Pn.Handlers
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 mainElement.Repeated = 0;
-                
+
                 string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.QuickSyncEnabled.ToString()}"; 
                 LogEvent($"lookup is {lookup}");
 
@@ -144,7 +144,7 @@ namespace MachineArea.Pn.Handlers
                 {
                     mainElement.EnableQuickSync = true;    
                 }
-                
+
                 List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
 
                 bool folderAlreadyExist = false;
