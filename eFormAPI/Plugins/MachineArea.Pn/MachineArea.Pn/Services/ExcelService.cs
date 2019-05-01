@@ -54,15 +54,24 @@ namespace MachineArea.Pn.Services
                 
                 var reportTitle = _machineAreaLocalizationService.GetString("Report");
                 worksheet.Cells[ExcelConsts.ReportTitleRow, ExcelConsts.ReportTitleCol].Value = reportTitle;
-                var reportName = _machineAreaLocalizationService.GetString("Employee"); // TODO make changable
+                var reportName = _machineAreaLocalizationService.GetString(reportModel.Relationship.ToString());
                 worksheet.Cells[ExcelConsts.ReportNameRow, ExcelConsts.ReportNameCol].Value = reportName;        
 
-                // sitenames
+                // entity names
                 for (var i = 0; i < reportModel.Entities.Count; i++)
                 {
-                    var rowIndex = ExcelConsts.SiteNameStartRow + i;
+                    var rowIndex = ExcelConsts.EntityNameStartRow + i;
                     var reportEntity = reportModel.Entities[i];
-                    worksheet.UpdateValue(rowIndex, ExcelConsts.SiteNameStartCol, reportEntity?.EntityName, true);
+                    worksheet.UpdateValue(rowIndex, ExcelConsts.EntityNameStartCol, reportEntity?.EntityName, true);
+                }
+
+                // related entity names
+                for (var i = 0; i < reportModel.Entities.Count; i++)
+                {
+                    var rowIndex = ExcelConsts.RelatedEntityNameStartRow + i;
+                    var reportEntity = reportModel.Entities[i];
+                    worksheet.UpdateValue(rowIndex, ExcelConsts.RelatedEntityNameStartCol,
+                        reportEntity?.RelatedEntityName, true);
                 }
 
                 // headers

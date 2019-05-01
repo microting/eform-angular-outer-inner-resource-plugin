@@ -465,6 +465,7 @@ namespace MachineArea.Pn.Services
                 {
                     Entities = reportEntitiesList,
                     ReportHeaders = reportHeaders,
+                    Relationship = model.Relationship,
                     TotalTime = reportEntitiesList
                         .Sum(x => x.TotalTime),
                     TotalTimePerTimeUnit = sumByTimeUnit

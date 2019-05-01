@@ -31,9 +31,13 @@
         public static int ReportNameRow = 6;
         public static int ReportNameCol = 3;
 
-        // Sitename start position
-        public static int SiteNameStartRow = 9;
-        public static int SiteNameStartCol = 2;
+        // Entity name start position
+        public static int EntityNameStartRow = 9;
+        public static int EntityNameStartCol = 2;
+
+        // Related entity name start position
+        public static int RelatedEntityNameStartRow = 9;
+        public static int RelatedEntityNameStartCol = 3;
 
         // Vertical sum start position
         public static int VerticalSumStartRow = 9;

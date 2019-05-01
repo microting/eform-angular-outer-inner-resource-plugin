@@ -254,5 +254,21 @@
       "en-US": "Employee",
       "de-DE": "Mitarbeiter"
     }
+  },
+  {
+    "Key": "EmployeeMachine",
+    "LocalizedValue": {
+      "da": "Medarbejder-Maskiner",
+      "en-US": "Employee-Machine",
+      "de-DE": "Mitarbeiter-Maschine"
+    }
+  },
+  {
+    "Key": "EmployeeArea",
+    "LocalizedValue": {
+      "da": "Medarbejder-Områder",
+      "en-US": "Employee-Area",
+      "de-DE": "Mitarbeiter-Bereich"
+    }
   }
 ]
