@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Extensions;
+using MachineArea.Pn.Infrastructure.Helpers;
 using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.EntityFrameworkCore;
@@ -219,7 +220,7 @@ namespace MachineArea.Pn.Services
                         {
                             reportHeaders.Add(new ReportEntityHeaderModel
                             {
-                                HeaderValue = $"{reportDate:dd/MM/yyyy} - {reportDate.AddDays(7):dd/MM/yyyy}"
+                                HeaderValue = $"W{DatesHelper.GetIso8601WeekOfYear(reportDate)}-{reportDate:yy}"
                             });
                         }
 
