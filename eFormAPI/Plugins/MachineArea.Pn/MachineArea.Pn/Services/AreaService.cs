@@ -152,7 +152,7 @@ namespace MachineArea.Pn.Services
                 await _bus.SendLocal(new MachineAreaCreate(null, model));
 
                 return new OperationResult(true, 
-                    _localizationService.GetString("AreaCreatedSuccesfully", model.Name));
+                    _localizationService.GetString("AreaCreatedSuccessfully", model.Name));
             }
             catch (Exception e)
             {

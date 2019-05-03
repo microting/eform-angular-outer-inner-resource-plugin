@@ -56,13 +56,13 @@ namespace MachineArea.Pn.Controllers
                     {
                         using (var excelStream = result.Model.FileStream)
                         {
-                            int bytesReaded;
+                            int bytesRead;
                             Response.ContentLength = excelStream.Length;
                             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                            while ((bytesReaded = excelStream.Read(buffer, 0, buffer.Length)) > 0 &&
+                            while ((bytesRead = excelStream.Read(buffer, 0, buffer.Length)) > 0 &&
                                    !HttpContext.RequestAborted.IsCancellationRequested)
                             {
-                                await Response.Body.WriteAsync(buffer, 0, bytesReaded);
+                                await Response.Body.WriteAsync(buffer, 0, bytesRead);
                                 await Response.Body.FlushAsync();
                             }
                         }

@@ -40,37 +40,37 @@ namespace MachineArea.Pn.Services
                 var worksheet = package.Workbook.Worksheets[ExcelConsts.MachineAreaReportSheetNumber];
                 // Fill base info
                 var periodFromTitle = _machineAreaLocalizationService.GetString("DateFrom");
-                worksheet.Cells[ExcelConsts.PeriodFromTitleRow, ExcelConsts.PeriodFromTitleCol].Value = periodFromTitle;
-                worksheet.Cells[ExcelConsts.PeriodFromRow, ExcelConsts.PeriodFromCol].Value = generateReportModel.DateFrom;
+                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodFromTitleRow, ExcelConsts.EmployeeReport.PeriodFromTitleCol].Value = periodFromTitle;
+                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodFromRow, ExcelConsts.EmployeeReport.PeriodFromCol].Value = generateReportModel.DateFrom;
 
                 var periodToTitle = _machineAreaLocalizationService.GetString("DateTo");
-                worksheet.Cells[ExcelConsts.PeriodToTitleRow, ExcelConsts.PeriodToTitleCol].Value = periodToTitle;
-                worksheet.Cells[ExcelConsts.PeriodToRow, ExcelConsts.PeriodToCol].Value = generateReportModel.DateTo;        
+                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodToTitleRow, ExcelConsts.EmployeeReport.PeriodToTitleCol].Value = periodToTitle;
+                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodToRow, ExcelConsts.EmployeeReport.PeriodToCol].Value = generateReportModel.DateTo;        
 
                 var showDataByTitle = _machineAreaLocalizationService.GetString("ShowDataBy");
-                worksheet.Cells[ExcelConsts.PeriodTypeTitleRow, ExcelConsts.PeriodTypeTitleCol].Value = showDataByTitle;        
+                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodTypeTitleRow, ExcelConsts.EmployeeReport.PeriodTypeTitleCol].Value = showDataByTitle;        
                 var showDataByValue = _machineAreaLocalizationService.GetString(generateReportModel.Type.ToString());
-                worksheet.Cells[ExcelConsts.PeriodTypeRow, ExcelConsts.PeriodTypeCol].Value = showDataByValue;        
+                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodTypeRow, ExcelConsts.EmployeeReport.PeriodTypeCol].Value = showDataByValue;        
                 
                 var reportTitle = _machineAreaLocalizationService.GetString("Report");
-                worksheet.Cells[ExcelConsts.ReportTitleRow, ExcelConsts.ReportTitleCol].Value = reportTitle;
+                worksheet.Cells[ExcelConsts.EmployeeReport.ReportTitleRow, ExcelConsts.EmployeeReport.ReportTitleCol].Value = reportTitle;
                 var reportName = _machineAreaLocalizationService.GetString(reportModel.Relationship.ToString());
-                worksheet.Cells[ExcelConsts.ReportNameRow, ExcelConsts.ReportNameCol].Value = reportName;        
+                worksheet.Cells[ExcelConsts.EmployeeReport.ReportNameRow, ExcelConsts.EmployeeReport.ReportNameCol].Value = reportName;        
 
                 // entity names
                 for (var i = 0; i < reportModel.Entities.Count; i++)
                 {
-                    var rowIndex = ExcelConsts.EntityNameStartRow + i;
+                    var rowIndex = ExcelConsts.EmployeeReport.EntityNameStartRow + i;
                     var reportEntity = reportModel.Entities[i];
-                    worksheet.UpdateValue(rowIndex, ExcelConsts.EntityNameStartCol, reportEntity?.EntityName, true);
+                    worksheet.UpdateValue(rowIndex, ExcelConsts.EmployeeReport.EntityNameStartCol, reportEntity?.EntityName, true);
                 }
 
                 // related entity names
                 for (var i = 0; i < reportModel.Entities.Count; i++)
                 {
-                    var rowIndex = ExcelConsts.RelatedEntityNameStartRow + i;
+                    var rowIndex = ExcelConsts.EmployeeReport.RelatedEntityNameStartRow + i;
                     var reportEntity = reportModel.Entities[i];
-                    worksheet.UpdateValue(rowIndex, ExcelConsts.RelatedEntityNameStartCol,
+                    worksheet.UpdateValue(rowIndex, ExcelConsts.EmployeeReport.RelatedEntityNameStartCol,
                         reportEntity?.RelatedEntityName, true);
                 }
 
@@ -78,48 +78,48 @@ namespace MachineArea.Pn.Services
                 for (var i = 0; i < reportModel.ReportHeaders.Count; i++)
                 {
                     var reportHeader = reportModel.ReportHeaders[i];
-                    var colIndex = ExcelConsts.HeaderStartCol + i;
-                    worksheet.UpdateValue(ExcelConsts.HeaderStartRow, colIndex, reportHeader?.HeaderValue, true, true, Color.Wheat);
+                    var colIndex = ExcelConsts.EmployeeReport.HeaderStartCol + i;
+                    worksheet.UpdateValue(ExcelConsts.EmployeeReport.HeaderStartRow, colIndex, reportHeader?.HeaderValue, true, true, Color.Wheat);
                 }
 
                 // vertical sum
                 for (var i = 0; i < reportModel.Entities.Count; i++)
                 {
-                    var rowIndex = ExcelConsts.VerticalSumStartRow + i;
+                    var rowIndex = ExcelConsts.EmployeeReport.VerticalSumStartRow + i;
                     var reportEntity = reportModel.Entities[i];
-                    worksheet.UpdateValue(rowIndex, ExcelConsts.VerticalSumStartCol, reportEntity?.TotalTime, true, "0");
+                    worksheet.UpdateValue(rowIndex, ExcelConsts.EmployeeReport.VerticalSumStartCol, reportEntity?.TotalTime, true, "0");
                 }
 
                 // vertical sum title
-                worksheet.UpdateValue(ExcelConsts.VerticalSumTitleRow, ExcelConsts.VerticalSumTitleCol, "Sum", true);
+                worksheet.UpdateValue(ExcelConsts.EmployeeReport.VerticalSumTitleRow, ExcelConsts.EmployeeReport.VerticalSumTitleCol, "Sum", true);
 
                 // data
                 for (var i = 0; i < reportModel.Entities.Count; i++)
                 {
                     var reportEntity = reportModel.Entities[i];
-                    var rowIndex = ExcelConsts.DataStartRow + i;
+                    var rowIndex = ExcelConsts.EmployeeReport.DataStartRow + i;
                     for (var y = 0; y < reportEntity.TimePerTimeUnit.Count; y++)
                     {
                         var time = reportEntity.TimePerTimeUnit[y];
-                        var colIndex = ExcelConsts.DataStartCol + y;
+                        var colIndex = ExcelConsts.EmployeeReport.DataStartCol + y;
                         worksheet.UpdateValue(rowIndex, colIndex, time, true, "0");
                     }
                 }
 
                 // horizontal sum
-                var horizontalSumRowIndex = ExcelConsts.DataStartRow + reportModel.Entities.Count;
+                var horizontalSumRowIndex = ExcelConsts.EmployeeReport.DataStartRow + reportModel.Entities.Count;
                 for (var i = 0; i < reportModel.TotalTimePerTimeUnit.Count; i++)
                 {
                     var time = reportModel.TotalTimePerTimeUnit[i];
-                    var colIndex = ExcelConsts.HorizontalSumStartCol + i;
+                    var colIndex = ExcelConsts.EmployeeReport.HorizontalSumStartCol + i;
                     worksheet.UpdateValue(horizontalSumRowIndex, colIndex, time, true, "0");
                 }
                 
                 // Report sum
-                var totalSumRowIndex = ExcelConsts.DataStartRow + reportModel.Entities.Count;
+                var totalSumRowIndex = ExcelConsts.EmployeeReport.DataStartRow + reportModel.Entities.Count;
                 var totalSum = reportModel.TotalTime;
-                worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.TotalSumCol, totalSum, true);
-                worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.TotalSumTitleCol, "Sum", true);
+                worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.EmployeeReport.TotalSumCol, totalSum, true);
+                worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.EmployeeReport.TotalSumTitleCol, "Sum", true);
                 
                 package.Save(); //Save the workbook.
             }
@@ -151,28 +151,29 @@ namespace MachineArea.Pn.Services
         /// Will return filename for excel file
         /// </summary>
         /// <returns></returns>
-        private static string BuildFileNameForExcelFile(int userId)
+        private static string BuildFileNameForExcelFile(int userId, string templateId)
         {
-            return $"machinearea-report-{userId}-{DateTime.UtcNow.Ticks}.xlsx";
+            return $"{templateId}-{userId}-{DateTime.UtcNow.Ticks}.xlsx";
         }
 
         /// <summary>
         /// Get path and filename for particular user
         /// </summary>
         /// <returns></returns>
-        private static string GetFilePathForUser(int userId)
+        private static string GetFilePathForUser(int userId, string templateId)
         {
             var filesDir = GetExcelStoragePath();
-            var destFile = Path.Combine(filesDir, BuildFileNameForExcelFile(userId));
+            var destFile = Path.Combine(filesDir, BuildFileNameForExcelFile(userId, templateId));
             return destFile;
         }
 
         /// <summary>
         /// Copy template file to new excel file
         /// </summary>
-        /// <param name="templateName">Name of the template.</param>
+        /// <param name="templateId">The template identifier.</param>
         /// <returns></returns>
-        public string CopyTemplateForNewAccount(string templateName)
+        /// <exception cref="ArgumentNullException">userId</exception>
+        public string CopyTemplateForNewAccount(string templateId)
         {
             string destFile = null;
             try
@@ -185,9 +186,9 @@ namespace MachineArea.Pn.Services
 
                 var assembly = typeof(EformMachineAreaPlugin).GetTypeInfo().Assembly;
                 var resourceStream = assembly.GetManifestResourceStream(
-                    $"MachineArea.Pn.Resources.Templates.{templateName}");
+                    $"MachineArea.Pn.Resources.Templates.{templateId}.xlsx");
 
-                destFile = GetFilePathForUser(userId);
+                destFile = GetFilePathForUser(userId, templateId);
                 if (File.Exists(destFile))
                 {
                     File.Delete(destFile);
