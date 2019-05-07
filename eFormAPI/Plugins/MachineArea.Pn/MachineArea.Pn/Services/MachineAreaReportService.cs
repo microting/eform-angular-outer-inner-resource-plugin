@@ -493,7 +493,7 @@ namespace MachineArea.Pn.Services
                     return new OperationDataResult<FileStreamModel>(false, reportDataResult.Message);
                 }
 
-                excelFile = _excelService.CopyTemplateForNewAccount("report_template.xlsx");
+                excelFile = _excelService.CopyTemplateForNewAccount("report_template");
                 var writeResult = _excelService.WriteRecordsExportModelsToExcelFile(
                     reportDataResult.Model,
                     model,

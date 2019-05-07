@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Templates\area_template.xlsx" />
-    <EmbeddedResource Include="Resources\Templates\employee_area_template.xlsx" />
-    <EmbeddedResource Include="Resources\Templates\employee_machine_template.xlsx" />
-    <EmbeddedResource Include="Resources\Templates\machine_template.xlsx" />
     <EmbeddedResource Include="Resources\Templates\report_template.xlsx" />
   </ItemGroup>
 
