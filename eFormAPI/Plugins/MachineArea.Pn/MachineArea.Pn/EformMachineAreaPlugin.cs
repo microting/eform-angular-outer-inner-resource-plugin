@@ -44,8 +44,8 @@ namespace MachineArea.Pn
 
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
         {
-            var seedData = new MachineAreaConfigurationSeedData();
-            var contextFactory = new MachineAreaPnContextFactory();
+            MachineAreaConfigurationSeedData seedData = new MachineAreaConfigurationSeedData();
+            MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
             builder.AddPluginConfiguration(
                 connectionString,
                 seedData,
@@ -76,7 +76,7 @@ namespace MachineArea.Pn
 
             MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
 
-            using (var context = contextFactory.CreateDbContext(new[] {connectionString}))
+            using (MachineAreaPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
             {  
                 context.Database.Migrate();
             }
@@ -87,17 +87,17 @@ namespace MachineArea.Pn
 
         public void Configure(IApplicationBuilder appBuilder)
         {
-            var serviceProvider = appBuilder.ApplicationServices;
+            IServiceProvider serviceProvider = appBuilder.ApplicationServices;
             IRebusService rebusService = serviceProvider.GetService<IRebusService>();
             rebusService.Start(_connectionString);
         }
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
-            var localizationService = serviceProvider
+            IMachineAreaLocalizationService localizationService = serviceProvider
                 .GetService<IMachineAreaLocalizationService>();
 
-            var result = new MenuModel();
+            MenuModel result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
             {
                 Name = localizationService.GetString("MachineArea"),
@@ -141,8 +141,8 @@ namespace MachineArea.Pn
         public void SeedDatabase(string connectionString)
         {
             // Get DbContext
-            var contextFactory = new MachineAreaPnContextFactory();
-            using (var context = contextFactory.CreateDbContext(new[] { connectionString }))
+            MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
+            using (MachineAreaPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString }))
             {
                 // Seed configuration
                 MachineAreaPluginSeed.SeedData(context);

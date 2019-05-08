@@ -6,14 +6,14 @@ namespace MachineArea.Pn.Infrastructure.Extensions
     {
         public static DateTime FirstDayOfWeek(this DateTime date, DayOfWeek dayOfWeek)
         {
-            var offset = dayOfWeek - date.DayOfWeek;
-            var fdowDate = date.AddDays(offset);
+            int offset = dayOfWeek - date.DayOfWeek;
+            DateTime fdowDate = date.AddDays(offset);
             return fdowDate;
         }
 
         public static DateTime LastDayOfWeek(this DateTime date, DayOfWeek dayOfWeek)
         {
-            var ldowDate = FirstDayOfWeek(date, dayOfWeek).AddDays(6);
+            DateTime ldowDate = FirstDayOfWeek(date, dayOfWeek).AddDays(6);
             return ldowDate;
         }
 

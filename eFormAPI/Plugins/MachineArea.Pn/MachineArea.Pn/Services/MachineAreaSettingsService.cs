@@ -40,7 +40,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var option = _options.Value;
+                MachineAreaBaseSettings option = _options.Value;
 
                 if (option.SdkConnectionString == "...")
                 {
@@ -96,7 +96,7 @@ namespace MachineArea.Pn.Services
         {
             get
             {
-                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                string value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
                 return value == null ? 0 : int.Parse(value);
             }
         }

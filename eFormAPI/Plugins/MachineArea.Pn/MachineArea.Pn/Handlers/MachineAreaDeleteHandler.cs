@@ -32,6 +32,7 @@ using MachineArea.Pn.Infrastructure.Models.Machines;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
+using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 using Rebus.Handlers;
 
 namespace MachineArea.Pn.Handlers
@@ -77,12 +78,12 @@ namespace MachineArea.Pn.Handlers
 
         private async Task DeleteRelationships(List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas)
         {
-            foreach (var machineArea in machineAreas)
+            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
             {
-                var machineAreaSites = _dbContext.MachineAreaSites.Where(x => x.MachineAreaId == machineArea.Id);
+                IQueryable<MachineAreaSite> machineAreaSites = _dbContext.MachineAreaSites.Where(x => x.MachineAreaId == machineArea.Id);
                 int numSites = machineAreaSites.Count();
                 int sitesDeleted = 0;
-                foreach (var machineAreaSite in machineAreaSites)
+                foreach (MachineAreaSite machineAreaSite in machineAreaSites)
                 {
                     try
                     {

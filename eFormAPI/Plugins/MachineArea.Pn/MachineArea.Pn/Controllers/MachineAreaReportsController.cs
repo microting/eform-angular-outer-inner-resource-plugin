@@ -1,6 +1,8 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
+using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,9 +38,9 @@ namespace MachineArea.Pn.Controllers
         [ProducesResponseType(typeof(string), 400)]
         public async Task GenerateReportFile(GenerateReportModel requestModel)
         {
-            var result = await _machineAreaReportService.GenerateReportFile(requestModel);
+            OperationDataResult<FileStreamModel> result = await _machineAreaReportService.GenerateReportFile(requestModel);
             const int bufferSize = 4086;
-            var buffer = new byte[bufferSize];
+            byte[] buffer = new byte[bufferSize];
             Response.OnStarting(async () =>
             {
                 try
@@ -48,13 +50,13 @@ namespace MachineArea.Pn.Controllers
                         Response.ContentLength = result.Message.Length;
                         Response.ContentType = "text/plain";
                         Response.StatusCode = 400;
-                        var bytes = Encoding.UTF8.GetBytes(result.Message);
+                        byte[] bytes = Encoding.UTF8.GetBytes(result.Message);
                         await Response.Body.WriteAsync(bytes, 0, result.Message.Length);
                         await Response.Body.FlushAsync();
                     }
                     else
                     {
-                        using (var excelStream = result.Model.FileStream)
+                        using (FileStream excelStream = result.Model.FileStream)
                         {
                             int bytesRead;
                             Response.ContentLength = excelStream.Length;

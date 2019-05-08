@@ -43,7 +43,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var machinesModel = new MachinesModel();
+                MachinesModel machinesModel = new MachinesModel();
 
                 IQueryable<Machine> machinesQuery = _dbContext.Machines.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -74,7 +74,7 @@ namespace MachineArea.Pn.Services
                         .Take((int)requestModel.PageSize);
                 }
 
-                var machines = await machinesQuery.Select(x => new MachineModel()
+                List<MachineModel> machines = await machinesQuery.Select(x => new MachineModel()
                 {
                     Name = x.Name,
                     Id = x.Id
@@ -111,11 +111,11 @@ namespace MachineArea.Pn.Services
                         _localizationService.GetString("MachineWithIdNotExist"));
                 }
                 
-                var machineAreas = _dbContext.MachineAreas
+                List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = _dbContext.MachineAreas
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.MachineId == machine.Id).ToList();
 
                 machine.RelatedAreasIds = new List<int>();
-                foreach (var machineArea in machineAreas)
+                foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
                 {
                     machine.RelatedAreasIds.Add(machineArea.AreaId);
                 }
@@ -135,7 +135,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var machineAreas = model.RelatedAreasIds.Select(x =>
+                List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = model.RelatedAreasIds.Select(x =>
                     new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
                     {
                         Id = x
@@ -165,7 +165,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var machineAreas = model.RelatedAreasIds.Select(x =>
+                List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = model.RelatedAreasIds.Select(x =>
                     new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
                     {
                         Id = x

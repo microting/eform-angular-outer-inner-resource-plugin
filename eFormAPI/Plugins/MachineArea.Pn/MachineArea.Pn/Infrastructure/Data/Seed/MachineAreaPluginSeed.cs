@@ -11,13 +11,13 @@ namespace MachineArea.Pn.Infrastructure.Data.Seed
     {
         public static void SeedData(MachineAreaPnDbContext dbContext)
         {
-            var seedData = new MachineAreaConfigurationSeedData();
-            var configurationList = seedData.Data;
-            foreach (var configurationItem in configurationList)
+            MachineAreaConfigurationSeedData seedData = new MachineAreaConfigurationSeedData();
+            PluginConfigurationValue[] configurationList = seedData.Data;
+            foreach (PluginConfigurationValue configurationItem in configurationList)
             {
                 if (!dbContext.PluginConfigurationValues.Any(x=>x.Name == configurationItem.Name))
                 {
-                    var newConfigValue = new PluginConfigurationValue()
+                    PluginConfigurationValue newConfigValue = new PluginConfigurationValue()
                     {
                         Name = configurationItem.Name,
                         Value = configurationItem.Value,
