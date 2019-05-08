@@ -118,7 +118,7 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            var match = _dbContext.MachineAreas.SingleOrDefault(x =>
+            Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea match = _dbContext.MachineAreas.SingleOrDefault(x =>
                     x.MachineId == machineId && x.AreaId == areaId);
             if (match == null)
             {
@@ -176,7 +176,7 @@ namespace MachineArea.Pn.Handlers
                 
                 foreach (Site_Dto siteDto in sites)
                 {
-                    var siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
+                    MachineAreaSite siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
                         x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id);
                     if (siteMatch == null)
                     {
@@ -200,7 +200,7 @@ namespace MachineArea.Pn.Handlers
         {
             try
             {                
-                var oldColor = Console.ForegroundColor;
+                ConsoleColor oldColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("[DBG] " + appendText);
                 Console.ForegroundColor = oldColor;
@@ -214,7 +214,7 @@ namespace MachineArea.Pn.Handlers
         {
             try
             {
-                var oldColor = Console.ForegroundColor;
+                ConsoleColor oldColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("[ERR] " + appendText);
                 Console.ForegroundColor = oldColor;

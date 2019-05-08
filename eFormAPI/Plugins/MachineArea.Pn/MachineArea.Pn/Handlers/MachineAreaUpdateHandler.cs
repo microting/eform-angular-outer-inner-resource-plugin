@@ -92,7 +92,7 @@ namespace MachineArea.Pn.Handlers
             List<int> deployedAreaIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
-            foreach (var machineArea in machineAreas)
+            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
             {                
                 deployedAreaIds.Add(machineArea.AreaId);
 
@@ -130,7 +130,7 @@ namespace MachineArea.Pn.Handlers
             List<int> deployedMachineIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
-            foreach (var machineArea in machineAreas)
+            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
             {
                 deployedMachineIds.Add(machineArea.MachineId);
                 
@@ -160,7 +160,7 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            var machineArea = _dbContext.MachineAreas.SingleOrDefault(x =>
+            Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea = _dbContext.MachineAreas.SingleOrDefault(x =>
                     x.MachineId == machineId && x.AreaId == areaId);
 
             if (machineArea != null)

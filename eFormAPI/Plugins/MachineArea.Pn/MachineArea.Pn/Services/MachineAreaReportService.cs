@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using eFormCore;
+using eFormShared;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Extensions;
@@ -44,49 +46,50 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var sitesList = core.SiteReadAll(false);
-                var modelDateFrom = new DateTime(
+                Core core = _coreHelper.GetCore();
+                List<Site_Dto> sitesList = core.SiteReadAll(false);
+                DateTime modelDateFrom = new DateTime(
                     model.DateFrom.Year,
                     model.DateFrom.Month,
                     model.DateFrom.Day,
                     0,0,0);
 
-                var modelDateTo = new DateTime(
+                DateTime modelDateTo = new DateTime(
                     model.DateTo.Year,
                     model.DateTo.Month,
                     model.DateTo.Day,
                     23,59,59);
 
-                var jobsList = await _dbContext.MachineAreaTimeRegistrations
+                List<MachineAreaTimeRegistration> jobsList = await _dbContext.MachineAreaTimeRegistrations
                     .Include(x => x.Machine)
                     .Include(x => x.Area)
                     .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                     .ToListAsync();
-                var reportEntitiesList = new List<ReportEntityModel>();
-                var reportDates = new List<DateTime>();
-                var reportHeaders = new List<ReportEntityHeaderModel>();
+                List<ReportEntityModel> reportEntitiesList = new List<ReportEntityModel>();
+                List<DateTime> reportDates = new List<DateTime>();
+                List<ReportEntityHeaderModel> reportHeaders = new List<ReportEntityHeaderModel>();
+                ReportModel finalModel = new ReportModel();
                 switch (model.Type)
                 {
                     case ReportType.Day:
-                        var dateFrom = new DateTime(
+                        DateTime dateFrom = new DateTime(
                             model.DateFrom.Year,
                             model.DateFrom.Month,
                             model.DateFrom.Day,
                             0,0,0);
 
-                        var dateTo = new DateTime(
+                        DateTime dateTo = new DateTime(
                             model.DateTo.Year,
                             model.DateTo.Month,
                             model.DateTo.Day,
                             23,59,59);
 
-                        for (var date = dateFrom; date <= dateTo; date = date.AddDays(1))
+                        for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
                         {
                             reportDates.Add(date);
                         }
 
-                        foreach (var reportDate in reportDates)
+                        foreach (DateTime reportDate in reportDates)
                         {
                             reportHeaders.Add(new ReportEntityHeaderModel
                             {
@@ -196,27 +199,27 @@ namespace MachineArea.Pn.Services
                         break;
                     case ReportType.Week:
 
-                        var firstDayOfWeek = model.DateFrom.FirstDayOfWeek(DayOfWeek.Monday);
-                        var lastDayOfWeek = model.DateTo.LastDayOfWeek(DayOfWeek.Monday);
+                        DateTime firstDayOfWeek = model.DateFrom.FirstDayOfWeek(DayOfWeek.Monday);
+                        DateTime lastDayOfWeek = model.DateTo.LastDayOfWeek(DayOfWeek.Monday);
 
-                        var dateFromWeek = new DateTime(
+                        DateTime dateFromWeek = new DateTime(
                             firstDayOfWeek.Year,
                             firstDayOfWeek.Month,
                             firstDayOfWeek.Day,
                             0,0,0);
 
-                        var dateToWeek = new DateTime(
+                        DateTime dateToWeek = new DateTime(
                             lastDayOfWeek.Year,
                             lastDayOfWeek.Month,
                             lastDayOfWeek.Day,
                             23,59,59);
 
-                        for (var date = dateFromWeek; date <= dateToWeek; date = date.AddDays(7))
+                        for (DateTime date = dateFromWeek; date <= dateToWeek; date = date.AddDays(7))
                         {
                             reportDates.Add(date);
                         }
 
-                        foreach (var reportDate in reportDates)
+                        foreach (DateTime reportDate in reportDates)
                         {
                             reportHeaders.Add(new ReportEntityHeaderModel
                             {
@@ -319,27 +322,29 @@ namespace MachineArea.Pn.Services
                         break;
                     case ReportType.Month:
 
-                        var firstDayOfMonth = model.DateFrom.FirstDayOfMonth();
-                        var lastDayOfMonth = model.DateTo.LastDayOfMonth();
+                        DateTime firstDayOfMonth = model.DateFrom.FirstDayOfMonth();
+                        DateTime lastDayOfMonth = model.DateTo.LastDayOfMonth();
 
-                        var dateFromMonth = new DateTime(
+                        DateTime dateFromMonth = new DateTime(
                             firstDayOfMonth.Year,
                             firstDayOfMonth.Month,
                             firstDayOfMonth.Day,
                             0,0,0);
 
-                        var dateToMonth = new DateTime(
+                        DateTime dateToMonth = new DateTime(
                             lastDayOfMonth.Year,
                             lastDayOfMonth.Month,
                             lastDayOfMonth.Day,
                             23,59,59);
 
-                        for (var date = dateFromMonth; date <= dateToMonth; date = date.AddMonths(1))
+                        // Fill dates array to arrange time by time unit
+                        for (DateTime date = dateFromMonth; date <= dateToMonth; date = date.AddMonths(1))
                         {
                             reportDates.Add(date);
                         }
 
-                        foreach (var reportDate in reportDates)
+                        // Add headers with required format
+                        foreach (DateTime reportDate in reportDates)
                         {
                             reportHeaders.Add(new ReportEntityHeaderModel
                             {
@@ -355,6 +360,7 @@ namespace MachineArea.Pn.Services
                                     {
                                         EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
                                         EntityId = x.Key,
+                                        // Fill dates array foreach date and calc sum for this date
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -442,34 +448,77 @@ namespace MachineArea.Pn.Services
                         break;
                 }
 
-                var sumByTimeUnit = new List<decimal>();
-                foreach (var reportEntity in reportEntitiesList)
+                if (model.Relationship == ReportRelationshipType.EmployeeArea 
+                    || model.Relationship == ReportRelationshipType.EmployeeMachine)
                 {
-                    var i = 0;
-                    foreach (var timePerTimeUnit in reportEntity.TimePerTimeUnit)
+                    // Group reports by employee
+                    List<IGrouping<int, ReportEntityModel>> groupedReports = reportEntitiesList.GroupBy(x => x.EntityId).ToList();
+                    foreach (IGrouping<int, ReportEntityModel> groupedReport in groupedReports)
                     {
-                        if (sumByTimeUnit.Count <= i)
+                        // Calculate sum for sub report
+                        List<decimal> sumByTimeUnit = new List<decimal>();
+                        foreach (ReportEntityModel reportEntity in groupedReport)
                         {
-                            sumByTimeUnit.Add(timePerTimeUnit);
-                        }
-                        else
-                        {
-                            sumByTimeUnit[i] += timePerTimeUnit;
+                            int i = 0;
+                            foreach (decimal timePerTimeUnit in reportEntity.TimePerTimeUnit)
+                            {
+                                if (sumByTimeUnit.Count <= i)
+                                {
+                                    sumByTimeUnit.Add(timePerTimeUnit);
+                                }
+                                else
+                                {
+                                    sumByTimeUnit[i] += timePerTimeUnit;
+                                }
+
+                                i++;
+                            }
                         }
 
-                        i++;
+                        // Push sub report to reports array
+                        finalModel.SubReports.Add(new SubReportModel()
+                        {
+                            Entities = groupedReport.ToList(),
+                            TotalTime = groupedReport.Sum(x => x.TotalTime),
+                            TotalTimePerTimeUnit = sumByTimeUnit
+                        });
                     }
                 }
-
-                var finalModel = new ReportModel()
+                else
                 {
-                    Entities = reportEntitiesList,
-                    ReportHeaders = reportHeaders,
-                    Relationship = model.Relationship,
-                    TotalTime = reportEntitiesList
-                        .Sum(x => x.TotalTime),
-                    TotalTimePerTimeUnit = sumByTimeUnit
-                };
+                    // Calculate only one sub report for employee/area/machine
+                    List<decimal> sumByTimeUnit = new List<decimal>();
+                    foreach (ReportEntityModel reportEntity in reportEntitiesList)
+                    {
+                        int i = 0;
+                        foreach (decimal timePerTimeUnit in reportEntity.TimePerTimeUnit)
+                        {
+                            if (sumByTimeUnit.Count <= i)
+                            {
+                                sumByTimeUnit.Add(timePerTimeUnit);
+                            }
+                            else
+                            {
+                                sumByTimeUnit[i] += timePerTimeUnit;
+                            }
+
+                            i++;
+                        }
+                    }
+
+                    finalModel.SubReports = new List<SubReportModel>()
+                    {
+                        new SubReportModel()
+                        {
+                            Entities = reportEntitiesList,
+                            TotalTime = reportEntitiesList.Sum(x => x.TotalTime),
+                            TotalTimePerTimeUnit = sumByTimeUnit
+                        }
+                    };
+                }
+
+                finalModel.ReportHeaders = reportHeaders;
+                finalModel.Relationship = model.Relationship;
 
                 return new OperationDataResult<ReportModel>(true, finalModel);
             }
@@ -487,14 +536,14 @@ namespace MachineArea.Pn.Services
             string excelFile = null;
             try
             {
-                var reportDataResult = await GenerateReport(model);
+                OperationDataResult<ReportModel> reportDataResult = await GenerateReport(model);
                 if (!reportDataResult.Success)
                 {
                     return new OperationDataResult<FileStreamModel>(false, reportDataResult.Message);
                 }
 
                 excelFile = _excelService.CopyTemplateForNewAccount("report_template");
-                var writeResult = _excelService.WriteRecordsExportModelsToExcelFile(
+                bool writeResult = _excelService.WriteRecordsExportModelsToExcelFile(
                     reportDataResult.Model,
                     model,
                     excelFile);
@@ -504,7 +553,7 @@ namespace MachineArea.Pn.Services
                     throw new Exception($"Error while writing excel file {excelFile}");
                 }
 
-                var result = new FileStreamModel()
+                FileStreamModel result = new FileStreamModel()
                 {
                     FilePath = excelFile,
                     FileStream = new FileStream(excelFile, FileMode.Open),

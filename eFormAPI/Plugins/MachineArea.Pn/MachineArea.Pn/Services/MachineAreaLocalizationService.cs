@@ -16,13 +16,13 @@ namespace MachineArea.Pn.Services
  
         public string GetString(string key)
         {
-            var str = _localizer[key];
+            LocalizedString str = _localizer[key];
             return str.Value;
         }
 
         public string GetString(string format, params object[] args)
         {
-            var message = _localizer[format];
+            LocalizedString message = _localizer[format];
             if (message?.Value == null)
             {
                 return null;
