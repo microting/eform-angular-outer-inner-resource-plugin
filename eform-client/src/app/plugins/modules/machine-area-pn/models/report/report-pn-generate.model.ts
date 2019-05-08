@@ -7,7 +7,7 @@ export class ReportPnGenerateModel {
   constructor(data?: any) {
     if (data) {
       this.type = data.type;
-      this.relationship = data.relationshipl;
+      this.relationship = data.relationship;
       this.dateTo = data.dateTo;
       this.dateFrom = data.dateFrom;
     }

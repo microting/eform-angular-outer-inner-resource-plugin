@@ -10,5 +10,6 @@
         public string Token { get; set; }
         public string SdkeFormId { get; set; }
         public string EnabledSiteIds { get; set; }
+        public bool QuickSyncEnabled { get; set; }
     }
 }

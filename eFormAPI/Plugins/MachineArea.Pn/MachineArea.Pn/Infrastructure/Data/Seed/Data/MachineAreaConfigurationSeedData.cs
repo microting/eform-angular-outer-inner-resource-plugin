@@ -47,6 +47,11 @@ namespace MachineArea.Pn.Infrastructure.Data.Seed.Data
                 Name = "MachineAreaBaseSettings:EnabledSiteIds",
                 Value = ""
             },
+            new PluginConfigurationValue()
+            {
+                Name = "MachineAreaBaseSettings:QuickSyncEnabled",
+                Value = "false"
+            },
         };
     }
 }

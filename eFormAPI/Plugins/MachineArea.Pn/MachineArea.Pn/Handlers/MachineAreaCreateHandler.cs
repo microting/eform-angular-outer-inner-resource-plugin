@@ -132,18 +132,29 @@ namespace MachineArea.Pn.Handlers
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 mainElement.Repeated = 0;
-                
-                mainElement.EnableQuickSync = true;
+
+                string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.QuickSyncEnabled.ToString()}"; 
+                LogEvent($"lookup is {lookup}");
+
+                bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
+                    .FirstOrDefault(x => 
+                        x.Name == lookup)?.Value == "true";
+
+                if (quickSyncEnabled)
+                {
+                    mainElement.EnableQuickSync = true;    
+                }
+
                 List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
 
                 bool folderAlreadyExist = false;
-                int _microtingUId = 0;
+                int microtingUId = 0;
                 foreach (Folder_Dto folderDto in folderDtos)
                 {
                     if (folderDto.Name == areaName)
                     {
                         folderAlreadyExist = true;
-                        _microtingUId = (int)folderDto.MicrotingUId;
+                        microtingUId = (int)folderDto.MicrotingUId;
                     }
                 }
 
@@ -156,12 +167,12 @@ namespace MachineArea.Pn.Handlers
                     {
                         if (folderDto.Name == areaName)
                         {
-                            _microtingUId = (int)folderDto.MicrotingUId;
+                            microtingUId = (int)folderDto.MicrotingUId;
                         }
                     }
                 }
                 
-                mainElement.CheckListFolderName = _microtingUId.ToString();
+                mainElement.CheckListFolderName = microtingUId.ToString();
                 
                 foreach (Site_Dto siteDto in sites)
                 {

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Models.Settings;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -38,8 +40,21 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                var result = _options.Value;
-                return new OperationDataResult<MachineAreaBaseSettings>(true, result);
+                var option = _options.Value;
+
+                if (option.SdkConnectionString == "...")
+                {
+                    string connectionString = _dbContext.Database.GetDbConnection().ConnectionString;
+
+                    string dbNameSection = Regex.Match(connectionString, @"(Database=(...)_eform-angular-\w*-plugin;)").Groups[0].Value;
+                    string dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
+                    string sdk = $"Database={dbPrefix}_SDK;";
+                    connectionString = connectionString.Replace(dbNameSection, sdk);
+                    _options.UpdateDb(settings => { settings.SdkConnectionString = connectionString;}, _dbContext, UserId);
+
+                }
+
+                return new OperationDataResult<MachineAreaBaseSettings>(true, option);
             }
             catch(Exception e)
             {
