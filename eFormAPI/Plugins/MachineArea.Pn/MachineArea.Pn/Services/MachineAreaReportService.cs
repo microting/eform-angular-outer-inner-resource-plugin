@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Extensions;
+using MachineArea.Pn.Infrastructure.Helpers;
 using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
+using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Services
 {
@@ -55,8 +57,10 @@ namespace MachineArea.Pn.Services
                     model.DateTo.Month,
                     model.DateTo.Day,
                     23,59,59);
-                
+
                 var jobsList = await _dbContext.MachineAreaTimeRegistrations
+                    .Include(x => x.Machine)
+                    .Include(x => x.Area)
                     .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                     .ToListAsync();
                 var reportEntitiesList = new List<ReportEntityModel>();
@@ -90,22 +94,105 @@ namespace MachineArea.Pn.Services
                             });
                         }
 
-                        reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
-                            .Select(x => new ReportEntityModel()
-                            {
-                                EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
-                                EntityId = x.Key,
-                                TimePerTimeUnit = reportDates.Select(z =>
-                                        x
-                                            .Where(j => j.DoneAt.Day == z.Day
-                                                        && j.DoneAt.Month == z.Month
-                                                        && j.DoneAt.Year == z.Year)
-                                            .Sum(s => (decimal) TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
-                                    )
-                                    .ToList(),
-                                TotalTime = x.Sum(z => (decimal) TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
-                            })
-                            .ToList();
+                        switch (model.Relationship)
+                        {
+                            case ReportRelationshipType.Employee:
+                            reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
+                                .Select(x => new ReportEntityModel()
+                                {
+                                    EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
+                                    EntityId = x.Key,
+                                    TimePerTimeUnit = reportDates.Select(z =>
+                                            x
+                                                .Where(j => j.DoneAt.Day == z.Day
+                                                            && j.DoneAt.Month == z.Month
+                                                            && j.DoneAt.Year == z.Year)
+                                                .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                        )
+                                        .ToList(),
+                                    TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                })
+                                .ToList();
+                                break;
+                            case ReportRelationshipType.Area:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.AreaId, x.Area })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.Area?.Name,
+                                        EntityId = x.Key.AreaId,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt.Day == z.Day
+                                                                && j.DoneAt.Month == z.Month
+                                                                && j.DoneAt.Year == z.Year)
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.Machine:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.MachineId, x.Machine })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.Machine?.Name,
+                                        EntityId = x.Key.MachineId,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt.Day == z.Day
+                                                                && j.DoneAt.Month == z.Month
+                                                                && j.DoneAt.Year == z.Year)
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.EmployeeMachine:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.MachineId, x.Machine })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityId = x.Key.SDKSiteId,
+                                        RelatedEntityId = x.Key.MachineId,
+                                        RelatedEntityName = x.Key.Machine.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt.Day == z.Day
+                                                                && j.DoneAt.Month == z.Month
+                                                                && j.DoneAt.Year == z.Year)
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    }).ToList();
+                                break;
+                            case ReportRelationshipType.EmployeeArea:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.AreaId, x.Area })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityId = x.Key.SDKSiteId,
+                                        RelatedEntityId = x.Key.AreaId,
+                                        RelatedEntityName = x.Key.Area.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt.Day == z.Day
+                                                                && j.DoneAt.Month == z.Month
+                                                                && j.DoneAt.Year == z.Year)
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    }).ToList();
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                        
+                        // Employee - Machine
                         break;
                     case ReportType.Week:
 
@@ -133,25 +220,102 @@ namespace MachineArea.Pn.Services
                         {
                             reportHeaders.Add(new ReportEntityHeaderModel
                             {
-                                HeaderValue = $"{reportDate:dd/MM/yyyy} - {reportDate.AddDays(7):dd/MM/yyyy}"
+                                HeaderValue = $"W{DatesHelper.GetIso8601WeekOfYear(reportDate)}-{reportDate:yy}"
                             });
                         }
 
-                        reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
-                            .Select(x => new ReportEntityModel()
-                            {
-                                EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
-                                EntityId = x.Key,
-                                TimePerTimeUnit = reportDates.Select(z =>
-                                        x
-                                            .Where(j => j.DoneAt >= z
-                                                        && j.DoneAt < z.AddDays(7))
-                                            .Sum(s => (decimal) TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
-                                    )
-                                    .ToList(),
-                                TotalTime = x.Sum(z => (decimal) TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
-                            })
-                            .ToList();
+                        switch (model.Relationship)
+                        {
+                            case ReportRelationshipType.Employee:
+                                reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
+                                        EntityId = x.Key,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddDays(7))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.Area:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.AreaId, x.Area })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.Area?.Name,
+                                        EntityId = x.Key.AreaId,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddDays(7))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.Machine:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.MachineId, x.Machine })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.Machine?.Name,
+                                        EntityId = x.Key.MachineId,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddDays(7))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.EmployeeArea:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.AreaId, x.Area })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityId = x.Key.SDKSiteId,
+                                        RelatedEntityId = x.Key.AreaId,
+                                        RelatedEntityName = x.Key.Area.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddDays(7))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    }).ToList();
+                                break;
+                            case ReportRelationshipType.EmployeeMachine:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.MachineId, x.Machine })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityId = x.Key.SDKSiteId,
+                                        RelatedEntityId = x.Key.MachineId,
+                                        RelatedEntityName = x.Key.Machine.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddDays(7))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    }).ToList();
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                         break;
                     case ReportType.Month:
 
@@ -183,21 +347,98 @@ namespace MachineArea.Pn.Services
                             });
                         }
 
-                        reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
-                            .Select(x => new ReportEntityModel()
-                            {
-                                EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
-                                EntityId = x.Key,
-                                TimePerTimeUnit = reportDates.Select(z =>
-                                        x
-                                            .Where(j => j.DoneAt >= z
-                                                        && j.DoneAt < z.AddMonths(1))
-                                            .Sum(s => (decimal) TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
-                                    )
-                                    .ToList(),
-                                TotalTime = x.Sum(z => (decimal) TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
-                            })
-                            .ToList();
+                        switch (model.Relationship)
+                        {
+                            case ReportRelationshipType.Employee:
+                                reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
+                                        EntityId = x.Key,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddMonths(1))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.Area:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.AreaId, x.Area })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.Area?.Name,
+                                        EntityId = x.Key.AreaId,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddMonths(1))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.Machine:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.MachineId, x.Machine })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.Machine?.Name,
+                                        EntityId = x.Key.MachineId,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddMonths(1))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    })
+                                    .ToList();
+                                break;
+                            case ReportRelationshipType.EmployeeArea:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.AreaId, x.Area })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityId = x.Key.SDKSiteId,
+                                        RelatedEntityId = x.Key.AreaId,
+                                        RelatedEntityName = x.Key.Area.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddMonths(1))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    }).ToList();
+                                break;
+                            case ReportRelationshipType.EmployeeMachine:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.MachineId, x.Machine })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityId = x.Key.SDKSiteId,
+                                        RelatedEntityId = x.Key.MachineId,
+                                        RelatedEntityName = x.Key.Machine.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddMonths(1))
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    }).ToList();
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                         break;
                 }
 
@@ -224,6 +465,7 @@ namespace MachineArea.Pn.Services
                 {
                     Entities = reportEntitiesList,
                     ReportHeaders = reportHeaders,
+                    Relationship = model.Relationship,
                     TotalTime = reportEntitiesList
                         .Sum(x => x.TotalTime),
                     TotalTimePerTimeUnit = sumByTimeUnit
@@ -251,7 +493,7 @@ namespace MachineArea.Pn.Services
                     return new OperationDataResult<FileStreamModel>(false, reportDataResult.Message);
                 }
 
-                excelFile = _excelService.CopyTemplateForNewAccount("report_template.xlsx");
+                excelFile = _excelService.CopyTemplateForNewAccount("report_template");
                 var writeResult = _excelService.WriteRecordsExportModelsToExcelFile(
                     reportDataResult.Model,
                     model,

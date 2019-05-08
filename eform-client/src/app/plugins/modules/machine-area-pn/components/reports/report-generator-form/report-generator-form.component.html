@@ -38,7 +38,11 @@
         required
         [placeholder]="'Relationship' | translate"
         [items]="[
-        {id: relationshipTypes.Employee, name: relationshipTypes[relationshipTypes.Employee] | translate}
+        {id: relationshipTypes.Employee, name: relationshipTypes[relationshipTypes.Employee] | translate},
+        {id: relationshipTypes.Area, name: relationshipTypes[relationshipTypes.Area] | translate},
+        {id: relationshipTypes.Machine, name: relationshipTypes[relationshipTypes.Machine] | translate},
+        {id: relationshipTypes.EmployeeArea, name: relationshipTypes[relationshipTypes.EmployeeArea] | translate},
+        {id: relationshipTypes.EmployeeMachine, name: relationshipTypes[relationshipTypes.EmployeeMachine] | translate}
         ]"
         [clearable]="false"
         [bindLabel]="'name'"
