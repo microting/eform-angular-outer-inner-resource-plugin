@@ -3,11 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormShared;
-using MachineArea.Pn.Infrastructure.Models.Machines;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
-using MachineArea = Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea;
 
 namespace MachineArea.Pn.Test
 {
