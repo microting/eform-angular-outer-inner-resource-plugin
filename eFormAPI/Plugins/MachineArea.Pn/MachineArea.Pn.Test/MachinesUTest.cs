@@ -7,6 +7,7 @@ using MachineArea.Pn.Infrastructure.Models.Machines;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
+using MachineArea = Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea;
 
 namespace MachineArea.Pn.Test
 {
@@ -14,7 +15,7 @@ namespace MachineArea.Pn.Test
     public class MachinesUTest : DbTestFixture
     {
         [Test]
-        public async Task MachineModel_Save_DoesSave()
+        public async Task Machine_Save_DoesSave()
         {
             // Arrange
             Machine newMachine = new Machine
@@ -38,7 +39,7 @@ namespace MachineArea.Pn.Test
         }
 
         [Test]
-        public async Task MachineModel_Update_DoesUpdate()
+        public async Task Machine_Update_DoesUpdate()
         {
             // Arrange
             Machine machine = new Machine
@@ -72,7 +73,47 @@ namespace MachineArea.Pn.Test
         }
 
         [Test]
-        public async Task MachineModel_Delete_DoesDelete()
+        public async Task Machine_UpdateBinding_DoesUpdate()
+        {
+            // Arrange
+            Machine machine = new Machine
+            {
+                Name = Guid.NewGuid().ToString()
+            };
+
+            Area area = new Area
+            {
+                Name = Guid.NewGuid().ToString()
+            };
+
+            DbContext.Machines.Add(machine);
+            DbContext.Areas.Add(area);
+            DbContext.SaveChanges();
+
+            //Act
+            Machine selectedMachine = new Machine
+            {
+                Name = Guid.NewGuid().ToString(),
+                Id = machine.Id,
+                MachineAreas = new List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea>()
+                {
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
+                    {
+                        AreaId = area.Id,
+                        MachineId = machine.Id
+                    }
+                }
+            };
+
+            await selectedMachine.Update(DbContext);
+
+            //Assert
+            Assert.AreEqual(selectedMachine.MachineAreas.First().AreaId, area.Id);
+
+        }
+
+        [Test]
+        public async Task Machine_Delete_DoesDelete()
         {
             //Arrange
             Machine machine = new Machine
