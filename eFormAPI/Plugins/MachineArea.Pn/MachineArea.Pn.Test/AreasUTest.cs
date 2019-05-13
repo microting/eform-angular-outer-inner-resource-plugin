@@ -72,6 +72,46 @@ namespace MachineArea.Pn.Test
         }
 
         [Test]
+        public async Task Area_UpdateBinding_DoesUpdate()
+        {
+            // Arrange
+            Machine machine = new Machine
+            {
+                Name = Guid.NewGuid().ToString()
+            };
+
+            Area area = new Area
+            {
+                Name = Guid.NewGuid().ToString()
+            };
+
+            DbContext.Machines.Add(machine);
+            DbContext.Areas.Add(area);
+            DbContext.SaveChanges();
+
+            //Act
+            Area selectedArea = new Area
+            {
+                Name = Guid.NewGuid().ToString(),
+                Id = area.Id,
+                MachineAreas = new List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea>()
+                {
+                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea()
+                    {
+                        AreaId = area.Id,
+                        MachineId = machine.Id
+                    }
+                }
+            };
+
+            await selectedArea.Update(DbContext);
+
+            //Assert
+            Assert.AreEqual(selectedArea.MachineAreas.First().MachineId, machine.Id);
+
+        }
+
+        [Test]
         public async Task AreaModel_Delete_DoesDelete()
         {
             //Arrange
