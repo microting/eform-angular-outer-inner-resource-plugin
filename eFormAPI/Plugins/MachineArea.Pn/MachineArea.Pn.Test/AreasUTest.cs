@@ -15,7 +15,7 @@ namespace MachineArea.Pn.Test
     public class AreasUTest : DbTestFixture
     {
         [Test]
-        public async Task AreasModel_Save_DoesSave()
+        public async Task Area_Save_DoesSave()
         {
            // Arrange
             Area newArea = new Area()
@@ -38,7 +38,7 @@ namespace MachineArea.Pn.Test
         }
 
         [Test]
-        public async Task AreaModel_Update_DoesUpdate()
+        public async Task Area_Update_DoesUpdate()
         {
             // Arrange
             Area area = new Area
@@ -112,7 +112,7 @@ namespace MachineArea.Pn.Test
         }
 
         [Test]
-        public async Task AreaModel_Delete_DoesDelete()
+        public async Task Area_Delete_DoesDelete()
         {
             //Arrange
             Area area = new Area
