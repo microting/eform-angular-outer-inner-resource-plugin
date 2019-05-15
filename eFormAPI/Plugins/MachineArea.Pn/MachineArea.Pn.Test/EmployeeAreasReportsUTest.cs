@@ -89,7 +89,7 @@ namespace MachineArea.Pn.Test
                 .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                 .ToListAsync();
 
-            ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList);
+            ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, (int)ReportTimeType.Minutes);
 
             Assert.AreEqual(reportModel.SubReports.Count, 2);
 
@@ -204,7 +204,7 @@ namespace MachineArea.Pn.Test
                 .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                 .ToListAsync();
 
-            ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList);
+            ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, (int)ReportTimeType.Minutes);
 
             Assert.AreEqual(reportModel.SubReports.Count, 2);
 
@@ -308,7 +308,7 @@ namespace MachineArea.Pn.Test
                 .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                 .ToListAsync();
 
-            ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList);
+            ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, (int)ReportTimeType.Minutes);
 
             Assert.AreEqual(reportModel.SubReports.Count, 2);
 
