@@ -52,6 +52,11 @@ namespace MachineArea.Pn.Infrastructure.Data.Seed.Data
                 Name = "MachineAreaBaseSettings:QuickSyncEnabled",
                 Value = "false"
             },
+            new PluginConfigurationValue()
+            {
+                Name = "MachineAreaBaseSettings:ReportTimeType",
+                Value = "1"
+            },
         };
     }
 }

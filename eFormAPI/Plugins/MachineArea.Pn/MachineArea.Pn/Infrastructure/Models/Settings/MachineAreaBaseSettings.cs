@@ -1,4 +1,6 @@
-﻿namespace MachineArea.Pn.Infrastructure.Models.Settings
+﻿using MachineArea.Pn.Infrastructure.Enums;
+
+namespace MachineArea.Pn.Infrastructure.Models.Settings
 {
     public class MachineAreaBaseSettings
     {
@@ -11,5 +13,6 @@
         public string SdkeFormId { get; set; }
         public string EnabledSiteIds { get; set; }
         public bool QuickSyncEnabled { get; set; }
+        public int ReportTimeType { get; set; }
     }
 }

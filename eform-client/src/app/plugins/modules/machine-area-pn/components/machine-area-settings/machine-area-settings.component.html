@@ -82,6 +82,20 @@
           </div>
           <div class="col-md-12">
             <div class="md-form input-group">
+              <ng-select required
+                         bindLabel="name"
+                         bindValue="id"
+                         [clearable]="false"
+                         [(ngModel)]="settingsModel.reportTimeType" name="editTime"
+                         [placeholder]="'Report time units' | translate"
+                         [items]="[
+                            {id: 1, name: 'Seconds' | translate},
+                            {id: 2, name: 'Minutes' | translate}
+                           ]"></ng-select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="md-form input-group">
               <input mdbInputDirective
                      [mdbValidate]="false" [(ngModel)]="settingsModel.enabledSiteIds"
                      type="text" name="sdkSiteIds" #sdkSiteIds="ngModel"
