@@ -8,4 +8,5 @@ export class MachineAreaBaseSettingsModel {
   sdkeFormId: string;
   enabledSiteIds: string;
   quickSyncEnabled: boolean;
+  reportTimeType: number;
 }

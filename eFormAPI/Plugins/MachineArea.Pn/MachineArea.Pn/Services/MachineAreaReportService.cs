@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,9 +12,11 @@ using MachineArea.Pn.Infrastructure.Extensions;
 using MachineArea.Pn.Infrastructure.Helpers;
 using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Report;
+using MachineArea.Pn.Infrastructure.Models.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
@@ -28,11 +30,13 @@ namespace MachineArea.Pn.Services
         private readonly IExcelService _excelService;
         private readonly MachineAreaPnDbContext _dbContext;
         private readonly IEFormCoreService _coreHelper;
+        private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
 
         public MachineAreaReportService(ILogger<MachineAreaReportService> logger,
             MachineAreaPnDbContext dbContext,
             IEFormCoreService coreHelper,
             IMachineAreaLocalizationService machineAreaLocalizationService,
+            IPluginDbOptions<MachineAreaBaseSettings> options,
             IExcelService excelService)
         {
             _logger = logger;
@@ -40,12 +44,14 @@ namespace MachineArea.Pn.Services
             _coreHelper = coreHelper;
             _machineAreaLocalizationService = machineAreaLocalizationService;
             _excelService = excelService;
+            _options = options;
         }
 
         public async Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel model)
         {
             try
             {
+                var reportTimeType = _options.Value.ReportTimeType;
                 Core core = _coreHelper.GetCore();
                 List<Site_Dto> sitesList = core.SiteReadAll(false);
 
@@ -66,7 +72,7 @@ namespace MachineArea.Pn.Services
                     .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                     .ToListAsync();
 
-                ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList);
+                ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, reportTimeType);
 
                 return new OperationDataResult<ReportModel>(true, reportModel);
             }

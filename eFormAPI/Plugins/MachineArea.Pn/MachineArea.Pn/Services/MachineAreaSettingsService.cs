@@ -79,6 +79,7 @@ namespace MachineArea.Pn.Services
                     settings.SdkConnectionString = machineAreaSettingsModel.SdkConnectionString;
                     settings.SdkeFormId = machineAreaSettingsModel.SdkeFormId;
                     settings.Token = machineAreaSettingsModel.Token;
+                    settings.ReportTimeType = machineAreaSettingsModel.ReportTimeType;
                 }, _dbContext, UserId);
                 
                 return new OperationResult(true,

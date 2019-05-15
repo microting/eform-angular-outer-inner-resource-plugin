@@ -14,7 +14,7 @@ namespace MachineArea.Pn.Infrastructure.Helpers
     {
         public static ReportModel GetReportData(
             GenerateReportModel model, List<MachineAreaTimeRegistration> jobsList,
-            List<Site_Dto> sitesList)
+            List<Site_Dto> sitesList, int timeType)
         {
                 List<ReportEntityModel> reportEntitiesList = new List<ReportEntityModel>();
                 List<DateTime> reportDates = new List<DateTime>();
@@ -61,10 +61,17 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                     .Where(j => j.DoneAt.Day == z.Day
                                                                 && j.DoneAt.Month == z.Month
                                                                 && j.DoneAt.Year == z.Year)
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ? 
+                                                                (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds 
+                                                                : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes
+                                                        )
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -79,10 +86,17 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                     .Where(j => j.DoneAt.Day == z.Day
                                                                 && j.DoneAt.Month == z.Month
                                                                 && j.DoneAt.Year == z.Year)
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes
+                                                    )
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -97,10 +111,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                     .Where(j => j.DoneAt.Day == z.Day
                                                                 && j.DoneAt.Month == z.Month
                                                                 && j.DoneAt.Year == z.Year)
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -117,10 +137,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                     .Where(j => j.DoneAt.Day == z.Day
                                                                 && j.DoneAt.Month == z.Month
                                                                 && j.DoneAt.Year == z.Year)
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     }).ToList();
                                 break;
                             case ReportRelationshipType.EmployeeArea:
@@ -190,10 +216,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddDays(7))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -207,10 +239,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddDays(7))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -224,10 +262,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddDays(7))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -243,10 +287,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddDays(7))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     }).ToList();
                                 break;
                             case ReportRelationshipType.EmployeeMachine:
@@ -261,10 +311,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddDays(7))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     }).ToList();
                                 break;
                             default:
@@ -316,10 +372,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddMonths(1))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -333,10 +395,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddMonths(1))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -350,10 +418,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddMonths(1))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     })
                                     .ToList();
                                 break;
@@ -369,10 +443,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddMonths(1))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     }).ToList();
                                 break;
                             case ReportRelationshipType.EmployeeMachine:
@@ -387,10 +467,16 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                 x
                                                     .Where(j => j.DoneAt >= z
                                                                 && j.DoneAt < z.AddMonths(1))
-                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                                    .Sum(s => timeType ==
+                                                              (int)ReportTimeType.Seconds ?
+                                                        (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds
+                                                        : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
                                             )
                                             .ToList(),
-                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                        TotalTime = x.Sum(z => timeType ==
+                                                               (int)ReportTimeType.Seconds ?
+                                            (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalSeconds
+                                            : (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     }).ToList();
                                 break;
                             default:
