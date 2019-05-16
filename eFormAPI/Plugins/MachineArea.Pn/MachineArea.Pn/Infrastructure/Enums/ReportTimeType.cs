@@ -7,6 +7,7 @@ namespace MachineArea.Pn.Infrastructure.Enums
     public enum ReportTimeType
     {
         Seconds = 1,
-        Minutes
+        Minutes = 2,
+        Hours
     }
 }
