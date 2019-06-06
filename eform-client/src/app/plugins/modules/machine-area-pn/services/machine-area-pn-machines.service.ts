@@ -12,6 +12,7 @@ import {
   MachinesPnRequestModel, MachinePnUpdateModel,
   MachinesPnModel
 } from '../models';
+import {ReportNamesModel} from '../models/report/report-names.model';
 
 export let MachineAreaPnMachineMethods = {
   Machines: 'api/machine-area-pn/machines',

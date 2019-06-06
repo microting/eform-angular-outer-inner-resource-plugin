@@ -47,6 +47,50 @@ namespace MachineArea.Pn.Services
             _options = options;
         }
 
+        public async Task<OperationDataResult<ReportNamesModel>> GetReportNames()
+        {
+            ReportNamesModel reportNamesModel = new ReportNamesModel();
+            reportNamesModel.ReportNameModels = new List<ReportNameModel>();
+            string outerResourceName = "";
+            string innerResourceName = "";
+            try
+            {
+                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;
+                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value; 
+            }
+            catch
+            {
+            }
+            
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 1,
+                Name = _machineAreaLocalizationService.GetString("Employee")
+            });
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 2,
+                Name = innerResourceName
+            });
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 3,
+                Name = outerResourceName
+            });
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 4,
+                Name = _machineAreaLocalizationService.GetString("Employee") + "-"+outerResourceName
+            });
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 5,
+                Name = _machineAreaLocalizationService.GetString("Employee") + "-"+innerResourceName
+            });
+            
+            return new OperationDataResult<ReportNamesModel>(true, reportNamesModel);
+        }
+
         public async Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel model)
         {
             try
@@ -94,6 +138,39 @@ namespace MachineArea.Pn.Services
                 if (!reportDataResult.Success)
                 {
                     return new OperationDataResult<FileStreamModel>(false, reportDataResult.Message);
+                }
+                
+                string outerResourceName = "";
+                string innerResourceName = "";
+                try
+                {
+                    outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;
+                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value; 
+                }
+                catch
+                {
+                }
+
+                switch (reportDataResult.Model.Relationship)
+                {
+                    case ReportRelationshipType.Employee:
+                        reportDataResult.Model.HumanReadableName =
+                            _machineAreaLocalizationService.GetString("Employee");
+                        break;
+                    case ReportRelationshipType.Machine:
+                        reportDataResult.Model.HumanReadableName = innerResourceName;
+                        break;
+                    case ReportRelationshipType.Area:
+                        reportDataResult.Model.HumanReadableName = outerResourceName;
+                        break;
+                    case ReportRelationshipType.EmployeeMachine:
+                        reportDataResult.Model.HumanReadableName =
+                            _machineAreaLocalizationService.GetString("Employee") + "-" + innerResourceName;
+                        break;
+                    case ReportRelationshipType.EmployeeArea:
+                        reportDataResult.Model.HumanReadableName =
+                            _machineAreaLocalizationService.GetString("Employee") + "-" + outerResourceName;
+                        break;
                 }
 
                 excelFile = _excelService.CopyTemplateForNewAccount("report_template");

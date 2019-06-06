@@ -20,6 +20,15 @@ namespace MachineArea.Pn.Controllers
             _machineAreaReportService = machineAreaReportService;
         }
 
+
+        [HttpGet]
+        [Route("api/machine-area-pn/reports/reportnames")]
+        [AllowAnonymous]
+        public async Task<OperationDataResult<ReportNamesModel>> GetReportNames()
+        {
+            return await _machineAreaReportService.GetReportNames();
+        }
+
         [HttpGet]
         [Route("api/machine-area-pn/reports")]
         public async Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel requestModel)

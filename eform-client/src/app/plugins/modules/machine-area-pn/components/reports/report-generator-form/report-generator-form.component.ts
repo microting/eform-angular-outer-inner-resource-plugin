@@ -8,7 +8,8 @@ import {
 import {ReportPnGenerateModel} from '../../../models';
 import {format} from "date-fns";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {KeyValueModel} from "../../../../../../common/models/common";
+import {MachineAreaPnReportsService} from '../../../services';
+import {ReportNamesModel} from '../../../models/report/report-names.model';
 
 @Component({
   selector: 'app-machine-area-pn-report-generator-form',
@@ -19,12 +20,14 @@ export class ReportGeneratorFormComponent implements OnInit {
   @Output() generateReport: EventEmitter<ReportPnGenerateModel> = new EventEmitter();
   @Output() saveReport: EventEmitter<ReportPnGenerateModel> = new EventEmitter();
   generateForm: FormGroup;
+  reportNames: ReportNamesModel = new ReportNamesModel();
 
   get reportType() { return MachineAreaPnReportTypeEnum; }
-  get relationshipTypes() { return MachineAreaPnReportRelationshipEnum; }
+  // get relationshipTypes() { return MachineAreaPnReportRelationshipEnum; }
 
   constructor(dateTimeAdapter: DateTimeAdapter<any>,
               private localeService: LocaleService,
+              private reportService: MachineAreaPnReportsService,
               private formBuilder: FormBuilder) {
     dateTimeAdapter.setLocale(this.localeService.getCurrentUserLocale());
   }
@@ -35,6 +38,7 @@ export class ReportGeneratorFormComponent implements OnInit {
       type: [null, Validators.required],
       relationship: [null, Validators.required]
     });
+    this.getReportNames();
   }
 
   onSubmit() {
@@ -47,6 +51,18 @@ export class ReportGeneratorFormComponent implements OnInit {
     this.saveReport.emit(model);
   }
 
+  getReportNames() {
+    // this.getReportNames();
+    // debugger;
+    this.reportService.getReportNames().subscribe( (data) => {
+      if (data && data.success) {
+        // debugger;
+        this.reportNames = data.model;
+      }
+    });
+    // return MachineAreaPnReportRelationshipEnum;
+  }
+
   private extractData(formValue: any): ReportPnGenerateModel {
     return new ReportPnGenerateModel(
       {
@@ -57,5 +73,4 @@ export class ReportGeneratorFormComponent implements OnInit {
       }
     );
   }
-
 }

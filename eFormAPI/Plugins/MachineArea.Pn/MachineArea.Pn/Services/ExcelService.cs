@@ -55,10 +55,10 @@ namespace MachineArea.Pn.Services
                 
                 string reportTitle = _machineAreaLocalizationService.GetString("Report");
                 worksheet.Cells[ExcelConsts.EmployeeReport.ReportTitleRow, ExcelConsts.EmployeeReport.ReportTitleCol].Value = reportTitle;
-                string reportName = _machineAreaLocalizationService.GetString(reportModel.Relationship.ToString());
+                string reportName = _machineAreaLocalizationService.GetString(reportModel.HumanReadableName);
                 worksheet.Cells[ExcelConsts.EmployeeReport.ReportNameRow, ExcelConsts.EmployeeReport.ReportNameCol].Value = reportName;
 
-                Debugger.Break();
+//                Debugger.Break();
                 int entityPosition = 0;
                 foreach (SubReportModel subReport in reportModel.SubReports)
                 {

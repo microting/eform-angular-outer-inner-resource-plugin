@@ -37,16 +37,10 @@
         formControlName="relationship"
         required
         [placeholder]="'Relationship' | translate"
-        [items]="[
-        {id: relationshipTypes.Employee, name: relationshipTypes[relationshipTypes.Employee] | translate},
-        {id: relationshipTypes.Area, name: relationshipTypes[relationshipTypes.Area] | translate},
-        {id: relationshipTypes.Machine, name: relationshipTypes[relationshipTypes.Machine] | translate},
-        {id: relationshipTypes.EmployeeArea, name: relationshipTypes[relationshipTypes.EmployeeArea] | translate},
-        {id: relationshipTypes.EmployeeMachine, name: relationshipTypes[relationshipTypes.EmployeeMachine] | translate}
-        ]"
-        [clearable]="false"
+        [items]="reportNames.reportNameModels"
         [bindLabel]="'name'"
         [bindValue]="'id'"
+        [clearable]="false"
         id="relationshipSelector"></ng-select>
     </div>
     <div class="col-md-3 text-center pt-3">
