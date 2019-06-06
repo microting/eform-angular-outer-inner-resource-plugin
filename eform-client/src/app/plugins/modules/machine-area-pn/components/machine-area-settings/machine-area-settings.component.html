@@ -113,6 +113,42 @@
               <label for="quickSyncEnabled">{{'Quick sync enabled' | translate}}</label>
             </div>
           </div>
+          <div class="col-md-12">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.outerResourceName"
+                     type="text" name="outerResourceName" #outerResourceName="ngModel"
+                     id="outerResourceName" class="form-control">
+              <label for="outerResourceName">{{'Outer resource name' | translate}}</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.innerResourceName"
+                     type="text" name="innerResourceName" #innerResourceName="ngModel"
+                     id="innerResourceName" class="form-control">
+              <label for="innerResourceName">{{'Inner resource name' | translate}}</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.outerTotalTimeName"
+                     type="text" name="outerTotalTimeName" #outerTotalTimeName="ngModel"
+                     id="outerTotalTimeName" class="form-control">
+              <label for="outerTotalTimeName">{{'Outer total time name' | translate}}</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.innerTotalTimeName"
+                     type="text" name="innerTotalTimeName" #innerTotalTimeName="ngModel"
+                     id="innerTotalTimeName" class="form-control">
+              <label for="innerTotalTimeName">{{'Inner total time name' | translate}}</label>
+            </div>
+          </div>
         </div>
 
       </div>

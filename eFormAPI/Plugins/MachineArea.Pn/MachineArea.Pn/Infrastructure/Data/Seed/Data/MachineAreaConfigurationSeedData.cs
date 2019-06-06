@@ -57,6 +57,26 @@ namespace MachineArea.Pn.Infrastructure.Data.Seed.Data
                 Name = "MachineAreaBaseSettings:ReportTimeType",
                 Value = "1"
             },
+            new PluginConfigurationValue()
+            {
+                Name = "MachineAreaBaseSettings:OuterResourceName",
+                Value = "Machines"
+            },
+            new PluginConfigurationValue()
+            {
+                Name = "MachineAreaBaseSettings:InnerResourceName",
+                Value = "Areas"
+            },
+            new PluginConfigurationValue()
+            {
+                Name = "MachineAreaBaseSettings:OuterTotalTimeName",
+                Value = "Working day"
+            },
+            new PluginConfigurationValue()
+            {
+                Name = "MachineAreaBaseSettings:InnerTotalTimeName",
+                Value = "Time tracking for the whole day"
+            },
         };
     }
 }

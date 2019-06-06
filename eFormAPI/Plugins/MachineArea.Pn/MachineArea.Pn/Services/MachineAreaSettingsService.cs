@@ -80,6 +80,10 @@ namespace MachineArea.Pn.Services
                     settings.SdkeFormId = machineAreaSettingsModel.SdkeFormId;
                     settings.Token = machineAreaSettingsModel.Token;
                     settings.ReportTimeType = machineAreaSettingsModel.ReportTimeType;
+                    settings.OuterResourceName = machineAreaSettingsModel.OuterResourceName;
+                    settings.InnerResourceName = machineAreaSettingsModel.InnerResourceName;
+                    settings.OuterTotalTimeName = machineAreaSettingsModel.OuterTotalTimeName;
+                    settings.InnerTotalTimeName = machineAreaSettingsModel.InnerTotalTimeName;
                 }, _dbContext, UserId);
                 
                 return new OperationResult(true,

@@ -6,5 +6,6 @@ namespace MachineArea.Pn.Infrastructure.Models.Areas
     {
         public int Total { get; set; }
         public List<AreaModel> AreaList { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -82,6 +82,11 @@ namespace MachineArea.Pn.Services
 
                 areasModel.Total = await _dbContext.Areas.CountAsync();
                 areasModel.AreaList = areas;
+                
+                try
+                {
+                    areasModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;  
+                } catch {}
 
                 return new OperationDataResult<AreasModel>(true, areasModel);
             }

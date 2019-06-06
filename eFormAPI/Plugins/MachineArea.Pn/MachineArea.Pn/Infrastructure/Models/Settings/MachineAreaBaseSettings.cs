@@ -14,5 +14,9 @@ namespace MachineArea.Pn.Infrastructure.Models.Settings
         public string EnabledSiteIds { get; set; }
         public bool QuickSyncEnabled { get; set; }
         public int ReportTimeType { get; set; }
+        public string OuterResourceName { get; set; }
+        public string InnerResourceName { get; set; }
+        public string OuterTotalTimeName { get; set; }
+        public string InnerTotalTimeName { get; set; }
     }
 }

@@ -82,6 +82,11 @@ namespace MachineArea.Pn.Services
 
                 machinesModel.Total = await _dbContext.Machines.CountAsync();
                 machinesModel.MachineList = machines;
+                
+                try
+                {
+                    machinesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value;  
+                } catch {}
 
                 return new OperationDataResult<MachinesModel>(true, machinesModel);
             }

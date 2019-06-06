@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Data.Seed;
@@ -25,6 +26,8 @@ namespace MachineArea.Pn
         public string PluginId => "eform-angular-machinearea-plugin";
         public string PluginPath => PluginAssembly().Location;
         private string _connectionString;
+        public string outerResourceName = "Machines";
+        public string innerResourceName = "Areas";
 
         public Assembly PluginAssembly()
         {
@@ -79,6 +82,12 @@ namespace MachineArea.Pn
             using (MachineAreaPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
             {  
                 context.Database.Migrate();
+                try
+                {
+                    outerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;
+                    innerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value;    
+                } catch {}
+                
             }
 
             // Seed database
@@ -107,14 +116,16 @@ namespace MachineArea.Pn
                 {
                     new MenuItemModel()
                     {
-                        Name = localizationService.GetString("Machines"),
+//                        Name = localizationService.GetString("Machines"),
+                        Name = innerResourceName,
                         E2EId = "machine-area-pn-machines",
                         Link = "/plugins/machine-area-pn/machines",
                         Position = 0,
                     },
                     new MenuItemModel()
                     {
-                        Name = localizationService.GetString("Areas"),
+//                        Name = localizationService.GetString("Areas"),
+                        Name = outerResourceName,
                         E2EId = "machine-area-pn-areas",
                         Link = "/plugins/machine-area-pn/areas",
                         Position = 1,

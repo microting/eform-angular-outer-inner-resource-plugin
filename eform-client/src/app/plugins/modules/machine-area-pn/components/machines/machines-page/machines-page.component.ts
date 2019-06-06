@@ -25,6 +25,7 @@ export class MachinesPageComponent implements OnInit {
   machinesRequestModel: MachinesPnRequestModel = new MachinesPnRequestModel();
   mappingAreas: AreasPnModel = new AreasPnModel();
   spinnerStatus = false;
+  name: string;
 
   constructor(private sharedPnService: SharedPnService,
               private machineAreaPnMachinesService: MachineAreaPnMachinesService,

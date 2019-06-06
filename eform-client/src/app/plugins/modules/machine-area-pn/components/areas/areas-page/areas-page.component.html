@@ -1,9 +1,9 @@
-<subheader-pn [title]="'Areas' | translate">
+<subheader-pn [title]="areasModel.name">
   <div class="p-3">
     <button
       class="btn btn-success"
-      mdbTooltip="{{ 'Create Area' | translate }}"
-      (click)="showCreateAreaModal()">{{ 'New Area' | translate }}
+      mdbTooltip="{{ 'Create' | translate }}"
+      (click)="showCreateAreaModal()">{{ 'New' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -52,12 +52,12 @@
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
-                    mdbTooltip="{{ 'Edit Area' | translate }}"
+                    mdbTooltip="{{ 'Edit' | translate }}"
                     (click)="showEditAreaModal(area)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
-                    mdbTooltip="{{ 'Delete Area' | translate }}"
+                    mdbTooltip="{{ 'Delete' | translate }}"
                     (click)="showDeleteAreaModal(area)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
             </button>

@@ -1,6 +1,7 @@
 export class MachinesPnModel {
   total: number;
   machineList: Array<MachinePnModel> = [];
+  name: string;
 }
 
 export class MachinePnModel {
