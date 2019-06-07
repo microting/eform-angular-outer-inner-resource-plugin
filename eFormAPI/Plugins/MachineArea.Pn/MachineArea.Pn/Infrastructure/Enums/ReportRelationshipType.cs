@@ -6,6 +6,7 @@
         Machine,
         Area,
         EmployeeArea,
-        EmployeeMachine
+        EmployeeMachine,
+        EmployeeTotal
     }
 }

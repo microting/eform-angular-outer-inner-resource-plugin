@@ -87,6 +87,11 @@ namespace MachineArea.Pn.Services
                 Id = 5,
                 Name = _machineAreaLocalizationService.GetString("Employee") + "-"+innerResourceName
             });
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 6,
+                Name = _machineAreaLocalizationService.GetString("Employee") + "-Total"
+            });
             
             return new OperationDataResult<ReportNamesModel>(true, reportNamesModel);
         }
@@ -109,12 +114,36 @@ namespace MachineArea.Pn.Services
                     model.DateTo.Month,
                     model.DateTo.Day,
                     23, 59, 59);
+                
+                // results to exclude
+                
+                string outerResourceName = "";
+                Area areaToExclude;
+                Machine machineToExclude;
+                string innerResourceName = "";
+                List<MachineAreaTimeRegistration> jobsList;
+                
+                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterTotalTimeName").Value;
+                areaToExclude = _dbContext.Areas.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
+                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerTotalTimeName").Value;
+                machineToExclude = await _dbContext.Machines.SingleOrDefaultAsync(x => x.Name == innerResourceName);
 
-                List<MachineAreaTimeRegistration> jobsList = await _dbContext.MachineAreaTimeRegistrations
-                    .Include(x => x.Machine)
-                    .Include(x => x.Area)
-                    .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
-                    .ToListAsync();
+                if (model.Relationship == ReportRelationshipType.EmployeeTotal)
+                {
+                    jobsList = await _dbContext.MachineAreaTimeRegistrations
+                        .Include(x => x.Machine)
+                        .Include(x => x.Area)
+                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.AreaId == areaToExclude.Id && x.MachineId == machineToExclude.Id)
+                        .ToListAsync();
+                }
+                else
+                {
+                    jobsList = await _dbContext.MachineAreaTimeRegistrations
+                        .Include(x => x.Machine)
+                        .Include(x => x.Area)
+                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.AreaId != areaToExclude.Id && x.MachineId != machineToExclude.Id)
+                        .ToListAsync();
+                }
 
                 ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, reportTimeType);
 
@@ -170,6 +199,10 @@ namespace MachineArea.Pn.Services
                     case ReportRelationshipType.EmployeeArea:
                         reportDataResult.Model.HumanReadableName =
                             _machineAreaLocalizationService.GetString("Employee") + "-" + outerResourceName;
+                        break;
+                    case ReportRelationshipType.EmployeeTotal:
+                        reportDataResult.Model.HumanReadableName =
+                            _machineAreaLocalizationService.GetString("Employee" + "-Total");
                         break;
                 }
 

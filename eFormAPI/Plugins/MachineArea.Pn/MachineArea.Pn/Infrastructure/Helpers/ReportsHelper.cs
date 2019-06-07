@@ -50,6 +50,7 @@ namespace MachineArea.Pn.Infrastructure.Helpers
 
                         switch (model.Relationship)
                         {
+                            case ReportRelationshipType.EmployeeTotal:
                             case ReportRelationshipType.Employee:
                                 reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                                     .Select(x => new ReportEntityModel()
@@ -61,10 +62,7 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                                     .Where(j => j.DoneAt.Day == z.Day
                                                                 && j.DoneAt.Month == z.Month
                                                                 && j.DoneAt.Year == z.Year)
-                                                    .Sum(s => timeType ==
-                                                              (int)ReportTimeType.Seconds ? 
-                                                                (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalSeconds 
-                                                                : (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes
+                                                    .Sum(s => (decimal)CorrectedTime(s, timeType)
                                                         )
                                             )
                                             .ToList(),
