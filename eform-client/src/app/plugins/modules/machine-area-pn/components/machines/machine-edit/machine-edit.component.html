@@ -14,7 +14,7 @@
                          [mdbValidate]="false"
                          [(ngModel)]="selectedMachineModel.name"
                          type="text" id="updateMachineName"
-                         name="createMachineName" class="form-control">
+                         name="createMachineName" class="form-control" [readOnly]="true">
                   <label for="updateMachineName">{{'Name' | translate}}</label>
                 </div>
               </div>
