@@ -184,6 +184,7 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                         switch (model.Relationship)
                         {
                             case ReportRelationshipType.Employee:
+                            case ReportRelationshipType.EmployeeTotal:
                                 reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                                     .Select(x => new ReportEntityModel()
                                     {
@@ -309,6 +310,7 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                         switch (model.Relationship)
                         {
                             case ReportRelationshipType.Employee:
+                            case ReportRelationshipType.EmployeeTotal:
                                 reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                                     .Select(x => new ReportEntityModel()
                                     {
