@@ -55,8 +55,8 @@ namespace MachineArea.Pn.Services
             string innerResourceName = "";
             try
             {
-                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;
-                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value; 
+                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName")?.Value;
+                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName")?.Value; 
             }
             catch
             {
@@ -123,9 +123,9 @@ namespace MachineArea.Pn.Services
                 string innerResourceName = "";
                 List<MachineAreaTimeRegistration> jobsList;
                 
-                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterTotalTimeName").Value;
+                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterTotalTimeName")?.Value;
                 areaToExclude = _dbContext.Areas.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
-                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerTotalTimeName").Value;
+                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerTotalTimeName")?.Value;
                 machineToExclude = await _dbContext.Machines.SingleOrDefaultAsync(x => x.Name == innerResourceName);
 
                 if (model.Relationship == ReportRelationshipType.EmployeeTotal)
@@ -173,8 +173,8 @@ namespace MachineArea.Pn.Services
                 string innerResourceName = "";
                 try
                 {
-                    outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;
-                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value; 
+                    outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName")?.Value;
+                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName")?.Value; 
                 }
                 catch
                 {
