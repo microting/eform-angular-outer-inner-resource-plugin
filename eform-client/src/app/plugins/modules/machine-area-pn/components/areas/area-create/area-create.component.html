@@ -24,15 +24,15 @@
               <tr>
                 <th scope="col" id="idTableHeader">ID</th>
                 <th scope="col" id="nameTableHeader">{{'Name' | translate}}</th>
-                <th scope="col">{{ 'Relationship' | translate }}</th>
+                <th scope="col" id="relationshipTableHeader" >{{ 'Relationship' | translate }}</th>
               </tr>
               </thead>
               <tbody id="tableBody">
               <tr *ngFor="let machine of mappingMachines.machineList">
-                <td>
+                <td id="areaMachineId">
                   {{machine.id}}
                 </td>
-                <td>
+                <td id="areaMachineName">
                   {{machine.name}}
                 </td>
                 <td>
@@ -50,10 +50,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" [disabled]="!newAreaModel.name" (click)="createArea()">
+        <button class="btn btn-success" id="areaCreateSaveBtn" [disabled]="!newAreaModel.name" (click)="createArea()">
           {{ 'Create' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button class="btn btn-accent text-black-50" id="areaCreateCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

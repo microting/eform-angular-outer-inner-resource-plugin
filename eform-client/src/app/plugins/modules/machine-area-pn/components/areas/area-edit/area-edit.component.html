@@ -55,10 +55,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" [disabled]="!selectedAreaModel.name" (click)="updateArea()">
+        <button class="btn btn-success" id="areaEditSaveBtn" [disabled]="!selectedAreaModel.name" (click)="updateArea()">
           {{ 'Save' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button class="btn btn-accent text-black-50" id="areaEditCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>
