@@ -5,7 +5,7 @@ import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
 
-describe('Machine Area Area Add', function () {
+describe('Machine Area Area edit', function () {
   before(function () {
     loginPage.open('/auth');
     loginPage.login();
@@ -15,24 +15,23 @@ describe('Machine Area Area Add', function () {
     // browser.waitForVisible('#newAreaBtn', 20000);
     browser.pause(8000);
   });
-  it('should add area with only name', function () {
+  it('should create a new area', function () {
     machineAreaAreaPage.newAreaBtn.click();
     const newName = Guid.create().toString();
     browser.waitForVisible('#createAreaName');
     machineAreaModalPage.areaCreateNameInput.addValue(newName);
     machineAreaModalPage.areaCreateSaveBtn.click();
     browser.pause(8000);
-    const listRowObject = new ListRowObject(machineAreaAreaPage.rowNum());
-    expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
-    browser.refresh();
   });
-  it('should clean up', function () {
+  it('should delete area', function () {
     const listRowObject = new ListRowObject(machineAreaAreaPage.rowNum());
-    browser.waitForVisible('#areaDeleteBtn', 20000);
     listRowObject.deleteBtn.click();
+    browser.waitForVisible('#selectedAreaId');
     browser.pause(2000);
     machineAreaModalPage.areaDeleteDeleteBtn.click();
-    browser.pause(5000);
+    browser.pause(2000);
     browser.refresh();
+    expect(listRowObject.id === null, 'Area is not deleted');
+
   });
 });

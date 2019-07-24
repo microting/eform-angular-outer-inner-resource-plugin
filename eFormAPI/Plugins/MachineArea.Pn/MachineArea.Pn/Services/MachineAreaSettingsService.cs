@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using eFormShared;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models.Areas;
 using MachineArea.Pn.Infrastructure.Models.Settings;
-using MachineArea.Pn.Messages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Consts;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
-using Rebus.Bus;
 
 namespace MachineArea.Pn.Services
 {
@@ -29,22 +21,19 @@ namespace MachineArea.Pn.Services
         private readonly MachineAreaPnDbContext _dbContext;
         private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IBus _bus;
 
         public MachineAreaSettingsService(
             ILogger<MachineAreaSettingsService> logger,
             MachineAreaPnDbContext dbContext,
             IMachineAreaLocalizationService machineAreaLocalizationService,
             IPluginDbOptions<MachineAreaBaseSettings> options,
-            IHttpContextAccessor httpContextAccessor, 
-            IRebusService rebusService)
+            IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _dbContext = dbContext;
             _machineAreaLocalizationService = machineAreaLocalizationService;
             _options = options;
             _httpContextAccessor = httpContextAccessor;
-            _bus = rebusService.GetBus();
         }
 
         public OperationDataResult<MachineAreaBaseSettings> GetSettings()
@@ -80,11 +69,6 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
-                string oldSdkSiteIds = _dbContext.PluginConfigurationValues
-                    .FirstOrDefault(x => 
-                        x.Name == lookup)?.Value;
-            
                 await _options.UpdateDb(settings =>
                 {
                     settings.EnabledSiteIds = machineAreaSettingsModel.EnabledSiteIds;
@@ -101,11 +85,6 @@ namespace MachineArea.Pn.Services
                     settings.OuterTotalTimeName = machineAreaSettingsModel.OuterTotalTimeName;
                     settings.InnerTotalTimeName = machineAreaSettingsModel.InnerTotalTimeName;
                 }, _dbContext, UserId);
-
-                if (oldSdkSiteIds != machineAreaSettingsModel.EnabledSiteIds)
-                {
-                    CreateNewSiteRelations();
-                }
                 
                 return new OperationResult(true,
                     _machineAreaLocalizationService.GetString("SettingsHaveBeenUpdatedSuccessfully"));
@@ -124,25 +103,6 @@ namespace MachineArea.Pn.Services
             {
                 string value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
                 return value == null ? 0 : int.Parse(value);
-            }
-        }
-
-        private void CreateNewSiteRelations()
-        {
-            List<Area> areas = _dbContext.Areas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                .ToList();
-            foreach (Area area in areas)
-            {
-                AreaModel areaModel = new AreaModel()
-                {
-                    Id = area.Id,
-                    RelatedMachinesIds = _dbContext.MachineAreas.
-                        Where(x => x.AreaId == area.Id && 
-                                   x.WorkflowState != Constants.WorkflowStates.Removed).
-                        Select(x => x.MachineId).ToList()
-                };
-                        
-                _bus.SendLocal(new MachineAreaUpdate(null, areaModel));
             }
         }
     }
