@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using eFormShared;
 using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Extensions;
 using MachineArea.Pn.Infrastructure.Models.Report;
+using Microting.eForm.Dto;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Infrastructure.Helpers

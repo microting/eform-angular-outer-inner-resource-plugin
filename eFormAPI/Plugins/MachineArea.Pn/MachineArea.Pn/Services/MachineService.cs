@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using eFormShared;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Models.Machines;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -152,7 +152,7 @@ namespace MachineArea.Pn.Services
                     MachineAreas = machineAreas
                 };
 
-                await newMachine.Save(_dbContext);
+                await newMachine.Create(_dbContext);
                 model.Id = newMachine.Id;
                 await _bus.SendLocal(new MachineAreaCreate(model, null));
                 return new OperationResult(true, _localizationService.GetString("MachineCreatedSuccesfully"));

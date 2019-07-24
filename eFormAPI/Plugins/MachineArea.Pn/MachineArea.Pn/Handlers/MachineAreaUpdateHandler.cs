@@ -27,13 +27,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormCore;
-using eFormData;
-using eFormShared;
-using MachineArea.Pn.Infrastructure.Models;
 using MachineArea.Pn.Infrastructure.Models.Areas;
 using MachineArea.Pn.Infrastructure.Models.Machines;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
+using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Models;
 using Microting.eFormMachineAreaBase.Infrastructure.Data;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Consts;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
@@ -174,7 +174,7 @@ namespace MachineArea.Pn.Handlers
                     new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea();
                 machineArea.AreaId = areaId;
                 machineArea.MachineId = machineId;
-                await machineArea.Save(_dbContext);
+                await machineArea.Create(_dbContext);
             }
             
             mainElement.Label = machineName;
@@ -237,7 +237,7 @@ namespace MachineArea.Pn.Handlers
                         machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
                         machineAreaSite.MicrotingSdkCaseId = int.Parse(sdkCaseId);
                         machineAreaSite.MicrotingSdkeFormId = eFormId;
-                        await machineAreaSite.Save(_dbContext);
+                        await machineAreaSite.Create(_dbContext);
                     }    
                 }
             }    

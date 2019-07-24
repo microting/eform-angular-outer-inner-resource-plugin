@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eFormShared;
-using Microsoft.CodeAnalysis;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+﻿using System.Collections.Generic;
 
 namespace MachineArea.Pn.Infrastructure.Models.Machines
 {
