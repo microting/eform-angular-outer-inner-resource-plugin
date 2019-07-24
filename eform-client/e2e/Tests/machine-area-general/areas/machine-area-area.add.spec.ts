@@ -9,8 +9,8 @@ describe('Machine Area Area Add', function () {
   before(function () {
     loginPage.open('/auth');
     loginPage.login();
-    const newEformLabel = 'Number 1';
-    // machineAreaAreaPage.createNewEform(newEformLabel);
+    const newEformLabel = 'Machine Area area eForm';
+    machineAreaAreaPage.createNewEform(newEformLabel);
     machineAreaAreaPage.goToAreas();
     // browser.waitForVisible('#newAreaBtn', 20000);
     browser.pause(8000);
@@ -18,7 +18,7 @@ describe('Machine Area Area Add', function () {
   it('should add area with only name', function () {
     machineAreaAreaPage.newAreaBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createAreaName');
+    browser.waitForVisible('#createAreaName', 20000);
     machineAreaModalPage.areaCreateNameInput.addValue(newName);
     machineAreaModalPage.areaCreateSaveBtn.click();
     browser.pause(8000);

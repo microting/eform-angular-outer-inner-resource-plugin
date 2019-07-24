@@ -5,7 +5,7 @@ import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
 
-describe('Machine Area Area edit', function () {
+describe('Machine Area Area delete', function () {
   before(function () {
     loginPage.open('/auth');
     loginPage.login();
