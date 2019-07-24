@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using eFormShared;
 using Microsoft.EntityFrameworkCore;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
 
@@ -22,7 +22,7 @@ namespace MachineArea.Pn.Test
             };
 
             // Act
-            await newMachine.Save(DbContext);
+            await newMachine.Create(DbContext);
 
             Machine machine = DbContext.Machines.AsNoTracking().First();
             List<Machine> machineList = DbContext.Machines.AsNoTracking().ToList();

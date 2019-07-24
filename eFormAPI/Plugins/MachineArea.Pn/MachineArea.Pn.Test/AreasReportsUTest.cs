@@ -2,15 +2,11 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using eFormShared;
 using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Helpers;
-using MachineArea.Pn.Infrastructure.Models.Areas;
 using MachineArea.Pn.Infrastructure.Models.Report;
-using MachineArea.Pn.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Services;
+using Microting.eForm.Dto;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
 
@@ -29,12 +25,12 @@ namespace MachineArea.Pn.Test
             Machine newMachine = new Machine() { Name = "My Machine 1", Version = 1 };
             Machine newMachine1 = new Machine() { Name = "My Machine 2", Version = 1 };
             Machine newMachine2 = new Machine() { Name = "My Machine 3", Version = 1 };
-            await newArea.Save(DbContext);
-            await newArea1.Save(DbContext);
-            await newArea2.Save(DbContext);
-            await newMachine.Save(DbContext);
-            await newMachine1.Save(DbContext);
-            await newMachine2.Save(DbContext);
+            await newArea.Create(DbContext);
+            await newArea1.Create(DbContext);
+            await newArea2.Create(DbContext);
+            await newMachine.Create(DbContext);
+            await newMachine1.Create(DbContext);
+            await newMachine2.Create(DbContext);
 
             // Different days
             MachineAreaTimeRegistration newTimeRegistrationDay = new MachineAreaTimeRegistration()
@@ -123,12 +119,12 @@ namespace MachineArea.Pn.Test
             Machine newMachine1 = new Machine() { Name = "My Machine 2", Version = 1 };
             Machine newMachine2 = new Machine() { Name = "My Machine 3", Version = 1 };
 
-            await newArea.Save(DbContext);
-            await newArea1.Save(DbContext);
-            await newArea2.Save(DbContext);
-            await newMachine.Save(DbContext);
-            await newMachine1.Save(DbContext);
-            await newMachine2.Save(DbContext);
+            await newArea.Create(DbContext);
+            await newArea1.Create(DbContext);
+            await newArea2.Create(DbContext);
+            await newMachine.Create(DbContext);
+            await newMachine1.Create(DbContext);
+            await newMachine2.Create(DbContext);
 
             // Different Weeks
             MachineAreaTimeRegistration newTimeRegistrationWeek = new MachineAreaTimeRegistration()
@@ -216,12 +212,12 @@ namespace MachineArea.Pn.Test
             Machine newMachine1 = new Machine() { Name = "My Machine 2", Version = 1 };
             Machine newMachine2 = new Machine() { Name = "My Machine 3", Version = 1 };
 
-            await newArea.Save(DbContext);
-            await newArea1.Save(DbContext);
-            await newArea2.Save(DbContext);
-            await newMachine.Save(DbContext);
-            await newMachine1.Save(DbContext);
-            await newMachine2.Save(DbContext);
+            await newArea.Create(DbContext);
+            await newArea1.Create(DbContext);
+            await newArea2.Create(DbContext);
+            await newMachine.Create(DbContext);
+            await newMachine1.Create(DbContext);
+            await newMachine2.Create(DbContext);
 
             // Different Month
             MachineAreaTimeRegistration newTimeRegistrationMonth = new MachineAreaTimeRegistration()
