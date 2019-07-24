@@ -2,6 +2,7 @@
   <div class="p-3">
     <button
       class="btn btn-success"
+      id="newMachineBtn"
       mdbTooltip="{{ 'Create' | translate }}"
       (click)="showCreateMachineModal()">{{ 'New' | translate }}
     </button>
@@ -43,21 +44,23 @@
       </thead>
       <tbody id="tableBody">
       <tr *ngFor="let machine of machinesModel.machineList">
-        <td>
+        <td id="machineId">
           {{machine.id}}
         </td>
-        <td>
+        <td id="machineName">
           {{machine.name}}
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Edit' | translate }}"
+                    id="machineEditBtn"
                     (click)="showEditMachineModal(machine)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete' | translate }}"
+                    id="machineDeleteBtn"
                     (click)="showDeleteMachineModal(machine)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
             </button>

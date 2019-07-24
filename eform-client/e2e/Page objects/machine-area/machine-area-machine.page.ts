@@ -3,7 +3,7 @@ import {Guid} from 'guid-typescript';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
 import {parseTwoDigitYear} from 'moment';
 
-export class MachineAreaAreaPage extends PageWithNavbarPage {
+export class MachineAreaMachinePage extends PageWithNavbarPage {
   constructor() {
     super();
   }
@@ -26,27 +26,21 @@ export class MachineAreaAreaPage extends PageWithNavbarPage {
   public get createEformNewTagInput() {
     return browser.element('#addTagInput');
   }
-  public get areaName() {
-    return browser.element('#areaName');
-  }
-  public get areaId() {
-    return browser.element('#areaId');
-  }
   public get machineAreaDropdownMenu() {
     return browser.element('#machine-area-pn');
   }
-  public get areaMenuPoint() {
-    return browser.element('#machine-area-pn-Areas');
+  public get machineMenuPoint() {
+    return browser.element('#machine-area-pn-Machines');
   }
-  public get newAreaBtn() {
-    return browser.element('#newAreaBtn');
+  public get newMachineBtn() {
+    return browser.element('#newMachineBtn');
   }
 
-goToAreas() {
+  goToMachines() {
     this.machineAreaDropdownMenu.click();
-    browser.waitForVisible('#machine-area-pn-Areas', 20000);
-    this.areaMenuPoint.click();
-}
+    browser.pause(2000);
+    this.machineMenuPoint.click();
+  }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
     this.newEformBtn.click();
@@ -81,21 +75,20 @@ goToAreas() {
     return {added: addedTags, selected: selectedTags};
   }
 }
-
-const machineAreaAreaPage = new MachineAreaAreaPage();
-export default machineAreaAreaPage;
+const machineAreaMachinePage = new MachineAreaMachinePage();
+export default machineAreaMachinePage;
 
 export class ListRowObject {
   constructor(rowNum) {
-    if ($$('#areaId')[rowNum - 1]) {
+    if ($$('#machineId')[rowNum - 1]) {
       try {
-        this.name = $$('#areaName')[rowNum - 1].getText();
+        this.name = $$('#machineName')[rowNum - 1].getText();
       } catch (e) {}
       try {
-        this.updateBtn = $$('#areaEditBtn')[rowNum - 1];
+        this.updateBtn = $$('#machineEditBtn')[rowNum - 1];
       } catch (e) {}
       try {
-        this.deleteBtn = $$('#areaDeleteBtn')[rowNum - 1];
+        this.deleteBtn = $$('#machineDeleteBtn')[rowNum - 1];
       } catch (e) {}
     }
   }

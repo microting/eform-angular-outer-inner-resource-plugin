@@ -34,4 +34,34 @@ export class MachineAreaModalPage extends Page {
   public get areaDeleteCancelBtn() {
     return browser.element('#areaDeleteCancelBtn');
   }
+  public get machineCreateNameInput() {
+    return browser.element('#createMachineName');
+  }
+  public get machineCreateSaveBtn() {
+    return browser.element('#machineCreateSaveBtn');
+  }
+  public get mahcineCreateCancelBtn() {
+    return browser.element('#machineCreateCancelBtn');
+  }
+  public get machineEditName() {
+    return browser.element('#updateMachineName');
+  }
+  public get machineEditSaveBtn() {
+    return browser.element('#machineEditSaveBtn');
+  }
+  public get machineEditCancelBtn() {
+    return browser.element('#machineEditCancelBtn');
+  }
+  public get machineDeleteName() {
+    return browser.element('#machineDeleteName');
+  }
+  public get machineDeleteDeleteBtn() {
+    return browser.element('#machineDeleteDeleteBtn');
+  }
+  public get machineDeleteCancelBtn() {
+    return browser.element('#machineDeleteCancelBtn');
+  }
 }
+
+const machineAreaModalPage = new MachineAreaModalPage();
+export default machineAreaModalPage;

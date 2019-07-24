@@ -49,10 +49,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" [disabled]="!newMachineModel.name" (click)="createMachine()">
+        <button class="btn btn-success" id="machineCreateSaveBtn" [disabled]="!newMachineModel.name" (click)="createMachine()">
           {{ 'Create' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button class="btn btn-accent text-black-50" id="machineCreateCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>
