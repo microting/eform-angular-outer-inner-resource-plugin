@@ -24,7 +24,7 @@ describe('Machine Area Area delete', function () {
     browser.pause(8000);
   });
   it('should delete area', function () {
-    const listRowObject = new ListRowObject(machineAreaAreaPage.rowNum());
+    const listRowObject = new ListRowObject(1);
     listRowObject.deleteBtn.click();
     browser.waitForVisible('#selectedAreaId');
     browser.pause(2000);

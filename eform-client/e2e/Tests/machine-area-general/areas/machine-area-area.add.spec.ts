@@ -22,7 +22,7 @@ describe('Machine Area Area Add', function () {
     machineAreaModalPage.areaCreateNameInput.addValue(newName);
     machineAreaModalPage.areaCreateSaveBtn.click();
     browser.pause(8000);
-    const listRowObject = new ListRowObject(machineAreaAreaPage.rowNum());
+    const listRowObject = new ListRowObject(1);
     expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
     browser.refresh();
   });
