@@ -12,10 +12,8 @@ exports.config = {
     specs: [
         'e2e/Tests/machine-area-settings/application-settings.plugins-page.spec.ts',
         'e2e/Tests/machine-area-general/areas/machine-area-area.add.spec.ts',
-        // 'e2e/Tests/machine-area-general/areas/machine-area-area.edit.spec.ts',
         'e2e/Tests/machine-area-general/areas/machine-area-area.delete.spec.ts',
         'e2e/Tests/machine-area-general/machines/machine-area-machine.add.spec.ts',
-        // 'e2e/Tests/machine-area-general/machines/machine-area-machine.edit.spec.ts',
         'e2e/Tests/machine-area-general/machines/machine-area-machine.delete.spec.ts',
     ],
     suites: {
