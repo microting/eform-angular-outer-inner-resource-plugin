@@ -19,7 +19,8 @@ export class AreaCreateComponent implements OnInit {
 
   ngOnInit() {
   }
-
+// tslint:disable-next-line:comment-format
+//Hej med dig
   show() {
     this.frame.show();
   }
@@ -47,3 +48,4 @@ export class AreaCreateComponent implements OnInit {
     return this.newAreaModel.relatedMachinesIds.indexOf(relatedMachineId) !== -1;
   }
 }
+
