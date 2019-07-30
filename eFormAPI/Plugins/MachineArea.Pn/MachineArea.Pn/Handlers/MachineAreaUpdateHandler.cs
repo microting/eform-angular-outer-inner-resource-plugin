@@ -119,6 +119,14 @@ namespace MachineArea.Pn.Handlers
                     await CreateRelationships(machineModel.Id, areaId, machineModel.Name, area.Name, mainElement, sites,
                         eFormId);
             }
+            
+            // check for new site and add accordingly
+            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in
+                machineAreas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
+            {
+                await CreateRelationships(machineArea.MachineId, machineArea.AreaId, machineModel.Name, machineArea.Area.Name, mainElement, sites,
+                    eFormId);
+            }
         }
 
         private async Task UpdateFromArea(AreaModel areaModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
@@ -156,17 +164,29 @@ namespace MachineArea.Pn.Handlers
                     await CreateRelationships(machineId, areaModel.Id, machine.Name, areaModel.Name, mainElement, sites,
                         eFormId);
             }
+
+            // check for new site and add accordingly
+            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in
+                machineAreas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
+            {
+                await CreateRelationships(machineArea.MachineId, machineArea.AreaId, machineArea.Machine.Name, areaModel.Name, mainElement, sites,
+                    eFormId);
+            }
         }
 
-        private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName,
+            MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
             Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea = _dbContext.MachineAreas.SingleOrDefault(x =>
                     x.MachineId == machineId && x.AreaId == areaId);
 
             if (machineArea != null)
             {
-                machineArea.WorkflowState = Constants.WorkflowStates.Created;
-                await machineArea.Update(_dbContext);
+                if (machineArea.WorkflowState != Constants.WorkflowStates.Created)
+                {
+                    machineArea.WorkflowState = Constants.WorkflowStates.Created;
+                    await machineArea.Update(_dbContext);   
+                }
             }
             else
             {
@@ -221,7 +241,14 @@ namespace MachineArea.Pn.Handlers
             }
             
             mainElement.CheckListFolderName = _microtingUId.ToString();
-            
+            await UpdateSitesDeployed(machineArea, mainElement, sites, eFormId);
+
+        }
+
+        private async Task UpdateSitesDeployed(
+            Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea,
+            MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        {
             foreach (Site_Dto siteDto in sites)
             {
                 MachineAreaSite siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
@@ -240,7 +267,7 @@ namespace MachineArea.Pn.Handlers
                         await machineAreaSite.Create(_dbContext);
                     }    
                 }
-            }    
+            }   
         }
 
         private async Task DeleteRelationship(int machineAreaId, int microtingSdkCaseId)
