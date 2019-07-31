@@ -250,6 +250,7 @@ namespace MachineArea.Pn.Handlers
             MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
 
+            WriteLogEntry("MachineAreaUpdateHandler: UpdateSitesDeployed called");
             List<int> siteIds = new List<int>();
             
             foreach (Site_Dto siteDto in sites)
@@ -274,12 +275,22 @@ namespace MachineArea.Pn.Handlers
             }
 
             var sitesConfigured = _dbContext.MachineAreaSites.Where(x => x.MachineAreaId == machineArea.Id).ToList();
+            WriteLogEntry("MachineAreaUpdateHandler: sitesConfigured looked up");
 
             foreach (MachineAreaSite machineAreaSite in sitesConfigured)
             {
+                WriteLogEntry(
+                    $"MachineAreaUpdateHandler: Looking at machineAreaSite {machineAreaSite.Id} for microtingSiteId {machineAreaSite.MicrotingSdkSiteId}");
+
                 if (!siteIds.Contains(machineAreaSite.MicrotingSdkSiteId))
                 {
-                    await machineAreaSite.Delete(_dbContext);
+                    WriteLogEntry($"MachineAreaUpdateHandler: {machineAreaSite.MicrotingSdkSiteId} not found in the list, so calling delete.");
+                    
+                    bool result = _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId.ToString());
+                    if (result)
+                    {
+                        await machineAreaSite.Delete(_dbContext);
+                    }
                 }
             }
         }
@@ -296,6 +307,14 @@ namespace MachineArea.Pn.Handlers
                     await machineAreaSite.Delete(_dbContext);
                 }
             }
+        }
+
+        private void WriteLogEntry(string message)
+        {
+            var oldColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("[DBG] " + message);
+            Console.ForegroundColor = oldColor;
         }
     }
 }
