@@ -249,8 +249,12 @@ namespace MachineArea.Pn.Handlers
             Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea,
             MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
+
+            List<int> siteIds = new List<int>();
+            
             foreach (Site_Dto siteDto in sites)
             {
+                siteIds.Add(siteDto.SiteId);
                 MachineAreaSite siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
                     x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id && x.WorkflowState == Constants.WorkflowStates.Created);
                 if (siteMatch == null)
@@ -267,7 +271,17 @@ namespace MachineArea.Pn.Handlers
                         await machineAreaSite.Create(_dbContext);
                     }    
                 }
-            }   
+            }
+
+            var sitesConfigured = _dbContext.MachineAreaSites.Where(x => x.MachineAreaId == machineArea.Id).ToList();
+
+            foreach (MachineAreaSite machineAreaSite in sitesConfigured)
+            {
+                if (!siteIds.Contains(machineAreaSite.MicrotingSdkSiteId))
+                {
+                    await machineAreaSite.Delete(_dbContext);
+                }
+            }
         }
 
         private async Task DeleteRelationship(int machineAreaId, int microtingSdkCaseId)

@@ -139,7 +139,8 @@ namespace MachineArea.Pn.Services
                     RelatedMachinesIds = _dbContext.MachineAreas.
                         Where(x => x.AreaId == area.Id && 
                                    x.WorkflowState != Constants.WorkflowStates.Removed).
-                        Select(x => x.MachineId).ToList()
+                        Select(x => x.MachineId).ToList(),
+                    Name = area.Name
                 };
                         
                 _bus.SendLocal(new MachineAreaUpdate(null, areaModel));
