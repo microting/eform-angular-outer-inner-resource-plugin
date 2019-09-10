@@ -28,7 +28,7 @@
         [clearable]="false"
         [bindLabel]="'name'"
         [bindValue]="'id'"
-        id="typeSelector"></ng-select>
+        id="typeSelector" style="max-height: 500px;"></ng-select>
     </div>
     <div class="col-md-3 ng-select-wrapper">
       <ng-select
@@ -36,7 +36,7 @@
         dropdownPosition="'bottom'"
         formControlName="relationship"
         required
-        [placeholder]="'Relationship' | translate"
+        [placeholder]="'Report' | translate"
         [items]="reportNames.reportNameModels"
         [bindLabel]="'name'"
         [bindValue]="'id'"
@@ -48,7 +48,7 @@
         {{'Generate' | translate}}
       </button>
       <button class="btn btn-success" [disabled]="generateForm.invalid" (click)="onSave()">
-        {{ 'Download' | translate }}
+        <fa-icon icon="file-excel" [fixedWidth]="true" size="lg"></fa-icon>
       </button>
     </div>
 
@@ -57,4 +57,4 @@
 </form>
 
 
-<owl-date-time [pickerType]="'calendar'" [firstDayOfWeek]="1" #dateRangePicker></owl-date-time>
+<owl-date-time [pickerType]="'calendar'" #dateRangePicker></owl-date-time>

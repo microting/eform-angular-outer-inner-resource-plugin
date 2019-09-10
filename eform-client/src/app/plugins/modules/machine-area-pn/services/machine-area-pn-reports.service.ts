@@ -27,7 +27,7 @@ export class MachineAreaPnReportsService extends BaseService {
     return this.get(MachineAreaPnReportsMethods.Reports + '/reportnames');
   }
 
-  getGeneratedReport(model: ReportPnGenerateModel): Observable<OperationDataResult<any>> {
+  getGeneratedReport(model: ReportPnGenerateModel): Observable<any> {
     return this.getBlobData(MachineAreaPnReportsMethods.Reports + '/excel', model);
   }
 

@@ -2,9 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using eFormShared;
-using MachineArea.Pn.Infrastructure.Models.Areas;
 using Microsoft.EntityFrameworkCore;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
 
@@ -23,7 +22,7 @@ namespace MachineArea.Pn.Test
                 Name = Guid.NewGuid().ToString()
             };
             // Act
-            await newArea.Save(DbContext);
+            await newArea.Create(DbContext);
 
             Area area = DbContext.Areas.AsNoTracking().First();
             List<Area> areaList = DbContext.Areas.AsNoTracking().ToList();

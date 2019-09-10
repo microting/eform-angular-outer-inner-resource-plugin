@@ -10,7 +10,11 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        'e2e/Tests/machinearea-settings/application-settings.plugins-page.spec.ts'
+        'e2e/Tests/machine-area-settings/application-settings.plugins-page.spec.ts',
+        'e2e/Tests/machine-area-general/areas/machine-area-area.add.spec.ts',
+        'e2e/Tests/machine-area-general/areas/machine-area-area.delete.spec.ts',
+        'e2e/Tests/machine-area-general/machines/machine-area-machine.add.spec.ts',
+        'e2e/Tests/machine-area-general/machines/machine-area-machine.delete.spec.ts',
     ],
     suites: {
         settings: [

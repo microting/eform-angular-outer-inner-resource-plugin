@@ -110,7 +110,7 @@ namespace MachineArea.Pn
             result.LeftMenu.Add(new MenuItemModel()
             {
                 Name = localizationService.GetString("MachineArea"),
-                E2EId = "",
+                E2EId = "machine-area-pn",
                 Link = "",
                 MenuItems = new List<MenuItemModel>()
                 {
@@ -118,16 +118,16 @@ namespace MachineArea.Pn
                     {
 //                        Name = localizationService.GetString("Machines"),
                         Name = innerResourceName,
-                        E2EId = "machine-area-pn-machines",
-                        Link = "/plugins/machine-area-pn/machines",
+                        E2EId = $"machine-area-pn-machines",
+                        Link = $"/plugins/machine-area-pn/machines",
                         Position = 0,
                     },
                     new MenuItemModel()
                     {
 //                        Name = localizationService.GetString("Areas"),
                         Name = outerResourceName,
-                        E2EId = "machine-area-pn-areas",
-                        Link = "/plugins/machine-area-pn/areas",
+                        E2EId = $"machine-area-pn-areas",
+                        Link = $"/plugins/machine-area-pn/areas",
                         Position = 1,
                     },
                     new MenuItemModel()
