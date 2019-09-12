@@ -13,4 +13,5 @@ export class MachineAreaBaseSettingsModel {
   innerResourceName: string;
   outerTotalTimeName: string;
   innerTotalTimeName: string;
+  shouldCheckAllCases: boolean;
 }

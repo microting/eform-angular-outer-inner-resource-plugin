@@ -100,6 +100,8 @@ namespace MachineArea.Pn.Services
                     settings.InnerResourceName = machineAreaSettingsModel.InnerResourceName;
                     settings.OuterTotalTimeName = machineAreaSettingsModel.OuterTotalTimeName;
                     settings.InnerTotalTimeName = machineAreaSettingsModel.InnerTotalTimeName;
+                    settings.ShouldCheckAllCases = machineAreaSettingsModel.ShouldCheckAllCases;
+                    settings.QuickSyncEnabled = machineAreaSettingsModel.QuickSyncEnabled;
                 }, _dbContext, UserId);
 
                 if (oldSdkSiteIds != machineAreaSettingsModel.EnabledSiteIds)

@@ -77,6 +77,11 @@ namespace MachineArea.Pn.Infrastructure.Data.Seed.Data
                 Name = "MachineAreaBaseSettings:InnerTotalTimeName",
                 Value = "Time tracking for the whole day"
             },
+            new PluginConfigurationValue()
+            {
+                Name = "MachineAreaBaseSettings:ShouldCheckAllCases",
+                Value = "false"
+            },
         };
     }
 }

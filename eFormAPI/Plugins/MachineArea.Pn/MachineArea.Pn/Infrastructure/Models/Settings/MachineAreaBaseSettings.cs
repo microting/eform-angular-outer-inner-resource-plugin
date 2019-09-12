@@ -18,5 +18,6 @@ namespace MachineArea.Pn.Infrastructure.Models.Settings
         public string InnerResourceName { get; set; }
         public string OuterTotalTimeName { get; set; }
         public string InnerTotalTimeName { get; set; }
+        public bool ShouldCheckAllCases { get; set; }
     }
 }

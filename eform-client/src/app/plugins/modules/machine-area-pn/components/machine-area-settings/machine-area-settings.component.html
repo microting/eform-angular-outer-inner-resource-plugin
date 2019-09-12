@@ -149,6 +149,15 @@
               <label for="innerTotalTimeName">{{'Inner total time name' | translate}}</label>
             </div>
           </div>
+          <div class="col-md-12">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.shouldCheckAllCases"
+                     type="text" name="shouldCheckAllCases" #sdkSiteIds="ngModel"
+                     id="shouldCheckAllCases" class="form-control">
+              <label for="shouldCheckAllCases">{{'Should check all cases' | translate}}</label>
+            </div>
+          </div>
         </div>
 
       </div>
