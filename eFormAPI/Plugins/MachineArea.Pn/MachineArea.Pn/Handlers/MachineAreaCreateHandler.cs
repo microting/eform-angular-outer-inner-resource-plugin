@@ -177,14 +177,14 @@ namespace MachineArea.Pn.Handlers
                         x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id);
                     if (siteMatch == null)
                     {
-                        string sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
+                        int? sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
-                        if (!string.IsNullOrEmpty(sdkCaseId))
+                        if (sdkCaseId != null)
                         {
                             MachineAreaSite machineAreaSite = new MachineAreaSite();
                             machineAreaSite.MachineAreaId = machineArea.Id;
                             machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
-                            machineAreaSite.MicrotingSdkCaseId = int.Parse(sdkCaseId);
+                            machineAreaSite.MicrotingSdkCaseId = (int)sdkCaseId;
                             machineAreaSite.MicrotingSdkeFormId = eFormId;
                             await machineAreaSite.Create(_dbContext);
                         }    

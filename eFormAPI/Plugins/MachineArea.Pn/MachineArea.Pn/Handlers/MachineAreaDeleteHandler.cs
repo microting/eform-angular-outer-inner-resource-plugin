@@ -87,7 +87,7 @@ namespace MachineArea.Pn.Handlers
                 {
                     try
                     {
-                        bool result = _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId.ToString());
+                        bool result = _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId);
                         if (result)
                         {
                             await machineAreaSite.Delete(_dbContext);

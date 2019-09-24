@@ -260,14 +260,14 @@ namespace MachineArea.Pn.Handlers
                     x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id && x.WorkflowState == Constants.WorkflowStates.Created);
                 if (siteMatch == null)
                 {
-                    string sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
+                    int? sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
-                    if (!string.IsNullOrEmpty(sdkCaseId))
+                    if (sdkCaseId != null)
                     {
                         MachineAreaSite machineAreaSite = new MachineAreaSite();
                         machineAreaSite.MachineAreaId = machineArea.Id;
                         machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
-                        machineAreaSite.MicrotingSdkCaseId = int.Parse(sdkCaseId);
+                        machineAreaSite.MicrotingSdkCaseId = (int)sdkCaseId;
                         machineAreaSite.MicrotingSdkeFormId = eFormId;
                         await machineAreaSite.Create(_dbContext);
                     }    
@@ -286,7 +286,7 @@ namespace MachineArea.Pn.Handlers
                 {
                     WriteLogEntry($"MachineAreaUpdateHandler: {machineAreaSite.MicrotingSdkSiteId} not found in the list, so calling delete.");
                     
-                    bool result = _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId.ToString());
+                    bool result = _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId);
                     if (result)
                     {
                         await machineAreaSite.Delete(_dbContext);
@@ -301,7 +301,7 @@ namespace MachineArea.Pn.Handlers
                 _dbContext.MachineAreaSites.SingleOrDefault(x => x.MachineAreaId == machineAreaId && x.MicrotingSdkCaseId == microtingSdkCaseId);
             if (machineAreaSite != null)
             {
-                bool result = _core.CaseDelete(microtingSdkCaseId.ToString());
+                bool result = _core.CaseDelete(microtingSdkCaseId);
                 if (result)
                 {
                     await machineAreaSite.Delete(_dbContext);
