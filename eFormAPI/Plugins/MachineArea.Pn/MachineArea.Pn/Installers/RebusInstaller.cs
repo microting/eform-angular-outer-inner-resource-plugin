@@ -46,32 +46,15 @@ namespace MachineArea.Pn.Installers
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            if (connectionString.ToLower().Contains("convert zero datetime"))
-            {
-                Configure.With(new CastleWindsorContainerAdapter(container))
-                    .Logging(l => l.ColoredConsole())
-                    .Transport(t => t.UseMySql(connectionStringOrConnectionOrConnectionStringName: connectionString, tableName: "Rebus", inputQueueName: "eform-angular-machinearea-plugin-input"))
-                    .Options(o =>
-                    {
-                        o.SetMaxParallelism(maxParallelism);
-                        o.SetNumberOfWorkers(numberOfWorkers);
-                    })
-                    .Start();
-            }
-            else
-            {
-                Configure.With(new CastleWindsorContainerAdapter(container))
-                    .Logging(l => l.ColoredConsole())
-                    .Transport(t => t.UseSqlServer(connectionString: connectionString, inputQueueName: "eform-angular-machinearea-plugin-input"))
-                    //.Transport(t => t.UseSqlServer(connectionStringOrConnectionStringName: connectionString, tableName: "Rebus", inputQueueName: "eformsdk-input"))
-                    .Options(o =>
-                    {
-                        o.SetMaxParallelism(maxParallelism);
-                        o.SetNumberOfWorkers(numberOfWorkers);
-                    })
-                    .Start();
-            }
-            
+            Configure.With(new CastleWindsorContainerAdapter(container))
+                .Logging(l => l.ColoredConsole())
+                .Transport(t => t.UseRabbitMq("amqp://admin:password@localhost", "eform-angular-machinearea-plugin"))
+                .Options(o =>
+                {
+                    o.SetMaxParallelism(maxParallelism);
+                    o.SetNumberOfWorkers(numberOfWorkers);
+                })
+                .Start();
         }
     }
 }
