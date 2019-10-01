@@ -14,14 +14,12 @@ describe('Application settings page - site header section', function () {
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
         browser.pause(40000);
-        // browser.waitForVisible('#plugin-id', 80000);
 
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Machine Area plugin');
         expect(plugin.version).equal('1.0.0.0');
         expect(plugin.status).equal('Deaktiveret');
-        // expect()
 
     });
 
@@ -30,21 +28,14 @@ describe('Application settings page - site header section', function () {
         browser.waitForVisible('#PluginDropDown', 40000);
         pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
         pluginPage.saveBtn.click();
-        browser.pause(2000);
+        browser.pause(50000); // We need to wait 50 seconds for the plugin to create db etc.
         browser.refresh();
 
-        browser.pause(20000);
+        browser.waitForVisible('#plugin-id', 40000);
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Machine Area plugin');
         expect(plugin.version).equal('1.0.0.0');
         expect(plugin.status).equal('Aktiveret');
-        // click on plugin settings
-        // enter connectionstring for customers plugin
-        // select activate
-        // save changes
-        // see that the plugin is marked active
-        // validate that the customers menu entry is now visible
-        // validate that the customers index page is shown with all fields active in the header
     });
 });
