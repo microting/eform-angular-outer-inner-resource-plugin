@@ -20,9 +20,9 @@ namespace MachineArea.Pn.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/machine-area-pn/settings")]
-        public OperationDataResult<MachineAreaBaseSettings> GetSettings()
+        public async Task<OperationDataResult<MachineAreaBaseSettings>> GetSettings()
         {
-            return _machineAreaSettingsService.GetSettings();
+            return await _machineAreaSettingsService.GetSettings();
         }
 
 

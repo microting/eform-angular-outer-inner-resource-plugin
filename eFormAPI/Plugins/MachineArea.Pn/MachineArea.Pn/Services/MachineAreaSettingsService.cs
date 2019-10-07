@@ -47,11 +47,18 @@ namespace MachineArea.Pn.Services
             _bus = rebusService.GetBus();
         }
 
-        public OperationDataResult<MachineAreaBaseSettings> GetSettings()
+        public async Task<OperationDataResult<MachineAreaBaseSettings>> GetSettings()
         {
             try
             {
                 MachineAreaBaseSettings option = _options.Value;
+                if (option.Token == "...")
+                {
+                    string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    Random random = new Random();
+                    string result = new string(chars.Select(c => chars[random.Next(chars.Length)]).Take(32).ToArray());
+                    await _options.UpdateDb(settings => { settings.Token = result;}, _dbContext, UserId);
+                }
 
                 if (option.SdkConnectionString == "...")
                 {
@@ -61,7 +68,7 @@ namespace MachineArea.Pn.Services
                     string dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
                     string sdk = $"Database={dbPrefix}_SDK;";
                     connectionString = connectionString.Replace(dbNameSection, sdk);
-                    _options.UpdateDb(settings => { settings.SdkConnectionString = connectionString;}, _dbContext, UserId);
+                    await _options.UpdateDb(settings => { settings.SdkConnectionString = connectionString;}, _dbContext, UserId);
 
                 }
 
@@ -120,6 +127,7 @@ namespace MachineArea.Pn.Services
                     _machineAreaLocalizationService.GetString("ErrorWhileUpdatingSettings"));
             }
         }
+        
         public int UserId
         {
             get

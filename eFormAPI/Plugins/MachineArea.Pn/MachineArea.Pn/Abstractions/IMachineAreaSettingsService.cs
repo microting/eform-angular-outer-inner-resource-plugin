@@ -7,7 +7,7 @@ namespace MachineArea.Pn.Abstractions
 {
     public interface IMachineAreaSettingsService
     {
-        OperationDataResult<MachineAreaBaseSettings> GetSettings();
+        Task<OperationDataResult<MachineAreaBaseSettings>> GetSettings();
         Task<OperationResult> UpdateSettings(MachineAreaBaseSettings machineAreaSettingsModel);
     }
 }
