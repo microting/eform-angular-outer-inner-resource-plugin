@@ -1,0 +1,113 @@
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {PageSettingsModel} from 'src/app/common/models/settings';
+import {
+  InnerResourcesPnRequestModel,
+  InnerResourcesPnModel,
+  OuterResourcesPnModel,
+  OuterResourcesPnRequestModel,
+  InnerResourcePnModel
+} from '../../../models';
+import {OuterInnerResourcePnOuterResourceService, OuterInnerResourcePnInnerResourceService} from '../../../services';
+import {SharedPnService} from '../../../../shared/services';
+import {AuthService} from '../../../../../../common/services/auth';
+
+@Component({
+  selector: 'app-machine-area-pn-machines-page',
+  templateUrl: './inner-resources-page.component.html',
+  styleUrls: ['./inner-resources-page.component.scss']
+})
+export class InnerResourcesPageComponent implements OnInit {
+  @ViewChild('createMachineModal') createMachineModal;
+  @ViewChild('editMachineModal') editMachineModal;
+  @ViewChild('deleteMachineModal') deleteMachineModal;
+  localPageSettings: PageSettingsModel = new PageSettingsModel();
+  machinesModel: InnerResourcesPnModel = new InnerResourcesPnModel();
+  machinesRequestModel: InnerResourcesPnRequestModel = new InnerResourcesPnRequestModel();
+  mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
+  spinnerStatus = false;
+  name: string;
+
+  constructor(private sharedPnService: SharedPnService,
+              private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
+              private authService: AuthService,
+              private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService) { }
+  get currentRole(): string {
+    return this.authService.currentRole;
+  }
+  ngOnInit() {
+    this.getLocalPageSettings();
+  }
+
+  getLocalPageSettings() {
+    this.localPageSettings = this.sharedPnService.getLocalPageSettings
+    ('machinesPnSettings', 'Machines').settings;
+    this.getAllInitialData();
+  }
+
+  updateLocalPageSettings() {
+    this.sharedPnService.updateLocalPageSettings
+    ('machinesPnSettings', this.localPageSettings, 'Machines');
+    this.getLocalPageSettings();
+  }
+
+  getAllInitialData() {
+    this.getAllMachines();
+    this.getMappedAreas();
+  }
+
+  getAllMachines() {
+    this.spinnerStatus = true;
+    this.machinesRequestModel.pageSize = this.localPageSettings.pageSize;
+    this.machinesRequestModel.sort = this.localPageSettings.sort;
+    this.machinesRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
+    this.machineAreaPnMachinesService.getAllMachines(this.machinesRequestModel).subscribe((data) => {
+      if (data && data.success) {
+        this.machinesModel = data.model;
+      } this.spinnerStatus = false;
+    });
+  }
+
+  getMappedAreas() {
+    this.spinnerStatus = true;
+    this.machineAreaPnAreasService.getAllAreas(new OuterResourcesPnRequestModel()).subscribe((data) => {
+      if (data && data.success) {
+        this.mappingAreas = data.model;
+      } this.spinnerStatus = false;
+    });
+  }
+
+  showEditMachineModal(machine: InnerResourcePnModel) {
+    this.editMachineModal.show(machine);
+  }
+
+  showDeleteMachineModal(machine: InnerResourcePnModel) {
+    this.deleteMachineModal.show(machine);
+  }
+
+  showCreateMachineModal() {
+    this.createMachineModal.show();
+  }
+
+  sortTable(sort: string) {
+    if (this.localPageSettings.sort === sort) {
+      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
+    } else {
+      this.localPageSettings.isSortDsc = false;
+      this.localPageSettings.sort = sort;
+    }
+    this.updateLocalPageSettings();
+  }
+
+  changePage(e: any) {
+    if (e || e === 0) {
+      this.machinesRequestModel.offset = e;
+      if (e === 0) {
+        this.machinesRequestModel.pageIndex = 0;
+      } else {
+        this.machinesRequestModel.pageIndex
+          = Math.floor(e / this.machinesRequestModel.pageSize);
+      }
+      this.getAllMachines();
+    }
+  }
+}

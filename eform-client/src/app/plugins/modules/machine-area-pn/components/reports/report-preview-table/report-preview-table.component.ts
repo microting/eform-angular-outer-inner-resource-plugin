@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ReportPnFullModel} from 'src/app/plugins/modules/machine-area-pn/models/report';
-import {MachineAreaPnReportRelationshipEnum} from '../../../enums';
+import {OuterInnerResourcePnReportRelationshipEnum} from '../../../enums';
 
 @Component({
   selector: 'app-machine-area-pn-report-preview-table',
@@ -9,7 +9,7 @@ import {MachineAreaPnReportRelationshipEnum} from '../../../enums';
 })
 export class ReportPreviewTableComponent implements OnInit {
   @Input() reportData: ReportPnFullModel = new ReportPnFullModel();
-  get relationshipType() { return MachineAreaPnReportRelationshipEnum; }
+  get relationshipType() { return OuterInnerResourcePnReportRelationshipEnum; }
   constructor() { }
 
   ngOnInit() {

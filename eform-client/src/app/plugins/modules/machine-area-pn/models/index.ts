@@ -1,5 +1,5 @@
 export * from './area';
 export * from './machine';
-export * from './machine-area-settings.model';
+export * from './outer-inner-resource-settings.model';
 export * from './report';
-export * from './machine-area-base-settings.model';
+export * from './outer-inner-resource-base-settings.model';

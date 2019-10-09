@@ -8,7 +8,7 @@ import {
 import {ReportPnGenerateModel} from '../../../models';
 import {format} from "date-fns";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MachineAreaPnReportsService} from '../../../services';
+import {OuterInnerResourcePnReportsService} from '../../../services';
 import {ReportNamesModel} from '../../../models/report/report-names.model';
 
 @Component({
@@ -23,11 +23,11 @@ export class ReportGeneratorFormComponent implements OnInit {
   reportNames: ReportNamesModel = new ReportNamesModel();
 
   get reportType() { return MachineAreaPnReportTypeEnum; }
-  // get relationshipTypes() { return MachineAreaPnReportRelationshipEnum; }
+  // get relationshipTypes() { return OuterInnerResourcePnReportRelationshipEnum; }
 
   constructor(dateTimeAdapter: DateTimeAdapter<any>,
               private localeService: LocaleService,
-              private reportService: MachineAreaPnReportsService,
+              private reportService: OuterInnerResourcePnReportsService,
               private formBuilder: FormBuilder) {
     dateTimeAdapter.setLocale(this.localeService.getCurrentUserLocale());
   }
@@ -60,7 +60,7 @@ export class ReportGeneratorFormComponent implements OnInit {
         this.reportNames = data.model;
       }
     });
-    // return MachineAreaPnReportRelationshipEnum;
+    // return OuterInnerResourcePnReportRelationshipEnum;
   }
 
   private extractData(formValue: any): ReportPnGenerateModel {

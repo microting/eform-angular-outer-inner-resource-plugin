@@ -19,35 +19,35 @@ namespace MachineArea.Pn.Controllers
 
 
         [HttpGet]
-        [Route("api/outer-inner-resource-pn/areas")]
+        [Route("api/outer-inner-resource-pn/outer-resources")]
         public async Task<OperationDataResult<OuterResourcesModel>> GetAllAreas(OuterResourceRequestModel requestModel)
         {
             return await _areaService.GetAllAreas(requestModel);
         }
 
         [HttpGet]
-        [Route("api/outer-inner-resource-pn/areas/{id}")]
+        [Route("api/outer-inner-resource-pn/outer-resources/{id}")]
         public async Task<OperationDataResult<OuterResourceModel>> GetSingleArea(int id)
         {
             return await _areaService.GetSingleArea(id);
         }
 
         [HttpPost]
-        [Route("api/outer-inner-resource-pn/areas")]
+        [Route("api/outer-inner-resource-pn/outer-resources")]
         public async Task<OperationResult> CreateArea([FromBody] OuterResourceModel model)
         {
             return await _areaService.CreateArea(model);
         }
 
         [HttpPut]
-        [Route("api/outer-inner-resource-pn/areas")]
+        [Route("api/outer-inner-resource-pn/outer-resources")]
         public async Task<OperationResult> UpdateArea([FromBody] OuterResourceModel model)
         {
             return await _areaService.UpdateArea(model);
         }
 
         [HttpDelete]
-        [Route("api/outer-inner-resource-pn/areas/{id}")]
+        [Route("api/outer-inner-resource-pn/outer-resources/{id}")]
         public async Task<OperationResult> DeleteArea(int id)
         {
             return await _areaService.DeleteArea(id);

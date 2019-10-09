@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ReportPnFullModel, ReportPnGenerateModel} from '../../../models';
-import {MachineAreaPnReportsService} from '../../../services';
+import {OuterInnerResourcePnReportsService} from '../../../services';
 import {saveAs} from 'file-saver';
 import {ToastrService} from "ngx-toastr";
 
@@ -13,7 +13,7 @@ export class ReportGeneratorContainerComponent implements OnInit {
   reportModel: ReportPnFullModel = new ReportPnFullModel();
   spinnerStatus = false;
 
-  constructor(private reportService: MachineAreaPnReportsService, private toastrService: ToastrService) {
+  constructor(private reportService: OuterInnerResourcePnReportsService, private toastrService: ToastrService) {
   }
 
   ngOnInit() {
