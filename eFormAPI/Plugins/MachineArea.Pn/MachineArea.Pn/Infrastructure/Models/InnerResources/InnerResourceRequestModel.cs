@@ -1,6 +1,6 @@
-﻿namespace MachineArea.Pn.Infrastructure.Models.Areas
+﻿namespace MachineArea.Pn.Infrastructure.Models.InnerResources
 {
-    public class AreaRequestModel
+    public class InnerResourceRequestModel
     {
         public string Sort { get; set; }
         public int PageIndex { get; set; }

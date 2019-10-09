@@ -27,8 +27,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormCore;
-using MachineArea.Pn.Infrastructure.Models.Areas;
-using MachineArea.Pn.Infrastructure.Models.Machines;
+using MachineArea.Pn.Infrastructure.Models.InnerResources;
+using MachineArea.Pn.Infrastructure.Models.OuterResources;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
@@ -73,22 +73,22 @@ namespace MachineArea.Pn.Handlers
                 sites.Add(_core.SiteRead(int.Parse(siteId)));
             }
             
-            if (message.MachineModel != null)
+            if (message.InnerResourceModel != null)
             {
-                await UpdateFromMachine(message.MachineModel, mainElement, sites, eFormId);
+                await UpdateFromMachine(message.InnerResourceModel, mainElement, sites, eFormId);
             }
             else
             {
-                await UpdateFromArea(message.AreaModel, mainElement, sites, eFormId);
+                await UpdateFromArea(message.OuterResourceModel, mainElement, sites, eFormId);
             }
         }
 
-        private async Task UpdateFromMachine(MachineModel machineModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task UpdateFromMachine(InnerResourceModel innerResourceModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
-                x.InnerResourceId == machineModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
+                x.InnerResourceId == innerResourceModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
 
-            List<int> requestedAreaIds = machineModel.RelatedAreasIds;
+            List<int> requestedAreaIds = innerResourceModel.RelatedAreasIds;
             List<int> deployedAreaIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
@@ -96,7 +96,7 @@ namespace MachineArea.Pn.Handlers
             {                
                 deployedAreaIds.Add(machineArea.OuterResourceId);
 
-                if (!machineModel.RelatedAreasIds.Contains(machineArea.OuterResourceId))
+                if (!innerResourceModel.RelatedAreasIds.Contains(machineArea.OuterResourceId))
                 {
                     foreach (OuterInnerResourceSite machineAreaSite in machineArea.OuterInnerResourceSites)
                     {
@@ -116,7 +116,7 @@ namespace MachineArea.Pn.Handlers
             {
                 OuterResource area = _dbContext.OuterResources.SingleOrDefault(x => x.Id == areaId);
                 if (area != null)
-                    await CreateRelationships(machineModel.Id, areaId, machineModel.Name, area.Name, mainElement, sites,
+                    await CreateRelationships(innerResourceModel.Id, areaId, innerResourceModel.Name, area.Name, mainElement, sites,
                         eFormId);
             }
             
@@ -124,17 +124,17 @@ namespace MachineArea.Pn.Handlers
             foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in
                 machineAreas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
             {
-                await CreateRelationships(machineArea.InnerResourceId, machineArea.OuterResourceId, machineModel.Name, machineArea.OuterResource.Name, mainElement, sites,
+                await CreateRelationships(machineArea.InnerResourceId, machineArea.OuterResourceId, innerResourceModel.Name, machineArea.OuterResource.Name, mainElement, sites,
                     eFormId);
             }
         }
 
-        private async Task UpdateFromArea(AreaModel areaModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task UpdateFromArea(OuterResourceModel outerResourceModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
-                x.OuterResourceId == areaModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
+                x.OuterResourceId == outerResourceModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
 
-            List<int> requestedMachineIds = areaModel.RelatedMachinesIds;
+            List<int> requestedMachineIds = outerResourceModel.RelatedMachinesIds;
             List<int> deployedMachineIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
@@ -142,7 +142,7 @@ namespace MachineArea.Pn.Handlers
             {
                 deployedMachineIds.Add(machineArea.InnerResourceId);
                 
-                if (!areaModel.RelatedMachinesIds.Contains(machineArea.InnerResourceId))
+                if (!outerResourceModel.RelatedMachinesIds.Contains(machineArea.InnerResourceId))
                 {
                     foreach (OuterInnerResourceSite machineAreaSite in machineArea.OuterInnerResourceSites)
                     {
@@ -161,7 +161,7 @@ namespace MachineArea.Pn.Handlers
             {
                 InnerResource machine = _dbContext.InnerResources.SingleOrDefault(x => x.Id == machineId);
                 if (machine != null)
-                    await CreateRelationships(machineId, areaModel.Id, machine.Name, areaModel.Name, mainElement, sites,
+                    await CreateRelationships(machineId, outerResourceModel.Id, machine.Name, outerResourceModel.Name, mainElement, sites,
                         eFormId);
             }
 
@@ -169,7 +169,7 @@ namespace MachineArea.Pn.Handlers
             foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in
                 machineAreas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
             {
-                await CreateRelationships(machineArea.InnerResourceId, machineArea.OuterResourceId, machineArea.InnerResource.Name, areaModel.Name, mainElement, sites,
+                await CreateRelationships(machineArea.InnerResourceId, machineArea.OuterResourceId, machineArea.InnerResource.Name, outerResourceModel.Name, mainElement, sites,
                     eFormId);
             }
         }

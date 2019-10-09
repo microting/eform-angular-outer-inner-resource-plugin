@@ -27,8 +27,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormCore;
-using MachineArea.Pn.Infrastructure.Models.Areas;
-using MachineArea.Pn.Infrastructure.Models.Machines;
+using MachineArea.Pn.Infrastructure.Models.InnerResources;
+using MachineArea.Pn.Infrastructure.Models.OuterResources;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
@@ -85,17 +85,17 @@ namespace MachineArea.Pn.Handlers
                 sites.Add(_core.SiteRead(int.Parse(siteId)));
             }
             
-            if (message.MachineModel != null)
+            if (message.InnerResourceModel != null)
             {
-                await CreateFromMachine(message.MachineModel, mainElement, sites, eFormId);
+                await CreateFromMachine(message.InnerResourceModel, mainElement, sites, eFormId);
             }
             else
             {
-                await CreateFromArea(message.AreaModel, mainElement, sites, eFormId);
+                await CreateFromArea(message.OuterResourceModel, mainElement, sites, eFormId);
             }            
         }
 
-        private async Task CreateFromMachine(MachineModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromMachine(InnerResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
             foreach (int areaId in model.RelatedAreasIds)
             {                
@@ -104,7 +104,7 @@ namespace MachineArea.Pn.Handlers
             }
         }
 
-        private async Task CreateFromArea(AreaModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromArea(OuterResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
            foreach (int machineId in model.RelatedMachinesIds)
             {

@@ -22,16 +22,16 @@ using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Services
 {
-    public class MachineAreaReportService : IMachineAreaReportService
+    public class OuterInnerResourceReportService : IMachineAreaReportService
     {
-        private readonly ILogger<MachineAreaReportService> _logger;
+        private readonly ILogger<OuterInnerResourceReportService> _logger;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
         private readonly IExcelService _excelService;
         private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IEFormCoreService _coreHelper;
         private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
 
-        public MachineAreaReportService(ILogger<MachineAreaReportService> logger,
+        public OuterInnerResourceReportService(ILogger<OuterInnerResourceReportService> logger,
             OuterInnerResourcePnDbContext dbContext,
             IEFormCoreService coreHelper,
             IMachineAreaLocalizationService machineAreaLocalizationService,

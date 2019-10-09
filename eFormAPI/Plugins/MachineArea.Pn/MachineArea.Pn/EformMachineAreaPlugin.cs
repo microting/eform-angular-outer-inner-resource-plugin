@@ -36,11 +36,11 @@ namespace MachineArea.Pn
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IMachineAreaLocalizationService, MachineAreaLocalizationService>();
-            services.AddTransient<IAreaService, AreaService>();
-            services.AddTransient<IMachineService, MachineService>();
-            services.AddTransient<IMachineAreaSettingsService, MachineAreaSettingsService>();
-            services.AddTransient<IMachineAreaReportService, MachineAreaReportService>();
+            services.AddSingleton<IMachineAreaLocalizationService, OuterInnerResourceLocalizationService>();
+            services.AddTransient<IAreaService, OuterResourceService>();
+            services.AddTransient<IMachineService, InnerResourceService>();
+            services.AddTransient<IMachineAreaSettingsService, OuterInnerResourceSettingsService>();
+            services.AddTransient<IMachineAreaReportService, OuterInnerResourceReportService>();
             services.AddTransient<IExcelService, ExcelService>();
             services.AddSingleton<IRebusService, RebusService>();
         }

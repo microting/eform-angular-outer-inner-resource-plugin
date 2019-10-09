@@ -4,12 +4,12 @@ using Microting.eFormApi.BasePn.Localization.Abstractions;
 
 namespace MachineArea.Pn.Services
 {
-    public class MachineAreaLocalizationService : IMachineAreaLocalizationService
+    public class OuterInnerResourceLocalizationService : IMachineAreaLocalizationService
     {
         private readonly IStringLocalizer _localizer;
  
         // ReSharper disable once SuggestBaseTypeForParameter
-        public MachineAreaLocalizationService(IEformLocalizerFactory factory)
+        public OuterInnerResourceLocalizationService(IEformLocalizerFactory factory)
         {
             _localizer = factory.Create(typeof(EformMachineAreaPlugin));
         }

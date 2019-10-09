@@ -8,11 +8,11 @@ using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace MachineArea.Pn.Controllers
 {
-    public class MachineAreaSettingsController : Controller
+    public class OuterInnerResourceSettingsController : Controller
     {
         private readonly IMachineAreaSettingsService _machineAreaSettingsService;
 
-        public MachineAreaSettingsController(IMachineAreaSettingsService machineAreaSettingsService)
+        public OuterInnerResourceSettingsController(IMachineAreaSettingsService machineAreaSettingsService)
         {
             _machineAreaSettingsService = machineAreaSettingsService;
         }

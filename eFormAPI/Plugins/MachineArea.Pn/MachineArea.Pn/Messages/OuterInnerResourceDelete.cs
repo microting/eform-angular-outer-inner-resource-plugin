@@ -22,20 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using MachineArea.Pn.Infrastructure.Models.Areas;
-using MachineArea.Pn.Infrastructure.Models.Machines;
+using MachineArea.Pn.Infrastructure.Models.InnerResources;
+using MachineArea.Pn.Infrastructure.Models.OuterResources;
 
 namespace MachineArea.Pn.Messages
 {
     public class OuterInnerResourceDelete
     {
-        public MachineModel MachineModel { get; protected set; }
-        public AreaModel AreaModel { get; protected set; }
+        public InnerResourceModel InnerResourceModel { get; protected set; }
+        public OuterResourceModel OuterResourceModel { get; protected set; }
 
-        public OuterInnerResourceDelete(MachineModel machineModel, AreaModel areaModel)
+        public OuterInnerResourceDelete(InnerResourceModel innerResourceModel, OuterResourceModel outerResourceModel)
         {
-            MachineModel = machineModel;
-            AreaModel = areaModel;
+            InnerResourceModel = innerResourceModel;
+            OuterResourceModel = outerResourceModel;
         }
     }
 }

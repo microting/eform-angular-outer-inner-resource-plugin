@@ -11,11 +11,11 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 namespace MachineArea.Pn.Controllers
 {
     [Authorize]
-    public class MachineAreaReportsController : Controller
+    public class OuterInnerResourceReportsController : Controller
     {
         private readonly IMachineAreaReportService _machineAreaReportService;
 
-        public MachineAreaReportsController(IMachineAreaReportService machineAreaReportService)
+        public OuterInnerResourceReportsController(IMachineAreaReportService machineAreaReportService)
         {
             _machineAreaReportService = machineAreaReportService;
         }

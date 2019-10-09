@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models.Areas;
+using MachineArea.Pn.Infrastructure.Models.OuterResources;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,17 +18,17 @@ using Rebus.Bus;
 
 namespace MachineArea.Pn.Services
 {
-    public class AreaService : IAreaService
+    public class OuterResourceService : IAreaService
     {
         private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IMachineAreaLocalizationService _localizationService;
-        private readonly ILogger<AreaService> _logger;
+        private readonly ILogger<OuterResourceService> _logger;
         private readonly IEFormCoreService _coreService;
         private readonly IBus _bus;
 
-        public AreaService(OuterInnerResourcePnDbContext dbContext,
+        public OuterResourceService(OuterInnerResourcePnDbContext dbContext,
             IMachineAreaLocalizationService localizationService,
-            ILogger<AreaService> logger, 
+            ILogger<OuterResourceService> logger, 
             IEFormCoreService coreService, 
             IRebusService rebusService)
         {
@@ -39,11 +39,11 @@ namespace MachineArea.Pn.Services
             _bus = rebusService.GetBus();
         }
 
-        public async Task<OperationDataResult<AreasModel>> GetAllAreas(AreaRequestModel requestModel)
+        public async Task<OperationDataResult<OuterResourcesModel>> GetAllAreas(OuterResourceRequestModel requestModel)
         {
             try
             {
-                AreasModel areasModel = new AreasModel();
+                OuterResourcesModel outerResourcesModel = new OuterResourcesModel();
 
                 IQueryable<OuterResource> areasQuery = _dbContext.OuterResources.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -74,69 +74,69 @@ namespace MachineArea.Pn.Services
                         .Take((int)requestModel.PageSize);
                 }
 
-                List<AreaModel> areas = await areasQuery.Select(x => new AreaModel()
+                List<OuterResourceModel> areas = await areasQuery.Select(x => new OuterResourceModel()
                 {
                     Name = x.Name,
                     Id = x.Id
                 }).ToListAsync();
 
-                areasModel.Total = await _dbContext.OuterResources.CountAsync();
-                areasModel.AreaList = areas;
+                outerResourcesModel.Total = await _dbContext.OuterResources.CountAsync();
+                outerResourcesModel.OuterResourceList = areas;
                 
                 try
                 {
-                    areasModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;  
+                    outerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName").Value;  
                 } catch {}
 
-                return new OperationDataResult<AreasModel>(true, areasModel);
+                return new OperationDataResult<OuterResourcesModel>(true, outerResourcesModel);
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<AreasModel>(false,
+                return new OperationDataResult<OuterResourcesModel>(false,
                     _localizationService.GetString("ErrorObtainAreas"));
             }
         }
 
-        public async Task<OperationDataResult<AreaModel>> GetSingleArea(int areaId)
+        public async Task<OperationDataResult<OuterResourceModel>> GetSingleArea(int areaId)
         {
             try
             {
-                AreaModel area = await _dbContext.OuterResources.Select(x => new AreaModel()
+                OuterResourceModel outerResource = await _dbContext.OuterResources.Select(x => new OuterResourceModel()
                     {
                         Name = x.Name,
                         Id = x.Id
                     })
                     .FirstOrDefaultAsync(x => x.Id == areaId);
                                 
-                if (area == null)
+                if (outerResource == null)
                 {
-                    return new OperationDataResult<AreaModel>(false,
+                    return new OperationDataResult<OuterResourceModel>(false,
                         _localizationService.GetString("AreaWithIdNotExist", areaId));
                 }
 
                 List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.OuterResourceId == area.Id).ToList();
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.OuterResourceId == outerResource.Id).ToList();
 
-                area.RelatedMachinesIds = new List<int>();
+                outerResource.RelatedMachinesIds = new List<int>();
                 foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
                 {
-                    area.RelatedMachinesIds.Add(machineArea.InnerResourceId);
+                    outerResource.RelatedMachinesIds.Add(machineArea.InnerResourceId);
                 }
 
-                return new OperationDataResult<AreaModel>(true, area);
+                return new OperationDataResult<OuterResourceModel>(true, outerResource);
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<AreaModel>(false,
+                return new OperationDataResult<OuterResourceModel>(false,
                     _localizationService.GetString("ErrorObtainArea"));
             }
         }
 
-        public async Task<OperationResult> CreateArea(AreaModel model)
+        public async Task<OperationResult> CreateArea(OuterResourceModel model)
         {
             try
             {
@@ -168,7 +168,7 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public async Task<OperationResult> UpdateArea(AreaModel model)
+        public async Task<OperationResult> UpdateArea(OuterResourceModel model)
         {
             try
             {
@@ -208,7 +208,7 @@ namespace MachineArea.Pn.Services
                 };
                 
                 await selectedArea.Delete(_dbContext);
-                await _bus.SendLocal(new OuterInnerResourceDelete(null, new AreaModel() { Id = areaId }));
+                await _bus.SendLocal(new OuterInnerResourceDelete(null, new OuterResourceModel() { Id = areaId }));
                 return new OperationResult(true, _localizationService.GetString("AreaDeletedSuccessfully"));
             }
             catch (Exception e)

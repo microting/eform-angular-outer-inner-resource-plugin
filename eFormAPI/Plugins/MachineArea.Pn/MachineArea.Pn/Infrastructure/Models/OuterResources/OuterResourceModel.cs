@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MachineArea.Pn.Infrastructure.Models.Areas
+namespace MachineArea.Pn.Infrastructure.Models.OuterResources
 {
-    public class AreaModel
+    public class OuterResourceModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

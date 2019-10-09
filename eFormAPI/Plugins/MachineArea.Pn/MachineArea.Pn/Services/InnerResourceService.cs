@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models.Machines;
+using MachineArea.Pn.Infrastructure.Models.InnerResources;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,17 +18,17 @@ using Rebus.Bus;
 
 namespace MachineArea.Pn.Services
 {
-    public class MachineService : IMachineService
+    public class InnerResourceService : IMachineService
     {
         private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IMachineAreaLocalizationService _localizationService;
-        private readonly ILogger<MachineService> _logger;
+        private readonly ILogger<InnerResourceService> _logger;
         private readonly IEFormCoreService _coreService;
         private readonly IBus _bus;
 
-        public MachineService(OuterInnerResourcePnDbContext dbContext,
+        public InnerResourceService(OuterInnerResourcePnDbContext dbContext,
             IMachineAreaLocalizationService localizationService,
-            ILogger<MachineService> logger, 
+            ILogger<InnerResourceService> logger, 
             IEFormCoreService coreService, 
             IRebusService rebusService)
         {
@@ -39,11 +39,11 @@ namespace MachineArea.Pn.Services
             _bus = rebusService.GetBus();
         }
 
-        public async Task<OperationDataResult<MachinesModel>> GetAllMachines(MachineRequestModel requestModel)
+        public async Task<OperationDataResult<InnerResourcesModel>> GetAllMachines(InnerResourceRequestModel requestModel)
         {
             try
             {
-                MachinesModel machinesModel = new MachinesModel();
+                InnerResourcesModel innerResourcesModel = new InnerResourcesModel();
 
                 IQueryable<InnerResource> machinesQuery = _dbContext.InnerResources.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -74,69 +74,69 @@ namespace MachineArea.Pn.Services
                         .Take((int)requestModel.PageSize);
                 }
 
-                List<MachineModel> machines = await machinesQuery.Select(x => new MachineModel()
+                List<InnerResourceModel> machines = await machinesQuery.Select(x => new InnerResourceModel()
                 {
                     Name = x.Name,
                     Id = x.Id
                 }).ToListAsync();
 
-                machinesModel.Total = await _dbContext.InnerResources.CountAsync();
-                machinesModel.MachineList = machines;
+                innerResourcesModel.Total = await _dbContext.InnerResources.CountAsync();
+                innerResourcesModel.InnerResourceList = machines;
                 
                 try
                 {
-                    machinesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value;  
+                    innerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value;  
                 } catch {}
 
-                return new OperationDataResult<MachinesModel>(true, machinesModel);
+                return new OperationDataResult<InnerResourcesModel>(true, innerResourcesModel);
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<MachinesModel>(false,
+                return new OperationDataResult<InnerResourcesModel>(false,
                     _localizationService.GetString("ErrorObtainMachines"));
             }
         }
 
-        public async Task<OperationDataResult<MachineModel>> GetSingleMachine(int machineId)
+        public async Task<OperationDataResult<InnerResourceModel>> GetSingleMachine(int machineId)
         {
             try
             {
-                MachineModel machine = await _dbContext.InnerResources.Select(x => new MachineModel()
+                InnerResourceModel innerResource = await _dbContext.InnerResources.Select(x => new InnerResourceModel()
                     {
                         Name = x.Name,
                         Id = x.Id
                     })
                     .FirstOrDefaultAsync(x => x.Id == machineId);
                                 
-                if (machine == null)
+                if (innerResource == null)
                 {
-                    return new OperationDataResult<MachineModel>(false,
+                    return new OperationDataResult<InnerResourceModel>(false,
                         _localizationService.GetString("MachineWithIdNotExist"));
                 }
                 
                 List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.InnerResourceId == machine.Id).ToList();
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.InnerResourceId == innerResource.Id).ToList();
 
-                machine.RelatedAreasIds = new List<int>();
+                innerResource.RelatedAreasIds = new List<int>();
                 foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
                 {
-                    machine.RelatedAreasIds.Add(machineArea.OuterResourceId);
+                    innerResource.RelatedAreasIds.Add(machineArea.OuterResourceId);
                 }
                 
-                return new OperationDataResult<MachineModel>(true, machine);
+                return new OperationDataResult<InnerResourceModel>(true, innerResource);
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<MachineModel>(false,
+                return new OperationDataResult<InnerResourceModel>(false,
                     _localizationService.GetString("ErrorObtainMachine"));
             }
         }
 
-        public async Task<OperationResult> CreateMachine(MachineModel model)
+        public async Task<OperationResult> CreateMachine(InnerResourceModel model)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace MachineArea.Pn.Services
             }
         }
 
-        public async Task<OperationResult> UpdateMachine(MachineModel model)
+        public async Task<OperationResult> UpdateMachine(InnerResourceModel model)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace MachineArea.Pn.Services
                 };
                 
                 await selectedMachine.Delete(_dbContext);
-                await _bus.SendLocal(new OuterInnerResourceDelete(new MachineModel() { Id = machineId }, null));
+                await _bus.SendLocal(new OuterInnerResourceDelete(new InnerResourceModel() { Id = machineId }, null));
                 return new OperationResult(true, _localizationService.GetString("MachineDeletedSuccessfully"));
             }
             catch (Exception e)

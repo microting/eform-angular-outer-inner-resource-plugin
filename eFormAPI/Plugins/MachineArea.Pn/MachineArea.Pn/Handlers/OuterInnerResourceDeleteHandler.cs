@@ -27,8 +27,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using eFormCore;
 using MachineArea.Pn.Infrastructure.Models;
-using MachineArea.Pn.Infrastructure.Models.Areas;
-using MachineArea.Pn.Infrastructure.Models.Machines;
+using MachineArea.Pn.Infrastructure.Models.InnerResources;
+using MachineArea.Pn.Infrastructure.Models.OuterResources;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
@@ -51,27 +51,27 @@ namespace MachineArea.Pn.Handlers
         #pragma warning disable 1998
         public async Task Handle(OuterInnerResourceDelete message)
         {            
-            if (message.MachineModel != null)
+            if (message.InnerResourceModel != null)
             {
-                await DeleteFromMachine(message.MachineModel);
+                await DeleteFromMachine(message.InnerResourceModel);
             }
             else
             {
-                await DeleteFromArea(message.AreaModel);
+                await DeleteFromArea(message.OuterResourceModel);
             }     
         }
 
-        private async Task DeleteFromMachine(MachineModel machineModel)
+        private async Task DeleteFromMachine(InnerResourceModel innerResourceModel)
         {
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
-                x.InnerResourceId == machineModel.Id).ToList();
+                x.InnerResourceId == innerResourceModel.Id).ToList();
             await DeleteRelationships(machineAreas);
         }
 
-        private async Task DeleteFromArea(AreaModel areaModel)
+        private async Task DeleteFromArea(OuterResourceModel outerResourceModel)
         {
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
-                x.OuterResourceId == areaModel.Id).ToList();
+                x.OuterResourceId == outerResourceModel.Id).ToList();
             await DeleteRelationships(machineAreas);
 
         }

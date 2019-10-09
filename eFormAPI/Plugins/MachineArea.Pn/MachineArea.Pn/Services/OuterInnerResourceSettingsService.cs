@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
-using MachineArea.Pn.Infrastructure.Models.Areas;
+using MachineArea.Pn.Infrastructure.Models.OuterResources;
 using MachineArea.Pn.Infrastructure.Models.Settings;
 using MachineArea.Pn.Messages;
 using Microsoft.AspNetCore.Http;
@@ -22,17 +22,17 @@ using Rebus.Bus;
 
 namespace MachineArea.Pn.Services
 {
-    public class MachineAreaSettingsService : IMachineAreaSettingsService
+    public class OuterInnerResourceSettingsService : IMachineAreaSettingsService
     {
-        private readonly ILogger<MachineAreaSettingsService> _logger;
+        private readonly ILogger<OuterInnerResourceSettingsService> _logger;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
         private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IBus _bus;
 
-        public MachineAreaSettingsService(
-            ILogger<MachineAreaSettingsService> logger,
+        public OuterInnerResourceSettingsService(
+            ILogger<OuterInnerResourceSettingsService> logger,
             OuterInnerResourcePnDbContext dbContext,
             IMachineAreaLocalizationService machineAreaLocalizationService,
             IPluginDbOptions<MachineAreaBaseSettings> options,
@@ -143,7 +143,7 @@ namespace MachineArea.Pn.Services
                 .ToList();
             foreach (OuterResource area in areas)
             {
-                AreaModel areaModel = new AreaModel()
+                OuterResourceModel outerResourceModel = new OuterResourceModel()
                 {
                     Id = area.Id,
                     RelatedMachinesIds = _dbContext.OuterInnerResources.
@@ -153,7 +153,7 @@ namespace MachineArea.Pn.Services
                     Name = area.Name
                 };
                         
-                _bus.SendLocal(new OuterInnerResourceUpdate(null, areaModel));
+                _bus.SendLocal(new OuterInnerResourceUpdate(null, outerResourceModel));
             }
         }
     }

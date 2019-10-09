@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace MachineArea.Pn.Infrastructure.Models.Machines
+namespace MachineArea.Pn.Infrastructure.Models.InnerResources
 {
-    public class MachineUpdateModel
+    public class InnerResourceUpdateModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

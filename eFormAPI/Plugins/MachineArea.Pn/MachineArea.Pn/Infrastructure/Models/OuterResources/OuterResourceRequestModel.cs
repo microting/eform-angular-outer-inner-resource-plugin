@@ -1,6 +1,6 @@
-﻿namespace MachineArea.Pn.Infrastructure.Models.Machines
+﻿namespace MachineArea.Pn.Infrastructure.Models.OuterResources
 {
-    public class MachineRequestModel
+    public class OuterResourceRequestModel
     {
         public string Sort { get; set; }
         public int PageIndex { get; set; }
