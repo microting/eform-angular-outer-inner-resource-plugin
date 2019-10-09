@@ -25,18 +25,18 @@ script:
   - dotnet test -v n eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/MachineArea.Pn.Test.csproj
   - cd ../..
   - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
-  - cp -av microting/eform-angular-outer-inner-plugin/eform-client/src/app/plugins/modules/machine-area-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn
-  - cp -av microting/eform-angular-outer-inner-plugin/eform-client/e2e/Tests/machine-area-settings microting/eform-angular-frontend/eform-client/e2e/Tests/machine-area-settings
-  - cp -av microting/eform-angular-outer-inner-plugin/eform-client/wdio-headless-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
+  - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/src/app/plugins/modules/machine-area-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn
+  - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/machine-area-settings microting/eform-angular-frontend/eform-client/e2e/Tests/machine-area-settings
+  - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/wdio-headless-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
   - cd microting/eform-angular-frontend
   - dotnet restore -v q eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
   - dotnet build eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
   - cd ../..
   - mkdir -p microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
-  - cp -av microting/eform-angular-outer-inner-plugin/eFormAPI/eFormAPI.Web/Plugins/MachineArea microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/MahcineArea
+  - cp -av microting/eform-angular-outer-inner-resource-plugin/eFormAPI/eFormAPI.Web/Plugins/MachineArea microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/MahcineArea
   - cd microting/eform-angular-frontend
   - cd eform-client && npm install
-  - ../../eform-angular-machinearea-plugin/testinginstallpn.sh
+  - ../../eform-angular-outer-inner-resource-plugin/testinginstallpn.sh
   - npm start &
   - sleep 40
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
