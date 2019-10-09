@@ -1,10 +1,10 @@
-# eform-angular-machinearea-plugin
+# eform-angular-outer-inner-resource-plugin
 Build status
-[![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
+[![Build Status](https://travis-ci.org/microting/eform-angular-outer-inner-resource-plugin.svg?branch=master)](https://travis-ci.org/microting/eform-angular-outer-inner-resource-plugin)
 
 ## NOTICE! this is not a standalone project and needs to be used with eForm Angular Frontend.
 
-## Translating eform-angular-machinearea-plugin
+## Translating eform-angular-outer-inner-resource-plugin
 
 | Language | C# part | Angular part |
 | ------------- |:-----:|:-----:|
