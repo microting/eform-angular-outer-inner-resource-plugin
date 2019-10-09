@@ -15,7 +15,7 @@ import {
 import {ReportNamesModel} from '../models/report/report-names.model';
 
 export let OuterInnerResourcePnInnerResourceMethods = {
-  Machines: 'api/outer-inner-resource-pn/inner-resources',
+  InnerResources: 'api/outer-inner-resource-pn/inner-resources',
 };
 
 @Injectable()
@@ -25,23 +25,23 @@ export class OuterInnerResourcePnInnerResourceService extends BaseService {
   }
 
   getAllMachines(model: InnerResourcesPnRequestModel): Observable<OperationDataResult<InnerResourcesPnModel>> {
-    return this.get(OuterInnerResourcePnInnerResourceMethods.Machines, model);
+    return this.get(OuterInnerResourcePnInnerResourceMethods.InnerResources, model);
   }
 
   getSingleMachine(machineId: number): Observable<OperationDataResult<InnerResourcePnModel>> {
-    return this.get(OuterInnerResourcePnInnerResourceMethods.Machines + '/' + machineId);
+    return this.get(OuterInnerResourcePnInnerResourceMethods.InnerResources + '/' + machineId);
   }
 
   updateMachine(model: InnerResourcePnUpdateModel): Observable<OperationResult> {
-    return this.put(OuterInnerResourcePnInnerResourceMethods.Machines, model);
+    return this.put(OuterInnerResourcePnInnerResourceMethods.InnerResources, model);
   }
 
   createMachine(model: InnerResourcePnCreateModel): Observable<OperationResult> {
-    return this.post(OuterInnerResourcePnInnerResourceMethods.Machines, model);
+    return this.post(OuterInnerResourcePnInnerResourceMethods.InnerResources, model);
   }
 
   deleteMachine(machineId: number): Observable<OperationResult> {
-    return this.delete(OuterInnerResourcePnInnerResourceMethods.Machines + '/' + machineId);
+    return this.delete(OuterInnerResourcePnInnerResourceMethods.InnerResources + '/' + machineId);
   }
 
 }

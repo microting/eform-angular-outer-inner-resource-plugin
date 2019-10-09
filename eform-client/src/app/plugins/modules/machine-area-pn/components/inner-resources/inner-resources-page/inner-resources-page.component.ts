@@ -40,13 +40,13 @@ export class InnerResourcesPageComponent implements OnInit {
 
   getLocalPageSettings() {
     this.localPageSettings = this.sharedPnService.getLocalPageSettings
-    ('machinesPnSettings', 'Machines').settings;
+    ('machinesPnSettings', 'InnerResources').settings;
     this.getAllInitialData();
   }
 
   updateLocalPageSettings() {
     this.sharedPnService.updateLocalPageSettings
-    ('machinesPnSettings', this.localPageSettings, 'Machines');
+    ('machinesPnSettings', this.localPageSettings, 'InnerResources');
     this.getLocalPageSettings();
   }
 

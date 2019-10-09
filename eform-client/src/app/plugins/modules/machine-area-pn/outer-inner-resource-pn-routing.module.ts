@@ -11,12 +11,12 @@ export const routes: Routes = [
     component: OuterInnerResourcePnLayoutComponent,
     children: [
       {
-        path: 'InnerResources',
+        path: 'inner-resources',
         canActivate: [AuthGuard],
         component: InnerResourcesPageComponent
       },
       {
-        path: 'OuterResources',
+        path: 'outer-resources',
         canActivate: [AdminGuard],
         component: OuterResourcesPageComponent
       },

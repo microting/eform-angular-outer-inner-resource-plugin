@@ -14,7 +14,7 @@ export const OuterInnerResourcePnLocalSettings = [
     }
   ),
   new ApplicationPageModel({
-      name: 'Machines',
+      name: 'InnerResources',
       settings: new PageSettingsModel({
         pageSize: 10,
         sort: 'Id',
