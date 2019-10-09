@@ -22,7 +22,7 @@ namespace MachineArea.Pn
 {
     public class EformMachineAreaPlugin : IEformPlugin
     {
-        public string Name => "Microting Machine Area plugin";
+        public string Name => "Microting Outer Inner Resource plugin";
         public string PluginId => "eform-angular-machinearea-plugin";
         public string PluginPath => PluginAssembly().Location;
         private string _connectionString;
@@ -110,7 +110,7 @@ namespace MachineArea.Pn
             result.LeftMenu.Add(new MenuItemModel()
             {
                 Name = localizationService.GetString("MachineArea"),
-                E2EId = "machine-area-pn",
+                E2EId = "outer-inner-resource-pn",
                 Link = "",
                 MenuItems = new List<MenuItemModel>()
                 {
@@ -118,30 +118,30 @@ namespace MachineArea.Pn
                     {
 //                        Name = localizationService.GetString("Machines"),
                         Name = innerResourceName,
-                        E2EId = $"machine-area-pn-machines",
-                        Link = $"/plugins/machine-area-pn/Machines",
+                        E2EId = $"outer-inner-resource-pn-machines",
+                        Link = $"/plugins/outer-inner-resource-pn/Machines",
                         Position = 0,
                     },
                     new MenuItemModel()
                     {
 //                        Name = localizationService.GetString("Areas"),
                         Name = outerResourceName,
-                        E2EId = $"machine-area-pn-areas",
-                        Link = $"/plugins/machine-area-pn/Areas",
+                        E2EId = $"outer-inner-resource-pn-areas",
+                        Link = $"/plugins/outer-inner-resource-pn/Areas",
                         Position = 1,
                     },
                     new MenuItemModel()
                     {
                         Name = localizationService.GetString("Reports"),
-                        E2EId = "machine-area-pn-reports",
-                        Link = "/plugins/machine-area-pn/reports",
+                        E2EId = "outer-inner-resource-pn-reports",
+                        Link = "/plugins/outer-inner-resource-pn/reports",
                         Position = 2,
                     },
                     new MenuItemModel()
                     {
                         Name = localizationService.GetString("Settings"),
-                        E2EId = "machine-area-pn-settings",
-                        Link = "/plugins/machine-area-pn/settings",
+                        E2EId = "outer-inner-resource-pn-settings",
+                        Link = "/plugins/outer-inner-resource-pn/settings",
                         Position = 3,
                     }
                 }

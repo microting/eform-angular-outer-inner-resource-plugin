@@ -19,35 +19,35 @@ namespace MachineArea.Pn.Controllers
 
 
         [HttpGet]
-        [Route("api/machine-area-pn/areas")]
+        [Route("api/outer-inner-resource-pn/areas")]
         public async Task<OperationDataResult<OuterResourcesModel>> GetAllAreas(OuterResourceRequestModel requestModel)
         {
             return await _areaService.GetAllAreas(requestModel);
         }
 
         [HttpGet]
-        [Route("api/machine-area-pn/areas/{id}")]
+        [Route("api/outer-inner-resource-pn/areas/{id}")]
         public async Task<OperationDataResult<OuterResourceModel>> GetSingleArea(int id)
         {
             return await _areaService.GetSingleArea(id);
         }
 
         [HttpPost]
-        [Route("api/machine-area-pn/areas")]
+        [Route("api/outer-inner-resource-pn/areas")]
         public async Task<OperationResult> CreateArea([FromBody] OuterResourceModel model)
         {
             return await _areaService.CreateArea(model);
         }
 
         [HttpPut]
-        [Route("api/machine-area-pn/areas")]
+        [Route("api/outer-inner-resource-pn/areas")]
         public async Task<OperationResult> UpdateArea([FromBody] OuterResourceModel model)
         {
             return await _areaService.UpdateArea(model);
         }
 
         [HttpDelete]
-        [Route("api/machine-area-pn/areas/{id}")]
+        [Route("api/outer-inner-resource-pn/areas/{id}")]
         public async Task<OperationResult> DeleteArea(int id)
         {
             return await _areaService.DeleteArea(id);

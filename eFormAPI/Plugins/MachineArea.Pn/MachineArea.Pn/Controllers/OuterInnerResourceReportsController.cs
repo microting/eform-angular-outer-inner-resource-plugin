@@ -22,7 +22,7 @@ namespace MachineArea.Pn.Controllers
 
 
         [HttpGet]
-        [Route("api/machine-area-pn/reports/reportnames")]
+        [Route("api/outer-inner-resource-pn/reports/reportnames")]
         [AllowAnonymous]
         public async Task<OperationDataResult<ReportNamesModel>> GetReportNames()
         {
@@ -30,7 +30,7 @@ namespace MachineArea.Pn.Controllers
         }
 
         [HttpGet]
-        [Route("api/machine-area-pn/reports")]
+        [Route("api/outer-inner-resource-pn/reports")]
         public async Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel requestModel)
         {
             return await _machineAreaReportService.GenerateReport(requestModel);
@@ -43,7 +43,7 @@ namespace MachineArea.Pn.Controllers
         /// <returns code="200">Return excel blob</returns>
         /// <returns code="400">Error message</returns>
         [HttpGet]
-        [Route("api/machine-area-pn/reports/excel")]
+        [Route("api/outer-inner-resource-pn/reports/excel")]
         [ProducesResponseType(typeof(string), 400)]
         public async Task GenerateReportFile(GenerateReportModel requestModel)
         {
