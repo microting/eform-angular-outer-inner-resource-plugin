@@ -1,9 +1,9 @@
 ﻿[
   {
-    "Key": "MachineArea",
+    "Key": "OuterInnerResource",
     "LocalizedValue": {
-      "da": "Maskinområde",
-      "en-US": "Machine Area",
+      "da": "Ydre/indre resourcer",
+      "en-US": "Outer/inner resources",
       "de-De": "Maschinenbereich"
     }
   },

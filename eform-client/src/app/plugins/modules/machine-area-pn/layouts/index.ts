@@ -1,1 +1,1 @@
-export * from './machine-area-pn-layout.component';
+export * from './outer-inner-resource-pn-layout.component';

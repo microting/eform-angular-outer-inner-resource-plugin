@@ -26,8 +26,8 @@ namespace MachineArea.Pn
         public string PluginId => "eform-angular-machinearea-plugin";
         public string PluginPath => PluginAssembly().Location;
         private string _connectionString;
-        public string outerResourceName = "Machines";
-        public string innerResourceName = "Areas";
+        public string outerResourceName = "OuterResources";
+        public string innerResourceName = "InnerResources";
 
         public Assembly PluginAssembly()
         {
@@ -109,7 +109,7 @@ namespace MachineArea.Pn
             MenuModel result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
             {
-                Name = localizationService.GetString("MachineArea"),
+                Name = localizationService.GetString("OuterInnerResource"),
                 E2EId = "outer-inner-resource-pn",
                 Link = "",
                 MenuItems = new List<MenuItemModel>()
@@ -118,16 +118,16 @@ namespace MachineArea.Pn
                     {
 //                        Name = localizationService.GetString("Machines"),
                         Name = innerResourceName,
-                        E2EId = $"outer-inner-resource-pn-machines",
-                        Link = $"/plugins/outer-inner-resource-pn/Machines",
+                        E2EId = $"outer-inner-resource-pn-inner-resources",
+                        Link = $"/plugins/outer-inner-resource-pn/InnerResources",
                         Position = 0,
                     },
                     new MenuItemModel()
                     {
 //                        Name = localizationService.GetString("Areas"),
                         Name = outerResourceName,
-                        E2EId = $"outer-inner-resource-pn-areas",
-                        Link = $"/plugins/outer-inner-resource-pn/Areas",
+                        E2EId = $"outer-inner-resource-pn-outer-resources",
+                        Link = $"/plugins/outer-inner-resource-pn/OuterResources",
                         Position = 1,
                     },
                     new MenuItemModel()

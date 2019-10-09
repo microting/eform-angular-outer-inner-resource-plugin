@@ -1,4 +1,4 @@
-export class InneResourcePnUpdateModel {
+export class InnerResourcePnUpdateModel {
   id: number;
   name: string;
   relatedAreasIds: Array<number> = [];

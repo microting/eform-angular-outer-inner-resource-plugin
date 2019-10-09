@@ -13,8 +13,7 @@ import {
   OuterInnerResourcePnInnerResourceService, OuterInnerResourcePnReportsService,
   OuterInnerResourcePnSettingsService
 } from './services';
-import {MachineAreaPnLayoutComponent} from './layouts';
-import {OuterInnerResourcePnRouting} from './machine-area-pn-routing.module';
+import {OuterInnerResourcePnLayoutComponent} from './layouts';
 import {SharedPnModule} from '../shared/shared-pn.module';
 import {
   OuterResourceCreateComponent,
@@ -31,6 +30,7 @@ import {
   ReportGeneratorContainerComponent,
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {OuterInnerResourcePnRouting} from './outer-inner-resource-pn-routing.module';
 
 
 @NgModule({
@@ -57,7 +57,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     InnerResourceCreateComponent,
     InnerResourceEditComponent,
     InnerResourceDeleteComponent,
-    MachineAreaPnLayoutComponent,
+    OuterInnerResourcePnLayoutComponent,
     OuterInnerResourceSettingsComponent,
     ReportGeneratorContainerComponent,
     ReportGeneratorFormComponent,

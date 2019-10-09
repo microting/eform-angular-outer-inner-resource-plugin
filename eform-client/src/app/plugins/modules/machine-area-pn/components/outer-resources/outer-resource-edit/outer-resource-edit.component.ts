@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {AreaPnModel, AreaPnUpdateModel} from 'src/app/plugins/modules/machine-area-pn/models/area';
-import {MachinesPnModel} from 'src/app/plugins/modules/machine-area-pn/models/machine';
-import {MachineAreaPnAreasService} from 'src/app/plugins/modules/machine-area-pn/services';
+
+import {OuterResourcePnModel, OuterResourcePnUpdateModel} from '../../../models/area';
+import {InnerResourcePnModel} from '../../../models/machine';
+import {OuterInnerResourcePnOuterResourceService} from '../../../services';
 
 @Component({
   selector: 'app-machine-area-pn-area-edit',
@@ -10,16 +11,16 @@ import {MachineAreaPnAreasService} from 'src/app/plugins/modules/machine-area-pn
 })
 export class OuterResourceEditComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Input() mappingMachines: MachinesPnModel = new MachinesPnModel();
+  @Input() mappingMachines: InnerResourcePnModel = new InnerResourcePnModel();
   @Output() onAreaUpdated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
-  selectedAreaModel: AreaPnModel = new AreaPnModel();
-  constructor(private machineAreaPnAreasService: MachineAreaPnAreasService) { }
+  selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();
+  constructor(private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService) { }
 
   ngOnInit() {
   }
 
-  show(areaModel: AreaPnModel) {
+  show(areaModel: OuterResourcePnModel) {
     this.getSelectedArea(areaModel.id);
     this.frame.show();
   }
@@ -35,10 +36,10 @@ export class OuterResourceEditComponent implements OnInit {
 
   updateArea() {
     this.spinnerStatus = true;
-    this.machineAreaPnAreasService.updateArea(new AreaPnUpdateModel(this.selectedAreaModel)).subscribe((data) => {
+    this.machineAreaPnAreasService.updateArea(new OuterResourcePnUpdateModel(this.selectedAreaModel)).subscribe((data) => {
       if (data && data.success) {
         this.onAreaUpdated.emit();
-        this.selectedAreaModel = new AreaPnModel();
+        this.selectedAreaModel = new OuterResourcePnModel();
         this.frame.hide();
       } this.spinnerStatus = false;
     });

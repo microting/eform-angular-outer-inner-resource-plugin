@@ -9,7 +9,7 @@ import {BaseService} from 'src/app/common/services/base.service';
 import {
   InnerResourcePnCreateModel,
   InnerResourcePnModel,
-  InnerResourcesPnRequestModel, InneResourcePnUpdateModel,
+  InnerResourcesPnRequestModel, InnerResourcePnUpdateModel,
   InnerResourcesPnModel
 } from '../models';
 import {ReportNamesModel} from '../models/report/report-names.model';
@@ -32,7 +32,7 @@ export class OuterInnerResourcePnInnerResourceService extends BaseService {
     return this.get(OuterInnerResourcePnInnerResourceMethods.Machines + '/' + machineId);
   }
 
-  updateMachine(model: InneResourcePnUpdateModel): Observable<OperationResult> {
+  updateMachine(model: InnerResourcePnUpdateModel): Observable<OperationResult> {
     return this.put(OuterInnerResourcePnInnerResourceMethods.Machines, model);
   }
 

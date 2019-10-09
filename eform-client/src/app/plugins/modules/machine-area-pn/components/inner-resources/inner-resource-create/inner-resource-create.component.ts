@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {
-  MachineAreaPnAreasService,
-  MachineAreaPnMachinesService
+  OuterInnerResourcePnOuterResourceService,
+  OuterInnerResourcePnInnerResourceService
 } from 'src/app/plugins/modules/machine-area-pn/services';
 import {OuterResourcePnCreateModel, OuterResourcePnModel, OuterResourcesPnModel, InnerResourcePnCreateModel, InnerResourcesPnModel} from '../../../models';
 
@@ -18,7 +18,7 @@ export class InnerResourceCreateComponent implements OnInit {
   spinnerStatus = false;
   newMachineModel: InnerResourcePnCreateModel = new InnerResourcePnCreateModel();
 
-  constructor(private machineAreaPnMachinesService: MachineAreaPnMachinesService) { }
+  constructor(private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService) { }
 
   ngOnInit() {
 

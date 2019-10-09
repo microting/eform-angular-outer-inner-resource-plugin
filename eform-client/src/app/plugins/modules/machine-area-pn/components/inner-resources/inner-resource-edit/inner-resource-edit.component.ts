@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {
   OuterResourcePnModel, OuterResourcesPnModel,
   InnerResourcePnModel,
-  InneResourcePnUpdateModel
+  InnerResourcePnUpdateModel
 } from '../../../models';
 import {
   OuterInnerResourcePnInnerResourceService
@@ -40,7 +40,7 @@ export class InnerResourceEditComponent implements OnInit {
 
   updateMachine() {
     this.spinnerStatus = true;
-    this.machineAreaPnMachinesService.updateMachine(new InneResourcePnUpdateModel(this.selectedMachineModel))
+    this.machineAreaPnMachinesService.updateMachine(new InnerResourcePnUpdateModel(this.selectedMachineModel))
       .subscribe((data) => {
       if (data && data.success) {
         this.onMachineUpdated.emit();

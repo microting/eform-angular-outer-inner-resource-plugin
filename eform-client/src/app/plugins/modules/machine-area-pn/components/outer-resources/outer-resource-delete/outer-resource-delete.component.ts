@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AreaPnModel, AreaPnUpdateModel} from 'src/app/plugins/modules/machine-area-pn/models/area';
-import {MachineAreaPnAreasService} from 'src/app/plugins/modules/machine-area-pn/services';
+import {OuterResourcePnModel} from 'src/app/plugins/modules/machine-area-pn/models/area';
+import {OuterInnerResourcePnOuterResourceService} from '../../../services';
 
 @Component({
   selector: 'app-machine-area-pn-area-delete',
@@ -11,13 +11,13 @@ export class OuterResourceDeleteComponent implements OnInit {
   @ViewChild('frame') frame;
   @Output() onAreaDeleted: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
-  selectedAreaModel: AreaPnModel = new AreaPnModel();
-  constructor(private machineAreaPnAreasService: MachineAreaPnAreasService) { }
+  selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();
+  constructor(private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService) { }
 
   ngOnInit() {
   }
 
-  show(areaModel: AreaPnModel) {
+  show(areaModel: OuterResourcePnModel) {
     this.selectedAreaModel = areaModel;
     this.frame.show();
   }
@@ -27,7 +27,7 @@ export class OuterResourceDeleteComponent implements OnInit {
     this.machineAreaPnAreasService.deleteArea(this.selectedAreaModel.id).subscribe((data) => {
       if (data && data.success) {
         this.onAreaDeleted.emit();
-        this.selectedAreaModel = new AreaPnModel();
+        this.selectedAreaModel = new OuterResourcePnModel();
         this.frame.hide();
       } this.spinnerStatus = false;
     });

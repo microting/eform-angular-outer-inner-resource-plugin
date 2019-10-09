@@ -1,10 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PageSettingsModel} from 'src/app/common/models/settings';
-import {AreasPnRequestModel, AreasPnModel, AreaPnModel} from 'src/app/plugins/modules/machine-area-pn/models/area';
-import {MachinesPnRequestModel, MachinesPnModel} from 'src/app/plugins/modules/machine-area-pn/models/machine';
 import {
-  MachineAreaPnAreasService,
-  MachineAreaPnMachinesService
+  OuterResourcePnModel,
+  OuterResourcesPnModel,
+  OuterResourcesPnRequestModel
+} from 'src/app/plugins/modules/machine-area-pn/models/area';
+import {
+  InnerResourcePnModel,
+  InnerResourcesPnModel,
+  InnerResourcesPnRequestModel
+} from 'src/app/plugins/modules/machine-area-pn/models/machine';
+import {
+  OuterInnerResourcePnInnerResourceService,
+  OuterInnerResourcePnOuterResourceService,
 } from 'src/app/plugins/modules/machine-area-pn/services';
 import {SharedPnService} from 'src/app/plugins/modules/shared/services';
 
@@ -18,14 +26,14 @@ export class OuterResourcesPageComponent implements OnInit {
   @ViewChild('editAreaModal') editAreaModal;
   @ViewChild('deleteAreaModal') deleteAreaModal;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  areasModel: AreasPnModel = new AreasPnModel();
-  mappingMachines: MachinesPnModel = new MachinesPnModel();
-  areasRequestModel: AreasPnRequestModel = new AreasPnRequestModel();
+  areasModel: OuterResourcesPnModel = new OuterResourcesPnModel();
+  mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
+  areasRequestModel: OuterResourcesPnRequestModel = new OuterResourcesPnRequestModel();
   spinnerStatus = false;
 
   constructor(private sharedPnService: SharedPnService,
-              private machineAreaPnAreasService: MachineAreaPnAreasService,
-              private machineAreaPnMachinesService: MachineAreaPnMachinesService) { }
+              private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
+              private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService) { }
 
   ngOnInit() {
     this.getLocalPageSettings();
@@ -62,18 +70,18 @@ export class OuterResourcesPageComponent implements OnInit {
 
   getMachinesForMapping() {
     this.spinnerStatus = true;
-    this.machineAreaPnMachinesService.getAllMachines(new MachinesPnRequestModel()).subscribe((data) => {
+    this.machineAreaPnMachinesService.getAllMachines(new InnerResourcesPnRequestModel()).subscribe((data) => {
       if (data && data.success) {
         this.mappingMachines = data.model;
       } this.spinnerStatus = false;
     });
   }
 
-  showEditAreaModal(area: AreaPnModel) {
+  showEditAreaModal(area: OuterResourcePnModel) {
     this.editAreaModal.show(area);
   }
 
-  showDeleteAreaModal(area: AreaPnModel) {
+  showDeleteAreaModal(area: OuterResourcePnModel) {
     this.deleteAreaModal.show(area);
   }
 

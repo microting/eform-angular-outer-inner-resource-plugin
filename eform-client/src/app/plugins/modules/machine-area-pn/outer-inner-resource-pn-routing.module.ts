@@ -1,22 +1,22 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminGuard, AuthGuard} from 'src/app/common/guards';
-import {MachineAreaPnLayoutComponent} from './layouts';
+import {OuterInnerResourcePnLayoutComponent} from './layouts';
 import {InnerResourcesPageComponent, OuterResourcesPageComponent, ReportGeneratorContainerComponent} from './components';
 import {OuterInnerResourceSettingsComponent} from './components/outer-inner-resource-settings';
 
 export const routes: Routes = [
   {
     path: '',
-    component: MachineAreaPnLayoutComponent,
+    component: OuterInnerResourcePnLayoutComponent,
     children: [
       {
-        path: 'Machines',
+        path: 'InnerResources',
         canActivate: [AuthGuard],
         component: InnerResourcesPageComponent
       },
       {
-        path: 'Areas',
+        path: 'OuterResources',
         canActivate: [AdminGuard],
         component: OuterResourcesPageComponent
       },
