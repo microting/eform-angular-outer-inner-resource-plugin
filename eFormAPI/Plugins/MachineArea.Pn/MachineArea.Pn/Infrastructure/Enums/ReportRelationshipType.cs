@@ -3,10 +3,10 @@
     public enum ReportRelationshipType
     {
         Employee = 1,
-        Machine,
-        Area,
-        EmployeeArea,
-        EmployeeMachine,
+        InnerResource,
+        OuterResource,
+        EmployeeOuterResource,
+        EmployeeInnerResource,
         EmployeeTotal
     }
 }

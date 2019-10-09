@@ -1,15 +1,38 @@
-﻿using System;
-using System.Linq;
+﻿/*
+The MIT License (MIT)
+
+Copyright (c) 2007 - 2019 Microting A/S
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Helpers;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
-
 
 namespace MachineArea.Pn.Test
 {
@@ -19,12 +42,12 @@ namespace MachineArea.Pn.Test
         [Test]
         public async Task EmployeesReportByDay_Generate_DoesGenerate()
         {
-            Area newArea = new Area() { Name = "My Area 1", Version = 1 };
-            Area newArea1 = new Area() { Name = "My Area 2", Version = 1 };
-            Area newArea2 = new Area() { Name = "My Area 3", Version = 1 };
-            Machine newMachine = new Machine() { Name = "My Machine 1", Version = 1 };
-            Machine newMachine1 = new Machine() { Name = "My Machine 2", Version = 1 };
-            Machine newMachine2 = new Machine() { Name = "My Machine 3", Version = 1 };
+            OuterResource newArea = new OuterResource() { Name = "My OuterResource 1", Version = 1 };
+            OuterResource newArea1 = new OuterResource() { Name = "My OuterResource 2", Version = 1 };
+            OuterResource newArea2 = new OuterResource() { Name = "My OuterResource 3", Version = 1 };
+            InnerResource newMachine = new InnerResource() { Name = "My InnerResource 1", Version = 1 };
+            InnerResource newMachine1 = new InnerResource() { Name = "My InnerResource 2", Version = 1 };
+            InnerResource newMachine2 = new InnerResource() { Name = "My InnerResource 3", Version = 1 };
             await newArea.Create(DbContext);
             await newArea1.Create(DbContext);
             await newArea2.Create(DbContext);
@@ -33,22 +56,22 @@ namespace MachineArea.Pn.Test
             await newMachine2.Create(DbContext);
 
             // Different days
-            MachineAreaTimeRegistration newTimeRegistrationDay = new MachineAreaTimeRegistration()
-            { AreaId = newArea.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 13) };
-            MachineAreaTimeRegistration newTimeRegistrationDay1 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 14) };
-            MachineAreaTimeRegistration newTimeRegistrationDay2 = new MachineAreaTimeRegistration()
-            { AreaId = newArea2.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 15) };
-            MachineAreaTimeRegistration newTimeRegistrationDay3 = new MachineAreaTimeRegistration()
-            { AreaId = newArea.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 13) };
-            MachineAreaTimeRegistration newTimeRegistrationDay4 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 14) };
-            MachineAreaTimeRegistration newTimeRegistrationDay5 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 15) };
-            MachineAreaTimeRegistration newTimeRegistrationDay6 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 15) };
+            ResourceTimeRegistration newTimeRegistrationDay = new ResourceTimeRegistration()
+            { OuterResourceId = newArea.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 13) };
+            ResourceTimeRegistration newTimeRegistrationDay1 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 14) };
+            ResourceTimeRegistration newTimeRegistrationDay2 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea2.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 15) };
+            ResourceTimeRegistration newTimeRegistrationDay3 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 13) };
+            ResourceTimeRegistration newTimeRegistrationDay4 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 14) };
+            ResourceTimeRegistration newTimeRegistrationDay5 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 15) };
+            ResourceTimeRegistration newTimeRegistrationDay6 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 15) };
 
-            await DbContext.MachineAreaTimeRegistrations.AddRangeAsync(newTimeRegistrationDay, newTimeRegistrationDay1,
+            await DbContext.ResourceTimeRegistrations.AddRangeAsync(newTimeRegistrationDay, newTimeRegistrationDay1,
                 newTimeRegistrationDay2, newTimeRegistrationDay3, newTimeRegistrationDay4, newTimeRegistrationDay5,
                 newTimeRegistrationDay6);
 
@@ -79,9 +102,9 @@ namespace MachineArea.Pn.Test
                 model.DateTo.Day,
                 23, 59, 59);
 
-            List<MachineAreaTimeRegistration> jobsList = await DbContext.MachineAreaTimeRegistrations
-                .Include(x => x.Machine)
-                .Include(x => x.Area)
+            List<ResourceTimeRegistration> jobsList = await DbContext.ResourceTimeRegistrations
+                .Include(x => x.InnerResource)
+                .Include(x => x.OuterResource)
                 .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                 .ToListAsync();
 
@@ -101,12 +124,12 @@ namespace MachineArea.Pn.Test
         [Test]
         public async Task EmployeesReportByWeek_Generate_DoesGenerate()
         {
-            Area newArea = new Area() { Name = "My Area 1", Version = 1 };
-            Area newArea1 = new Area() { Name = "My Area 2", Version = 1 };
-            Area newArea2 = new Area() { Name = "My Area 3", Version = 1 };
-            Machine newMachine = new Machine() { Name = "My Machine 1", Version = 1 };
-            Machine newMachine1 = new Machine() { Name = "My Machine 2", Version = 1 };
-            Machine newMachine2 = new Machine() { Name = "My Machine 3", Version = 1 };
+            OuterResource newArea = new OuterResource() { Name = "My OuterResource 1", Version = 1 };
+            OuterResource newArea1 = new OuterResource() { Name = "My OuterResource 2", Version = 1 };
+            OuterResource newArea2 = new OuterResource() { Name = "My OuterResource 3", Version = 1 };
+            InnerResource newMachine = new InnerResource() { Name = "My InnerResource 1", Version = 1 };
+            InnerResource newMachine1 = new InnerResource() { Name = "My InnerResource 2", Version = 1 };
+            InnerResource newMachine2 = new InnerResource() { Name = "My InnerResource 3", Version = 1 };
 
             await newArea.Create(DbContext);
             await newArea1.Create(DbContext);
@@ -117,22 +140,22 @@ namespace MachineArea.Pn.Test
 
 
             // Different Weeks
-            MachineAreaTimeRegistration newTimeRegistrationWeek = new MachineAreaTimeRegistration()
-            { AreaId = newArea.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 20) };
-            MachineAreaTimeRegistration newTimeRegistrationWeek1 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 20) };
-            MachineAreaTimeRegistration newTimeRegistrationWeek2 = new MachineAreaTimeRegistration()
-            { AreaId = newArea2.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 27) };
-            MachineAreaTimeRegistration newTimeRegistrationWeek3 = new MachineAreaTimeRegistration()
-            { AreaId = newArea.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 27) };
-            MachineAreaTimeRegistration newTimeRegistrationWeek4 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 05) };
-            MachineAreaTimeRegistration newTimeRegistrationWeek5 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 05) };
-            MachineAreaTimeRegistration newTimeRegistrationWeek6 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 06) };
+            ResourceTimeRegistration newTimeRegistrationWeek = new ResourceTimeRegistration()
+            { OuterResourceId = newArea.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 20) };
+            ResourceTimeRegistration newTimeRegistrationWeek1 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 20) };
+            ResourceTimeRegistration newTimeRegistrationWeek2 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea2.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 05, 27) };
+            ResourceTimeRegistration newTimeRegistrationWeek3 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 27) };
+            ResourceTimeRegistration newTimeRegistrationWeek4 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 05) };
+            ResourceTimeRegistration newTimeRegistrationWeek5 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 05) };
+            ResourceTimeRegistration newTimeRegistrationWeek6 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 06) };
 
-            await DbContext.MachineAreaTimeRegistrations.AddRangeAsync(newTimeRegistrationWeek, newTimeRegistrationWeek1,
+            await DbContext.ResourceTimeRegistrations.AddRangeAsync(newTimeRegistrationWeek, newTimeRegistrationWeek1,
                 newTimeRegistrationWeek2, newTimeRegistrationWeek3, newTimeRegistrationWeek4, newTimeRegistrationWeek5,
                 newTimeRegistrationWeek6);
 
@@ -163,9 +186,9 @@ namespace MachineArea.Pn.Test
                 model.DateTo.Day,
                 23, 59, 59);
 
-            List<MachineAreaTimeRegistration> jobsList = await DbContext.MachineAreaTimeRegistrations
-                .Include(x => x.Machine)
-                .Include(x => x.Area)
+            List<ResourceTimeRegistration> jobsList = await DbContext.ResourceTimeRegistrations
+                .Include(x => x.InnerResource)
+                .Include(x => x.OuterResource)
                 .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                 .ToListAsync();
 
@@ -187,12 +210,12 @@ namespace MachineArea.Pn.Test
         [Test]
         public async Task EmployeesReportByMonth_Generate_DoesGenerate()
         {
-            Area newArea = new Area() { Name = "My Area 1", Version = 1 };
-            Area newArea1 = new Area() { Name = "My Area 2", Version = 1 };
-            Area newArea2 = new Area() { Name = "My Area 3", Version = 1 };
-            Machine newMachine = new Machine() { Name = "My Machine 1", Version = 1 };
-            Machine newMachine1 = new Machine() { Name = "My Machine 2", Version = 1 };
-            Machine newMachine2 = new Machine() { Name = "My Machine 3", Version = 1 };
+            OuterResource newArea = new OuterResource() { Name = "My OuterResource 1", Version = 1 };
+            OuterResource newArea1 = new OuterResource() { Name = "My OuterResource 2", Version = 1 };
+            OuterResource newArea2 = new OuterResource() { Name = "My OuterResource 3", Version = 1 };
+            InnerResource newMachine = new InnerResource() { Name = "My InnerResource 1", Version = 1 };
+            InnerResource newMachine1 = new InnerResource() { Name = "My InnerResource 2", Version = 1 };
+            InnerResource newMachine2 = new InnerResource() { Name = "My InnerResource 3", Version = 1 };
 
             await newArea.Create(DbContext);
             await newArea1.Create(DbContext);
@@ -202,22 +225,22 @@ namespace MachineArea.Pn.Test
             await newMachine2.Create(DbContext);
 
             // Different Month
-            MachineAreaTimeRegistration newTimeRegistrationMonth = new MachineAreaTimeRegistration()
-            { AreaId = newArea.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 13) };
-            MachineAreaTimeRegistration newTimeRegistrationMonth1 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 07, 14) };
-            MachineAreaTimeRegistration newTimeRegistrationMonth2 = new MachineAreaTimeRegistration()
-            { AreaId = newArea2.Id, Version = 1, SDKSiteId = 1, MachineId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 07, 15) };
-            MachineAreaTimeRegistration newTimeRegistrationMonth3 = new MachineAreaTimeRegistration()
-            { AreaId = newArea.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 08, 13) };
-            MachineAreaTimeRegistration newTimeRegistrationMonth4 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 08, 14) };
-            MachineAreaTimeRegistration newTimeRegistrationMonth5 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 09, 15) };
-            MachineAreaTimeRegistration newTimeRegistrationMonth6 = new MachineAreaTimeRegistration()
-            { AreaId = newArea1.Id, Version = 1, SDKSiteId = 2, MachineId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 09, 15) };
+            ResourceTimeRegistration newTimeRegistrationMonth = new ResourceTimeRegistration()
+            { OuterResourceId = newArea.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 06, 13) };
+            ResourceTimeRegistration newTimeRegistrationMonth1 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 07, 14) };
+            ResourceTimeRegistration newTimeRegistrationMonth2 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea2.Id, Version = 1, SDKSiteId = 1, InnerResourceId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 07, 15) };
+            ResourceTimeRegistration newTimeRegistrationMonth3 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 08, 13) };
+            ResourceTimeRegistration newTimeRegistrationMonth4 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 08, 14) };
+            ResourceTimeRegistration newTimeRegistrationMonth5 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine2.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 09, 15) };
+            ResourceTimeRegistration newTimeRegistrationMonth6 = new ResourceTimeRegistration()
+            { OuterResourceId = newArea1.Id, Version = 1, SDKSiteId = 2, InnerResourceId = newMachine1.Id, TimeInSeconds = 36000, DoneAt = new DateTime(2019, 09, 15) };
 
-            await DbContext.MachineAreaTimeRegistrations.AddRangeAsync(newTimeRegistrationMonth, newTimeRegistrationMonth1,
+            await DbContext.ResourceTimeRegistrations.AddRangeAsync(newTimeRegistrationMonth, newTimeRegistrationMonth1,
                 newTimeRegistrationMonth2, newTimeRegistrationMonth3, newTimeRegistrationMonth4, newTimeRegistrationMonth5,
                 newTimeRegistrationMonth6);
 
@@ -248,9 +271,9 @@ namespace MachineArea.Pn.Test
                 model.DateTo.Day,
                 23, 59, 59);
 
-            List<MachineAreaTimeRegistration> jobsList = await DbContext.MachineAreaTimeRegistrations
-                .Include(x => x.Machine)
-                .Include(x => x.Area)
+            List<ResourceTimeRegistration> jobsList = await DbContext.ResourceTimeRegistrations
+                .Include(x => x.InnerResource)
+                .Include(x => x.OuterResource)
                 .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo)
                 .ToListAsync();
 

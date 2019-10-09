@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 microting
+Copyright (c) 2007 - 2019 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,28 +34,28 @@ using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Consts;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using Rebus.Handlers;
 
 namespace MachineArea.Pn.Handlers
 {
-    public class MachineAreaUpdateHandler : IHandleMessages<MachineAreaUpdate>
+    public class OuterInnerResourceUpdateHandler : IHandleMessages<OuterInnerResourceUpdate>
     {  
         private readonly Core _core;
-        private readonly MachineAreaPnDbContext _dbContext;        
+        private readonly OuterInnerResourcePnDbContext _dbContext;        
         
-        public MachineAreaUpdateHandler(Core core, MachineAreaPnDbContext context)
+        public OuterInnerResourceUpdateHandler(Core core, OuterInnerResourcePnDbContext context)
         {
             _core = core;
             _dbContext = context;
         }
         
         #pragma warning disable 1998
-        public async Task Handle(MachineAreaUpdate message)
+        public async Task Handle(OuterInnerResourceUpdate message)
         {            
-            string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.SdkeFormId.ToString()}"; 
+            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}"; 
             
             int eFormId = int.Parse(_dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
@@ -64,7 +64,7 @@ namespace MachineArea.Pn.Handlers
             MainElement mainElement = _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
-            lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
+            lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
             string sdkSiteIds = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;
@@ -85,20 +85,20 @@ namespace MachineArea.Pn.Handlers
 
         private async Task UpdateFromMachine(MachineModel machineModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = _dbContext.MachineAreas.Where(x =>
-                x.MachineId == machineModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
+            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
+                x.InnerResourceId == machineModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
 
             List<int> requestedAreaIds = machineModel.RelatedAreasIds;
             List<int> deployedAreaIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
-            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
+            foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
             {                
-                deployedAreaIds.Add(machineArea.AreaId);
+                deployedAreaIds.Add(machineArea.OuterResourceId);
 
-                if (!machineModel.RelatedAreasIds.Contains(machineArea.AreaId))
+                if (!machineModel.RelatedAreasIds.Contains(machineArea.OuterResourceId))
                 {
-                    foreach (MachineAreaSite machineAreaSite in machineArea.MachineAreaSites)
+                    foreach (OuterInnerResourceSite machineAreaSite in machineArea.OuterInnerResourceSites)
                     {
                         await DeleteRelationship(machineArea.Id, machineAreaSite.MicrotingSdkCaseId);
                     }
@@ -114,37 +114,37 @@ namespace MachineArea.Pn.Handlers
 
             foreach (int areaId in toBedeployed)
             {
-                Area area = _dbContext.Areas.SingleOrDefault(x => x.Id == areaId);
+                OuterResource area = _dbContext.OuterResources.SingleOrDefault(x => x.Id == areaId);
                 if (area != null)
                     await CreateRelationships(machineModel.Id, areaId, machineModel.Name, area.Name, mainElement, sites,
                         eFormId);
             }
             
             // check for new site and add accordingly
-            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in
+            foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in
                 machineAreas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
             {
-                await CreateRelationships(machineArea.MachineId, machineArea.AreaId, machineModel.Name, machineArea.Area.Name, mainElement, sites,
+                await CreateRelationships(machineArea.InnerResourceId, machineArea.OuterResourceId, machineModel.Name, machineArea.OuterResource.Name, mainElement, sites,
                     eFormId);
             }
         }
 
         private async Task UpdateFromArea(AreaModel areaModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = _dbContext.MachineAreas.Where(x =>
-                x.AreaId == areaModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
+            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
+                x.OuterResourceId == areaModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
 
             List<int> requestedMachineIds = areaModel.RelatedMachinesIds;
             List<int> deployedMachineIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
-            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
+            foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
             {
-                deployedMachineIds.Add(machineArea.MachineId);
+                deployedMachineIds.Add(machineArea.InnerResourceId);
                 
-                if (!areaModel.RelatedMachinesIds.Contains(machineArea.MachineId))
+                if (!areaModel.RelatedMachinesIds.Contains(machineArea.InnerResourceId))
                 {
-                    foreach (MachineAreaSite machineAreaSite in machineArea.MachineAreaSites)
+                    foreach (OuterInnerResourceSite machineAreaSite in machineArea.OuterInnerResourceSites)
                     {
                         await DeleteRelationship(machineArea.Id, machineAreaSite.MicrotingSdkCaseId);
                     }
@@ -159,17 +159,17 @@ namespace MachineArea.Pn.Handlers
 
             foreach (int machineId in toBedeployed)
             {
-                Machine machine = _dbContext.Machines.SingleOrDefault(x => x.Id == machineId);
+                InnerResource machine = _dbContext.InnerResources.SingleOrDefault(x => x.Id == machineId);
                 if (machine != null)
                     await CreateRelationships(machineId, areaModel.Id, machine.Name, areaModel.Name, mainElement, sites,
                         eFormId);
             }
 
             // check for new site and add accordingly
-            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in
+            foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in
                 machineAreas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
             {
-                await CreateRelationships(machineArea.MachineId, machineArea.AreaId, machineArea.Machine.Name, areaModel.Name, mainElement, sites,
+                await CreateRelationships(machineArea.InnerResourceId, machineArea.OuterResourceId, machineArea.InnerResource.Name, areaModel.Name, mainElement, sites,
                     eFormId);
             }
         }
@@ -177,8 +177,8 @@ namespace MachineArea.Pn.Handlers
         private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName,
             MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea = _dbContext.MachineAreas.SingleOrDefault(x =>
-                    x.MachineId == machineId && x.AreaId == areaId);
+            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea = _dbContext.OuterInnerResources.SingleOrDefault(x =>
+                    x.InnerResourceId == machineId && x.OuterResourceId == areaId);
 
             if (machineArea != null)
             {
@@ -191,9 +191,11 @@ namespace MachineArea.Pn.Handlers
             else
             {
                 machineArea =
-                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea();
-                machineArea.AreaId = areaId;
-                machineArea.MachineId = machineId;
+                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource()
+                    {
+                        OuterResourceId = areaId,
+                        InnerResourceId = machineId
+                    };
                 await machineArea.Create(_dbContext);
             }
             
@@ -203,7 +205,7 @@ namespace MachineArea.Pn.Handlers
             mainElement.StartDate = DateTime.Now.ToUniversalTime();
             mainElement.Repeated = 0;
             
-            string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.QuickSyncEnabled.ToString()}"; 
+            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
 
             bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
                                         .FirstOrDefault(x => 
@@ -246,7 +248,7 @@ namespace MachineArea.Pn.Handlers
         }
 
         private async Task UpdateSitesDeployed(
-            Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea,
+            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea,
             MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
 
@@ -256,16 +258,16 @@ namespace MachineArea.Pn.Handlers
             foreach (Site_Dto siteDto in sites)
             {
                 siteIds.Add(siteDto.SiteId);
-                MachineAreaSite siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
-                    x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id && x.WorkflowState == Constants.WorkflowStates.Created);
+                OuterInnerResourceSite siteMatch = _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
+                    x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == machineArea.Id && x.WorkflowState == Constants.WorkflowStates.Created);
                 if (siteMatch == null)
                 {
                     int? sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
                     if (sdkCaseId != null)
                     {
-                        MachineAreaSite machineAreaSite = new MachineAreaSite();
-                        machineAreaSite.MachineAreaId = machineArea.Id;
+                        OuterInnerResourceSite machineAreaSite = new OuterInnerResourceSite();
+                        machineAreaSite.OuterInnerResourceId = machineArea.Id;
                         machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
                         machineAreaSite.MicrotingSdkCaseId = (int)sdkCaseId;
                         machineAreaSite.MicrotingSdkeFormId = eFormId;
@@ -274,10 +276,10 @@ namespace MachineArea.Pn.Handlers
                 }
             }
 
-            var sitesConfigured = _dbContext.MachineAreaSites.Where(x => x.MachineAreaId == machineArea.Id).ToList();
+            var sitesConfigured = _dbContext.OuterInnerResourceSites.Where(x => x.OuterInnerResourceId == machineArea.Id).ToList();
             WriteLogEntry("MachineAreaUpdateHandler: sitesConfigured looked up");
 
-            foreach (MachineAreaSite machineAreaSite in sitesConfigured)
+            foreach (OuterInnerResourceSite machineAreaSite in sitesConfigured)
             {
                 WriteLogEntry(
                     $"MachineAreaUpdateHandler: Looking at machineAreaSite {machineAreaSite.Id} for microtingSiteId {machineAreaSite.MicrotingSdkSiteId}");
@@ -297,8 +299,8 @@ namespace MachineArea.Pn.Handlers
 
         private async Task DeleteRelationship(int machineAreaId, int microtingSdkCaseId)
         {
-            MachineAreaSite machineAreaSite =  
-                _dbContext.MachineAreaSites.SingleOrDefault(x => x.MachineAreaId == machineAreaId && x.MicrotingSdkCaseId == microtingSdkCaseId);
+            OuterInnerResourceSite machineAreaSite =  
+                _dbContext.OuterInnerResourceSites.SingleOrDefault(x => x.OuterInnerResourceId == machineAreaId && x.MicrotingSdkCaseId == microtingSdkCaseId);
             if (machineAreaSite != null)
             {
                 bool result = _core.CaseDelete(microtingSdkCaseId);

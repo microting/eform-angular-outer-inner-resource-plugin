@@ -17,8 +17,8 @@ using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Services
 {
@@ -27,12 +27,12 @@ namespace MachineArea.Pn.Services
         private readonly ILogger<MachineAreaReportService> _logger;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
         private readonly IExcelService _excelService;
-        private readonly MachineAreaPnDbContext _dbContext;
+        private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IEFormCoreService _coreHelper;
         private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
 
         public MachineAreaReportService(ILogger<MachineAreaReportService> logger,
-            MachineAreaPnDbContext dbContext,
+            OuterInnerResourcePnDbContext dbContext,
             IEFormCoreService coreHelper,
             IMachineAreaLocalizationService machineAreaLocalizationService,
             IPluginDbOptions<MachineAreaBaseSettings> options,
@@ -117,30 +117,30 @@ namespace MachineArea.Pn.Services
                 // results to exclude
                 
                 string outerResourceName = "";
-                Area areaToExclude;
-                Machine machineToExclude;
+                OuterResource areaToExclude;
+                InnerResource machineToExclude;
                 string innerResourceName = "";
-                List<MachineAreaTimeRegistration> jobsList;
+                List<ResourceTimeRegistration> jobsList;
                 
                 outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterTotalTimeName")?.Value;
-                areaToExclude = _dbContext.Areas.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
+                areaToExclude = _dbContext.OuterResources.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
                 innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerTotalTimeName")?.Value;
-                machineToExclude = await _dbContext.Machines.SingleOrDefaultAsync(x => x.Name == innerResourceName);
+                machineToExclude = await _dbContext.InnerResources.SingleOrDefaultAsync(x => x.Name == innerResourceName);
 
                 if (model.Relationship == ReportRelationshipType.EmployeeTotal)
                 {
-                    jobsList = await _dbContext.MachineAreaTimeRegistrations
-                        .Include(x => x.Machine)
-                        .Include(x => x.Area)
-                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.AreaId == areaToExclude.Id && x.MachineId == machineToExclude.Id)
+                    jobsList = await _dbContext.ResourceTimeRegistrations
+                        .Include(x => x.InnerResource)
+                        .Include(x => x.OuterResource)
+                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.OuterResourceId == areaToExclude.Id && x.InnerResourceId == machineToExclude.Id)
                         .ToListAsync();
                 }
                 else
                 {
-                    jobsList = await _dbContext.MachineAreaTimeRegistrations
-                        .Include(x => x.Machine)
-                        .Include(x => x.Area)
-                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.AreaId != areaToExclude.Id && x.MachineId != machineToExclude.Id)
+                    jobsList = await _dbContext.ResourceTimeRegistrations
+                        .Include(x => x.InnerResource)
+                        .Include(x => x.OuterResource)
+                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.OuterResourceId != areaToExclude.Id && x.InnerResourceId != machineToExclude.Id)
                         .ToListAsync();
                 }
 
@@ -185,17 +185,17 @@ namespace MachineArea.Pn.Services
                         reportDataResult.Model.HumanReadableName =
                             _machineAreaLocalizationService.GetString("Employee");
                         break;
-                    case ReportRelationshipType.Machine:
+                    case ReportRelationshipType.InnerResource:
                         reportDataResult.Model.HumanReadableName = innerResourceName;
                         break;
-                    case ReportRelationshipType.Area:
+                    case ReportRelationshipType.OuterResource:
                         reportDataResult.Model.HumanReadableName = outerResourceName;
                         break;
-                    case ReportRelationshipType.EmployeeMachine:
+                    case ReportRelationshipType.EmployeeInnerResource:
                         reportDataResult.Model.HumanReadableName =
                             _machineAreaLocalizationService.GetString("Employee") + "-" + innerResourceName;
                         break;
-                    case ReportRelationshipType.EmployeeArea:
+                    case ReportRelationshipType.EmployeeOuterResource:
                         reportDataResult.Model.HumanReadableName =
                             _machineAreaLocalizationService.GetString("Employee") + "-" + outerResourceName;
                         break;

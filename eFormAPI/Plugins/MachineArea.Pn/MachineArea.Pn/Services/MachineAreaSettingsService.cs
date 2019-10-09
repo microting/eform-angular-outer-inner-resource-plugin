@@ -15,9 +15,9 @@ using Microsoft.Extensions.Logging;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Consts;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using Rebus.Bus;
 
 namespace MachineArea.Pn.Services
@@ -26,14 +26,14 @@ namespace MachineArea.Pn.Services
     {
         private readonly ILogger<MachineAreaSettingsService> _logger;
         private readonly IMachineAreaLocalizationService _machineAreaLocalizationService;
-        private readonly MachineAreaPnDbContext _dbContext;
+        private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IBus _bus;
 
         public MachineAreaSettingsService(
             ILogger<MachineAreaSettingsService> logger,
-            MachineAreaPnDbContext dbContext,
+            OuterInnerResourcePnDbContext dbContext,
             IMachineAreaLocalizationService machineAreaLocalizationService,
             IPluginDbOptions<MachineAreaBaseSettings> options,
             IHttpContextAccessor httpContextAccessor, 
@@ -87,7 +87,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
+                string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
                 string oldSdkSiteIds = _dbContext.PluginConfigurationValues
                     .FirstOrDefault(x => 
                         x.Name == lookup)?.Value;
@@ -139,21 +139,21 @@ namespace MachineArea.Pn.Services
 
         private void CreateNewSiteRelations()
         {
-            List<Area> areas = _dbContext.Areas.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+            List<OuterResource> areas = _dbContext.OuterResources.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .ToList();
-            foreach (Area area in areas)
+            foreach (OuterResource area in areas)
             {
                 AreaModel areaModel = new AreaModel()
                 {
                     Id = area.Id,
-                    RelatedMachinesIds = _dbContext.MachineAreas.
-                        Where(x => x.AreaId == area.Id && 
+                    RelatedMachinesIds = _dbContext.OuterInnerResources.
+                        Where(x => x.OuterResourceId == area.Id && 
                                    x.WorkflowState != Constants.WorkflowStates.Removed).
-                        Select(x => x.MachineId).ToList(),
+                        Select(x => x.InnerResourceId).ToList(),
                     Name = area.Name
                 };
                         
-                _bus.SendLocal(new MachineAreaUpdate(null, areaModel));
+                _bus.SendLocal(new OuterInnerResourceUpdate(null, areaModel));
             }
         }
     }

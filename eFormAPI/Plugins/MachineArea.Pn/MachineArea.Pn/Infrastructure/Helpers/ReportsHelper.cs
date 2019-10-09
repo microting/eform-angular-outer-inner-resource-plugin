@@ -5,14 +5,14 @@ using MachineArea.Pn.Infrastructure.Enums;
 using MachineArea.Pn.Infrastructure.Extensions;
 using MachineArea.Pn.Infrastructure.Models.Report;
 using Microting.eForm.Dto;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 
 namespace MachineArea.Pn.Infrastructure.Helpers
 {
     public static class ReportsHelper
     {
         public static ReportModel GetReportData(
-            GenerateReportModel model, List<MachineAreaTimeRegistration> jobsList,
+            GenerateReportModel model, List<ResourceTimeRegistration> jobsList,
             List<Site_Dto> sitesList, int timeType)
         {
                 List<ReportEntityModel> reportEntitiesList = new List<ReportEntityModel>();
@@ -69,12 +69,12 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.Area:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.AreaId, x.Area })
+                            case ReportRelationshipType.OuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = x.Key.Area?.Name,
-                                        EntityId = x.Key.AreaId,
+                                        EntityName = x.Key.OuterResource?.Name,
+                                        EntityId = x.Key.OuterResourceId,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt.Day == z.Day
@@ -88,12 +88,12 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.Machine:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.MachineId, x.Machine })
+                            case ReportRelationshipType.InnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = x.Key.Machine?.Name,
-                                        EntityId = x.Key.MachineId,
+                                        EntityName = x.Key.InnerResource?.Name,
+                                        EntityId = x.Key.InnerResourceId,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt.Day == z.Day
@@ -106,14 +106,14 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.EmployeeMachine:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.MachineId, x.Machine })
+                            case ReportRelationshipType.EmployeeInnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
                                         EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
                                         EntityId = x.Key.SDKSiteId,
-                                        RelatedEntityId = x.Key.MachineId,
-                                        RelatedEntityName = x.Key.Machine.Name,
+                                        RelatedEntityId = x.Key.InnerResourceId,
+                                        RelatedEntityName = x.Key.InnerResource.Name,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt.Day == z.Day
@@ -125,14 +125,14 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                         TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
                                     }).ToList();
                                 break;
-                            case ReportRelationshipType.EmployeeArea:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.AreaId, x.Area })
+                            case ReportRelationshipType.EmployeeOuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
                                         EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
                                         EntityId = x.Key.SDKSiteId,
-                                        RelatedEntityId = x.Key.AreaId,
-                                        RelatedEntityName = x.Key.Area.Name,
+                                        RelatedEntityId = x.Key.OuterResourceId,
+                                        RelatedEntityName = x.Key.OuterResource.Name,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt.Day == z.Day
@@ -200,12 +200,12 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.Area:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.AreaId, x.Area })
+                            case ReportRelationshipType.OuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = x.Key.Area?.Name,
-                                        EntityId = x.Key.AreaId,
+                                        EntityName = x.Key.OuterResource?.Name,
+                                        EntityId = x.Key.OuterResourceId,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -217,12 +217,12 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.Machine:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.MachineId, x.Machine })
+                            case ReportRelationshipType.InnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = x.Key.Machine?.Name,
-                                        EntityId = x.Key.MachineId,
+                                        EntityName = x.Key.InnerResource?.Name,
+                                        EntityId = x.Key.InnerResourceId,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -234,14 +234,14 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.EmployeeArea:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.AreaId, x.Area })
+                            case ReportRelationshipType.EmployeeOuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
                                         EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
                                         EntityId = x.Key.SDKSiteId,
-                                        RelatedEntityId = x.Key.AreaId,
-                                        RelatedEntityName = x.Key.Area.Name,
+                                        RelatedEntityId = x.Key.OuterResourceId,
+                                        RelatedEntityName = x.Key.OuterResource.Name,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -252,14 +252,14 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                         TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
                                     }).ToList();
                                 break;
-                            case ReportRelationshipType.EmployeeMachine:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.MachineId, x.Machine })
+                            case ReportRelationshipType.EmployeeInnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
                                         EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
                                         EntityId = x.Key.SDKSiteId,
-                                        RelatedEntityId = x.Key.MachineId,
-                                        RelatedEntityName = x.Key.Machine.Name,
+                                        RelatedEntityId = x.Key.InnerResourceId,
+                                        RelatedEntityName = x.Key.InnerResource.Name,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -327,12 +327,12 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.Area:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.AreaId, x.Area })
+                            case ReportRelationshipType.OuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = x.Key.Area?.Name,
-                                        EntityId = x.Key.AreaId,
+                                        EntityName = x.Key.OuterResource?.Name,
+                                        EntityId = x.Key.OuterResourceId,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -344,12 +344,12 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.Machine:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.MachineId, x.Machine })
+                            case ReportRelationshipType.InnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = x.Key.Machine?.Name,
-                                        EntityId = x.Key.MachineId,
+                                        EntityName = x.Key.InnerResource?.Name,
+                                        EntityId = x.Key.InnerResourceId,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -361,14 +361,14 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                     })
                                     .ToList();
                                 break;
-                            case ReportRelationshipType.EmployeeArea:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.AreaId, x.Area })
+                            case ReportRelationshipType.EmployeeOuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
                                         EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
                                         EntityId = x.Key.SDKSiteId,
-                                        RelatedEntityId = x.Key.AreaId,
-                                        RelatedEntityName = x.Key.Area.Name,
+                                        RelatedEntityId = x.Key.OuterResourceId,
+                                        RelatedEntityName = x.Key.OuterResource.Name,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -379,14 +379,14 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                                         TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
                                     }).ToList();
                                 break;
-                            case ReportRelationshipType.EmployeeMachine:
-                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.MachineId, x.Machine })
+                            case ReportRelationshipType.EmployeeInnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
                                         EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
                                         EntityId = x.Key.SDKSiteId,
-                                        RelatedEntityId = x.Key.MachineId,
-                                        RelatedEntityName = x.Key.Machine.Name,
+                                        RelatedEntityId = x.Key.InnerResourceId,
+                                        RelatedEntityName = x.Key.InnerResource.Name,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
                                                     .Where(j => j.DoneAt >= z
@@ -403,8 +403,8 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                         break;
                 }
 
-                if (model.Relationship == ReportRelationshipType.EmployeeArea
-                    || model.Relationship == ReportRelationshipType.EmployeeMachine)
+                if (model.Relationship == ReportRelationshipType.EmployeeOuterResource
+                    || model.Relationship == ReportRelationshipType.EmployeeInnerResource)
                 {
                     // Group reports by employee
                     List<IGrouping<int, ReportEntityModel>> groupedReports = reportEntitiesList.GroupBy(x => x.EntityId).ToList();
@@ -478,7 +478,7 @@ namespace MachineArea.Pn.Infrastructure.Helpers
                 return finalModel;
         }
 
-        private static double CorrectedTime(MachineAreaTimeRegistration machineAreaTimeRegistration, int timeType)
+        private static double CorrectedTime(ResourceTimeRegistration machineAreaTimeRegistration, int timeType)
         {
             switch (timeType)
             {

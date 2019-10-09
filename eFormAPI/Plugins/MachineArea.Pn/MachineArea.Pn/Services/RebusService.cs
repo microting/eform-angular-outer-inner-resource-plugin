@@ -6,8 +6,8 @@ using MachineArea.Pn.Installers;
 using Rebus.Bus;
 using eFormCore;
 using Microsoft.EntityFrameworkCore;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Factories;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Factories;
 
 namespace MachineArea.Pn.Services
 {
@@ -35,7 +35,7 @@ namespace MachineArea.Pn.Services
             
             Core _core = _coreHelper.GetCore();
             _container.Register(Component.For<Core>().Instance(_core));
-            _container.Register(Component.For<MachineAreaPnDbContext>().Instance(GetContext()));
+            _container.Register(Component.For<OuterInnerResourcePnDbContext>().Instance(GetContext()));
             _bus = _container.Resolve<IBus>();
         }
 
@@ -44,9 +44,9 @@ namespace MachineArea.Pn.Services
             return _bus;
         }
         
-        private MachineAreaPnDbContext GetContext()
+        private OuterInnerResourcePnDbContext GetContext()
         {
-            MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
+            OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
             return contextFactory.CreateDbContext(new[] {_connectionString});
 
         }        

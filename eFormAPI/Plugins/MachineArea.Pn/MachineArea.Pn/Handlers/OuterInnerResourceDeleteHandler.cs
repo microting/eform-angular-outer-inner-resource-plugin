@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 microting
+Copyright (c) 2007 - 2019 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,25 +31,25 @@ using MachineArea.Pn.Infrastructure.Models.Areas;
 using MachineArea.Pn.Infrastructure.Models.Machines;
 using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using Rebus.Handlers;
 
 namespace MachineArea.Pn.Handlers
 {
-    public class MachineAreaDeleteHandler : IHandleMessages<MachineAreaDelete>
+    public class OuterInnerResourceDeleteHandler : IHandleMessages<OuterInnerResourceDelete>
     {    
         private readonly Core _core;
-        private readonly MachineAreaPnDbContext _dbContext;        
+        private readonly OuterInnerResourcePnDbContext _dbContext;        
         
-        public MachineAreaDeleteHandler(Core core, MachineAreaPnDbContext context)
+        public OuterInnerResourceDeleteHandler(Core core, OuterInnerResourcePnDbContext context)
         {
             _core = core;
             _dbContext = context;
         }
         
         #pragma warning disable 1998
-        public async Task Handle(MachineAreaDelete message)
+        public async Task Handle(OuterInnerResourceDelete message)
         {            
             if (message.MachineModel != null)
             {
@@ -63,27 +63,27 @@ namespace MachineArea.Pn.Handlers
 
         private async Task DeleteFromMachine(MachineModel machineModel)
         {
-            List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = _dbContext.MachineAreas.Where(x =>
-                x.MachineId == machineModel.Id).ToList();
+            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
+                x.InnerResourceId == machineModel.Id).ToList();
             await DeleteRelationships(machineAreas);
         }
 
         private async Task DeleteFromArea(AreaModel areaModel)
         {
-            List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = _dbContext.MachineAreas.Where(x =>
-                x.AreaId == areaModel.Id).ToList();
+            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
+                x.OuterResourceId == areaModel.Id).ToList();
             await DeleteRelationships(machineAreas);
 
         }
 
-        private async Task DeleteRelationships(List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas)
+        private async Task DeleteRelationships(List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas)
         {
-            foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
+            foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
             {
-                IQueryable<MachineAreaSite> machineAreaSites = _dbContext.MachineAreaSites.Where(x => x.MachineAreaId == machineArea.Id);
+                IQueryable<OuterInnerResourceSite> machineAreaSites = _dbContext.OuterInnerResourceSites.Where(x => x.OuterInnerResourceId == machineArea.Id);
                 int numSites = machineAreaSites.Count();
                 int sitesDeleted = 0;
-                foreach (MachineAreaSite machineAreaSite in machineAreaSites)
+                foreach (OuterInnerResourceSite machineAreaSite in machineAreaSites)
                 {
                     try
                     {

@@ -3,13 +3,13 @@ using System.Linq;
 using MachineArea.Pn.Infrastructure.Data.Seed.Data;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
 
 namespace MachineArea.Pn.Infrastructure.Data.Seed
 {
     public class MachineAreaPluginSeed
     {
-        public static void SeedData(MachineAreaPnDbContext dbContext)
+        public static void SeedData(OuterInnerResourcePnDbContext dbContext)
         {
             MachineAreaConfigurationSeedData seedData = new MachineAreaConfigurationSeedData();
             PluginConfigurationValue[] configurationList = seedData.Data;

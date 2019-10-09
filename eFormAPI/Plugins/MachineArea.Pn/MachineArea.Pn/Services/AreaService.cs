@@ -12,21 +12,21 @@ using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using Rebus.Bus;
 
 namespace MachineArea.Pn.Services
 {
     public class AreaService : IAreaService
     {
-        private readonly MachineAreaPnDbContext _dbContext;
+        private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IMachineAreaLocalizationService _localizationService;
         private readonly ILogger<AreaService> _logger;
         private readonly IEFormCoreService _coreService;
         private readonly IBus _bus;
 
-        public AreaService(MachineAreaPnDbContext dbContext,
+        public AreaService(OuterInnerResourcePnDbContext dbContext,
             IMachineAreaLocalizationService localizationService,
             ILogger<AreaService> logger, 
             IEFormCoreService coreService, 
@@ -45,7 +45,7 @@ namespace MachineArea.Pn.Services
             {
                 AreasModel areasModel = new AreasModel();
 
-                IQueryable<Area> areasQuery = _dbContext.Areas.AsQueryable();
+                IQueryable<OuterResource> areasQuery = _dbContext.OuterResources.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
                 {
                     if (requestModel.IsSortDsc)
@@ -61,7 +61,7 @@ namespace MachineArea.Pn.Services
                 }
                 else
                 {
-                    areasQuery = _dbContext.Areas
+                    areasQuery = _dbContext.OuterResources
                         .OrderBy(x => x.Id);
                 }
 
@@ -80,7 +80,7 @@ namespace MachineArea.Pn.Services
                     Id = x.Id
                 }).ToListAsync();
 
-                areasModel.Total = await _dbContext.Areas.CountAsync();
+                areasModel.Total = await _dbContext.OuterResources.CountAsync();
                 areasModel.AreaList = areas;
                 
                 try
@@ -103,7 +103,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                AreaModel area = await _dbContext.Areas.Select(x => new AreaModel()
+                AreaModel area = await _dbContext.OuterResources.Select(x => new AreaModel()
                     {
                         Name = x.Name,
                         Id = x.Id
@@ -116,13 +116,13 @@ namespace MachineArea.Pn.Services
                         _localizationService.GetString("AreaWithIdNotExist", areaId));
                 }
 
-                List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = _dbContext.MachineAreas
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.AreaId == area.Id).ToList();
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.OuterResourceId == area.Id).ToList();
 
                 area.RelatedMachinesIds = new List<int>();
-                foreach (Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea in machineAreas)
+                foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
                 {
-                    area.RelatedMachinesIds.Add(machineArea.MachineId);
+                    area.RelatedMachinesIds.Add(machineArea.InnerResourceId);
                 }
 
                 return new OperationDataResult<AreaModel>(true, area);
@@ -140,21 +140,21 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = model.RelatedMachinesIds.Select(x =>
-                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedMachinesIds.Select(x =>
+                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
                     {
                         Id = x
                     }).ToList();
 
-                Area newArea = new Area()
+                OuterResource newArea = new OuterResource()
                 {
                     Name = model.Name,
-                    MachineAreas = machineAreas
+                    OuterInnerResources = machineAreas
                 };
 
                 await newArea.Create(_dbContext);
                 model.Id = newArea.Id;
-                await _bus.SendLocal(new MachineAreaCreate(null, model));
+                await _bus.SendLocal(new OuterInnerResourceCreate(null, model));
 
                 return new OperationResult(true, 
                     _localizationService.GetString("AreaCreatedSuccessfully", model.Name));
@@ -172,21 +172,21 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                List<Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea> machineAreas = model.RelatedMachinesIds.Select(x =>
-                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedMachinesIds.Select(x =>
+                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
                     {
                         Id = x
                     }).ToList();
 
-                Area selectedArea = new Area()
+                OuterResource selectedArea = new OuterResource()
                 {
                     Name = model.Name,
-                    MachineAreas = machineAreas,
+                    OuterInnerResources = machineAreas,
                     Id = model.Id
                 };
 
                 await selectedArea.Update(_dbContext);
-                await _bus.SendLocal(new MachineAreaUpdate(null, model));
+                await _bus.SendLocal(new OuterInnerResourceUpdate(null, model));
                 return new OperationResult(true, _localizationService.GetString("AreaUpdatedSuccessfully"));
             }
             catch (Exception e)
@@ -202,13 +202,13 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                Area selectedArea = new Area()
+                OuterResource selectedArea = new OuterResource()
                 {
                     Id = areaId
                 };
                 
                 await selectedArea.Delete(_dbContext);
-                await _bus.SendLocal(new MachineAreaDelete(null, new AreaModel() { Id = areaId }));
+                await _bus.SendLocal(new OuterInnerResourceDelete(null, new AreaModel() { Id = areaId }));
                 return new OperationResult(true, _localizationService.GetString("AreaDeletedSuccessfully"));
             }
             catch (Exception e)

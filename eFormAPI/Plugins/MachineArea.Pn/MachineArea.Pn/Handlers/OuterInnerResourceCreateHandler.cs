@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 microting
+Copyright (c) 2007 - 2019 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,28 +33,28 @@ using MachineArea.Pn.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Models;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Consts;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Entities;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using Rebus.Handlers;
 
 namespace MachineArea.Pn.Handlers
 {
-    public class MachineAreaCreateHandler : IHandleMessages<MachineAreaCreate>
+    public class OuterInnerResourceCreateHandler : IHandleMessages<OuterInnerResourceCreate>
     {        
         private readonly Core _core;
-        private readonly MachineAreaPnDbContext _dbContext;        
+        private readonly OuterInnerResourcePnDbContext _dbContext;        
         
-        public MachineAreaCreateHandler(Core core, MachineAreaPnDbContext context)
+        public OuterInnerResourceCreateHandler(Core core, OuterInnerResourcePnDbContext context)
         {
             _core = core;
             _dbContext = context;
         }
         
         #pragma warning disable 1998
-        public async Task Handle(MachineAreaCreate message)
+        public async Task Handle(OuterInnerResourceCreate message)
         {            
-            string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.SdkeFormId.ToString()}"; 
+            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}"; 
             
             LogEvent($"lookup is {lookup}");
 
@@ -70,7 +70,7 @@ namespace MachineArea.Pn.Handlers
             MainElement mainElement = _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
-            lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.EnabledSiteIds.ToString()}"; 
+            lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
             LogEvent($"lookup is {lookup}");
 
             string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
@@ -99,7 +99,7 @@ namespace MachineArea.Pn.Handlers
         {
             foreach (int areaId in model.RelatedAreasIds)
             {                
-                Area area = _dbContext.Areas.SingleOrDefault(x => x.Id == areaId);
+                OuterResource area = _dbContext.OuterResources.SingleOrDefault(x => x.Id == areaId);
                 await CreateRelationships(model.Id, areaId, model.Name, area.Name, mainElement, sites, eFormId);              
             }
         }
@@ -108,21 +108,21 @@ namespace MachineArea.Pn.Handlers
         {
            foreach (int machineId in model.RelatedMachinesIds)
             {
-                Machine machine = _dbContext.Machines.SingleOrDefault(x => x.Id == machineId);
+                InnerResource machine = _dbContext.InnerResources.SingleOrDefault(x => x.Id == machineId);
                 await CreateRelationships(machineId, model.Id, machine.Name, model.Name, mainElement, sites, eFormId);
             }
         }
 
         private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea match = _dbContext.MachineAreas.SingleOrDefault(x =>
-                    x.MachineId == machineId && x.AreaId == areaId);
+            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource match = _dbContext.OuterInnerResources.SingleOrDefault(x =>
+                    x.InnerResourceId == machineId && x.OuterResourceId == areaId);
             if (match == null)
             {
-                Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea machineArea =
-                    new Microting.eFormMachineAreaBase.Infrastructure.Data.Entities.MachineArea();
-                machineArea.AreaId = areaId;
-                machineArea.MachineId = machineId;
+                Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea =
+                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource();
+                machineArea.OuterResourceId = areaId;
+                machineArea.InnerResourceId = machineId;
                 await machineArea.Create(_dbContext);
                 mainElement.Label = machineName;
                 mainElement.ElementList[0].Label = machineName;
@@ -130,7 +130,7 @@ namespace MachineArea.Pn.Handlers
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 mainElement.Repeated = 0;
 
-                string lookup = $"MachineAreaBaseSettings:{MachineAreaSettingsEnum.QuickSyncEnabled.ToString()}"; 
+                string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
                 LogEvent($"lookup is {lookup}");
 
                 bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
@@ -173,16 +173,16 @@ namespace MachineArea.Pn.Handlers
                 
                 foreach (Site_Dto siteDto in sites)
                 {
-                    MachineAreaSite siteMatch = _dbContext.MachineAreaSites.SingleOrDefault(x =>
-                        x.MicrotingSdkSiteId == siteDto.SiteId && x.MachineAreaId == machineArea.Id);
+                    OuterInnerResourceSite siteMatch = _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
+                        x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == machineArea.Id);
                     if (siteMatch == null)
                     {
                         int? sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
                         if (sdkCaseId != null)
                         {
-                            MachineAreaSite machineAreaSite = new MachineAreaSite();
-                            machineAreaSite.MachineAreaId = machineArea.Id;
+                            OuterInnerResourceSite machineAreaSite = new OuterInnerResourceSite();
+                            machineAreaSite.OuterInnerResourceId = machineArea.Id;
                             machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
                             machineAreaSite.MicrotingSdkCaseId = (int)sdkCaseId;
                             machineAreaSite.MicrotingSdkeFormId = eFormId;

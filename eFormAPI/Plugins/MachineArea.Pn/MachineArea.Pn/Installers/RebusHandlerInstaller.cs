@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 microting
+Copyright (c) 2007 - 2019 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,9 @@ namespace MachineArea.Pn.Installers
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<IHandleMessages<MachineAreaCreate>>().ImplementedBy<MachineAreaCreateHandler>().LifestyleTransient());            
-            container.Register(Component.For<IHandleMessages<MachineAreaUpdate>>().ImplementedBy<MachineAreaUpdateHandler>().LifestyleTransient());            
-            container.Register(Component.For<IHandleMessages<MachineAreaDelete>>().ImplementedBy<MachineAreaDeleteHandler>().LifestyleTransient());            
+            container.Register(Component.For<IHandleMessages<OuterInnerResourceCreate>>().ImplementedBy<OuterInnerResourceCreateHandler>().LifestyleTransient());            
+            container.Register(Component.For<IHandleMessages<OuterInnerResourceUpdate>>().ImplementedBy<OuterInnerResourceUpdateHandler>().LifestyleTransient());            
+            container.Register(Component.For<IHandleMessages<OuterInnerResourceDelete>>().ImplementedBy<OuterInnerResourceDeleteHandler>().LifestyleTransient());            
         }
     }
 }

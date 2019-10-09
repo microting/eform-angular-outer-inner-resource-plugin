@@ -15,8 +15,8 @@ using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
-using Microting.eFormMachineAreaBase.Infrastructure.Data;
-using Microting.eFormMachineAreaBase.Infrastructure.Data.Factories;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Factories;
 
 namespace MachineArea.Pn
 {
@@ -48,7 +48,7 @@ namespace MachineArea.Pn
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
         {
             MachineAreaConfigurationSeedData seedData = new MachineAreaConfigurationSeedData();
-            MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
+            OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
             builder.AddPluginConfiguration(
                 connectionString,
                 seedData,
@@ -68,18 +68,18 @@ namespace MachineArea.Pn
             _connectionString = connectionString;
             if (connectionString.ToLower().Contains("convert zero datetime"))
             {
-                services.AddDbContext<MachineAreaPnDbContext>(o => o.UseMySql(connectionString,
+                services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseMySql(connectionString,
                     b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
             else
             {
-                services.AddDbContext<MachineAreaPnDbContext>(o => o.UseSqlServer(connectionString,
+                services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseSqlServer(connectionString,
                     b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
 
-            MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
+            OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
 
-            using (MachineAreaPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
+            using (OuterInnerResourcePnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
             {  
                 context.Database.Migrate();
                 try
@@ -152,8 +152,8 @@ namespace MachineArea.Pn
         public void SeedDatabase(string connectionString)
         {
             // Get DbContext
-            MachineAreaPnContextFactory contextFactory = new MachineAreaPnContextFactory();
-            using (MachineAreaPnDbContext context = contextFactory.CreateDbContext(new[] { connectionString }))
+            OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
+            using (OuterInnerResourcePnDbContext context = contextFactory.CreateDbContext(new[] { connectionString }))
             {
                 // Seed configuration
                 MachineAreaPluginSeed.SeedData(context);
