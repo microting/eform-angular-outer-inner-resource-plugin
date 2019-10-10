@@ -2,8 +2,8 @@
 cd ~
 pwd
 
-if [ -d "Documents/workspace/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machnie-area-pn" ]; then
-	rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machnie-area-pn
+if [ -d "Documents/workspace/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn" ]; then
+	rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn
 fi
 
 cp -av Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/src/app/plugins/modules/machine-area-pn Documents/workspace/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn
