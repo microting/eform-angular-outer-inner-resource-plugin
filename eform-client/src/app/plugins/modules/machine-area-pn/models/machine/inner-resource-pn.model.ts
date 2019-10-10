@@ -1,6 +1,6 @@
 export class InnerResourcesPnModel {
   total: number;
-  machineList: Array<InnerResourcePnModel> = [];
+  innerResourceList: Array<InnerResourcePnModel> = [];
   name: string;
 }
 

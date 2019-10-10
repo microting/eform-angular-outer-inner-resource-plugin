@@ -6,6 +6,6 @@ namespace MachineArea.Pn.Infrastructure.Models.InnerResources
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<int> RelatedAreasIds { get; set; }
+        public List<int> RelatedOuterResourcesIds { get; set; }
     }
 }

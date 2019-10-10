@@ -8,18 +8,18 @@
     }
   },
   {
-    "Key": "Machines",
+    "Key": "Outer resources",
     "LocalizedValue": {
-      "da": "Maskiner",
-      "en-US": "Machine",
+      "da": "Ydre resource",
+      "en-US": "Outer resource",
       "de-De": "Maschine"
     }
   },
   {
-    "Key": "Areas",
+    "Key": "Inner resources",
     "LocalizedValue": {
-      "da": "Områder",
-      "en-US": "Area",
+      "da": "Indre resource",
+      "en-US": "Outer resource",
       "de-De": "Bereich"
     }
   },

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MachineArea.Pn.Abstractions;
 using MachineArea.Pn.Infrastructure.Models.Settings;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,22 @@ namespace MachineArea.Pn.Controllers
         public async Task<OperationResult> UpdateSettings([FromBody] MachineAreaBaseSettings machineAreaSettingsModel)
         {
             return await _machineAreaSettingsService.UpdateSettings(machineAreaSettingsModel);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = EformRole.Admin)]
+        [Route("api/outer-inner-resource-pn/settings/sites")]
+        public async Task<OperationResult> GetSitesEnabled()
+        {
+            return await _machineAreaSettingsService.GetSitesEnabled();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = EformRole.Admin)]
+        [Route("api/outer-inner-resource-pn/settings/sites")]
+        public async Task<OperationResult> UpdateSitesEnabled(List<int> siteIds)
+        {
+            return await _machineAreaSettingsService.UpdateSitesEnabled(siteIds);
         }
     }
 }

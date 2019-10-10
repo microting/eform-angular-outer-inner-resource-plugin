@@ -1,6 +1,6 @@
 export class OuterResourcesPnModel {
   total: number;
-  areaList: Array<OuterResourcePnModel> = [];
+  outerResourceList: Array<OuterResourcePnModel> = [];
   name: string;
 }
 
