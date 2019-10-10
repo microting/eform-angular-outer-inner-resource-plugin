@@ -17,7 +17,7 @@ describe('Application settings page - site header section', function () {
 
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
-        expect(plugin.name).equal('Microting Machine Area plugin');
+        expect(plugin.name).equal('Microting Outer Inner Resource plugin');
         expect(plugin.version).equal('1.0.0.0');
         expect(plugin.status).equal('Deaktiveret');
 
@@ -34,7 +34,7 @@ describe('Application settings page - site header section', function () {
         browser.waitForVisible('#plugin-id', 40000);
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
-        expect(plugin.name).equal('Microting Machine Area plugin');
+        expect(plugin.name).equal('Microting Outer Inner Resource plugin');
         expect(plugin.version).equal('1.0.0.0');
         expect(plugin.status).equal('Aktiveret');
     });
