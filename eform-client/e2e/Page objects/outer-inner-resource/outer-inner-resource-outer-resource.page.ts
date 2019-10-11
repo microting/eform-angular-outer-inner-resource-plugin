@@ -3,7 +3,7 @@ import {Guid} from 'guid-typescript';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
 import {parseTwoDigitYear} from 'moment';
 
-export class MachineAreaAreaPage extends PageWithNavbarPage {
+export class OuterInnerResourceOuterResourcePage extends PageWithNavbarPage {
   constructor() {
     super();
   }
@@ -26,26 +26,27 @@ export class MachineAreaAreaPage extends PageWithNavbarPage {
   public get createEformNewTagInput() {
     return browser.element('#addTagInput');
   }
-  public get areaName() {
+  public get outerResourceName() {
     return browser.element('#areaName');
   }
-  public get areaId() {
+  public get outerResourceId() {
     return browser.element('#areaId');
   }
-  public get machineAreaDropdownMenu() {
-    return browser.element('#machine-area-pn');
+  public get outerInnerResourceDropdownMenu() {
+    return browser.element('#outer-inner-resource-pn');
   }
-  public get areaMenuPoint() {
-    return browser.element('#machine-area-pn-Areas');
+  public get outerResourceMenuPoint() {
+    return browser.element('#outer-inner-resource-pn-outer-resources');
   }
-  public get newAreaBtn() {
-    return browser.element('#newAreaBtn');
+  public get newOuterResourceBtn() {
+    return browser.element('#newOuterResourceBtn');
   }
 
-goToAreas() {
-    this.machineAreaDropdownMenu.click();
-    browser.waitForVisible('#machine-area-pn-Areas', 20000);
-    this.areaMenuPoint.click();
+goToOuterResource() {
+    this.outerInnerResourceDropdownMenu.click();
+    browser.waitForVisible('#outer-inner-resource-pn-outer-resources', 20000);
+    this.outerResourceMenuPoint.click();
+    browser.waitForVisible('#newOuterResourceBtn', 20000);
 }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
@@ -82,20 +83,20 @@ goToAreas() {
   }
 }
 
-const machineAreaAreaPage = new MachineAreaAreaPage();
-export default machineAreaAreaPage;
+const outerInnerResourceOuterResourcePage = new OuterInnerResourceOuterResourcePage();
+export default outerInnerResourceOuterResourcePage;
 
 export class ListRowObject {
   constructor(rowNum) {
-    if ($$('#areaId')[rowNum - 1]) {
+    if ($$('#outerResourceId')[rowNum - 1]) {
       try {
-        this.name = $$('#areaName')[rowNum - 1].getText();
+        this.name = $$('#outerResourceName')[rowNum - 1].getText();
       } catch (e) {}
       try {
-        this.updateBtn = $$('#areaEditBtn')[rowNum - 1];
+        this.updateBtn = $$('#outerResourceEditBtn')[rowNum - 1];
       } catch (e) {}
       try {
-        this.deleteBtn = $$('#areaDeleteBtn')[rowNum - 1];
+        this.deleteBtn = $$('#outerResourceDeleteBtn')[rowNum - 1];
       } catch (e) {}
     }
   }

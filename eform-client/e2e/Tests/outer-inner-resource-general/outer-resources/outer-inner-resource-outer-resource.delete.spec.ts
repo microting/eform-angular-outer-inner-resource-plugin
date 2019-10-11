@@ -1,5 +1,5 @@
-import machineAreaMachinePage, {ListRowObject} from '../../../Page objects/machine-area/machine-area-machine.page';
-import machineAreaModalPage from '../../../Page objects/machine-area/machine-area-modal.page';
+import outerInnerResourceOuterResourcePage , {ListRowObject} from '../../../Page objects/outer-inner-resource/outer-inner-resource-outer-resource.page';
+import outerInnerResourceModalPage from '../../../Page objects/outer-inner-resource/outer-inner-resource-modal.page';
 import loginPage from '../../../Page objects/Login.page';
 import {Guid} from 'guid-typescript';
 
@@ -11,25 +11,25 @@ describe('Machine Area Machine delete', function () {
     loginPage.open('/auth');
     loginPage.login();
     const newEformLabel = 'Machine Area machine eForm';
-    machineAreaMachinePage.createNewEform(newEformLabel);
-    machineAreaMachinePage.goToMachines();
+    outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
+    outerInnerResourceOuterResourcePage.goToOuterResource();
     // browser.waitForVisible('#newAreaBtn', 20000);
     browser.pause(8000);
   });
   it('should add machine', function () {
-    machineAreaMachinePage.newMachineBtn.click();
+    outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
     const newName = Guid.create().toString();
     browser.waitForVisible('#createMachineName', 20000);
-    machineAreaModalPage.machineCreateNameInput.addValue(newName);
-    machineAreaModalPage.machineCreateSaveBtn.click();
+    outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
+    outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
     browser.pause(8000);
   });
   it('should delete machine', function () {
-    const listRowObject = new ListRowObject(machineAreaMachinePage.rowNum());
+    const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
     browser.waitForVisible('#machineDeleteBtn', 20000);
     listRowObject.deleteBtn.click();
     browser.pause(2000);
-    machineAreaModalPage.machineDeleteDeleteBtn.click();
+    outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();
     browser.pause(5000);
     browser.refresh();
   });

@@ -12,9 +12,9 @@
                 <input mdbInputDirective
                        [mdbValidate]="false"
                        [(ngModel)]="newAreaModel.name"
-                       type="text" id="createAreaName"
-                       name="createAreaName" class="form-control">
-                <label for="createAreaName">{{'Name' | translate}}</label>
+                       type="text" id="createOuterResourceName"
+                       name="createOuterResourceName" class="form-control">
+                <label for="createOuterResourceName">{{'Name' | translate}}</label>
               </div>
             </div>
           </div>
@@ -29,10 +29,10 @@
               </thead>
               <tbody id="tableBody">
               <tr *ngFor="let machine of mappingMachines.innerResourceList">
-                <td id="areaMachineId">
+                <td id="innerResourceId">
                   {{machine.id}}
                 </td>
-                <td id="areaMachineName">
+                <td id="innerREsourceName">
                   {{machine.name}}
                 </td>
                 <td>

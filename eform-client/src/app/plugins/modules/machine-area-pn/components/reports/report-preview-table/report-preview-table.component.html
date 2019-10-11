@@ -4,8 +4,8 @@
     <tr>
       <th>{{'Entity' | translate}}</th>
       <th>
-        <ng-container *ngIf="reportData.relationship == relationshipType.EmployeeMachine
-        || reportData.relationship == relationshipType.EmployeeArea">
+        <ng-container *ngIf="reportData.relationship == relationshipType.EmployeeInnerResource
+        || reportData.relationship == relationshipType.EmployeeOuterResource">
           {{'Relationship' | translate}}
         </ng-container>
       </th>

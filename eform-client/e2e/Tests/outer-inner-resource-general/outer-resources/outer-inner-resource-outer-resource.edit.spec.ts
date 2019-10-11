@@ -1,5 +1,5 @@
-import machineAreaMachinePage, {ListRowObject} from '../../../Page objects/machine-area/machine-area-machine.page';
-import machineAreaModalPage from '../../../Page objects/machine-area/machine-area-modal.page';
+import outerInnerResourceOuterResourcePage , {ListRowObject} from '../../../Page objects/outer-inner-resource/outer-inner-resource-outer-resource.page';
+import outerInnerResourceModalPage from '../../../Page objects/outer-inner-resource/outer-inner-resource-modal.page';
 import loginPage from '../../../Page objects/Login.page';
 import {Guid} from 'guid-typescript';
 
@@ -11,38 +11,38 @@ describe('Machine Area Machine edit', function () {
     loginPage.open('/auth');
     loginPage.login();
     const newEformLabel = 'Machine Area machine eForm';
-    machineAreaMachinePage.createNewEform(newEformLabel);
-    machineAreaMachinePage.goToMachines();
+    outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
+    outerInnerResourceOuterResourcePage.goToOuterResource();
     // browser.waitForVisible('#newAreaBtn', 20000);
     browser.pause(8000);
   });
   it('should create a new machine', function () {
-    machineAreaMachinePage.newMachineBtn.click();
+    outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
     const newName = Guid.create().toString();
     browser.waitForVisible('#createMachineName', 20000);
-    machineAreaModalPage.machineCreateNameInput.addValue(newName);
-    machineAreaModalPage.machineCreateSaveBtn.click();
+    outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
+    outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
     browser.pause(8000);
   });
   it('should edit machine', function () {
-    const listRowObject = new ListRowObject(machineAreaMachinePage.rowNum());
+    const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
     const newName = 'New Name';
     listRowObject.updateBtn.click();
     browser.waitForVisible('#updateMachineName');
-    machineAreaModalPage.machineEditName.clearElement();
-    machineAreaModalPage.machineEditName.addValue(newName);
-    machineAreaModalPage.machineEditSaveBtn.click();
+    outerInnerResourceModalPage.outerResourceEditNameInput.clearElement();
+    outerInnerResourceModalPage.outerResourceEditNameInput.addValue(newName);
+    outerInnerResourceModalPage.outerResourceEditSaveBtn.click();
     browser.pause(2000);
     browser.refresh();
     browser.waitForVisible(listRowObject.updateBtn, 20000);
     expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   });
   it('should clean up', function () {
-    const listRowObject = new ListRowObject(machineAreaMachinePage.rowNum());
+    const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
     browser.waitForVisible('#machineDeleteBtn', 20000);
     listRowObject.deleteBtn.click();
     browser.pause(2000);
-    machineAreaModalPage.machineDeleteDeleteBtn.click();
+    outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();
     browser.pause(5000);
     browser.refresh();
   });
