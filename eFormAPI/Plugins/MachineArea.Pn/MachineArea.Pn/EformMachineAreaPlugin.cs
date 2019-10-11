@@ -41,6 +41,7 @@ namespace MachineArea.Pn
             services.AddTransient<IMachineService, InnerResourceService>();
             services.AddTransient<IMachineAreaSettingsService, OuterInnerResourceSettingsService>();
             services.AddTransient<IMachineAreaReportService, OuterInnerResourceReportService>();
+            services.AddTransient<IResourceTimeRegistrationService, ResourceTimeRegistrationService>();
             services.AddTransient<IExcelService, ExcelService>();
             services.AddSingleton<IRebusService, RebusService>();
         }
