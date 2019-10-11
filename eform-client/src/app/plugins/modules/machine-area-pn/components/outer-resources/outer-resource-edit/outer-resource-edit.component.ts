@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 import {OuterResourcePnModel, OuterResourcePnUpdateModel} from '../../../models/area';
-import {InnerResourcePnModel} from '../../../models/machine';
+import {InnerResourcesPnModel} from '../../../models/machine';
 import {OuterInnerResourcePnOuterResourceService} from '../../../services';
 
 @Component({
@@ -11,7 +11,7 @@ import {OuterInnerResourcePnOuterResourceService} from '../../../services';
 })
 export class OuterResourceEditComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Input() mappingMachines: InnerResourcePnModel = new InnerResourcePnModel();
+  @Input() mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
   @Output() onAreaUpdated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
   selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();
