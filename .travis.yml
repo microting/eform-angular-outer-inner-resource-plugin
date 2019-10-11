@@ -45,4 +45,4 @@ script:
   - sleep 40
   - npm run testheadless
   - sleep 40
-  - npm run testheadlessplugin2
+  - npm run testheadlessplugin
