@@ -57,7 +57,7 @@ namespace MachineArea.Pn.Handlers
         {            
             string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}"; 
             
-            int eFormId = int.Parse(_dbContext.PluginConfigurationValues
+            int eFormId = int.Parse(_dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value);
 
@@ -65,7 +65,7 @@ namespace MachineArea.Pn.Handlers
             List<Site_Dto> sites = new List<Site_Dto>();
             
             lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
-            string sdkSiteIds = _dbContext.PluginConfigurationValues
+            string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;
             foreach (string siteId in sdkSiteIds.Split(","))

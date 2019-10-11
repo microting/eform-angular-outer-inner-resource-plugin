@@ -148,7 +148,25 @@ namespace MachineArea.Pn.Services
 
         public async Task<OperationResult> UpdateSitesEnabled(List<int> siteIds)
         {
-            throw new NotImplementedException();
+            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+            string oldSdkSiteIds = _dbContext.PluginConfigurationValues
+                .FirstOrDefault(x => 
+                    x.Name == lookup)?.Value;
+
+            string sdkSiteIds = "";
+            int i = 0;
+            
+            foreach (int siteId in siteIds)
+            {
+                if (i > 0)
+                    sdkSiteIds += ",";
+                sdkSiteIds += siteId.ToString();
+                i++;
+            }
+
+            await _options.UpdateDb(settings => { settings.EnabledSiteIds = sdkSiteIds; }, _dbContext, UserId);
+            
+            return new OperationResult(true);
         }
 
         public int UserId

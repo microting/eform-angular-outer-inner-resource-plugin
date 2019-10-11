@@ -7,5 +7,5 @@ export class InnerResourcesPnModel {
 export class InnerResourcePnModel {
   id: number;
   name: string;
-  relatedAreasIds: Array<number> = [];
+  relatedOuterResourcesIds: Array<number> = [];
 }
