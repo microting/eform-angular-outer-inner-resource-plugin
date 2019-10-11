@@ -16,8 +16,9 @@ exports.config = {
     'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.delete.spec.ts',
     'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.add.spec.ts',
     'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.edit.spec.ts',
-    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.delete.spec.ts',
-    
+    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.delete.spec.ts'
+    ],
+
     suites: {
         settings: [
             'e2e/Tests/application-settings/**/*.spec.ts'
