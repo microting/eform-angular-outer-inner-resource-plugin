@@ -1,4 +1,4 @@
 export class InnerResourcePnCreateModel {
   name: string;
-  relatedAreasIds: Array<number> = [];
+  relatedOuterResourcesIds: Array<number> = [];
 }

@@ -1,4 +1,4 @@
 export class OuterResourcePnCreateModel {
   name: string;
-  relatedMachinesIds: Array<number> = [];
+  relatedInnerResourcesIds: Array<number> = [];
 }

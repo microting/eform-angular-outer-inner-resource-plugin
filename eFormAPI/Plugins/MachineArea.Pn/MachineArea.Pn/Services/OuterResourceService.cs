@@ -119,10 +119,10 @@ namespace MachineArea.Pn.Services
                 List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.OuterResourceId == outerResource.Id).ToList();
 
-                outerResource.RelatedMachinesIds = new List<int>();
+                outerResource.RelatedInnerResourcesIds = new List<int>();
                 foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
                 {
-                    outerResource.RelatedMachinesIds.Add(machineArea.InnerResourceId);
+                    outerResource.RelatedInnerResourcesIds.Add(machineArea.InnerResourceId);
                 }
 
                 return new OperationDataResult<OuterResourceModel>(true, outerResource);
@@ -140,11 +140,15 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedMachinesIds.Select(x =>
-                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
-                    {
-                        Id = x
-                    }).ToList();
+                List<OuterInnerResource> machineAreas = new List<OuterInnerResource>();
+                if (model.RelatedInnerResourcesIds != null)
+                {
+                    machineAreas = model.RelatedInnerResourcesIds.Select(x =>
+                        new OuterInnerResource
+                        {
+                            Id = x
+                        }).ToList();    
+                }
 
                 OuterResource newArea = new OuterResource()
                 {
@@ -172,7 +176,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedMachinesIds.Select(x =>
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedInnerResourcesIds.Select(x =>
                     new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
                     {
                         Id = x

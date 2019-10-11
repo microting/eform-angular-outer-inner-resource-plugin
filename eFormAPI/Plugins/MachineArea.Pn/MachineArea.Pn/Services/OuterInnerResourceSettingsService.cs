@@ -69,7 +69,6 @@ namespace MachineArea.Pn.Services
                     string sdk = $"Database={dbPrefix}_SDK;";
                     connectionString = connectionString.Replace(dbNameSection, sdk);
                     await _options.UpdateDb(settings => { settings.SdkConnectionString = connectionString;}, _dbContext, UserId);
-
                 }
 
                 return new OperationDataResult<MachineAreaBaseSettings>(true, option);
@@ -127,7 +126,49 @@ namespace MachineArea.Pn.Services
                     _machineAreaLocalizationService.GetString("ErrorWhileUpdatingSettings"));
             }
         }
-        
+
+        public async Task<OperationDataResult<List<int>>> GetSitesEnabled()
+        {
+            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+            string oldSdkSiteIds = _dbContext.PluginConfigurationValues
+                .FirstOrDefault(x => 
+                    x.Name == lookup)?.Value;
+            List<int> siteIds = new List<int>();
+            if (!string.IsNullOrEmpty(oldSdkSiteIds))
+            {
+                foreach (string s in oldSdkSiteIds.Split(","))
+                {
+                    siteIds.Add(int.Parse(s));
+                }
+            }
+            
+            return new OperationDataResult<List<int>>(true, siteIds);
+//            throw new oldSdkSiteIds.sp;
+        }
+
+        public async Task<OperationResult> UpdateSitesEnabled(List<int> siteIds)
+        {
+            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+            string oldSdkSiteIds = _dbContext.PluginConfigurationValues
+                .FirstOrDefault(x => 
+                    x.Name == lookup)?.Value;
+
+            string sdkSiteIds = "";
+            int i = 0;
+            
+            foreach (int siteId in siteIds)
+            {
+                if (i > 0)
+                    sdkSiteIds += ",";
+                sdkSiteIds += siteId.ToString();
+                i++;
+            }
+
+            await _options.UpdateDb(settings => { settings.EnabledSiteIds = sdkSiteIds; }, _dbContext, UserId);
+            
+            return new OperationResult(true);
+        }
+
         public int UserId
         {
             get
@@ -146,7 +187,7 @@ namespace MachineArea.Pn.Services
                 OuterResourceModel outerResourceModel = new OuterResourceModel()
                 {
                     Id = area.Id,
-                    RelatedMachinesIds = _dbContext.OuterInnerResources.
+                    RelatedInnerResourcesIds = _dbContext.OuterInnerResources.
                         Where(x => x.OuterResourceId == area.Id && 
                                    x.WorkflowState != Constants.WorkflowStates.Removed).
                         Select(x => x.InnerResourceId).ToList(),

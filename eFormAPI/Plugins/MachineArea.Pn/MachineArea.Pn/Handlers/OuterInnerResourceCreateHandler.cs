@@ -97,19 +97,25 @@ namespace MachineArea.Pn.Handlers
 
         private async Task CreateFromMachine(InnerResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-            foreach (int areaId in model.RelatedAreasIds)
-            {                
-                OuterResource area = _dbContext.OuterResources.SingleOrDefault(x => x.Id == areaId);
-                await CreateRelationships(model.Id, areaId, model.Name, area.Name, mainElement, sites, eFormId);              
+            if (model.RelatedOuterResourcesIds != null)
+            {
+                foreach (int areaId in model.RelatedOuterResourcesIds)
+                {                
+                    OuterResource area = _dbContext.OuterResources.SingleOrDefault(x => x.Id == areaId);
+                    await CreateRelationships(model.Id, areaId, model.Name, area.Name, mainElement, sites, eFormId);              
+                }    
             }
         }
 
         private async Task CreateFromArea(OuterResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
-           foreach (int machineId in model.RelatedMachinesIds)
+            if (model.RelatedInnerResourcesIds != null)
             {
-                InnerResource machine = _dbContext.InnerResources.SingleOrDefault(x => x.Id == machineId);
-                await CreateRelationships(machineId, model.Id, machine.Name, model.Name, mainElement, sites, eFormId);
+                foreach (int machineId in model.RelatedInnerResourcesIds)
+                {
+                    InnerResource machine = _dbContext.InnerResources.SingleOrDefault(x => x.Id == machineId);
+                    await CreateRelationships(machineId, model.Id, machine.Name, model.Name, mainElement, sites, eFormId);
+                }    
             }
         }
 

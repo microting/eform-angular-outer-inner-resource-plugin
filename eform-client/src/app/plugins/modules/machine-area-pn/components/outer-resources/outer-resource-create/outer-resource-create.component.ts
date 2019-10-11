@@ -38,14 +38,14 @@ export class OuterResourceCreateComponent implements OnInit {
 
   addToArray(e: any, machineId: number) {
     if (e.target.checked) {
-      this.newAreaModel.relatedMachinesIds.push(machineId);
+      this.newAreaModel.relatedInnerResourcesIds.push(machineId);
     } else {
-      this.newAreaModel.relatedMachinesIds = this.newAreaModel.relatedMachinesIds.filter(x => x !== machineId);
+      this.newAreaModel.relatedInnerResourcesIds = this.newAreaModel.relatedInnerResourcesIds.filter(x => x !== machineId);
     }
   }
 
   isChecked(relatedMachineId: number) {
-    return this.newAreaModel.relatedMachinesIds.indexOf(relatedMachineId) !== -1;
+    return this.newAreaModel.relatedInnerResourcesIds.indexOf(relatedMachineId) !== -1;
   }
 }
 
