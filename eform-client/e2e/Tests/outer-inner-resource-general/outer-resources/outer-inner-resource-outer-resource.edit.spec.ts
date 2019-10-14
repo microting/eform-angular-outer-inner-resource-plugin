@@ -19,27 +19,28 @@ describe('Machine Area Machine edit', function () {
   it('should create a new machine', function () {
     outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createMachineName', 20000);
+    browser.waitForVisible('#createOuterResourceName', 20000);
     outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
     browser.pause(8000);
   });
-  it('should edit machine', function () {
-    const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
-    const newName = 'New Name';
-    listRowObject.updateBtn.click();
-    browser.waitForVisible('#updateMachineName');
-    outerInnerResourceModalPage.outerResourceEditNameInput.clearElement();
-    outerInnerResourceModalPage.outerResourceEditNameInput.addValue(newName);
-    outerInnerResourceModalPage.outerResourceEditSaveBtn.click();
-    browser.pause(2000);
-    browser.refresh();
-    browser.waitForVisible(listRowObject.updateBtn, 20000);
-    expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
-  });
+  // can't change name.
+  // it('should edit machine', function () {
+  //   const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
+  //   const newName = 'New Name';
+  //   listRowObject.updateBtn.click();
+  //   browser.waitForVisible('#updateMachineName');
+  //   outerInnerResourceModalPage.outerResourceEditNameInput.clearElement();
+  //   outerInnerResourceModalPage.outerResourceEditNameInput.addValue(newName);
+  //   outerInnerResourceModalPage.outerResourceEditSaveBtn.click();
+  //   browser.pause(2000);
+  //   browser.refresh();
+  //   browser.waitForVisible(listRowObject.updateBtn, 20000);
+  //   expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
+  // });
   it('should clean up', function () {
     const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
-    browser.waitForVisible('#machineDeleteBtn', 20000);
+    browser.waitForVisible('#outerResourceDeleteBtn', 20000);
     listRowObject.deleteBtn.click();
     browser.pause(2000);
     outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();
