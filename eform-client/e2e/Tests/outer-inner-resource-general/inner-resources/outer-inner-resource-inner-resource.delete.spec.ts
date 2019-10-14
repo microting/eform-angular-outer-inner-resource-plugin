@@ -18,7 +18,7 @@ describe('Machine Area Area delete', function () {
   it('should create a new area', function () {
     outerInnerResourceInnerResourcePage.newInnerResourceBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createAreaName');
+    browser.waitForVisible('#createInnerResourceName', 20000);
     outerInnerResourceModalPage.innerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
     browser.pause(8000);
@@ -26,7 +26,7 @@ describe('Machine Area Area delete', function () {
   it('should delete area', function () {
     const listRowObject = new ListRowObject(1);
     listRowObject.deleteBtn.click();
-    browser.waitForVisible('#selectedAreaId');
+    browser.waitForVisible('#innerResourceDeleteName', 20000);
     browser.pause(2000);
     outerInnerResourceModalPage.innerResourceDeleteDeleteBtn.click();
     browser.pause(2000);
