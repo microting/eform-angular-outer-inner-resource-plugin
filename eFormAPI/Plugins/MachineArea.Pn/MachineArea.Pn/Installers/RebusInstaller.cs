@@ -48,7 +48,7 @@ namespace MachineArea.Pn.Installers
         {
             Configure.With(new CastleWindsorContainerAdapter(container))
                 .Logging(l => l.ColoredConsole())
-                .Transport(t => t.UseRabbitMq("amqp://admin:password@localhost", "eform-angular-machinearea-plugin"))
+                .Transport(t => t.UseRabbitMq("amqp://admin:password@localhost", "eform-angular-outer-inner-resource-plugin"))
                 .Options(o =>
                 {
                     o.SetMaxParallelism(maxParallelism);

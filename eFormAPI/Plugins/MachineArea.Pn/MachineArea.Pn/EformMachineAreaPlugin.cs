@@ -23,7 +23,7 @@ namespace MachineArea.Pn
     public class EformMachineAreaPlugin : IEformPlugin
     {
         public string Name => "Microting Outer Inner Resource plugin";
-        public string PluginId => "eform-angular-machinearea-plugin";
+        public string PluginId => "eform-angular-outer-inner-resource-plugin";
         public string PluginPath => PluginAssembly().Location;
         private string _connectionString;
         public string outerResourceName = "OuterResources";
