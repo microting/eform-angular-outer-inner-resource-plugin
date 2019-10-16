@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {OuterResourcePnModel} from 'src/app/plugins/modules/machine-area-pn/models/area';
 import {OuterInnerResourcePnOuterResourceService} from '../../../services';
+import {OuterResourcePnModel} from '../../../models/area';
 
 @Component({
   selector: 'app-machine-area-pn-area-delete',

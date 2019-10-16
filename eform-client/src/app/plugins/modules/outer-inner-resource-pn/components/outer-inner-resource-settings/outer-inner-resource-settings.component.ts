@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, EventEmitter, OnInit} from '@angular/core';
 import { OuterInnerResourcePnSettingsService} from '../../services';
 import {Router} from '@angular/router';
-import {OuterInnerResourceBaseSettingsModel, OuterInnerResourceSettingsModel} from '../../models';
+import {OuterInnerResourceBaseSettingsModel} from '../../models';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {EntitySearchService} from '../../../../../common/services/advanced';
 import {TemplateListModel, TemplateRequestModel} from '../../../../../common/models/eforms';

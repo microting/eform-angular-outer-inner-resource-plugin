@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {} from 'src/app/plugins/modules/machine-area-pn/models/area';
 import {OuterResourcePnCreateModel, InnerResourcesPnModel} from '../../../models';
 import {OuterInnerResourcePnOuterResourceService} from '../../../services';
 

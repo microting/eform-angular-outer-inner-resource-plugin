@@ -12,7 +12,6 @@ import {
   InnerResourcesPnRequestModel, InnerResourcePnUpdateModel,
   InnerResourcesPnModel
 } from '../models';
-import {ReportNamesModel} from '../models/report/report-names.model';
 
 export let OuterInnerResourcePnInnerResourceMethods = {
   InnerResources: 'api/outer-inner-resource-pn/inner-resources',

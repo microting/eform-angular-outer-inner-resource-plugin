@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {OperationDataResult, OperationResult} from '../../../../common/models';
-import {OuterInnerResourceBaseSettingsModel, OuterInnerResourceSettingsModel} from '../models';
+import {OuterInnerResourceBaseSettingsModel} from '../models';
 import {BaseService} from '../../../../common/services/base.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';

@@ -1,9 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {
-  OuterInnerResourcePnOuterResourceService,
-  OuterInnerResourcePnInnerResourceService
-} from 'src/app/plugins/modules/machine-area-pn/services';
-import {OuterResourcePnCreateModel, OuterResourcePnModel, OuterResourcesPnModel, InnerResourcePnCreateModel, InnerResourcesPnModel} from '../../../models';
+
+import { OuterResourcesPnModel, InnerResourcePnCreateModel} from '../../../models';
+import {OuterInnerResourcePnInnerResourceService} from '../../../services';
 
 @Component({
   selector: 'app-machine-area-pn-machine-create',

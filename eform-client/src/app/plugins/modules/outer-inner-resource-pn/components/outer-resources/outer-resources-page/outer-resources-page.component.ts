@@ -1,20 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PageSettingsModel} from 'src/app/common/models/settings';
-import {
-  OuterResourcePnModel,
-  OuterResourcesPnModel,
-  OuterResourcesPnRequestModel
-} from 'src/app/plugins/modules/machine-area-pn/models/area';
-import {
-  InnerResourcePnModel,
-  InnerResourcesPnModel,
-  InnerResourcesPnRequestModel
-} from 'src/app/plugins/modules/machine-area-pn/models/machine';
-import {
-  OuterInnerResourcePnInnerResourceService,
-  OuterInnerResourcePnOuterResourceService,
-} from 'src/app/plugins/modules/machine-area-pn/services';
 import {SharedPnService} from 'src/app/plugins/modules/shared/services';
+import {OuterResourcePnModel, OuterResourcesPnModel, OuterResourcesPnRequestModel} from '../../../models/area';
+import {InnerResourcesPnModel, InnerResourcesPnRequestModel} from '../../../models/machine';
+import {OuterInnerResourcePnInnerResourceService, OuterInnerResourcePnOuterResourceService} from '../../../services';
 
 @Component({
   selector: 'app-areas-page',

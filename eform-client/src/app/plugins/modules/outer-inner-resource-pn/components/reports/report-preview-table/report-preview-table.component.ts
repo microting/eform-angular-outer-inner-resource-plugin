@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ReportPnFullModel} from 'src/app/plugins/modules/machine-area-pn/models/report';
 import {OuterInnerResourcePnReportRelationshipEnum} from '../../../enums';
+import {ReportPnFullModel} from '../../../models/report';
 
 @Component({
   selector: 'app-machine-area-pn-report-preview-table',

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {
-  OuterResourcePnModel, OuterResourcesPnModel,
+  OuterResourcesPnModel,
   InnerResourcePnModel,
   InnerResourcePnUpdateModel
 } from '../../../models';
