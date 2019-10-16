@@ -15,7 +15,7 @@ export GITVERSION=`git describe --abbrev=0 --tags | cut -d "v" -f 2`
 echo $GITVERSION
 echo "################## END GITVERSION ##################"
 su ubuntu -c \
-"dotnet publish eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.sln -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
+"dotnet publish eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn.sln -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 
 if [ -d "/var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/outer-inner-resource-pn" ]; then
 	su ubuntu -c \
