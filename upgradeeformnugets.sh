@@ -3,11 +3,11 @@
 GIT_STATUS=`git status | grep "nothing to commit, working tree clean" | wc -l`
 if (( "$GIT_STATUS" > 0 )); then
 	git pull
-	cd eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn/
+	cd eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn/
 
-	dotnet add MachineArea.Pn.csproj package Microting.eForm
-	dotnet add MachineArea.Pn.csproj package Microting.eFormApi.BasePn
-	dotnet add MachineArea.Pn.csproj package Microting.eFormOuterInnerResourceBase
+	dotnet add OuterInnerResource.Pn.csproj package Microting.eForm
+	dotnet add OuterInnerResource.Pn.csproj package Microting.eFormApi.BasePn
+	dotnet add OuterInnerResource.Pn.csproj package Microting.eFormOuterInnerResourceBase
 
 	EFORM_VERSION=`dotnet list package | grep 'Microting.eForm ' | cut -c64-71`
 	EFORM_BASEPN_VERSION=`dotnet list package | grep 'Microting.eFormApi.BasePn' | cut -c64-71`
