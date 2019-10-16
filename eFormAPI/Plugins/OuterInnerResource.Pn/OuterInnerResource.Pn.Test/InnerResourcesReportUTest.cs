@@ -40,7 +40,7 @@ namespace MachineArea.Pn.Test
     public class InnerResourcesReportUTest : DbTestFixture
     {
         [Test]
-        public async Task MachinesReportByDay_Generate_DoesGenerate()
+        public async Task InnerResourcesReportByDay_Generate_DoesGenerate()
         {
             OuterResource newArea = new OuterResource() { Name = "My OuterResource 1", Version = 1 };
             OuterResource newArea1 = new OuterResource() { Name = "My OuterResource 2", Version = 1 };
@@ -132,7 +132,7 @@ namespace MachineArea.Pn.Test
         }
 
         [Test]
-        public async Task MachinesReportByWeek_Generate_DoesGenerate()
+        public async Task InnerResourcesReportByWeek_Generate_DoesGenerate()
         {
             OuterResource newArea = new OuterResource() { Name = "My OuterResource 1", Version = 1 };
             OuterResource newArea1 = new OuterResource() { Name = "My OuterResource 2", Version = 1 };
@@ -225,7 +225,7 @@ namespace MachineArea.Pn.Test
         }
 
         [Test]
-        public async Task MachinesReportByMonth_Generate_DoesGenerate()
+        public async Task InnerResourcesReportByMonth_Generate_DoesGenerate()
         {
             OuterResource newArea = new OuterResource() { Name = "My OuterResource 1", Version = 1 };
             OuterResource newArea1 = new OuterResource() { Name = "My OuterResource 2", Version = 1 };

@@ -48,47 +48,47 @@ namespace MachineArea.Pn.Test
             // Act
             await newInnerResource.Create(DbContext);
 
-            InnerResource machine = DbContext.InnerResources.AsNoTracking().First();
-            List<InnerResource> machineList = DbContext.InnerResources.AsNoTracking().ToList();
+            InnerResource innerResource = DbContext.InnerResources.AsNoTracking().First();
+            List<InnerResource> innerResourceList = DbContext.InnerResources.AsNoTracking().ToList();
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
             
             // Assert
-            Assert.NotNull(machine);
-            Assert.AreEqual(1, machineList.Count());
+            Assert.NotNull(innerResource);
+            Assert.AreEqual(1, innerResourceList.Count());
             Assert.AreEqual(1, versionList.Count());
             
-            Assert.AreEqual(newInnerResource.Name, machine.Name);
+            Assert.AreEqual(newInnerResource.Name, innerResource.Name);
         }
 
         [Test]
         public async Task Machine_Update_DoesUpdate()
         {
             // Arrange
-            InnerResource machine = new InnerResource
+            InnerResource innerResource = new InnerResource
             {
                 Name = Guid.NewGuid().ToString()
             };
 
-            DbContext.InnerResources.Add(machine);
+            DbContext.InnerResources.Add(innerResource);
             DbContext.SaveChanges();
 
             //Act
             InnerResource selectedInnerResource = new InnerResource
             {
                 Name = Guid.NewGuid().ToString(),
-                Id = machine.Id
+                Id = innerResource.Id
             };
 
             await selectedInnerResource.Update(DbContext);
 
             InnerResource dbInnerResource = DbContext.InnerResources.AsNoTracking().First();
-            List<InnerResource> machineList = DbContext.InnerResources.AsNoTracking().ToList();
+            List<InnerResource> innerResourceList = DbContext.InnerResources.AsNoTracking().ToList();
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
 
             //Assert
             
             Assert.NotNull(dbInnerResource);
-            Assert.AreEqual(1, machineList.Count());
+            Assert.AreEqual(1, innerResourceList.Count());
             Assert.AreEqual(1, versionList.Count());
             
             Assert.AreEqual(selectedInnerResource.Name, dbInnerResource.Name);
@@ -98,7 +98,7 @@ namespace MachineArea.Pn.Test
         public async Task Machine_UpdateBinding_DoesUpdate()
         {
             // Arrange
-            InnerResource machine = new InnerResource
+            InnerResource innerResource = new InnerResource
             {
                 Name = Guid.NewGuid().ToString()
             };
@@ -108,7 +108,7 @@ namespace MachineArea.Pn.Test
                 Name = Guid.NewGuid().ToString()
             };
 
-            DbContext.InnerResources.Add(machine);
+            DbContext.InnerResources.Add(innerResource);
             DbContext.OuterResources.Add(area);
             DbContext.SaveChanges();
 
@@ -116,13 +116,13 @@ namespace MachineArea.Pn.Test
             InnerResource selectedInnerResource = new InnerResource
             {
                 Name = Guid.NewGuid().ToString(),
-                Id = machine.Id,
+                Id = innerResource.Id,
                 OuterInnerResources = new List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource>()
                 {
                     new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource()
                     {
                         OuterResourceId = area.Id,
-                        InnerResourceId = machine.Id
+                        InnerResourceId = innerResource.Id
                     }
                 }
             };
@@ -138,30 +138,30 @@ namespace MachineArea.Pn.Test
         public async Task Machine_Delete_DoesDelete()
         {
             //Arrange
-            InnerResource machine = new InnerResource
+            InnerResource innerResource = new InnerResource
             {
                 Name = Guid.NewGuid().ToString()
             };
 
-            DbContext.InnerResources.Add(machine);
+            DbContext.InnerResources.Add(innerResource);
             DbContext.SaveChanges();
 
             //Act
             InnerResource selectedInnerResource = new InnerResource
             {
-                Name = machine.Name,
-                Id = machine.Id
+                Name = innerResource.Name,
+                Id = innerResource.Id
             };
 
             await selectedInnerResource.Delete(DbContext);
             
             InnerResource dbInnerResource = DbContext.InnerResources.AsNoTracking().First();
-            List<InnerResource> machineList = DbContext.InnerResources.AsNoTracking().ToList();
+            List<InnerResource> innerResourceList = DbContext.InnerResources.AsNoTracking().ToList();
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
             
             // Assert
             Assert.NotNull(dbInnerResource);
-            Assert.AreEqual(1, machineList.Count());
+            Assert.AreEqual(1, innerResourceList.Count());
             Assert.AreEqual(1, versionList.Count());
             
             Assert.AreEqual(dbInnerResource.WorkflowState, Constants.WorkflowStates.Removed);

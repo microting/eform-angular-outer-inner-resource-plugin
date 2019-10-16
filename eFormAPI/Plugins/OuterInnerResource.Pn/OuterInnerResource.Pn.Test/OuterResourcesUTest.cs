@@ -37,15 +37,15 @@ namespace MachineArea.Pn.Test
     public class OuterResourcesUTest : DbTestFixture
     {
         [Test]
-        public async Task Area_Save_DoesSave()
+        public async Task OuterResource_Save_DoesSave()
         {
            // Arrange
-            OuterResource newArea = new OuterResource()
+            OuterResource newOuterResource = new OuterResource()
             {
                 Name = Guid.NewGuid().ToString()
             };
             // Act
-            await newArea.Create(DbContext);
+            await newOuterResource.Create(DbContext);
 
             OuterResource area = DbContext.OuterResources.AsNoTracking().First();
             List<OuterResource> areaList = DbContext.OuterResources.AsNoTracking().ToList();
@@ -56,11 +56,11 @@ namespace MachineArea.Pn.Test
             Assert.AreEqual(1, areaList.Count());
             Assert.AreEqual(1, versionList.Count());
             
-            Assert.AreEqual(newArea.Name, area.Name);
+            Assert.AreEqual(newOuterResource.Name, area.Name);
         }
 
         [Test]
-        public async Task Area_Update_DoesUpdate()
+        public async Task OuterResource_Update_DoesUpdate()
         {
             // Arrange
             OuterResource area = new OuterResource
@@ -72,29 +72,29 @@ namespace MachineArea.Pn.Test
             DbContext.SaveChanges();
 
             //Act
-            OuterResource selectedArea = new OuterResource
+            OuterResource selectedOuterResource = new OuterResource
             {
                 Name = Guid.NewGuid().ToString(),
                 Id = area.Id
             };
 
-            await selectedArea.Update(DbContext);
+            await selectedOuterResource.Update(DbContext);
 
-            OuterResource dbArea = DbContext.OuterResources.AsNoTracking().First();
+            OuterResource dbOuterResource = DbContext.OuterResources.AsNoTracking().First();
             List<OuterResource> areaList = DbContext.OuterResources.AsNoTracking().ToList();
             List<OuterResourceVersion> versionList = DbContext.OuterResourceVersions.AsNoTracking().ToList();
 
             //Assert
             
-            Assert.NotNull(dbArea);
+            Assert.NotNull(dbOuterResource);
             Assert.AreEqual(1, areaList.Count());
             Assert.AreEqual(1, versionList.Count());
             
-            Assert.AreEqual(selectedArea.Name, dbArea.Name);
+            Assert.AreEqual(selectedOuterResource.Name, dbOuterResource.Name);
         }
 
         [Test]
-        public async Task Area_UpdateBinding_DoesUpdate()
+        public async Task OuterResource_UpdateBinding_DoesUpdate()
         {
             // Arrange
             InnerResource machine = new InnerResource
@@ -112,7 +112,7 @@ namespace MachineArea.Pn.Test
             DbContext.SaveChanges();
 
             //Act
-            OuterResource selectedArea = new OuterResource
+            OuterResource selectedOuterResource = new OuterResource
             {
                 Name = Guid.NewGuid().ToString(),
                 Id = area.Id,
@@ -126,15 +126,15 @@ namespace MachineArea.Pn.Test
                 }
             };
 
-            await selectedArea.Update(DbContext);
+            await selectedOuterResource.Update(DbContext);
 
             //Assert
-            Assert.AreEqual(selectedArea.OuterInnerResources.First().InnerResourceId, machine.Id);
+            Assert.AreEqual(selectedOuterResource.OuterInnerResources.First().InnerResourceId, machine.Id);
 
         }
 
         [Test]
-        public async Task Area_Delete_DoesDelete()
+        public async Task OuterResource_Delete_DoesDelete()
         {
             //Arrange
             OuterResource area = new OuterResource
@@ -146,24 +146,24 @@ namespace MachineArea.Pn.Test
             DbContext.SaveChanges();
 
             //Act
-            OuterResource selectedArea = new OuterResource
+            OuterResource selectedOuterResource = new OuterResource
             {
                 Id = area.Id
             };
 
-            await selectedArea.Delete(DbContext);
+            await selectedOuterResource.Delete(DbContext);
             
-            OuterResource dbArea = DbContext.OuterResources.AsNoTracking().First();
+            OuterResource dbOuterResource = DbContext.OuterResources.AsNoTracking().First();
             List<OuterResource> areaList = DbContext.OuterResources.AsNoTracking().ToList();
             List<OuterResourceVersion> versionList = DbContext.OuterResourceVersions.AsNoTracking().ToList();
             
             // Assert
             
-            Assert.NotNull(dbArea);
+            Assert.NotNull(dbOuterResource);
             Assert.AreEqual(1, areaList.Count());
             Assert.AreEqual(1, versionList.Count());
             
-            Assert.AreEqual(dbArea.WorkflowState, Constants.WorkflowStates.Removed);
+            Assert.AreEqual(dbOuterResource.WorkflowState, Constants.WorkflowStates.Removed);
         }
     }
 }
