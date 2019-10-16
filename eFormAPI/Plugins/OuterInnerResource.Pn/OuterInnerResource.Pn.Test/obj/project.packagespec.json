@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/MachineArea.Pn.Test/MachineArea.Pn.Test.csproj",
-    "projectName": "MachineArea.Pn.Test",
-    "projectPath": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/MachineArea.Pn.Test/MachineArea.Pn.Test.csproj",
-    "outputPath": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/MachineArea.Pn.Test/obj/",
+    "projectUniqueName": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn.Test/OuterInnerResource.Pn.Test.csproj",
+    "projectName": "OuterInnerResource.Pn.Test",
+    "projectPath": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn.Test/OuterInnerResource.Pn.Test.csproj",
+    "outputPath": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn.Test/obj/",
     "projectStyle": "PackageReference",
     "fallbackFolders": [
       "/usr/share/dotnet/sdk/NuGetFallbackFolder"
