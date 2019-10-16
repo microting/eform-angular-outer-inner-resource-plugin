@@ -78,7 +78,7 @@ namespace MachineArea.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<MachineAreaBaseSettings>(false,
-                    _machineAreaLocalizationService.GetString("ErrorWhileObtainingTrashInspectionSettings"));
+                    _machineAreaLocalizationService.GetString("ErrorWhileObtainingTrashInspectionSettings") + e.Message);
             }
         }
 
