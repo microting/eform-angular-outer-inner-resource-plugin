@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.Rider2019.1/system/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.Rider2019.1/system/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_OuterInnerResource.Pn.129000165.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.3.0/build/netcoreapp1.0" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/NUnit3.TestAdapter.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/NUnit3.TestAdapter.pdb" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/nunit.engine.api.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/nunit.engine.dll" t="Include" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="MachineArea.Pn.Test" t="IncludeRecursive">
+        <e p="CanaryInAColeMine.cs" t="Include" />
+        <e p="DbTestFixtures.cs" t="Include" />
+        <e p="EmployeeInnerResourcesReportsUTest.cs" t="Include" />
+        <e p="EmployeeOuterResourcesReportsUTest.cs" t="Include" />
+        <e p="EmployeesReportsUTest.cs" t="Include" />
+        <e p="InnerResourcesReportUTest.cs" t="Include" />
+        <e p="InnerResourcesUTest.cs" t="Include" />
+        <e p="MachineArea.Pn.Test.csproj" t="IncludeRecursive" />
+        <e p="OuterResourcesReportUTest.cs" t="Include" />
+        <e p="OuterResourcesUTest.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="MachineArea.Pn.Test.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="OuterInnerResource.Pn" t="IncludeRecursive">
+        <e p="Abstractions" t="Include">
+          <e p="IExcelService.cs" t="Include" />
+          <e p="IInnerResourceService.cs" t="Include" />
+          <e p="IOuterInnerResourceLocalizationService.cs" t="Include" />
+          <e p="IOuterInnerResourceReportService.cs" t="Include" />
+          <e p="IOuterInnerResourceSettingsService.cs" t="Include" />
+          <e p="IOuterResourceService.cs" t="Include" />
+          <e p="IRebusService.cs" t="Include" />
+          <e p="IResourceTimeRegistrationService.cs" t="Include" />
+        </e>
+        <e p="Controllers" t="Include">
+          <e p="InnerResourcesController.cs" t="Include" />
+          <e p="OuterInnerResourceReportsController.cs" t="Include" />
+          <e p="OuterInnerResourceSettingsController.cs" t="Include" />
+          <e p="OuterResourcesController.cs" t="Include" />
+          <e p="ResourceTimeRegistrationsController.cs" t="Include" />
+        </e>
+        <e p="EformOuterInnerResourcePlugin.cs" t="Include" />
+        <e p="Handlers" t="Include">
+          <e p="OuterInnerResourceCreateHandler.cs" t="Include" />
+          <e p="OuterInnerResourceDeleteHandler.cs" t="Include" />
+          <e p="OuterInnerResourceUpdateHandler.cs" t="Include" />
+        </e>
+        <e p="Infrastructure" t="Include">
+          <e p="Consts" t="Include">
+            <e p="ExcelConsts.cs" t="Include" />
+          </e>
+          <e p="Data" t="Include">
+            <e p="Seed" t="Include">
+              <e p="Data" t="Include">
+                <e p="OuterInnerResourceConfigurationSeedData.cs" t="Include" />
+              </e>
+              <e p="OuterInnerResourcePluginSeed.cs" t="Include" />
+            </e>
+          </e>
+          <e p="DbConfig.cs" t="Include" />
+          <e p="Enums" t="Include">
+            <e p="ReportRelationshipType.cs" t="Include" />
+            <e p="ReportTimeType.cs" t="Include" />
+            <e p="ReportType.cs" t="Include" />
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="DateTimeExtensions.cs" t="Include" />
+            <e p="ExcelWorksheetExtensions.cs" t="Include" />
+          </e>
+          <e p="Helpers" t="Include">
+            <e p="DatesHelper.cs" t="Include" />
+            <e p="ReportsHelper.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="FileStreamModel.cs" t="Include" />
+            <e p="InnerResources" t="Include">
+              <e p="InnerResourceCreateModel.cs" t="Include" />
+              <e p="InnerResourceModel.cs" t="Include" />
+              <e p="InnerResourceRequestModel.cs" t="Include" />
+              <e p="InnerResourceUpdateModel.cs" t="Include" />
+              <e p="InnerResourcesModel.cs" t="Include" />
+            </e>
+            <e p="OuterResources" t="Include">
+              <e p="OuterResourceCreateModel.cs" t="Include" />
+              <e p="OuterResourceModel.cs" t="Include" />
+              <e p="OuterResourceRequestModel.cs" t="Include" />
+              <e p="OuterResourceUpdateModel.cs" t="Include" />
+              <e p="OuterResourcesModel.cs" t="Include" />
+            </e>
+            <e p="Report" t="Include">
+              <e p="GenerateReportModel.cs" t="Include" />
+              <e p="ReportEntityHeaderModel.cs" t="Include" />
+              <e p="ReportEntityModel.cs" t="Include" />
+              <e p="ReportModel.cs" t="Include" />
+              <e p="ReportNameModel.cs" t="Include" />
+              <e p="ReportNamesModel.cs" t="Include" />
+              <e p="SubReportModel.cs" t="Include" />
+            </e>
+            <e p="ResourceTimeRegistrations" t="Include">
+              <e p="ResourceTimeRegistrationModel.cs" t="Include" />
+              <e p="ResourceTimeRegistrationRequestModel.cs" t="Include" />
+              <e p="ResourceTimeRegistrationsModel.cs" t="Include" />
+            </e>
+            <e p="Settings" t="Include">
+              <e p="MachineAreaBaseSettings.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Installers" t="Include">
+          <e p="RebusHandlerInstaller.cs" t="Include" />
+          <e p="RebusInstaller.cs" t="Include" />
+        </e>
+        <e p="Messages" t="Include">
+          <e p="OuterInnerResourceCreate.cs" t="Include" />
+          <e p="OuterInnerResourceDelete.cs" t="Include" />
+          <e p="OuterInnerResourceUpdate.cs" t="Include" />
+        </e>
+        <e p="OuterInnerResource.Pn.csproj" t="IncludeRecursive" />
+        <e p="Resources" t="Include">
+          <e p="Templates" t="Include">
+            <e p="report_template.xlsx" t="Include" />
+          </e>
+          <e p="localization.json" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="ExcelService.cs" t="Include" />
+          <e p="InnerResourceService.cs" t="Include" />
+          <e p="OuterInnerResourceLocalizationService.cs" t="Include" />
+          <e p="OuterInnerResourceReportService.cs" t="Include" />
+          <e p="OuterInnerResourceSettingsService.cs" t="Include" />
+          <e p="OuterResourceService.cs" t="Include" />
+          <e p="RebusService.cs" t="Include" />
+          <e p="ResourceTimeRegistrationService.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="OuterInnerResource.Pn.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="OuterInnerResource.Pn.sln" t="IncludeFlat" />
+      <e p="Tests" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+    <e p="$PROJECT_DIR$/../../eFormAPI.Web/Plugins/MachineArea/netcoreapp2.2" t="ExcludeRecursive" />
+  </component>
+</project>

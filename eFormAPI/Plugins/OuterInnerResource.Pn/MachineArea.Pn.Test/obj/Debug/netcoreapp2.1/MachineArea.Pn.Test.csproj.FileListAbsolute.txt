@@ -1,0 +1,14 @@
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/NUnit3.TestAdapter.dll
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/NUnit3.TestAdapter.pdb
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/nunit.engine.netstandard.dll
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/MachineArea.Pn.Test.deps.json
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/MachineArea.Pn.Test.runtimeconfig.json
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/MachineArea.Pn.Test.runtimeconfig.dev.json
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/MachineArea.Pn.Test.dll
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/bin/Debug/netcoreapp2.1/MachineArea.Pn.Test.pdb
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/obj/Debug/netcoreapp2.1/MachineArea.Pn.Test.csprojAssemblyReference.cache
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/obj/Debug/netcoreapp2.1/MachineArea.Pn.Test.csproj.CoreCompileInputs.cache
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/obj/Debug/netcoreapp2.1/MachineArea.Pn.Test.AssemblyInfoInputs.cache
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/obj/Debug/netcoreapp2.1/MachineArea.Pn.Test.AssemblyInfo.cs
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/obj/Debug/netcoreapp2.1/MachineArea.Pn.Test.dll
+/home/microting/Documents/workspace/eform-angular-machinearea-plugin/eFormAPI/Plugins/MachineArea.Pn/MachineArea.Pn.Test/obj/Debug/netcoreapp2.1/MachineArea.Pn.Test.pdb

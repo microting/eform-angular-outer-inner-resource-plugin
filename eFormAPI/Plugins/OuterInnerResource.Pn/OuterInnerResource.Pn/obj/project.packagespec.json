@@ -1,0 +1,86 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn/OuterInnerResource.Pn.csproj",
+    "projectName": "OuterInnerResource.Pn",
+    "projectPath": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn/OuterInnerResource.Pn.csproj",
+    "outputPath": "/home/microting/Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn/obj/",
+    "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
+    "originalTargetFrameworks": [
+      "netcoreapp2.2"
+    ],
+    "sources": {
+      "https://api.nuget.org/v3/index.json": {}
+    },
+    "frameworks": {
+      "netcoreapp2.2": {
+        "projectReferences": {}
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.2": {
+      "dependencies": {
+        "EPPlus.Core": {
+          "target": "Package",
+          "version": "[1.5.4, )"
+        },
+        "ExcelDataReader": {
+          "target": "Package",
+          "version": "[3.6.0, )"
+        },
+        "McMaster.NETCore.Plugins": {
+          "target": "Package",
+          "version": "[0.2.1, )"
+        },
+        "Microsoft.AspNetCore.All": {
+          "target": "Package",
+          "version": "[2.2.7, )"
+        },
+        "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+          "target": "Package",
+          "version": "[2.2.0, )"
+        },
+        "Microsoft.EntityFrameworkCore.SqlServer": {
+          "target": "Package",
+          "version": "[2.2.6, )"
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.2.0, )",
+          "autoReferenced": true
+        },
+        "Microting.eForm": {
+          "target": "Package",
+          "version": "[3.0.331, )"
+        },
+        "Microting.eFormApi.BasePn": {
+          "target": "Package",
+          "version": "[1.1.187, )"
+        },
+        "Microting.eFormOuterInnerResourceBase": {
+          "target": "Package",
+          "version": "[1.1.73, )"
+        },
+        "OtpSharp.Core": {
+          "target": "Package",
+          "version": "[1.0.0, )"
+        }
+      },
+      "imports": [
+        "net461"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}

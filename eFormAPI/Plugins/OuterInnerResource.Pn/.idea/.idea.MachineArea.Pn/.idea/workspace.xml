@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="90d87a66-6131-4a4c-a1a1-af23c664fc6d" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceSettingsService.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="438">
+              <caret line="70" column="75" lean-forward="true" selection-start-line="70" selection-start-column="75" selection-end-line="70" selection-end-column="75" />
+              <folding>
+                <marker date="1571206067607" expanded="false" signature="6:884" ph="..." />
+                <marker date="1571206067607" expanded="true" signature="919:9238" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="1002:9236" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="1824:2118" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="2205:3944" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="2231:3584" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="2353:2766" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="2824:3482" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="3615:3934" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="4053:6461" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="4079:6157" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="4463:5791" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="5892:5974" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="6189:6451" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="6538:7232" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="6923:7097" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="7000:7083" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="7314:8059" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="7713:7877" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="8086:8325" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="8112:8315" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="8372:9230" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="8589:9220" ph="{...}" />
+                <marker date="1571206067607" expanded="true" signature="8701:9092" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>SdkeFormId</find>
+      <find>token</find>
+      <find>maskiner</find>
+      <find>eFormMachineAreaBase</find>
+      <find>MachineAreaPnContextFactory</find>
+      <find>Area newArea</find>
+      <find>Machine newMachine</find>
+      <find>new Machine</find>
+      <find>new Area</find>
+      <find>Area</find>
+      <find>MachineAreaTimeRegistration</find>
+      <find>AreaId</find>
+      <find>MachineId</find>
+      <find>AreaVersion</find>
+      <find>Machine</find>
+      <find>MachineAreas</find>
+      <find>MachineArea</find>
+      <find>Areas</find>
+      <find>AreaVersions</find>
+      <find>Machines</find>
+      <find>MachineAreaTimeRegistrations</find>
+      <find>InnerResourceAreaTimeRegistration</find>
+      <find>MachineVersion</find>
+      <find>2007 - 2019 microting</find>
+      <find>machine-area</find>
+      <find>Errorwhile</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>(decimal)CorrectedTime(z, timeType)</replace>
+      <replace>(decimal)CorrectedTime(s, timeType)</replace>
+      <replace>eFormOuterInnerResourceBase</replace>
+      <replace>OuterResource newArea</replace>
+      <replace>InnerResource newMachine</replace>
+      <replace>new InnerResource</replace>
+      <replace>new OuterResource</replace>
+      <replace>ResourceTimeRegistration</replace>
+      <replace>OuterResourceId</replace>
+      <replace>InnerResourceId</replace>
+      <replace>OuterResource</replace>
+      <replace>OuterResourceVersion</replace>
+      <replace>InnerResource</replace>
+      <replace>OuterInnerResources</replace>
+      <replace>OuterInnerResource</replace>
+      <replace>OuterResources</replace>
+      <replace>OuterResourceVersions</replace>
+      <replace>InnerResources</replace>
+      <replace>ResourceTimeRegistrations</replace>
+      <replace>InnerResourceVersion</replace>
+      <replace>2007 - 2019 Microting A/S</replace>
+      <replace>outer-inner-resource</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/InnerResourcesReportUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/DbTestFixtures.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/CanaryInAColeMine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/InnerResourcesUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesReportUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeOuterResourcesReportsUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeInnerResourcesReportsUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/EmployeesReportsUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Helpers/ReportsHelper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceUpdateModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceRequestModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourcesModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceCreateModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceUpdateModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5D23445A-33F6-47F7-8196-B4405EF07A7F/7f/db500b4d/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceRequestModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceCreateModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourcesModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3557DCB1-B182-4E9F-B521-FBE601864010/71/04f380bc/BaseEntity.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Settings/MachineAreaBaseSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Report/GenerateReportModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/69F795DF-FC84-4780-BFCF-FF4FF8415A92/d2/88e51309/RelationalDatabaseFacadeExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03AB5F2C-F212-43D5-B7F6-C17715B6110D/9b/b7aa8a1d/MachineAreaSettingsEnum.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Consts/ExcelConsts.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Enums/ReportRelationshipType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Enums/ReportTimeType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Data/Seed/Data/MachineAreaConfigurationSeedData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Data/Seed/MachineAreaPluginSeed.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Abstractions/IMachineService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Abstractions/IMachineAreaLocalizationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Abstractions/IMachineAreaSettingsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/InnerResourcesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterResourcesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterInnerResourceSettingsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterInnerResourceReportsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Installers/RebusInstaller.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/obj/Debug/netcoreapp2.2/MachineArea.Pn.Test.AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Installers/RebusHandlerInstaller.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/obj/Debug/netcoreapp2.2/MachineArea.Pn.Test.Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceReportService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Services/ExcelService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Services/RebusService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterResourceService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceLocalizationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceSettingsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Services/InnerResourceService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceCreate.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceUpdate.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceDelete.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceUpdateHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceCreateHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceDeleteHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../eform-machinearea-dotnet/Microting.eFormOuterInnerResourceBase/Infrastructure/Migrations/20190218071621_InitialCreate.Designer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn/EformMachineAreaPlugin.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Handlers/MachineAreaCreateHandler.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Handlers/MachineAreaDeleteHandler.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/MachineAreaReportService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/MachineService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/MachineAreaSettingsService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/AreaService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Helpers/ReportsHelper.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Handlers/MachineAreaUpdateHandler.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Enums/ReportRelationshipType.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/AreasUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeAreasReportsUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeMachinesReportsUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/MachinesUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/MachinesReportsUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/AreasReportsUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesReportUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/InnerResourcesUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/InnerResourcesReportUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/EmployeesReportsUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeOuterResourcesReportsUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeInnerResourcesReportsUTest.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/DbTestFixtures.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn.Test/CanaryInAColeMine.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceCreateHandler.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceUpdateHandler.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceDeleteHandler.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceCreate.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceUpdate.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceDelete.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/OuterResourceService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/InnerResourceService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceReportService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceLocalizationService.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterInnerResourceReportsController.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterInnerResourceSettingsController.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Areas/OuterResourceCreateModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Areas/OuterResourceModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Areas/OuterResourceRequestModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Areas/OuterResourceUpdateModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Machines/InnerResourceCreateModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Machines/InnerResourceModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Machines/InnerResourceRequestModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Machines/InnerResourceUpdateModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Machines/InnerResourcesModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Areas/OuterResourcesModel.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Controllers/InnerResourcesController.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterResourcesController.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/EformMachineAreaPlugin.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Installers/RebusInstaller.cs" />
+        <option value="$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceSettingsService.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="27" />
+    <option name="width" value="2560" />
+    <option name="height" value="1413" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="FileSystemExplorer" />
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="AssemblyExplorer" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../eform-machinearea-dotnet/Microting.eFormOuterInnerResourceBase/Microting.eFormOuterInnerResourceBase.csproj" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="90d87a66-6131-4a4c-a1a1-af23c664fc6d" name="Default Changelist" comment="" />
+      <created>1547111208850</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1547111208850</updated>
+      <workItem from="1547111210338" duration="81000" />
+      <workItem from="1547115374883" duration="1989000" />
+      <workItem from="1547198778856" duration="9000" />
+      <workItem from="1547447590371" duration="97000" />
+      <workItem from="1547706708735" duration="96000" />
+      <workItem from="1548075090151" duration="38000" />
+      <workItem from="1548228805365" duration="71000" />
+      <workItem from="1548413264115" duration="669000" />
+      <workItem from="1548413973717" duration="960000" />
+      <workItem from="1548419554879" duration="2140000" />
+      <workItem from="1548679816401" duration="39000" />
+      <workItem from="1550209252184" duration="7000" />
+      <workItem from="1550209685216" duration="134000" />
+      <workItem from="1550668292223" duration="497000" />
+      <workItem from="1550729460340" duration="716000" />
+      <workItem from="1550836958980" duration="60000" />
+      <workItem from="1550838327271" duration="163000" />
+      <workItem from="1553842466062" duration="24000" />
+      <workItem from="1554878014288" duration="549000" />
+      <workItem from="1556095620681" duration="96000" />
+      <workItem from="1556096477934" duration="83000" />
+      <workItem from="1556174110644" duration="1999000" />
+      <workItem from="1556177404455" duration="669000" />
+      <workItem from="1556514868492" duration="2842000" />
+      <workItem from="1556538475655" duration="887000" />
+      <workItem from="1556701707448" duration="3643000" />
+      <workItem from="1556708121180" duration="807000" />
+      <workItem from="1556796157847" duration="105000" />
+      <workItem from="1557211722929" duration="1235000" />
+      <workItem from="1557394330768" duration="457000" />
+      <workItem from="1557985782067" duration="1768000" />
+      <workItem from="1558677793119" duration="173000" />
+      <workItem from="1558677969179" duration="848000" />
+      <workItem from="1559031691871" duration="234000" />
+      <workItem from="1559302502856" duration="84000" />
+      <workItem from="1563969034040" duration="339000" />
+      <workItem from="1564477099082" duration="831000" />
+      <workItem from="1564479592749" duration="3576000" />
+      <workItem from="1564552178249" duration="3809000" />
+      <workItem from="1564662662149" duration="111000" />
+      <workItem from="1565678914889" duration="107000" />
+      <workItem from="1565858646782" duration="72000" />
+      <workItem from="1567411246446" duration="713000" />
+      <workItem from="1567685724176" duration="302000" />
+      <workItem from="1567746010519" duration="557000" />
+      <workItem from="1568029192972" duration="356000" />
+      <workItem from="1568103627716" duration="992000" />
+      <workItem from="1568349201611" duration="31000" />
+      <workItem from="1568349478933" duration="561000" />
+      <workItem from="1568627585672" duration="9000" />
+      <workItem from="1568627656599" duration="77000" />
+      <workItem from="1568796787401" duration="13000" />
+      <workItem from="1568870831831" duration="177000" />
+      <workItem from="1568871675851" duration="810000" />
+      <workItem from="1569216247185" duration="96000" />
+      <workItem from="1569399546878" duration="108000" />
+      <workItem from="1569582968460" duration="72000" />
+      <workItem from="1569830524275" duration="628000" />
+      <workItem from="1569917403104" duration="1285000" />
+      <workItem from="1570182978083" duration="618000" />
+      <workItem from="1570186312869" duration="1381000" />
+      <workItem from="1570523826255" duration="14336000" />
+      <workItem from="1571121829752" duration="45000" />
+      <workItem from="1571202445585" duration="922000" />
+      <workItem from="1571205894310" duration="174000" />
+      <workItem from="1571206150923" duration="70000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="57447000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="27" width="2560" height="1413" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25338107" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.4544432" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39968026" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="NuGet" order="7" weight="0.36022365" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="11" weight="0.46344206" />
+      <window_info anchor="bottom" id="Terminal" order="12" />
+      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="14" weight="0.1445687" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Errors In Solution" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesUTest.cs</url>
+          <line>123</line>
+          <properties documentPath="$PROJECT_DIR$/MachineArea.Pn.Test/AreasUTest.cs" initialLine="85" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesReportUTest.cs</url>
+          <line>273</line>
+          <properties documentPath="$PROJECT_DIR$/MachineArea.Pn.Test/AreasReportsUTest.cs" initialLine="274" />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Helpers/SettingsHelper.cs" />
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/ExcelService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="176" column="38" selection-start-line="176" selection-start-column="38" selection-end-line="176" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Abstractions/IMachineAreaLocalizationService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+          <folding>
+            <marker date="1547022789403" expanded="true" signature="92:205" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/MachineArea.Pn.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="71" lean-forward="true" selection-start-line="7" selection-start-column="71" selection-end-line="7" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Settings/MachineAreaBaseSettings.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+          <folding>
+            <marker date="1568627740227" expanded="true" signature="142:911" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Data/Seed/Data/MachineAreaConfigurationSeedData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="41" column="60" lean-forward="true" selection-start-line="41" selection-start-column="60" selection-end-line="41" selection-end-column="60" />
+          <folding>
+            <marker date="1568627740227" expanded="false" signature="6:111" ph="..." />
+            <marker date="1568627740227" expanded="true" signature="167:2886" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="250:2884" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="321:2877" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="378:493" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="550:652" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="709:815" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="872:980" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="1037:1146" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="1203:1304" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="1361:1467" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="1524:1631" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="1688:1802" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="1859:1967" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="2024:2142" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="2199:2314" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="2371:2493" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="2550:2692" ph="{...}" />
+            <marker date="1568627740227" expanded="true" signature="2749:2866" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Abstractions/IMachineAreaSettingsService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
+          <folding>
+            <marker date="1570186982922" expanded="false" signature="6:185" ph="..." />
+            <marker date="1570186982922" expanded="true" signature="224:459" ph="{...}" />
+            <marker date="1570186982922" expanded="true" signature="275:457" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Resources/localization.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Data/Seed/MachineAreaPluginSeed.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="11" column="65" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
+          <folding>
+            <marker date="1570523986714" expanded="false" signature="6:263" ph="..." />
+            <marker date="1570523986714" expanded="true" signature="314:1465" ph="{...}" />
+            <marker date="1570523986714" expanded="true" signature="355:1463" ph="{...}" />
+            <marker date="1570523986714" expanded="true" signature="438:1457" ph="{...}" />
+            <marker date="1570523986714" expanded="true" signature="704:1447" ph="{...}" />
+            <marker date="1570523986714" expanded="true" signature="817:1433" ph="{...}" />
+            <marker date="1570523986714" expanded="true" signature="949:1292" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/RebusService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="42" column="9" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+          <folding>
+            <marker date="1570524190584" expanded="false" signature="6:385" ph="..." />
+            <marker date="1570524190584" expanded="true" signature="468:1784" ph="{...}" />
+            <marker date="1570524190584" expanded="true" signature="704:812" ph="{...}" />
+            <marker date="1570524190584" expanded="true" signature="864:1422" ph="{...}" />
+            <marker date="1570524190584" expanded="true" signature="1452:1497" ph="{...}" />
+            <marker date="1570524190584" expanded="true" signature="1565:1770" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/Report/GenerateReportModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding>
+            <marker date="1557294539786" expanded="false" signature="6:56" ph="..." />
+            <marker date="1557294539786" expanded="true" signature="111:366" ph="{...}" />
+            <marker date="1557294539786" expanded="true" signature="150:364" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Helpers/ReportsHelper.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+          <folding>
+            <marker date="1570599184047" expanded="false" signature="6:309" ph="..." />
+            <marker date="1570599184047" expanded="true" signature="358:29253" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="398:29251" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="585:28599" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="949:25317" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="1586:1689" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="1759:2027" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="1888:1999" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="2080:9243" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="2441:3411" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="3798:4747" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="5134:6030" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="6438:7538" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="7909:9057" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="10156:10259" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="10329:10630" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="10458:10602" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="10683:17183" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="11044:11856" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="12243:13038" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="13425:14220" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="14628:15627" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="15998:16997" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="18107:18210" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="18340:18605" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="18469:18577" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="18658:25268" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="19019:19933" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="20320:21117" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="21504:22301" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="22709:23710" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="24081:25082" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="25496:27119" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="25790:27101" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="26025:26688" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="26184:26662" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="26276:26416" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="26453:26594" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="26845:27077" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="27140:28432" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="27391:27994" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="27538:27972" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="27622:27750" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="27783:27912" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="28087:28413" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="28158:28391" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="28712:29245" ph="{...}" />
+            <marker date="1570599184047" expanded="true" signature="28752:29235" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesUTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522406" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570600522406" expanded="false" signature="1100:1372" ph="..." />
+            <marker date="1570600522406" expanded="true" signature="1476:5817" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="1544:2309" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="1645:1709" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="2376:3407" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="2473:2537" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="2715:2809" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="3481:4715" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="3581:3645" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="3711:3775" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="4004:4531" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="4238:4517" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="4372:4499" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="4782:5811" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="4878:4942" ph="{...}" />
+            <marker date="1570600522406" expanded="true" signature="5120:5164" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/OuterResourcesReportUTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522454" expanded="false" signature="1100:1490" ph="..." />
+            <marker date="1570600522454" expanded="true" signature="1600:19627" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="1688:7535" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="4879:5107" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="5554:5704" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="7619:13479" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="10825:11054" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="11129:11279" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="13564:19621" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="16784:17014" ph="{...}" />
+            <marker date="1570600522454" expanded="true" signature="17089:17239" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/InnerResourcesUTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522430" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570600522430" expanded="false" signature="1100:1372" ph="..." />
+            <marker date="1570600522430" expanded="true" signature="1403:6053" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="1476:6051" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="1547:2354" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="1656:1720" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="2424:3524" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="2524:2588" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="2778:2875" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="3601:4862" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="3701:3765" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="3831:3895" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="4133:4663" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="4370:4649" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="4504:4631" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="4932:6045" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="5031:5095" ph="{...}" />
+            <marker date="1570600522430" expanded="true" signature="5285:5369" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/InnerResourcesReportUTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522422" expanded="false" signature="1100:1490" ph="..." />
+            <marker date="1570600522422" expanded="true" signature="1521:19663" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="1600:19661" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="1691:7545" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="4881:5109" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="5184:5334" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="7632:13501" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="10838:11067" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="11142:11292" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="13589:19655" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="16809:17039" ph="{...}" />
+            <marker date="1570600522422" expanded="true" signature="17114:17264" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/EmployeesReportsUTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522414" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570600522414" expanded="true" signature="1100:1490" ph="..." />
+            <marker date="1570600522414" expanded="true" signature="1521:18065" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="1596:18063" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="1688:6918" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="4878:5101" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="5176:5326" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="7006:12435" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="10213:10437" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="10512:10662" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="12524:18057" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="15744:15969" ph="{...}" />
+            <marker date="1570600522414" expanded="true" signature="16044:16194" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeOuterResourcesReportsUTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522438" expanded="true" signature="1521:24288" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="1609:24286" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="1699:9246" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="4889:5125" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="5200:5350" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="9338:16253" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="12546:12783" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="12858:13008" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="16346:24280" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="19566:19804" ph="{...}" />
+            <marker date="1570600522438" expanded="true" signature="19879:20029" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/EmployeeInnerResourcesReportsUTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522450" expanded="true" signature="1521:24337" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="1609:24335" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="1702:9263" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="4893:5129" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="5204:5354" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="9358:16284" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="12565:12802" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="12877:13027" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="16380:24329" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="19600:19838" ph="{...}" />
+            <marker date="1570600522450" expanded="true" signature="19913:20063" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/DbTestFixtures.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <marker date="1570600522434" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570600522434" expanded="true" signature="1100:1379" ph="..." />
+            <marker date="1570600522434" expanded="true" signature="1410:4872" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="1470:4870" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="2110:2428" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="2473:3228" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="2552:2727" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="2744:2929" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="3047:3102" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="3133:3194" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="3279:3369" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="3400:4792" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="4068:4782" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="4102:4644" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="4224:4411" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="4436:4560" ph="{...}" />
+            <marker date="1570600522434" expanded="true" signature="4681:4768" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn.Test/CanaryInAColeMine.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="9" lean-forward="true" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+          <folding>
+            <marker date="1570600522446" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570600522446" expanded="true" signature="1147:1312" ph="{...}" />
+            <marker date="1570600522446" expanded="true" signature="1202:1310" ph="{...}" />
+            <marker date="1570600522446" expanded="true" signature="1253:1304" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceCreateHandler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="42" column="36" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceUpdateHandler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="43" column="37" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Handlers/OuterInnerResourceDeleteHandler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+          <folding>
+            <marker date="1570602865587" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570602865587" expanded="true" signature="1100:1584" ph="..." />
+            <marker date="1570602865587" expanded="true" signature="1619:4551" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="1714:4549" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="1942:2022" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="2135:2432" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="2209:2306" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="2323:2417" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="2517:2821" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="2903:3208" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="3362:4543" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="3508:4533" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="3861:4378" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="3903:4244" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="4053:4222" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="4291:4339" ph="{...}" />
+            <marker date="1570602865587" expanded="true" signature="4425:4519" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceCreate.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding>
+            <marker date="1570602865591" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570602865591" expanded="false" signature="1094:1211" ph="..." />
+            <marker date="1570602865591" expanded="true" signature="1246:1703" ph="{...}" />
+            <marker date="1570602865591" expanded="true" signature="1290:1701" ph="{...}" />
+            <marker date="1570602865591" expanded="true" signature="1569:1695" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceUpdate.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding>
+            <marker date="1570602865595" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570602865595" expanded="false" signature="1094:1211" ph="..." />
+            <marker date="1570602865595" expanded="true" signature="1290:1701" ph="{...}" />
+            <marker date="1570602865595" expanded="true" signature="1569:1695" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Messages/OuterInnerResourceDelete.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+          <folding>
+            <marker date="1570602865599" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570602865599" expanded="false" signature="1094:1211" ph="..." />
+            <marker date="1570602865599" expanded="true" signature="1246:1703" ph="{...}" />
+            <marker date="1570602865599" expanded="true" signature="1290:1701" ph="{...}" />
+            <marker date="1570602865599" expanded="true" signature="1569:1695" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterResourceService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/InnerResourceService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceReportService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#843#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceLocalizationService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
+          <folding>
+            <marker date="1570601907301" expanded="false" signature="6:134" ph="..." />
+            <marker date="1570601907301" expanded="true" signature="169:1018" ph="{...}" />
+            <marker date="1570601907301" expanded="true" signature="260:1016" ph="{...}" />
+            <marker date="1570601907301" expanded="true" signature="469:562" ph="{...}" />
+            <marker date="1570601907301" expanded="true" signature="608:709" ph="{...}" />
+            <marker date="1570601907301" expanded="true" signature="779:1010" ph="{...}" />
+            <marker date="1570601907301" expanded="true" signature="887:944" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterInnerResourceReportsController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding>
+            <marker date="1570606969658" expanded="false" signature="6:328" ph="..." />
+            <marker date="1570606969658" expanded="true" signature="450:3795" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="638:724" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="918:1007" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="1190:1291" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="1301:1543" ph="/// Download records export excel ... " />
+            <marker date="1570606969658" expanded="true" signature="1753:3789" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="2035:3777" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="2056:3445" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="2115:2569" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="2594:3427" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="2722:3384" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="3146:3358" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="3469:3763" ph="{...}" />
+            <marker date="1570606969658" expanded="true" signature="3631:3745" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterInnerResourceSettingsController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
+          <folding>
+            <marker date="1570606969646" expanded="false" signature="6:316" ph="..." />
+            <marker date="1570606969646" expanded="true" signature="354:1368" ph="{...}" />
+            <marker date="1570606969646" expanded="true" signature="423:1366" ph="{...}" />
+            <marker date="1570606969646" expanded="true" signature="620:710" ph="{...}" />
+            <marker date="1570606969646" expanded="true" signature="916:1004" ph="{...}" />
+            <marker date="1570606969646" expanded="true" signature="1245:1360" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+          <folding>
+            <marker date="1570602850547" expanded="true" signature="96:283" ph="{...}" />
+            <marker date="1570602850547" expanded="true" signature="134:281" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceUpdateModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceCreateModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <folding>
+            <marker date="1570602865555" expanded="true" signature="96:269" ph="{...}" />
+            <marker date="1570602865555" expanded="true" signature="140:267" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceRequestModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+          <folding>
+            <marker date="1570602865563" expanded="true" signature="61:331" ph="{...}" />
+            <marker date="1570602865563" expanded="true" signature="106:329" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceUpdateModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <folding>
+            <marker date="1570602865571" expanded="true" signature="96:286" ph="{...}" />
+            <marker date="1570602865571" expanded="true" signature="140:284" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourcesModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="52" selection-start-line="7" selection-start-column="52" selection-end-line="7" selection-end-column="52" />
+          <folding>
+            <marker date="1570602865567" expanded="true" signature="96:301" ph="{...}" />
+            <marker date="1570602865567" expanded="true" signature="135:299" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourcesModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+          <folding>
+            <marker date="1570602850559" expanded="true" signature="96:301" ph="{...}" />
+            <marker date="1570602850559" expanded="true" signature="135:299" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceRequestModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
+          <folding>
+            <marker date="1570602850551" expanded="true" signature="106:329" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceCreateModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+          <folding>
+            <marker date="1570602850543" expanded="true" signature="96:272" ph="{...}" />
+            <marker date="1570602850543" expanded="true" signature="140:270" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Enums/ReportRelationshipType.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding>
+            <marker date="1570599184175" expanded="true" signature="45:252" ph="{...}" />
+            <marker date="1570599184175" expanded="true" signature="86:250" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Infrastructure/Enums/ReportTimeType.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+          <folding>
+            <marker date="1557986988916" expanded="false" signature="6:66" ph="..." />
+            <marker date="1557986988916" expanded="true" signature="113:216" ph="{...}" />
+            <marker date="1557986988916" expanded="true" signature="146:214" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/InnerResourcesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Controllers/OuterResourcesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="9" lean-forward="true" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+          <folding>
+            <marker date="1570612980710" expanded="false" signature="6:256" ph="..." />
+            <marker date="1570612980710" expanded="true" signature="294:1828" ph="{...}" />
+            <marker date="1570612980710" expanded="true" signature="367:1826" ph="{...}" />
+            <marker date="1570612980710" expanded="true" signature="492:552" ph="{...}" />
+            <marker date="1570612980710" expanded="true" signature="755:840" ph="{...}" />
+            <marker date="1570612980710" expanded="true" signature="1016:1093" ph="{...}" />
+            <marker date="1570612980710" expanded="true" signature="1267:1344" ph="{...}" />
+            <marker date="1570612980710" expanded="true" signature="1517:1594" ph="{...}" />
+            <marker date="1570612980710" expanded="true" signature="1746:1820" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Installers/RebusHandlerInstaller.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <marker date="1570600704640" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1570600704640" expanded="true" signature="1387:2025" ph="{...}" />
+            <marker date="1570600704640" expanded="true" signature="1477:2019" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/EformMachineAreaPlugin.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="25" column="76" selection-start-line="25" selection-start-column="76" selection-end-line="25" selection-end-column="76" />
+          <folding>
+            <marker date="1571202948086" expanded="false" signature="6:837" ph="..." />
+            <marker date="1571202948086" expanded="true" signature="863:7306" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="920:7304" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="1343:1437" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="1505:2217" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="2310:2669" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="2799:2961" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="3055:4411" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="3193:3400" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="3417:3628" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="3866:4327" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="3933:4287" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="4474:4710" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="4781:6842" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="5051:6803" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="5277:6789" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="5339:5686" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="5748:6092" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="6154:6430" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="6492:6771" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="6901:7298" ph="{...}" />
+            <marker date="1571202948086" expanded="true" signature="7178:7288" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Installers/RebusInstaller.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="72" lean-forward="true" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
+          <folding>
+            <marker date="1571202948094" expanded="true" signature="0:1092" ph="/* The MIT License (MIT) ... */" />
+            <marker date="1571202948094" expanded="false" signature="1100:1239" ph="..." />
+            <marker date="1571202948094" expanded="true" signature="1276:2437" ph="{...}" />
+            <marker date="1571202948094" expanded="true" signature="1330:2435" ph="{...}" />
+            <marker date="1571202948094" expanded="true" signature="1574:1865" ph="{...}" />
+            <marker date="1571202948094" expanded="true" signature="1950:2429" ph="{...}" />
+            <marker date="1571202948094" expanded="true" signature="2257:2392" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MachineArea.Pn/Services/OuterInnerResourceSettingsService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="70" column="75" lean-forward="true" selection-start-line="70" selection-start-column="75" selection-end-line="70" selection-end-column="75" />
+          <folding>
+            <marker date="1571206067607" expanded="false" signature="6:884" ph="..." />
+            <marker date="1571206067607" expanded="true" signature="919:9238" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="1002:9236" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="1824:2118" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="2205:3944" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="2231:3584" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="2353:2766" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="2824:3482" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="3615:3934" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="4053:6461" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="4079:6157" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="4463:5791" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="5892:5974" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="6189:6451" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="6538:7232" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="6923:7097" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="7000:7083" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="7314:8059" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="7713:7877" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="8086:8325" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="8112:8315" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="8372:9230" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="8589:9220" ph="{...}" />
+            <marker date="1571206067607" expanded="true" signature="8701:9092" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

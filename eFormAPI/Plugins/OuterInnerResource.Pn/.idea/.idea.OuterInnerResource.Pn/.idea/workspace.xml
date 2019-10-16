@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8dfc9caa-16bb-4dc0-9c79-6bbe098086bb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/CanaryInAColeMine.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/DbTestFixtures.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/EmployeeInnerResourcesReportsUTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/EmployeeOuterResourcesReportsUTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/EmployeesReportsUTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/InnerResourcesReportUTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/InnerResourcesUTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/MachineArea.Pn.Test.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/OuterResourcesReportUTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.Test/OuterResourcesUTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IAreaService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IExcelService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IMachineAreaLocalizationService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IMachineAreaReportService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IMachineAreaSettingsService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IMachineService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IRebusService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Abstractions/IResourceTimeRegistrationService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Controllers/InnerResourcesController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Controllers/OuterInnerResourceReportsController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Controllers/OuterInnerResourceSettingsController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Controllers/OuterResourcesController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Controllers/ResourceTimeRegistrationsController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/EformMachineAreaPlugin.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Handlers/OuterInnerResourceCreateHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Handlers/OuterInnerResourceDeleteHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Handlers/OuterInnerResourceUpdateHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Consts/ExcelConsts.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Data/Seed/Data/MachineAreaConfigurationSeedData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Data/Seed/MachineAreaPluginSeed.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/DbConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Enums/ReportRelationshipType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Enums/ReportTimeType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Enums/ReportType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Extensions/DateTimeExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Extensions/ExcelWorksheetExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Helpers/DatesHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Helpers/ReportsHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/FileStreamModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceCreateModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceRequestModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourceUpdateModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/InnerResources/InnerResourcesModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceCreateModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceRequestModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourceUpdateModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/OuterResources/OuterResourcesModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Report/GenerateReportModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Report/ReportEntityHeaderModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Report/ReportEntityModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Report/ReportModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Report/ReportNameModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Report/ReportNamesModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Report/SubReportModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/ResourceTimeRegistrations/ResourceTimeRegistrationModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/ResourceTimeRegistrations/ResourceTimeRegistrationRequestModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/ResourceTimeRegistrations/ResourceTimeRegistrationsModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Infrastructure/Models/Settings/MachineAreaBaseSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Installers/RebusHandlerInstaller.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Installers/RebusInstaller.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/MachineArea.Pn.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Messages/OuterInnerResourceCreate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Messages/OuterInnerResourceDelete.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Messages/OuterInnerResourceUpdate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Resources/Templates/report_template.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Resources/localization.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/ExcelService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/InnerResourceService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/OuterInnerResourceLocalizationService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/OuterInnerResourceReportService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/OuterInnerResourceSettingsService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/OuterResourceService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/RebusService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MachineArea.Pn/MachineArea.Pn/Services/ResourceTimeRegistrationService.cs" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/EformOuterInnerResourcePlugin.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="119" column="75" lean-forward="true" selection-start-line="119" selection-start-column="75" selection-end-line="119" selection-end-column="75" />
+              <folding>
+                <marker date="1571207961886" expanded="true" signature="6:872" ph="..." />
+                <marker date="1571207961886" expanded="true" signature="905:7443" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="969:7441" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="1396:1497" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="1565:2313" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="2406:2779" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="2909:3071" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="3165:4525" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="3303:3510" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="3527:3738" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="3976:4441" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="4043:4401" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="4588:4824" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="4895:6972" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="5179:6933" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="5405:6919" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="5467:5815" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="5877:6222" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="6284:6560" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="6622:6901" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="7031:7435" ph="{...}" />
+                <marker date="1571207961886" expanded="true" signature="7308:7425" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Data/Seed/Data/OuterInnerResourceConfigurationSeedData.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+              <folding>
+                <marker date="1571208005898" expanded="false" signature="6:111" ph="..." />
+                <marker date="1571208005898" expanded="true" signature="174:2962" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="264:2960" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="335:2953" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="392:510" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="567:672" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="729:838" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="895:1006" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="1063:1175" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="1232:1336" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="1393:1502" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="1559:1669" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="1726:1843" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="1900:2011" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="2068:2196" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="2253:2381" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="2438:2563" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="2620:2765" ph="{...}" />
+                <marker date="1571208005898" expanded="true" signature="2822:2942" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>MachineAreaBaseSettings</find>
+      <find>Machines</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>OuterInnerResourceSettings</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.3.0/build/netcoreapp1.0/Microsoft.NET.Test.Sdk.Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/EformOuterInnerResourcePlugin.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Data/Seed/Data/OuterInnerResourceConfigurationSeedData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Data/Seed/OuterInnerResourcePluginSeed.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Services/OuterResourceService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IInnerResourceService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceLocalizationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceReportService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Models/Settings/MachineAreaBaseSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IExcelService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MachineArea.Pn.Test/InnerResourcesReportUTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterResourceService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceSettingsService.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Services/OuterResourceService.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Data/Seed/OuterInnerResourcePluginSeed.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceLocalizationService.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceReportService.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceSettingsService.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IInnerResourceService.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterResourceService.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/EformOuterInnerResourcePlugin.cs" />
+        <option value="$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Data/Seed/Data/OuterInnerResourceConfigurationSeedData.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/.idea.OuterInnerResource.Pn/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/.idea.OuterInnerResource.Pn/.idea/indexLayout.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="27" />
+    <option name="width" value="2560" />
+    <option name="height" value="1413" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="SolutionExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Abstractions" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Infrastructure" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Infrastructure" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Data" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Infrastructure" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Data" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Seed" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Infrastructure" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Data" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Seed" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Data" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="OuterInnerResource.Pn" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Services" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="FileSystemExplorer" />
+      <pane id="AssemblyExplorer" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8dfc9caa-16bb-4dc0-9c79-6bbe098086bb" name="Default Changelist" comment="" />
+      <created>1571206377812</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571206377812</updated>
+      <workItem from="1571206379326" duration="1398000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1398000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="27" width="2560" height="1413" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24980111" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="NuGet" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Unit Tests" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Errors In Solution" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IExcelService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding>
+            <marker date="1571206650733" expanded="true" signature="103:387" ph="{...}" />
+            <marker date="1571206650733" expanded="true" signature="140:385" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Services/OuterResourceService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="146" column="106" selection-start-line="146" selection-start-column="106" selection-end-line="146" selection-end-column="106" />
+          <folding>
+            <marker date="1571207891549" expanded="false" signature="6:709" ph="..." />
+            <marker date="1571207891549" expanded="true" signature="751:9430" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="815:9428" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="1416:1640" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="1761:4028" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="1787:3720" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="2045:2474" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="2111:2276" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="2301:2456" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="2495:2635" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="2793:2983" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="3104:3188" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="3395:3600" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="3752:4018" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="4122:5785" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="4148:5479" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="4303:4399" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="4539:4740" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="5246:5375" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="5511:5775" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="5866:7322" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="5892:7038" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="6188:6518" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="6423:6485" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="6596:6709" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="7070:7312" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="7403:8581" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="7429:8297" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="7740:7794" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="7888:8036" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="8329:8571" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="8648:9422" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="8674:9133" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="8770:8821" ph="{...}" />
+            <marker date="1571207891549" expanded="true" signature="9165:9412" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Data/Seed/OuterInnerResourcePluginSeed.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+          <folding>
+            <marker date="1571207768768" expanded="false" signature="6:270" ph="..." />
+            <marker date="1571207768768" expanded="true" signature="328:1500" ph="{...}" />
+            <marker date="1571207768768" expanded="true" signature="376:1498" ph="{...}" />
+            <marker date="1571207768768" expanded="true" signature="459:1492" ph="{...}" />
+            <marker date="1571207768768" expanded="true" signature="739:1482" ph="{...}" />
+            <marker date="1571207768768" expanded="true" signature="852:1468" ph="{...}" />
+            <marker date="1571207768768" expanded="true" signature="984:1327" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceLocalizationService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceReportService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+          <folding>
+            <marker date="1571207838789" expanded="false" signature="6:197" ph="..." />
+            <marker date="1571207838789" expanded="true" signature="243:572" ph="{...}" />
+            <marker date="1571207838789" expanded="true" signature="299:570" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterInnerResourceSettingsService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+          <folding>
+            <marker date="1571207859177" expanded="false" signature="6:182" ph="..." />
+            <marker date="1571207859177" expanded="true" signature="228:603" ph="{...}" />
+            <marker date="1571207859177" expanded="true" signature="286:601" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IInnerResourceService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+          <folding>
+            <marker date="1571207877549" expanded="false" signature="6:154" ph="..." />
+            <marker date="1571207877549" expanded="true" signature="200:659" ph="{...}" />
+            <marker date="1571207877549" expanded="true" signature="245:657" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Abstractions/IOuterResourceService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <marker date="1571207891685" expanded="false" signature="6:154" ph="..." />
+            <marker date="1571207891685" expanded="true" signature="200:638" ph="{...}" />
+            <marker date="1571207891685" expanded="true" signature="245:636" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/EformOuterInnerResourcePlugin.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="119" column="75" lean-forward="true" selection-start-line="119" selection-start-column="75" selection-end-line="119" selection-end-column="75" />
+          <folding>
+            <marker date="1571207961886" expanded="true" signature="6:872" ph="..." />
+            <marker date="1571207961886" expanded="true" signature="905:7443" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="969:7441" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="1396:1497" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="1565:2313" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="2406:2779" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="2909:3071" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="3165:4525" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="3303:3510" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="3527:3738" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="3976:4441" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="4043:4401" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="4588:4824" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="4895:6972" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="5179:6933" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="5405:6919" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="5467:5815" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="5877:6222" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="6284:6560" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="6622:6901" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="7031:7435" ph="{...}" />
+            <marker date="1571207961886" expanded="true" signature="7308:7425" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OuterInnerResource.Pn/Infrastructure/Data/Seed/Data/OuterInnerResourceConfigurationSeedData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+          <folding>
+            <marker date="1571208005898" expanded="false" signature="6:111" ph="..." />
+            <marker date="1571208005898" expanded="true" signature="174:2962" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="264:2960" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="335:2953" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="392:510" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="567:672" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="729:838" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="895:1006" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="1063:1175" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="1232:1336" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="1393:1502" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="1559:1669" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="1726:1843" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="1900:2011" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="2068:2196" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="2253:2381" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="2438:2563" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="2620:2765" ph="{...}" />
+            <marker date="1571208005898" expanded="true" signature="2822:2942" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
