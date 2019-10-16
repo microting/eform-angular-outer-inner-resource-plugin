@@ -10,14 +10,15 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        'e2e/Tests/machine-area-settings/application-settings.plugins-page.spec.ts',
-        'e2e/Tests/machine-area-general/areas/machine-area-area.add.spec.ts',
-        // 'e2e/Tests/machine-area-general/areas/machine-area-area.edit.spec.ts',
-        'e2e/Tests/machine-area-general/areas/machine-area-area.delete.spec.ts',
-        'e2e/Tests/machine-area-general/machines/machine-area-machine.add.spec.ts',
-        // 'e2e/Tests/machine-area-general/machines/machine-area-machine.edit.spec.ts',
-        'e2e/Tests/machine-area-general/machines/machine-area-machine.delete.spec.ts',
+    'e2e/Tests/outer-inner-resource-settings/application-settings.plugins-page.spec.ts',
+    'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.add.spec.ts',
+    'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.edit.spec.ts',
+    'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.delete.spec.ts',
+    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.add.spec.ts',
+    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.edit.spec.ts',
+    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.delete.spec.ts'
     ],
+
     suites: {
         settings: [
             'e2e/Tests/application-settings/**/*.spec.ts'

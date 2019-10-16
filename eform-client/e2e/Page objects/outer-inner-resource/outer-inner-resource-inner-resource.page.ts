@@ -3,7 +3,7 @@ import {Guid} from 'guid-typescript';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
 import {parseTwoDigitYear} from 'moment';
 
-export class MachineAreaMachinePage extends PageWithNavbarPage {
+export class OuterInnerResourceInnerResourcePage extends PageWithNavbarPage {
   constructor() {
     super();
   }
@@ -26,20 +26,21 @@ export class MachineAreaMachinePage extends PageWithNavbarPage {
   public get createEformNewTagInput() {
     return browser.element('#addTagInput');
   }
-  public get machineAreaDropdownMenu() {
-    return browser.element('#machine-area-pn');
+  public get outerInnerResourceDropdownMenu() {
+    return browser.element('#outer-inner-resource-pn');
   }
-  public get machineMenuPoint() {
-    return browser.element('#machine-area-pn-Machines');
+  public get innerResourceMenuPoint() {
+    return browser.element('#outer-inner-resource-pn-inner-resources');
   }
-  public get newMachineBtn() {
-    return browser.element('#newMachineBtn');
+  public get newInnerResourceBtn() {
+    return browser.element('#newInnerResource');
   }
 
-  goToMachines() {
-    this.machineAreaDropdownMenu.click();
+  goToInnerResource() {
+    this.outerInnerResourceDropdownMenu.click();
     browser.pause(2000);
-    this.machineMenuPoint.click();
+    this.innerResourceMenuPoint.click();
+    browser.waitForVisible('#newInnerResource', 20000);
   }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
@@ -75,20 +76,20 @@ export class MachineAreaMachinePage extends PageWithNavbarPage {
     return {added: addedTags, selected: selectedTags};
   }
 }
-const machineAreaMachinePage = new MachineAreaMachinePage();
-export default machineAreaMachinePage;
+const outerInnerResourceInnerResourcePage = new OuterInnerResourceInnerResourcePage();
+export default outerInnerResourceInnerResourcePage;
 
 export class ListRowObject {
   constructor(rowNum) {
-    if ($$('#machineId')[rowNum - 1]) {
+    if ($$('#innerResourceId')[rowNum - 1]) {
       try {
-        this.name = $$('#machineName')[rowNum - 1].getText();
+        this.name = $$('#innerResourceName')[rowNum - 1].getText();
       } catch (e) {}
       try {
-        this.updateBtn = $$('#machineEditBtn')[rowNum - 1];
+        this.updateBtn = $$('#innerResourceEditBtn')[rowNum - 1];
       } catch (e) {}
       try {
-        this.deleteBtn = $$('#machineDeleteBtn')[rowNum - 1];
+        this.deleteBtn = $$('#innerResourceDeleteBtn')[rowNum - 1];
       } catch (e) {}
     }
   }

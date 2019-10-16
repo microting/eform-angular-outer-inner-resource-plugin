@@ -6,6 +6,6 @@ namespace MachineArea.Pn.Infrastructure.Models.OuterResources
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<int> RelatedMachinesIds { get; set; } = new List<int>();
+        public List<int> RelatedInnerResourcesIds { get; set; } = new List<int>();
     }
 }

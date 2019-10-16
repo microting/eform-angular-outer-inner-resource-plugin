@@ -1,5 +1,5 @@
-import machineAreaAreaPage, {ListRowObject} from '../../../Page objects/machine-area/mahcine-area-area.page';
-import machineAreaModalPage from '../../../Page objects/machine-area/machine-area-modal.page';
+import outerInnerResourceInnerResourcePage , {ListRowObject} from '../../../Page objects/outer-inner-resource/outer-inner-resource-inner-resource.page';
+import outerInnerResourceModalPage from '../../../Page objects/outer-inner-resource/outer-inner-resource-modal.page';
 import loginPage from '../../../Page objects/Login.page';
 import {Guid} from 'guid-typescript';
 
@@ -11,24 +11,24 @@ describe('Machine Area Area delete', function () {
     loginPage.login();
     const newEformLabel = 'Number 1';
     // machineAreaAreaPage.createNewEform(newEformLabel);
-    machineAreaAreaPage.goToAreas();
+    outerInnerResourceInnerResourcePage.goToInnerResource();
     // browser.waitForVisible('#newAreaBtn', 20000);
     browser.pause(8000);
   });
   it('should create a new area', function () {
-    machineAreaAreaPage.newAreaBtn.click();
+    outerInnerResourceInnerResourcePage.newInnerResourceBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createAreaName');
-    machineAreaModalPage.areaCreateNameInput.addValue(newName);
-    machineAreaModalPage.areaCreateSaveBtn.click();
+    browser.waitForVisible('#createInnerResourceName', 20000);
+    outerInnerResourceModalPage.innerResourceCreateNameInput.addValue(newName);
+    outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
     browser.pause(8000);
   });
   it('should delete area', function () {
     const listRowObject = new ListRowObject(1);
     listRowObject.deleteBtn.click();
-    browser.waitForVisible('#selectedAreaId');
+    browser.waitForVisible('#innerResourceDeleteName', 20000);
     browser.pause(2000);
-    machineAreaModalPage.areaDeleteDeleteBtn.click();
+    outerInnerResourceModalPage.innerResourceDeleteDeleteBtn.click();
     browser.pause(2000);
     browser.refresh();
     expect(listRowObject.id === null, 'Area is not deleted');

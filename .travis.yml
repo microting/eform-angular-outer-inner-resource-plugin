@@ -26,7 +26,9 @@ script:
   - cd ../..
   - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
   - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/src/app/plugins/modules/machine-area-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/machine-area-pn
-  - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/machine-area-settings microting/eform-angular-frontend/eform-client/e2e/Tests/machine-area-settings
+  - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-settings microting/eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-settings
+  - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-general microting/eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-general
+  - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Page\ objects/outer-inner-resource microting/eform-angular-frontend/eform-client/e2e/Page\ objects/outer-inner-resource
   - cp -av microting/eform-angular-outer-inner-resource-plugin/eform-client/wdio-headless-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
   - cd microting/eform-angular-frontend
   - dotnet restore -v q eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &

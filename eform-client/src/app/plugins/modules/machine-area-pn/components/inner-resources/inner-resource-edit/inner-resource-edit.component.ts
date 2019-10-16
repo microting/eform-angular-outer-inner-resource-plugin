@@ -52,15 +52,15 @@ export class InnerResourceEditComponent implements OnInit {
 
   addToEditMapping(e: any, areaId: number) {
     if (e.target.checked) {
-      this.selectedMachineModel.relatedAreasIds.push(areaId);
+      this.selectedMachineModel.relatedOuterResourcesIds.push(areaId);
     } else {
-      this.selectedMachineModel.relatedAreasIds = this.selectedMachineModel.relatedAreasIds.filter(x => x !== areaId);
+      this.selectedMachineModel.relatedOuterResourcesIds = this.selectedMachineModel.relatedOuterResourcesIds.filter(x => x !== areaId);
     }
   }
 
   isChecked(areaId: number) {
-    if (this.selectedMachineModel.relatedAreasIds && this.selectedMachineModel.relatedAreasIds.length > 0) {
-      return this.selectedMachineModel.relatedAreasIds.findIndex(x => x === areaId) !== -1;
+    if (this.selectedMachineModel.relatedOuterResourcesIds && this.selectedMachineModel.relatedOuterResourcesIds.length > 0) {
+      return this.selectedMachineModel.relatedOuterResourcesIds.findIndex(x => x === areaId) !== -1;
     } return false;
   }
 

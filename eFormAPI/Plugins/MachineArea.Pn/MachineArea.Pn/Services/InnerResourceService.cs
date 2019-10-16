@@ -119,10 +119,10 @@ namespace MachineArea.Pn.Services
                 List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.InnerResourceId == innerResource.Id).ToList();
 
-                innerResource.RelatedAreasIds = new List<int>();
+                innerResource.RelatedOuterResourcesIds = new List<int>();
                 foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
                 {
-                    innerResource.RelatedAreasIds.Add(machineArea.OuterResourceId);
+                    innerResource.RelatedOuterResourcesIds.Add(machineArea.OuterResourceId);
                 }
                 
                 return new OperationDataResult<InnerResourceModel>(true, innerResource);
@@ -140,7 +140,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedAreasIds.Select(x =>
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedOuterResourcesIds.Select(x =>
                     new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
                     {
                         Id = x
@@ -170,7 +170,7 @@ namespace MachineArea.Pn.Services
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedAreasIds.Select(x =>
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedOuterResourcesIds.Select(x =>
                     new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
                     {
                         Id = x

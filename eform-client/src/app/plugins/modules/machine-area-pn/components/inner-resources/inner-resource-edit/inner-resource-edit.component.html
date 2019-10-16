@@ -13,9 +13,9 @@
                   <input mdbInputDirective
                          [mdbValidate]="false"
                          [(ngModel)]="selectedMachineModel.name"
-                         type="text" id="updateMachineName"
-                         name="createMachineName" class="form-control" [readOnly]="true">
-                  <label for="updateMachineName">{{'Name' | translate}}</label>
+                         type="text" id="updateInnerResourceName"
+                         name="updateInnerResourceName" class="form-control" [readOnly]="true">
+                  <label for="updateInnerResourceName">{{'Name' | translate}}</label>
                 </div>
               </div>
             </div>
@@ -31,11 +31,11 @@
                 </tr>
                 </thead>
                 <tbody id="tableBody">
-                <tr *ngFor="let area of mappingAreas.areaList">
-                  <td>
+                <tr *ngFor="let area of mappingAreas.outerResourceList">
+                  <td id="outerResourceId">
                     {{area.id}}
                   </td>
-                  <td>
+                  <td id="outerResourceName">
                     {{area.name}}
                   </td>
                   <td>
@@ -55,10 +55,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" id="machineEditSaveBtn" [disabled]="!selectedMachineModel.name" (click)="updateMachine()">
+        <button class="btn btn-success" id="innerResourceEditSaveBtn" [disabled]="!selectedMachineModel.name" (click)="updateMachine()">
           {{ 'Save' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" id="machineEditCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button class="btn btn-accent text-black-50" id="innerResourceEditCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

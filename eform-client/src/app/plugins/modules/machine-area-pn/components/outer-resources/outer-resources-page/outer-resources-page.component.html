@@ -3,7 +3,7 @@
     <button
       class="btn btn-success"
       mdbTooltip="{{ 'Create' | translate }}"
-      id="newAreaBtn"
+      id="newOuterResourceBtn"
       (click)="showCreateAreaModal()">{{ 'New' | translate }}
     </button>
   </div>
@@ -43,24 +43,24 @@
       </tr>
       </thead>
       <tbody id="tableBody">
-      <tr *ngFor="let area of areasModel.areaList">
-        <td id="areaId">
+      <tr *ngFor="let area of areasModel.outerResourceList">
+        <td id="outerResourceId">
           {{area.id}}
         </td>
-        <td id="areaName">
+        <td id="outerResourceName">
           {{area.name}}
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Edit' | translate }}"
-                    id="areaEditBtn"
+                    id="outerResourceEditBtn"
                     (click)="showEditAreaModal(area)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete' | translate }}"
-                    id="areaDeleteBtn"
+                    id="outerResourceDeleteBtn"
                     (click)="showDeleteAreaModal(area)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
             </button>

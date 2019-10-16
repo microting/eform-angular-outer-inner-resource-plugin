@@ -42,13 +42,13 @@ export class InnerResourceCreateComponent implements OnInit {
 
   addToArray(e: any, areaId: number) {
     if (e.target.checked) {
-      this.newMachineModel.relatedAreasIds.push(areaId);
+      this.newMachineModel.relatedOuterResourcesIds.push(areaId);
     } else {
-      this.newMachineModel.relatedAreasIds = this.newMachineModel.relatedAreasIds.filter(x => x !== areaId);
+      this.newMachineModel.relatedOuterResourcesIds = this.newMachineModel.relatedOuterResourcesIds.filter(x => x !== areaId);
     }
   }
 
   isChecked(relatedAreaId: number) {
-    return this.newMachineModel.relatedAreasIds.indexOf(relatedAreaId) !== -1;
+    return this.newMachineModel.relatedOuterResourcesIds.indexOf(relatedAreaId) !== -1;
   }
 }

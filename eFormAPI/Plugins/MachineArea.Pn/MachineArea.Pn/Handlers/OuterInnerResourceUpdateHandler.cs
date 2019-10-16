@@ -57,7 +57,7 @@ namespace MachineArea.Pn.Handlers
         {            
             string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}"; 
             
-            int eFormId = int.Parse(_dbContext.PluginConfigurationValues
+            int eFormId = int.Parse(_dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value);
 
@@ -65,7 +65,7 @@ namespace MachineArea.Pn.Handlers
             List<Site_Dto> sites = new List<Site_Dto>();
             
             lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
-            string sdkSiteIds = _dbContext.PluginConfigurationValues
+            string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;
             foreach (string siteId in sdkSiteIds.Split(","))
@@ -88,7 +88,7 @@ namespace MachineArea.Pn.Handlers
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
                 x.InnerResourceId == innerResourceModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
 
-            List<int> requestedAreaIds = innerResourceModel.RelatedAreasIds;
+            List<int> requestedAreaIds = innerResourceModel.RelatedOuterResourcesIds;
             List<int> deployedAreaIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
@@ -96,7 +96,7 @@ namespace MachineArea.Pn.Handlers
             {                
                 deployedAreaIds.Add(machineArea.OuterResourceId);
 
-                if (!innerResourceModel.RelatedAreasIds.Contains(machineArea.OuterResourceId))
+                if (!innerResourceModel.RelatedOuterResourcesIds.Contains(machineArea.OuterResourceId))
                 {
                     foreach (OuterInnerResourceSite machineAreaSite in machineArea.OuterInnerResourceSites)
                     {
@@ -134,7 +134,7 @@ namespace MachineArea.Pn.Handlers
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
                 x.OuterResourceId == outerResourceModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
 
-            List<int> requestedMachineIds = outerResourceModel.RelatedMachinesIds;
+            List<int> requestedMachineIds = outerResourceModel.RelatedInnerResourcesIds;
             List<int> deployedMachineIds = new List<int>();
             List<int> toBedeployed = new List<int>();
             
@@ -142,7 +142,7 @@ namespace MachineArea.Pn.Handlers
             {
                 deployedMachineIds.Add(machineArea.InnerResourceId);
                 
-                if (!outerResourceModel.RelatedMachinesIds.Contains(machineArea.InnerResourceId))
+                if (!outerResourceModel.RelatedInnerResourcesIds.Contains(machineArea.InnerResourceId))
                 {
                     foreach (OuterInnerResourceSite machineAreaSite in machineArea.OuterInnerResourceSites)
                     {

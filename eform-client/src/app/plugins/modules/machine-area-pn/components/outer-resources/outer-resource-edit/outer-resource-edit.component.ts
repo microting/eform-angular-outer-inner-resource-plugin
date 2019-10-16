@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 import {OuterResourcePnModel, OuterResourcePnUpdateModel} from '../../../models/area';
-import {InnerResourcePnModel} from '../../../models/machine';
+import {InnerResourcePnModel, InnerResourcesPnModel} from '../../../models/machine';
 import {OuterInnerResourcePnOuterResourceService} from '../../../services';
 
 @Component({
@@ -11,7 +11,7 @@ import {OuterInnerResourcePnOuterResourceService} from '../../../services';
 })
 export class OuterResourceEditComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Input() mappingMachines: InnerResourcePnModel = new InnerResourcePnModel();
+  @Input() mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
   @Output() onAreaUpdated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
   selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();
@@ -47,15 +47,15 @@ export class OuterResourceEditComponent implements OnInit {
 
   addToEditMapping(e: any, machineId: number) {
     if (e.target.checked) {
-      this.selectedAreaModel.relatedMachinesIds.push(machineId);
+      this.selectedAreaModel.relatedInnerResourcesIds.push(machineId);
     } else {
-      this.selectedAreaModel.relatedMachinesIds = this.selectedAreaModel.relatedMachinesIds.filter(x => x !== machineId);
+      this.selectedAreaModel.relatedInnerResourcesIds = this.selectedAreaModel.relatedInnerResourcesIds.filter(x => x !== machineId);
     }
   }
 
   isChecked(machineId: number) {
-    if (this.selectedAreaModel.relatedMachinesIds && this.selectedAreaModel.relatedMachinesIds.length > 0) {
-      return this.selectedAreaModel.relatedMachinesIds.findIndex(x => x === machineId) !== -1;
+    if (this.selectedAreaModel.relatedInnerResourcesIds && this.selectedAreaModel.relatedInnerResourcesIds.length > 0) {
+      return this.selectedAreaModel.relatedInnerResourcesIds.findIndex(x => x === machineId) !== -1;
     } return false;
   }
 }
