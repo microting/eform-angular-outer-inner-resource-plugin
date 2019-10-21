@@ -1,6 +1,6 @@
 <subheader-pn [title]="machinesModel.name">
   <div class="p-3">
-    <button
+    <button *ngIf="pluginClaimsHelper.check(outerInnerResourcePnClaims.createMachines)"
       class="btn btn-success"
       id="newInnerResource"
       mdbTooltip="{{ 'Create' | translate }}"

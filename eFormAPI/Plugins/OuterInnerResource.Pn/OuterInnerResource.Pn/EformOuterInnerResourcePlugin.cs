@@ -8,9 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Factories;
 using OuterInnerResource.Pn.Abstractions;
 using OuterInnerResource.Pn.Infrastructure.Data.Seed;
@@ -25,6 +27,8 @@ namespace OuterInnerResource.Pn
         public string Name => "Microting Outer Inner Resource plugin";
         public string PluginId => "eform-angular-outer-inner-resource-plugin";
         public string PluginPath => PluginAssembly().Location;
+        public string PluginBaseUrl => "outer-inner-resource-pn";
+
         private string _connectionString;
         private string _outerResourceName = "OuterResources";
         private string _innerResourceName = "InnerResources";
@@ -113,6 +117,7 @@ namespace OuterInnerResource.Pn
                 Name = localizationService.GetString("OuterInnerResource"),
                 E2EId = "outer-inner-resource-pn",
                 Link = "",
+                Guards = new List<string>() { OuterInnerResourceClaims.AccessOuterInnerResourcePlugin },
                 MenuItems = new List<MenuItemModel>()
                 {
                     new MenuItemModel()
@@ -137,13 +142,6 @@ namespace OuterInnerResource.Pn
                         E2EId = "outer-inner-resource-pn-reports",
                         Link = "/plugins/outer-inner-resource-pn/reports",
                         Position = 2,
-                    },
-                    new MenuItemModel()
-                    {
-                        Name = localizationService.GetString("Settings"),
-                        E2EId = "outer-inner-resource-pn-settings",
-                        Link = "/plugins/outer-inner-resource-pn/settings",
-                        Position = 3,
                     }
                 }
             });
@@ -159,6 +157,14 @@ namespace OuterInnerResource.Pn
                 // Seed configuration
                 OuterInnerResourcePluginSeed.SeedData(context);
             }
+        }
+
+        public PluginPermissionsManager GetPermissionsManager(string connectionString)
+        {
+            var contextFactory = new OuterInnerResourcePnContextFactory();
+            var context = contextFactory.CreateDbContext(new[] { connectionString });
+
+            return new PluginPermissionsManager(context);
         }
     }
 }
