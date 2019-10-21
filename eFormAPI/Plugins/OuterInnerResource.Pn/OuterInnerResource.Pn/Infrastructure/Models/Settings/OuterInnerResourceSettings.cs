@@ -1,6 +1,6 @@
 ﻿namespace OuterInnerResource.Pn.Infrastructure.Models.Settings
 {
-    public class MachineAreaBaseSettings
+    public class OuterInnerResourceSettings
     {
         public string SdkConnectionString { get; set; }
         public string LogLevel { get; set; }

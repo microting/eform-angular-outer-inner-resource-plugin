@@ -54,7 +54,7 @@ namespace OuterInnerResource.Pn.Handlers
         #pragma warning disable 1998
         public async Task Handle(OuterInnerResourceCreate message)
         {            
-            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}"; 
+            string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}"; 
             
             LogEvent($"lookup is {lookup}");
 
@@ -70,7 +70,7 @@ namespace OuterInnerResource.Pn.Handlers
             MainElement mainElement = _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
-            lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+            lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
             LogEvent($"lookup is {lookup}");
 
             string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
@@ -136,7 +136,7 @@ namespace OuterInnerResource.Pn.Handlers
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 mainElement.Repeated = 0;
 
-                string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
+                string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
                 LogEvent($"lookup is {lookup}");
 
                 bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()

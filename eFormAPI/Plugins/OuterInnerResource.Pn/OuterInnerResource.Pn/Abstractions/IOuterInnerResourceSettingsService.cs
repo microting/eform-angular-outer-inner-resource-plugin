@@ -7,8 +7,8 @@ namespace OuterInnerResource.Pn.Abstractions
 {
     public interface IOuterInnerResourceSettingsService
     {
-        Task<OperationDataResult<MachineAreaBaseSettings>> GetSettings();
-        Task<OperationResult> UpdateSettings(MachineAreaBaseSettings machineAreaSettingsModel);
+        Task<OperationDataResult<OuterInnerResourceSettings>> GetSettings();
+        Task<OperationResult> UpdateSettings(OuterInnerResourceSettings machineAreaSettingsModel);
         Task<OperationDataResult<List<int>>> GetSitesEnabled();
         Task<OperationResult> UpdateSitesEnabled(List<int> siteIds);
     }

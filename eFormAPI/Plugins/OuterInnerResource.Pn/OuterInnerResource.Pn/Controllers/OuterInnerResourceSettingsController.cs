@@ -21,7 +21,7 @@ namespace OuterInnerResource.Pn.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/outer-inner-resource-pn/settings")]
-        public async Task<OperationDataResult<MachineAreaBaseSettings>> GetSettings()
+        public async Task<OperationDataResult<OuterInnerResourceSettings>> GetSettings()
         {
             return await _outerInnerResourceSettingsService.GetSettings();
         }
@@ -30,7 +30,7 @@ namespace OuterInnerResource.Pn.Controllers
         [HttpPost]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/outer-inner-resource-pn/settings")]
-        public async Task<OperationResult> UpdateSettings([FromBody] MachineAreaBaseSettings machineAreaSettingsModel)
+        public async Task<OperationResult> UpdateSettings([FromBody] OuterInnerResourceSettings machineAreaSettingsModel)
         {
             return await _outerInnerResourceSettingsService.UpdateSettings(machineAreaSettingsModel);
         }

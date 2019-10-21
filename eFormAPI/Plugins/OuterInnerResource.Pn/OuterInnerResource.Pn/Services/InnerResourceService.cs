@@ -85,7 +85,7 @@ namespace OuterInnerResource.Pn.Services
                 
                 try
                 {
-                    innerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName").Value;  
+                    innerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName").Value;  
                 } catch {}
 
                 return new OperationDataResult<InnerResourcesModel>(true, innerResourcesModel);

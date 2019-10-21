@@ -27,7 +27,7 @@ namespace OuterInnerResource.Pn.Services
         private readonly ILogger<OuterInnerResourceSettingsService> _logger;
         private readonly IOuterInnerResourceLocalizationService _outerInnerResourceLocalizationService;
         private readonly OuterInnerResourcePnDbContext _dbContext;
-        private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
+        private readonly IPluginDbOptions<OuterInnerResourceSettings> _options;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IBus _bus;
 
@@ -35,7 +35,7 @@ namespace OuterInnerResource.Pn.Services
             ILogger<OuterInnerResourceSettingsService> logger,
             OuterInnerResourcePnDbContext dbContext,
             IOuterInnerResourceLocalizationService outerInnerResourceLocalizationService,
-            IPluginDbOptions<MachineAreaBaseSettings> options,
+            IPluginDbOptions<OuterInnerResourceSettings> options,
             IHttpContextAccessor httpContextAccessor, 
             IRebusService rebusService)
         {
@@ -47,11 +47,11 @@ namespace OuterInnerResource.Pn.Services
             _bus = rebusService.GetBus();
         }
 
-        public async Task<OperationDataResult<MachineAreaBaseSettings>> GetSettings()
+        public async Task<OperationDataResult<OuterInnerResourceSettings>> GetSettings()
         {
             try
             {
-                MachineAreaBaseSettings option = _options.Value;
+                OuterInnerResourceSettings option = _options.Value;
                 if (option.Token == "...")
                 {
                     string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -71,22 +71,22 @@ namespace OuterInnerResource.Pn.Services
                     await _options.UpdateDb(settings => { settings.SdkConnectionString = connectionString;}, _dbContext, UserId);
                 }
 
-                return new OperationDataResult<MachineAreaBaseSettings>(true, option);
+                return new OperationDataResult<OuterInnerResourceSettings>(true, option);
             }
             catch(Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<MachineAreaBaseSettings>(false,
+                return new OperationDataResult<OuterInnerResourceSettings>(false,
                     _outerInnerResourceLocalizationService.GetString("ErrorWhileObtainingTrashInspectionSettings") + e.Message);
             }
         }
 
-        public async Task<OperationResult> UpdateSettings(MachineAreaBaseSettings machineAreaSettingsModel)
+        public async Task<OperationResult> UpdateSettings(OuterInnerResourceSettings machineAreaSettingsModel)
         {
             try
             {
-                string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+                string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
                 string oldSdkSiteIds = _dbContext.PluginConfigurationValues
                     .FirstOrDefault(x => 
                         x.Name == lookup)?.Value;
@@ -129,7 +129,7 @@ namespace OuterInnerResource.Pn.Services
 
         public async Task<OperationDataResult<List<int>>> GetSitesEnabled()
         {
-            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+            string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
             string oldSdkSiteIds = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;
@@ -148,7 +148,7 @@ namespace OuterInnerResource.Pn.Services
 
         public async Task<OperationResult> UpdateSitesEnabled(List<int> siteIds)
         {
-            string lookup = $"MachineAreaBaseSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+            string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
             string oldSdkSiteIds = _dbContext.PluginConfigurationValues
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;

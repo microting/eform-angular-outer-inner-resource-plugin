@@ -60,8 +60,8 @@ namespace OuterInnerResource.Pn
             IServiceCollection services,
             IConfiguration configuration)
         {
-            services.ConfigurePluginDbOptions<MachineAreaBaseSettings>(
-                configuration.GetSection("MachineAreaBaseSettings"));
+            services.ConfigurePluginDbOptions<OuterInnerResourceSettings>(
+                configuration.GetSection("OuterInnerResourceSettings"));
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
@@ -85,8 +85,8 @@ namespace OuterInnerResource.Pn
                 context.Database.Migrate();
                 try
                 {
-                    _outerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName")?.Value;
-                    _innerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName")?.Value;    
+                    _outerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
+                    _innerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;    
                 } catch {}
                 
             }

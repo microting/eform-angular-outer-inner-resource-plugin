@@ -29,13 +29,13 @@ namespace OuterInnerResource.Pn.Services
         private readonly IExcelService _excelService;
         private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IEFormCoreService _coreHelper;
-        private readonly IPluginDbOptions<MachineAreaBaseSettings> _options;
+        private readonly IPluginDbOptions<OuterInnerResourceSettings> _options;
 
         public OuterInnerResourceReportService(ILogger<OuterInnerResourceReportService> logger,
             OuterInnerResourcePnDbContext dbContext,
             IEFormCoreService coreHelper,
             IOuterInnerResourceLocalizationService outerInnerResourceLocalizationService,
-            IPluginDbOptions<MachineAreaBaseSettings> options,
+            IPluginDbOptions<OuterInnerResourceSettings> options,
             IExcelService excelService)
         {
             _logger = logger;
@@ -54,8 +54,8 @@ namespace OuterInnerResource.Pn.Services
             string innerResourceName = "";
             try
             {
-                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName")?.Value;
-                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName")?.Value; 
+                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
+                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value; 
             }
             catch
             {
@@ -122,9 +122,9 @@ namespace OuterInnerResource.Pn.Services
                 string innerResourceName = "";
                 List<ResourceTimeRegistration> jobsList;
                 
-                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterTotalTimeName")?.Value;
+                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterTotalTimeName")?.Value;
                 areaToExclude = _dbContext.OuterResources.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
-                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerTotalTimeName")?.Value;
+                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
                 machineToExclude = await _dbContext.InnerResources.SingleOrDefaultAsync(x => x.Name == innerResourceName);
 
                 if (model.Relationship == ReportRelationshipType.EmployeeTotal)
@@ -172,8 +172,8 @@ namespace OuterInnerResource.Pn.Services
                 string innerResourceName = "";
                 try
                 {
-                    outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:OuterResourceName")?.Value;
-                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "MachineAreaBaseSettings:InnerResourceName")?.Value; 
+                    outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
+                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value; 
                 }
                 catch
                 {
