@@ -39,7 +39,7 @@ This is expection you to have eform-angular-frontend installed as default in /va
 
 ```
 cd /var/www/microting/
-curl -s -L https://raw.githubusercontent.com/microting/eform-angular-outer-inner-resource-plugin/master/install.sh | sudo bash
+curl -s -L https://raw.githubusercontent.com/microting/eform-angular-outer-inner-resource-plugin/stable/install.sh | sudo bash
 ```
 
 
@@ -70,7 +70,7 @@ We're also interested in your feedback for the future of Microting eForm SDK. Yo
 
 ## Microting Open Source Code of Conduct
 
-This project has adopted the [Microting Open Source Code of Conduct](https://www.microting.com/microting-open-source-code-of-conduct/). Contact opencode@microting.com with any additional questions or comments.
+This project has adopted the [Microting Open Source Code of Conduct](https://www.microting.com/microting-open-source-code-of-conduct). Contact opencode@microting.com with any additional questions or comments.
 	
 
 ## License
