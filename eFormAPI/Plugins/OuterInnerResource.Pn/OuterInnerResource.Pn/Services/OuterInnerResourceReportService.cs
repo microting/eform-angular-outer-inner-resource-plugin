@@ -48,19 +48,13 @@ namespace OuterInnerResource.Pn.Services
 
         public async Task<OperationDataResult<ReportNamesModel>> GetReportNames()
         {
-            ReportNamesModel reportNamesModel = new ReportNamesModel();
-            reportNamesModel.ReportNameModels = new List<ReportNameModel>();
-            string outerResourceName = "";
-            string innerResourceName = "";
-            try
+            var reportNamesModel = new ReportNamesModel
             {
-                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
-                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value; 
-            }
-            catch
-            {
-            }
-            
+                ReportNameModels = new List<ReportNameModel>()
+            };
+            var outerResourceName = _options.Value.OuterResourceName;
+            var innerResourceName = _options.Value.InnerResourceName;
+
             reportNamesModel.ReportNameModels.Add(new ReportNameModel
             {
                 Id = 1,
@@ -91,7 +85,17 @@ namespace OuterInnerResource.Pn.Services
                 Id = 6,
                 Name = _outerInnerResourceLocalizationService.GetString("Employee") + "-Total"
             });
-            
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 7,
+                Name = $"{outerResourceName} {innerResourceName}",
+            });
+            reportNamesModel.ReportNameModels.Add(new ReportNameModel
+            {
+                Id = 8,
+                Name = $"{innerResourceName} {outerResourceName}",
+            });
+
             return new OperationDataResult<ReportNamesModel>(true, reportNamesModel);
         }
 
@@ -202,6 +206,14 @@ namespace OuterInnerResource.Pn.Services
                     case ReportRelationshipType.EmployeeTotal:
                         reportDataResult.Model.HumanReadableName =
                             _outerInnerResourceLocalizationService.GetString("Employee" + "-Total");
+                        break;
+                    case ReportRelationshipType.OuterInnerResource:
+                        reportDataResult.Model.HumanReadableName =
+                            $"{outerResourceName} {innerResourceName}";
+                        break;
+                    case ReportRelationshipType.InnerOuterResource:
+                        reportDataResult.Model.HumanReadableName =
+                            $"{innerResourceName} {outerResourceName}";
                         break;
                 }
 
