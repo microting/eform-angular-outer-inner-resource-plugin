@@ -29,7 +29,7 @@ describe('Application settings page - site header section', function () {
         browser.waitForVisible('#PluginDropDown', 40000);
         pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
         pluginPage.saveBtn.click();
-        browser.pause(50000); // We need to wait 50 seconds for the plugin to create db etc.
+        browser.waitForExist('#plugin-name', 50000);
         browser.refresh();
 
         // Start - This block is here because of the new plugin permission loading, requires a re-login.
