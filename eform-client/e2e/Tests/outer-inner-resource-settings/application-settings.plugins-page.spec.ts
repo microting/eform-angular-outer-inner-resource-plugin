@@ -14,7 +14,7 @@ describe('Application settings page - site header section', function () {
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
         browser.waitForExist('#plugin-name', 50000);
-        browser.pause(10000);
+        browser.pause(20000);
 
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
