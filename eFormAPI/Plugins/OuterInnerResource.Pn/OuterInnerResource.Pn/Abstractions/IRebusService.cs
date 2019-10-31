@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using Rebus.Bus;
 
 namespace OuterInnerResource.Pn.Abstractions
 {
     public interface IRebusService
     {
-        void Start(string connectionString);
+        Task Start(string connectionString);
         IBus GetBus();
     }
 }

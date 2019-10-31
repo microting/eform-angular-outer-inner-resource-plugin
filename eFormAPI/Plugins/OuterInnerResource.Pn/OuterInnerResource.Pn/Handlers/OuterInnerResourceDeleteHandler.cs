@@ -85,7 +85,7 @@ namespace OuterInnerResource.Pn.Handlers
                 {
                     try
                     {
-                        bool result = _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId);
+                        bool result = await _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId);
                         if (result)
                         {
                             await machineAreaSite.Delete(_dbContext);

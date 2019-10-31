@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
@@ -25,6 +26,7 @@ namespace OuterInnerResource.Pn
         public string Name => "Microting Outer Inner Resource plugin";
         public string PluginId => "eform-angular-outer-inner-resource-plugin";
         public string PluginPath => PluginAssembly().Location;
+        public string PluginBaseUrl => "outer-inner-resource-pn";
         private string _connectionString;
         private string _outerResourceName = "OuterResources";
         private string _innerResourceName = "InnerResources";
@@ -159,6 +161,14 @@ namespace OuterInnerResource.Pn
                 // Seed configuration
                 OuterInnerResourcePluginSeed.SeedData(context);
             }
+        }
+
+        public PluginPermissionsManager GetPermissionsManager(string connectionString)
+        {
+            var contextFactory = new OuterInnerResourcePnContextFactory();
+            var context = contextFactory.CreateDbContext(new[] {connectionString});
+            
+            return new PluginPermissionsManager(context);
         }
     }
 }

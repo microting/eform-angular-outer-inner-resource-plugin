@@ -67,7 +67,7 @@ namespace OuterInnerResource.Pn.Handlers
             
             int eFormId = int.Parse(result);
 
-            MainElement mainElement = _core.TemplateRead(eFormId);
+            MainElement mainElement = await _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
             lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
@@ -82,7 +82,7 @@ namespace OuterInnerResource.Pn.Handlers
             foreach (string siteId in sdkSiteIds.Split(","))
             {
                 LogEvent($"found siteId {siteId}");
-                sites.Add(_core.SiteRead(int.Parse(siteId)));
+                sites.Add(await _core.SiteRead(int.Parse(siteId)));
             }
             
             if (message.InnerResourceModel != null)
@@ -148,7 +148,7 @@ namespace OuterInnerResource.Pn.Handlers
                     mainElement.EnableQuickSync = true;    
                 }
 
-                List<Folder_Dto> folderDtos = _core.FolderGetAll(true);
+                List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
 
                 bool folderAlreadyExist = false;
                 int microtingUId = 0;
@@ -163,8 +163,8 @@ namespace OuterInnerResource.Pn.Handlers
 
                 if (!folderAlreadyExist)
                 {
-                    _core.FolderCreate(areaName, "", null);
-                    folderDtos = _core.FolderGetAll(true);
+                    await _core.FolderCreate(areaName, "", null);
+                    folderDtos = await _core.FolderGetAll(true);
                 
                     foreach (Folder_Dto folderDto in folderDtos)
                     {
@@ -183,7 +183,7 @@ namespace OuterInnerResource.Pn.Handlers
                         x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == machineArea.Id);
                     if (siteMatch == null)
                     {
-                        int? sdkCaseId = _core.CaseCreate(mainElement, "", siteDto.SiteId);
+                        int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
                         if (sdkCaseId != null)
                         {

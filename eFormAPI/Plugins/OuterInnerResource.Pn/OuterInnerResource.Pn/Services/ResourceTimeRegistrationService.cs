@@ -69,7 +69,7 @@ namespace OuterInnerResource.Pn.Services
                 }
                 else
                 {
-                    registration.DoneByDeviceUserName = _coreService.GetCore().SiteRead(registration.DoneByDeviceUserId)?.SiteName;
+                    registration.DoneByDeviceUserName = _coreService.GetCore().Result.SiteRead(registration.DoneByDeviceUserId)?.Result.SiteName;
                     _deviceUserNames.Add(new KeyValuePair<int, string>(registration.DoneByDeviceUserId, registration.DoneByDeviceUserName));
                 }
 
