@@ -77,7 +77,9 @@ namespace OuterInnerResource.Pn.Services
                 List<InnerResourceModel> machines = await machinesQuery.Select(x => new InnerResourceModel()
                 {
                     Name = x.Name,
-                    Id = x.Id
+                    Id = x.Id,
+                    RelatedOuterResourcesIds = _dbContext.OuterInnerResources.Where(y => 
+                        y.InnerResourceId == x.Id).Select(z => z.OuterResourceId).ToList()
                 }).ToListAsync();
 
                 innerResourcesModel.Total = await _dbContext.InnerResources.CountAsync();
@@ -85,7 +87,9 @@ namespace OuterInnerResource.Pn.Services
                 
                 try
                 {
-                    innerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName").Value;  
+                    innerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => 
+                        x.Name == "OuterInnerResourceSettings:InnerResourceName")
+                        ?.Value;  
                 } catch {}
 
                 return new OperationDataResult<InnerResourcesModel>(true, innerResourcesModel);
@@ -140,22 +144,29 @@ namespace OuterInnerResource.Pn.Services
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedOuterResourcesIds.Select(x =>
-                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
-                    {
-                        Id = x
-                    }).ToList();
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas 
+                    = new List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource>();
+                if (model.RelatedOuterResourcesIds != null)
+                {
+                    machineAreas = model.RelatedOuterResourcesIds.Select(x =>
+                        new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
+                        {
+                            Id = x
+                        }).ToList();    
+                }
 
-                InnerResource newMachine = new InnerResource()
+                InnerResource newArea = new InnerResource()
                 {
                     Name = model.Name,
                     OuterInnerResources = machineAreas
                 };
 
-                await newMachine.Create(_dbContext);
-                model.Id = newMachine.Id;
+                await newArea.Create(_dbContext);
+                model.Id = newArea.Id;
                 await _bus.SendLocal(new OuterInnerResourceCreate(model, null));
-                return new OperationResult(true, _localizationService.GetString("MachineCreatedSuccesfully"));
+
+                return new OperationResult(true, 
+                    _localizationService.GetString("MachineCreatedSuccesfully", model.Name));
             }
             catch (Exception e)
             {

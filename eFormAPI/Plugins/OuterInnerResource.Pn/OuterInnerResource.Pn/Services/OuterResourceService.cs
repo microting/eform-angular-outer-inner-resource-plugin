@@ -77,7 +77,9 @@ namespace OuterInnerResource.Pn.Services
                 List<OuterResourceModel> areas = await areasQuery.Select(x => new OuterResourceModel()
                 {
                     Name = x.Name,
-                    Id = x.Id
+                    Id = x.Id,
+                    RelatedInnerResourcesIds = _dbContext.OuterInnerResources.Where(y => 
+                        y.OuterResourceId == x.Id).Select(z => z.InnerResourceId).ToList()
                 }).ToListAsync();
 
                 outerResourcesModel.Total = await _dbContext.OuterResources.CountAsync();
@@ -85,7 +87,9 @@ namespace OuterInnerResource.Pn.Services
                 
                 try
                 {
-                    outerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName").Value;  
+                    outerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => 
+                        x.Name == "OuterInnerResourceSettings:OuterResourceName")
+                        ?.Value;  
                 } catch {}
 
                 return new OperationDataResult<OuterResourcesModel>(true, outerResourcesModel);
@@ -140,7 +144,8 @@ namespace OuterInnerResource.Pn.Services
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = new List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource>();
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas 
+                    = new List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource>();
                 if (model.RelatedInnerResourcesIds != null)
                 {
                     machineAreas = model.RelatedInnerResourcesIds.Select(x =>

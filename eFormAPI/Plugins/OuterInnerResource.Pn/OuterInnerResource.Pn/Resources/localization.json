@@ -138,8 +138,8 @@
   {
     "Key": "MachineCreatedSuccesfully",
     "LocalizedValue": {
-      "da": "Maskine {0} blev oprettet med succes",
-      "en-US": "Machine {0} created successfully",
+      "da": "Indre resource {0} blev oprettet med succes",
+      "en-US": "Inner resource {0} created successfully",
       "de-DE": "Maschine {0} wurde erfolgreich erstellt"
     }
   },
