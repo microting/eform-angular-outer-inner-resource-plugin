@@ -7,6 +7,8 @@
         OuterResource,
         EmployeeOuterResource,
         EmployeeInnerResource,
-        EmployeeTotal
+        EmployeeTotal,
+        OuterInnerResource,
+        InnerOuterResource,
     }
 }

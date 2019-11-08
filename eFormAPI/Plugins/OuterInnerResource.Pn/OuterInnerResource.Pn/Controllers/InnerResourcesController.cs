@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
 using OuterInnerResource.Pn.Abstractions;
 using OuterInnerResource.Pn.Infrastructure.Models.InnerResources;
 
@@ -33,6 +34,7 @@ namespace OuterInnerResource.Pn.Controllers
 
         [HttpPost]
         [Route("api/outer-inner-resource-pn/inner-resources")]
+        [Authorize(Policy = OuterInnerResourceClaims.CreateMachines)]
         public async Task<OperationResult> CreateMachine([FromBody] InnerResourceModel model)
         {
             return await _innerResourceService.CreateMachine(model);

@@ -10,6 +10,8 @@ import {
 import {OuterInnerResourcePnOuterResourceService, OuterInnerResourcePnInnerResourceService} from '../../../services';
 import {SharedPnService} from '../../../../shared/services';
 import {AuthService} from '../../../../../../common/services/auth';
+import {PluginClaimsHelper} from '../../../../../../common/helpers';
+import {OuterInnerResourcePnClaims} from '../../../enums';
 
 @Component({
   selector: 'app-machine-area-pn-machines-page',
@@ -26,6 +28,14 @@ export class InnerResourcesPageComponent implements OnInit {
   mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
   spinnerStatus = false;
   name: string;
+
+  get pluginClaimsHelper() {
+    return PluginClaimsHelper;
+  }
+
+  get outerInnerResourcePnClaims() {
+    return OuterInnerResourcePnClaims;
+  }
 
   constructor(private sharedPnService: SharedPnService,
               private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
