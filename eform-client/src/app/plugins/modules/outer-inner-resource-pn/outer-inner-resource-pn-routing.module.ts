@@ -1,14 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AdminGuard, AuthGuard} from 'src/app/common/guards';
+import {AdminGuard, AuthGuard, PermissionGuard} from 'src/app/common/guards';
 import {OuterInnerResourcePnLayoutComponent} from './layouts';
 import {InnerResourcesPageComponent, OuterResourcesPageComponent, ReportGeneratorContainerComponent} from './components';
 import {OuterInnerResourceSettingsComponent} from './components/outer-inner-resource-settings';
+import {OuterInnerResourcePnClaims} from './enums';
 
 export const routes: Routes = [
   {
     path: '',
     component: OuterInnerResourcePnLayoutComponent,
+    canActivate: [PermissionGuard],
+    data: {requiredPermission: OuterInnerResourcePnClaims.accessOuterInnerResourcePlugin},
     children: [
       {
         path: 'inner-resources',

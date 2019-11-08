@@ -144,7 +144,45 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                         TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
                                     }).ToList();
                                 break;
-                            default:
+                            case ReportRelationshipType.OuterInnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.OuterResourceId, x.OuterResource, x.InnerResourceId, x.InnerResource })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.OuterResource.Name,
+                                        EntityId = x.Key.OuterResourceId,
+                                        RelatedEntityId = x.Key.InnerResourceId,
+                                        RelatedEntityName = x.Key.InnerResource.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt.Day == z.Day
+                                                                && j.DoneAt.Month == z.Month
+                                                                && j.DoneAt.Year == z.Year)
+                                                    .Sum(s => (decimal)CorrectedTime(s, timeType))
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
+                                    }).ToList();
+                                break;
+                            case ReportRelationshipType.InnerOuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.InnerResourceId, x.InnerResource, x.OuterResourceId, x.OuterResource })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.InnerResource.Name,
+                                        EntityId = x.Key.InnerResourceId,
+                                        RelatedEntityId = x.Key.OuterResourceId,
+                                        RelatedEntityName = x.Key.OuterResource.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt.Day == z.Day
+                                                                && j.DoneAt.Month == z.Month
+                                                                && j.DoneAt.Year == z.Year)
+                                                    .Sum(s => (decimal)TimeSpan.FromSeconds(s.TimeInSeconds).TotalMinutes)
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)TimeSpan.FromSeconds(z.TimeInSeconds).TotalMinutes)
+                                    }).ToList();
+                            break;
+                        default:
                                 throw new ArgumentOutOfRangeException();
                         }
 
@@ -270,7 +308,43 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                         TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
                                     }).ToList();
                                 break;
-                            default:
+                            case ReportRelationshipType.OuterInnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.OuterResourceId, x.OuterResource, x.InnerResourceId, x.InnerResource })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.OuterResource.Name,
+                                        EntityId = x.Key.OuterResourceId,
+                                        RelatedEntityId = x.Key.InnerResourceId,
+                                        RelatedEntityName = x.Key.InnerResource.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddDays(7))
+                                                    .Sum(s => (decimal)CorrectedTime(s, timeType))
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
+                                    }).ToList();
+                            break;
+                            case ReportRelationshipType.InnerOuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.InnerResourceId, x.InnerResource, x.OuterResourceId, x.OuterResource })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.InnerResource.Name,
+                                        EntityId = x.Key.InnerResourceId,
+                                        RelatedEntityId = x.Key.OuterResourceId,
+                                        RelatedEntityName = x.Key.OuterResource.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddDays(7))
+                                                    .Sum(s => (decimal)CorrectedTime(s, timeType))
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
+                                    }).ToList();
+                            break;
+                        default:
                                 throw new ArgumentOutOfRangeException();
                         }
                         break;
@@ -397,9 +471,46 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                         TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
                                     }).ToList();
                                 break;
+                            case ReportRelationshipType.OuterInnerResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new { x.OuterResourceId, x.OuterResource, x.InnerResourceId, x.InnerResource })
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.OuterResource.Name,
+                                        EntityId = x.Key.OuterResourceId,
+                                        RelatedEntityId = x.Key.InnerResourceId,
+                                        RelatedEntityName = x.Key.InnerResource.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddMonths(1))
+                                                    .Sum(s => (decimal)CorrectedTime(s, timeType))
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal)CorrectedTime(z, timeType))
+                                    }).ToList();
+                                break;
+                            case ReportRelationshipType.InnerOuterResource:
+                                reportEntitiesList = jobsList.GroupBy(x => new {x.InnerResourceId, x.InnerResource, x.OuterResourceId, x.OuterResource})
+                                    .Select(x => new ReportEntityModel()
+                                    {
+                                        EntityName = x.Key.InnerResource.Name,
+                                        EntityId = x.Key.InnerResourceId,
+                                        RelatedEntityId = x.Key.OuterResourceId,
+                                        RelatedEntityName = x.Key.OuterResource.Name,
+                                        TimePerTimeUnit = reportDates.Select(z =>
+                                                x
+                                                    .Where(j => j.DoneAt >= z
+                                                                && j.DoneAt < z.AddMonths(1))
+                                                    .Sum(s => (decimal) CorrectedTime(s, timeType))
+                                            )
+                                            .ToList(),
+                                        TotalTime = x.Sum(z => (decimal) CorrectedTime(z, timeType))
+                                    }).ToList();
+                                break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
+
                         break;
                 }
 
