@@ -78,6 +78,7 @@ namespace OuterInnerResource.Pn.Services
                 {
                     Name = x.Name,
                     Id = x.Id,
+                    ExternalId = x.ExternalId,
                     RelatedOuterResourcesIds = _dbContext.OuterInnerResources.Where(y => 
                         y.InnerResourceId == x.Id).Select(z => z.OuterResourceId).ToList()
                 }).ToListAsync();
@@ -110,7 +111,8 @@ namespace OuterInnerResource.Pn.Services
                 InnerResourceModel innerResource = await _dbContext.InnerResources.Select(x => new InnerResourceModel()
                     {
                         Name = x.Name,
-                        Id = x.Id
+                        Id = x.Id,
+                        ExternalId = x.ExternalId
                     })
                     .FirstOrDefaultAsync(x => x.Id == machineId);
                                 
@@ -158,6 +160,7 @@ namespace OuterInnerResource.Pn.Services
                 InnerResource newArea = new InnerResource()
                 {
                     Name = model.Name,
+                    ExternalId = model.ExternalId,
                     OuterInnerResources = machineAreas
                 };
 
@@ -190,6 +193,7 @@ namespace OuterInnerResource.Pn.Services
                 InnerResource selectedMachine = new InnerResource()
                 {
                     Name = model.Name,
+                    ExternalId = model.ExternalId,
                     OuterInnerResources = machineAreas,
                     Id = model.Id
                 };
