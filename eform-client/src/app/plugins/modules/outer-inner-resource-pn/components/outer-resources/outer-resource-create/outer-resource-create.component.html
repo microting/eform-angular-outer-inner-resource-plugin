@@ -35,6 +35,9 @@
                 <td id="innerREsourceName">
                   {{machine.name}}
                 </td>
+                <td id="innerResourceExternalId">
+                  {{machine.externalId}}
+                </td>
                 <td>
                   <div class="mat-checkbox">
                     <input id="checkbox{{machine.id}}" (change)="addToArray($event, machine.id)"

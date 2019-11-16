@@ -36,6 +36,17 @@
                *ngIf="localPageSettings.sort == 'Name' && areasRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
+        <th scope="col" class="table-header-sortable" id="externalIdTableHeader"
+            (click)="sortTable('ExternalId')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'External ID' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'ExternalId'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'ExternalId' && !areasRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'ExternalId' && areasRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
 
         <th scope="col">
           {{ 'Actions' | translate }}
@@ -49,6 +60,9 @@
         </td>
         <td id="outerResourceName">
           {{area.name}}
+        </td>
+        <td id="outerResourceExternalId">
+          {{area.externalId}}
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">

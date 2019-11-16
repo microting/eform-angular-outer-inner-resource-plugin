@@ -79,9 +79,9 @@ namespace OuterInnerResource.Pn.Services
                     Name = x.Name,
                     Id = x.Id,
                     ExternalId = x.ExternalId,
-                    RelatedOuterResourcesIds = _dbContext.OuterInnerResources.Where(y => 
+                    RelatedOuterResourcesIds = _dbContext.OuterInnerResources.AsNoTracking().Where(y => 
                         y.InnerResourceId == x.Id).Select(z => z.OuterResourceId).ToList()
-                }).ToListAsync();
+                }).AsNoTracking().ToListAsync();
 
                 innerResourcesModel.Total = await _dbContext.InnerResources.CountAsync();
                 innerResourcesModel.InnerResourceList = machines;

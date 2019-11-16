@@ -7,5 +7,6 @@ export class OuterResourcesPnModel {
 export class OuterResourcePnModel {
   id: number;
   name: string;
+  externalId: number;
   relatedInnerResourcesIds: Array<number> = [];
 }

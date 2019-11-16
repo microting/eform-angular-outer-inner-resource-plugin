@@ -79,9 +79,9 @@ namespace OuterInnerResource.Pn.Services
                     Name = x.Name,
                     Id = x.Id,
                     ExternalId = x.ExternalId,
-                    RelatedInnerResourcesIds = _dbContext.OuterInnerResources.Where(y => 
+                    RelatedInnerResourcesIds = _dbContext.OuterInnerResources.AsNoTracking().Where(y => 
                         y.OuterResourceId == x.Id).Select(z => z.InnerResourceId).ToList()
-                }).ToListAsync();
+                }).AsNoTracking().ToListAsync();
 
                 outerResourcesModel.Total = await _dbContext.OuterResources.CountAsync();
                 outerResourcesModel.OuterResourceList = areas;

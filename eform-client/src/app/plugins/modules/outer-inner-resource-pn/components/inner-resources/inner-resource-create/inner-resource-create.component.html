@@ -35,6 +35,9 @@
                 <td id="outerResourceName">
                   {{area.name}}
                 </td>
+                <td id="outerResourceExternalId">
+                  {{area.externalId}}
+                </td>
                 <td>
                   <div class="mat-checkbox">
                     <input id="checkbox{{area.id}}" (change)="addToArray($event, area.id)" [checked]="isChecked(area.id)"
