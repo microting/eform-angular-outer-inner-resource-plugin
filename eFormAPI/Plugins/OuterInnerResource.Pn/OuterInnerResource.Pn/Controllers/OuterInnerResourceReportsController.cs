@@ -24,9 +24,9 @@ namespace OuterInnerResource.Pn.Controllers
         [HttpGet]
         [Route("api/outer-inner-resource-pn/reports/reportnames")]
         [AllowAnonymous]
-        public async Task<OperationDataResult<ReportNamesModel>> GetReportNames()
+        public OperationDataResult<ReportNamesModel> GetReportNames()
         {
-            return await _outerInnerResourceReportService.GetReportNames();
+            return _outerInnerResourceReportService.GetReportNames();
         }
 
         [HttpGet]

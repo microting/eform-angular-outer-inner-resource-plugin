@@ -38,9 +38,9 @@ namespace OuterInnerResource.Pn.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/outer-inner-resource-pn/settings/sites")]
-        public async Task<OperationResult> GetSitesEnabled()
+        public OperationResult GetSitesEnabled()
         {
-            return await _outerInnerResourceSettingsService.GetSitesEnabled();
+            return _outerInnerResourceSettingsService.GetSitesEnabled();
         }
 
         [HttpPost]

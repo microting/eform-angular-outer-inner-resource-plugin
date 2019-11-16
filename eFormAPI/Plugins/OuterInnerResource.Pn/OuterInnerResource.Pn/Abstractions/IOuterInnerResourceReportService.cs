@@ -8,7 +8,7 @@ namespace OuterInnerResource.Pn.Abstractions
     public interface IOuterInnerResourceReportService
     {
         Task<OperationDataResult<ReportModel>> GenerateReport(GenerateReportModel model);
-        Task<OperationDataResult<ReportNamesModel>> GetReportNames();
+        OperationDataResult<ReportNamesModel> GetReportNames();
         Task<OperationDataResult<FileStreamModel>> GenerateReportFile(GenerateReportModel model);
 
     }

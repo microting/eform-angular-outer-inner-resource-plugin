@@ -46,7 +46,7 @@ namespace OuterInnerResource.Pn.Services
             _options = options;
         }
 
-        public async Task<OperationDataResult<ReportNamesModel>> GetReportNames()
+        public OperationDataResult<ReportNamesModel> GetReportNames()
         {
             var reportNamesModel = new ReportNamesModel
             {

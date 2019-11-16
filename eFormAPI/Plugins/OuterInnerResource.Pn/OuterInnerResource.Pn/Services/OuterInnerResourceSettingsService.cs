@@ -127,7 +127,7 @@ namespace OuterInnerResource.Pn.Services
             }
         }
 
-        public async Task<OperationDataResult<List<int>>> GetSitesEnabled()
+        public OperationDataResult<List<int>> GetSitesEnabled()
         {
             string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
             string oldSdkSiteIds = _dbContext.PluginConfigurationValues

@@ -9,7 +9,7 @@ namespace OuterInnerResource.Pn.Abstractions
     {
         Task<OperationDataResult<OuterInnerResourceSettings>> GetSettings();
         Task<OperationResult> UpdateSettings(OuterInnerResourceSettings machineAreaSettingsModel);
-        Task<OperationDataResult<List<int>>> GetSitesEnabled();
+        OperationDataResult<List<int>> GetSitesEnabled();
         Task<OperationResult> UpdateSitesEnabled(List<int> siteIds);
     }
 }

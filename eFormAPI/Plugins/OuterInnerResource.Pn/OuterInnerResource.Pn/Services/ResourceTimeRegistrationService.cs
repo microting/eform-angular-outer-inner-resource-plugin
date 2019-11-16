@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -45,7 +46,7 @@ namespace OuterInnerResource.Pn.Services
             ResourceTimeRegistrationsModel resourceTimeRegistrationsModel = new ResourceTimeRegistrationsModel();
             resourceTimeRegistrationsModel.ResourceTimeRegistrationModels = new List<ResourceTimeRegistrationModel>();
 
-            var results = _dbContext.ResourceTimeRegistrations.Where(x => x.Id > lastRegistrationId).Take(10).OrderBy(x => x.Id).ToList();
+            var results = await _dbContext.ResourceTimeRegistrations.Where(x => x.Id > lastRegistrationId).Take(10).OrderBy(x => x.Id).ToListAsync();
             foreach (ResourceTimeRegistration resourceTimeRegistration in results)
             {
                 var registration = new ResourceTimeRegistrationModel()

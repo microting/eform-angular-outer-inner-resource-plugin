@@ -132,7 +132,6 @@ namespace MachineArea.Pn.Test
                 }
             }
         }
-        private string path;
         public virtual void DoSetup() { }
 
     }
