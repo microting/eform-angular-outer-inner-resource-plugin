@@ -115,16 +115,10 @@ namespace MachineArea.Pn.Test
             {
                 try
                 {
-                    string sqlCmd = string.Empty;
-                    if (DbContext.Database.IsMySql())
-                    {
-                        sqlCmd = string.Format("SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{0}`.`{1}`", "outer-inner-resource-pn-tests", modelName);
-                    }
-                    else
-                    {
-                        sqlCmd = string.Format("DELETE FROM [{0}]", modelName);
-                    }
+                    var sqlCmd = DbContext.Database.IsMySql() ? $"SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `outer-inner-resource-pn-tests`.`{modelName}`" : $"DELETE FROM [{modelName}]";
+#pragma warning disable EF1000
                     DbContext.Database.ExecuteSqlCommand(sqlCmd);
+#pragma warning restore EF1000
                 }
                 catch (Exception ex)
                 {
