@@ -46,7 +46,7 @@ namespace OuterInnerResource.Pn.Services
             ResourceTimeRegistrationsModel resourceTimeRegistrationsModel = new ResourceTimeRegistrationsModel();
             resourceTimeRegistrationsModel.ResourceTimeRegistrationModels = new List<ResourceTimeRegistrationModel>();
 
-            var results = await _dbContext.ResourceTimeRegistrations.Where(x => x.Id > lastRegistrationId).Take(10).OrderBy(x => x.Id).ToListAsync();
+            var results = await _dbContext.ResourceTimeRegistrations.AsNoTracking().Where(x => x.Id > lastRegistrationId).Take(10).OrderBy(x => x.Id).ToListAsync();
             foreach (ResourceTimeRegistration resourceTimeRegistration in results)
             {
                 var registration = new ResourceTimeRegistrationModel()
