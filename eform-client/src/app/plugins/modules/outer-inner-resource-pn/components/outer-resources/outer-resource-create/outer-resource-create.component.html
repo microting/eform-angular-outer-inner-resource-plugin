@@ -18,6 +18,18 @@
               </div>
             </div>
           </div>
+          <div class="row mb-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       [(ngModel)]="newAreaModel.externalId"
+                       type="text" id="createOuterResourceExternalId"
+                       name="createOuterResourceExternalId" class="form-control">
+                <label for="createOuterResourceExternalId">{{'External ID' | translate}}</label>
+              </div>
+            </div>
+          </div>
           <div class="row p-1 table-responsive table-fixed-scrollable no-gutters">
             <table class="table table-sm table-striped text-center z-depth-1">
               <thead>

@@ -131,22 +131,30 @@ namespace OuterInnerResource.Pn.Services
                 innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
                 machineToExclude = await _dbContext.InnerResources.SingleOrDefaultAsync(x => x.Name == innerResourceName);
 
-                if (model.Relationship == ReportRelationshipType.EmployeeTotal)
+                IQueryable<ResourceTimeRegistration> query = _dbContext.ResourceTimeRegistrations
+                    .Include(x => x.InnerResource)
+                    .Include(x => x.OuterResource);
+
+                if (areaToExclude != null && machineToExclude != null)
                 {
-                    jobsList = await _dbContext.ResourceTimeRegistrations
-                        .Include(x => x.InnerResource)
-                        .Include(x => x.OuterResource)
-                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.OuterResourceId == areaToExclude.Id && x.InnerResourceId == machineToExclude.Id)
-                        .ToListAsync();
+                    if (model.Relationship == ReportRelationshipType.EmployeeTotal)
+                    {
+                        query = query.Where(x =>
+                            x.OuterResourceId == areaToExclude.Id && x.InnerResourceId == machineToExclude.Id);
+                    }
+                    else
+                    {
+                        query = query.Where(x =>
+                            x.OuterResourceId != areaToExclude.Id && x.InnerResourceId != machineToExclude.Id);
+                    }
                 }
                 else
                 {
-                    jobsList = await _dbContext.ResourceTimeRegistrations
-                        .Include(x => x.InnerResource)
-                        .Include(x => x.OuterResource)
-                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo).Where(x => x.OuterResourceId != areaToExclude.Id && x.InnerResourceId != machineToExclude.Id)
-                        .ToListAsync();
+                    query = query
+                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo);
                 }
+
+                jobsList = await query.ToListAsync();
 
                 ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, reportTimeType);
 
