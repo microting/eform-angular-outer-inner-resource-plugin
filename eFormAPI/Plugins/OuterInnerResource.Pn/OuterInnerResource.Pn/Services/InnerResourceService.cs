@@ -80,10 +80,10 @@ namespace OuterInnerResource.Pn.Services
                     Id = x.Id,
                     ExternalId = x.ExternalId,
                     RelatedOuterResourcesIds = _dbContext.OuterInnerResources.AsNoTracking().Where(y => 
-                        y.InnerResourceId == x.Id).Select(z => z.OuterResourceId).ToList()
+                        y.InnerResourceId == x.Id && y.WorkflowState != Constants.WorkflowStates.Removed).Select(z => z.OuterResourceId).ToList()
                 }).AsNoTracking().ToListAsync();
 
-                innerResourcesModel.Total = await _dbContext.InnerResources.CountAsync();
+                innerResourcesModel.Total = await _dbContext.InnerResources.AsNoTracking().Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).CountAsync();
                 innerResourcesModel.InnerResourceList = machines;
                 
                 try

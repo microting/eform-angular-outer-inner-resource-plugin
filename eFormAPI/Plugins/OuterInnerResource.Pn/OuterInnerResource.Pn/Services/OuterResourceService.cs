@@ -80,10 +80,10 @@ namespace OuterInnerResource.Pn.Services
                     Id = x.Id,
                     ExternalId = x.ExternalId,
                     RelatedInnerResourcesIds = _dbContext.OuterInnerResources.AsNoTracking().Where(y => 
-                        y.OuterResourceId == x.Id).Select(z => z.InnerResourceId).ToList()
+                        y.OuterResourceId == x.Id && y.WorkflowState != Constants.WorkflowStates.Removed).Select(z => z.InnerResourceId).ToList()
                 }).AsNoTracking().ToListAsync();
 
-                outerResourcesModel.Total = await _dbContext.OuterResources.CountAsync();
+                outerResourcesModel.Total = await _dbContext.OuterResources.AsNoTracking().Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).CountAsync();
                 outerResourcesModel.OuterResourceList = areas;
                 
                 try
