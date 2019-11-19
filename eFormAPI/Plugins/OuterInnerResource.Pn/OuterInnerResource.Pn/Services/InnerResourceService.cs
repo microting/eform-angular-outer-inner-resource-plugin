@@ -122,8 +122,8 @@ namespace OuterInnerResource.Pn.Services
                         _localizationService.GetString("MachineWithIdNotExist"));
                 }
                 
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.InnerResourceId == innerResource.Id).ToList();
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = await _dbContext.OuterInnerResources
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.InnerResourceId == innerResource.Id).AsNoTracking().ToListAsync();
 
                 innerResource.RelatedOuterResourcesIds = new List<int>();
                 foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
