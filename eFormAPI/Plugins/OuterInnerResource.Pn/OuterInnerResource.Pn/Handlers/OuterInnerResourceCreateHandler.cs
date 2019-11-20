@@ -76,15 +76,18 @@ namespace OuterInnerResource.Pn.Handlers
             string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value;
-            
-            LogEvent($"sdkSiteIds is {sdkSiteIds}");
-            
-            foreach (string siteId in sdkSiteIds.Split(","))
+
+
+            if (sdkSiteIds != null)
             {
-                LogEvent($"found siteId {siteId}");
-                sites.Add(await _core.SiteRead(int.Parse(siteId)));
+                LogEvent($"sdkSiteIds is {sdkSiteIds}");
+                foreach (string siteId in sdkSiteIds.Split(","))
+                {
+                    LogEvent($"found siteId {siteId}");
+                    sites.Add(await _core.SiteRead(int.Parse(siteId)));
+                }
             }
-            
+
             if (message.InnerResourceModel != null)
             {
                 await CreateFromMachine(message.InnerResourceModel, mainElement, sites, eFormId);
