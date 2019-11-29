@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ ! -d "/var/www/microting/eform-angular-outer-inner-resource-plugin" ]; then
+	rm -fR /var/www/microting/eform-angular-outer-inner-resource-plugin
   cd /var/www/microting
   su ubuntu -c \
   "git clone https://github.com/microting/eform-angular-outer-inner-resource-plugin.git -b stable"
