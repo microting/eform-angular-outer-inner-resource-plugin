@@ -33,6 +33,7 @@ using Microting.eForm.Infrastructure.Models;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
+using OuterInnerResource.Pn.Infrastructure.Helpers;
 using OuterInnerResource.Pn.Infrastructure.Models.InnerResources;
 using OuterInnerResource.Pn.Infrastructure.Models.OuterResources;
 using OuterInnerResource.Pn.Messages;
@@ -45,10 +46,10 @@ namespace OuterInnerResource.Pn.Handlers
         private readonly Core _core;
         private readonly OuterInnerResourcePnDbContext _dbContext;        
         
-        public OuterInnerResourceCreateHandler(Core core, OuterInnerResourcePnDbContext context)
+        public OuterInnerResourceCreateHandler(Core core, DbContextHelper dbContextHelper)
         {
             _core = core;
-            _dbContext = context;
+            _dbContext = dbContextHelper.GetDbContext();
         }
         
         #pragma warning disable 1998

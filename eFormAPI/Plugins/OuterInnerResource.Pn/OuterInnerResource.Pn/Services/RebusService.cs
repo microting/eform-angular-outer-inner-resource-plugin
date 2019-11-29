@@ -6,6 +6,7 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Factories;
 using OuterInnerResource.Pn.Abstractions;
+using OuterInnerResource.Pn.Infrastructure.Helpers;
 using OuterInnerResource.Pn.Installers;
 using Rebus.Bus;
 
@@ -17,6 +18,8 @@ namespace OuterInnerResource.Pn.Services
         private IWindsorContainer _container;
         private string _connectionString;
         private readonly IEFormCoreService _coreHelper;
+        private DbContextHelper _dbContextHelper;
+
 
         public RebusService(IEFormCoreService coreHelper)
         {            

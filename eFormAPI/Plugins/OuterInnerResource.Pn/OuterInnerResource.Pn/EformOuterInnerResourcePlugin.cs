@@ -92,7 +92,14 @@ namespace OuterInnerResource.Pn
                 try
                 {
                     _outerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
-                    _innerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;    
+                    _innerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;
+                    string temp = context.PluginConfigurationValues
+                        .SingleOrDefault(x => x.Name == "TrashInspectionBaseSettings:MaxParallelism")?.Value;
+                    _maxParallelism = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
+
+                    temp = context.PluginConfigurationValues
+                        .SingleOrDefault(x => x.Name == "TrashInspectionBaseSettings:NumberOfWorkers")?.Value;
+                    _numberOfWorkers = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
                 } catch {}
                 
             }
@@ -100,13 +107,7 @@ namespace OuterInnerResource.Pn
             // Seed database
             SeedDatabase(connectionString);
             
-            string temp = context.PluginConfigurationValues
-                .SingleOrDefault(x => x.Name == "TrashInspectionBaseSettings:MaxParallelism")?.Value;
-            _maxParallelism = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
-
-            temp = context.PluginConfigurationValues
-                .SingleOrDefault(x => x.Name == "TrashInspectionBaseSettings:NumberOfWorkers")?.Value;
-            _numberOfWorkers = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
+            
         }
 
         public void Configure(IApplicationBuilder appBuilder)
