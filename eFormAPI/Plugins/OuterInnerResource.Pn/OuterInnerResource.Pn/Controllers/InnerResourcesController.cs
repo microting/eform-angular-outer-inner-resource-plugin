@@ -22,14 +22,14 @@ namespace OuterInnerResource.Pn.Controllers
         [Route("api/outer-inner-resource-pn/inner-resources")]
         public async Task<OperationDataResult<InnerResourcesModel>> GetAllMachines(InnerResourceRequestModel requestModel)
         {
-            return await _innerResourceService.GetAllMachines(requestModel);
+            return await _innerResourceService.Index(requestModel);
         }
 
         [HttpGet]
         [Route("api/outer-inner-resource-pn/inner-resources/{id}")]
         public async Task<OperationDataResult<InnerResourceModel>> GetSingleMachine(int id)
         {
-            return await _innerResourceService.GetSingleMachine(id);
+            return await _innerResourceService.Get(id);
         }
 
         [HttpPost]
@@ -37,21 +37,21 @@ namespace OuterInnerResource.Pn.Controllers
         [Authorize(Policy = OuterInnerResourceClaims.CreateMachines)]
         public async Task<OperationResult> CreateMachine([FromBody] InnerResourceModel model)
         {
-            return await _innerResourceService.CreateMachine(model);
+            return await _innerResourceService.Create(model);
         }
 
         [HttpPut]
         [Route("api/outer-inner-resource-pn/inner-resources")]
         public async Task<OperationResult> UpdateMachines([FromBody] InnerResourceModel model)
         {
-            return await _innerResourceService.UpdateMachine(model);
+            return await _innerResourceService.Update(model);
         }
 
         [HttpDelete]
         [Route("api/outer-inner-resource-pn/inner-resources/{id}")]
         public async Task<OperationResult> DeleteArea(int id)
         {
-            return await _innerResourceService.DeleteMachine(id);
+            return await _innerResourceService.Delete(id);
         }
     }
 }

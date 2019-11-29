@@ -39,42 +39,42 @@ namespace OuterInnerResource.Pn.Services
             _bus = rebusService.GetBus();
         }
 
-        public async Task<OperationDataResult<OuterResourcesModel>> GetAllAreas(OuterResourceRequestModel requestModel)
+        public async Task<OperationDataResult<OuterResourcesModel>> Index(OuterResourceRequestModel requestModel)
         {
             try
             {
                 OuterResourcesModel outerResourcesModel = new OuterResourcesModel();
 
-                IQueryable<OuterResource> areasQuery = _dbContext.OuterResources.AsQueryable();
+                IQueryable<OuterResource> query = _dbContext.OuterResources.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
                 {
                     if (requestModel.IsSortDsc)
                     {
-                        areasQuery = areasQuery
+                        query = query
                             .CustomOrderByDescending(requestModel.Sort);
                     }
                     else
                     {
-                        areasQuery = areasQuery
+                        query = query
                             .CustomOrderBy(requestModel.Sort);
                     }
                 }
                 else
                 {
-                    areasQuery = _dbContext.OuterResources
+                    query = _dbContext.OuterResources
                         .OrderBy(x => x.Id);
                 }
 
-                areasQuery = areasQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+                query = query.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
 
                 if (requestModel.PageSize != null)
                 {
-                    areasQuery = areasQuery
+                    query = query
                         .Skip(requestModel.Offset)
                         .Take((int)requestModel.PageSize);
                 }
 
-                List<OuterResourceModel> areas = await areasQuery.Select(x => new OuterResourceModel()
+                List<OuterResourceModel> outerResourceList = await query.Select(x => new OuterResourceModel()
                 {
                     Name = x.Name,
                     Id = x.Id,
@@ -84,7 +84,7 @@ namespace OuterInnerResource.Pn.Services
                 }).AsNoTracking().ToListAsync();
 
                 outerResourcesModel.Total = await _dbContext.OuterResources.AsNoTracking().Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).CountAsync();
-                outerResourcesModel.OuterResourceList = areas;
+                outerResourcesModel.OuterResourceList = outerResourceList;
                 
                 try
                 {
@@ -104,7 +104,7 @@ namespace OuterInnerResource.Pn.Services
             }
         }
 
-        public async Task<OperationDataResult<OuterResourceModel>> GetSingleArea(int areaId)
+        public async Task<OperationDataResult<OuterResourceModel>> Get(int areaId)
         {
             try
             {
@@ -122,13 +122,13 @@ namespace OuterInnerResource.Pn.Services
                         _localizationService.GetString("AreaWithIdNotExist", areaId));
                 }
 
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = await _dbContext.OuterInnerResources
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources = await _dbContext.OuterInnerResources
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.OuterResourceId == outerResource.Id).AsNoTracking().ToListAsync();
 
                 outerResource.RelatedInnerResourcesIds = new List<int>();
-                foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
+                foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource in outerInnerResources)
                 {
-                    outerResource.RelatedInnerResourcesIds.Add(machineArea.InnerResourceId);
+                    outerResource.RelatedInnerResourcesIds.Add(outerInnerResource.InnerResourceId);
                 }
 
                 return new OperationDataResult<OuterResourceModel>(true, outerResource);
@@ -142,30 +142,30 @@ namespace OuterInnerResource.Pn.Services
             }
         }
 
-        public async Task<OperationResult> CreateArea(OuterResourceModel model)
+        public async Task<OperationResult> Create(OuterResourceModel model)
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas 
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources 
                     = new List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource>();
                 if (model.RelatedInnerResourcesIds != null)
                 {
-                    machineAreas = model.RelatedInnerResourcesIds.Select(x =>
+                    outerInnerResources = model.RelatedInnerResourcesIds.Select(x =>
                         new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
                         {
                             Id = x
                         }).ToList();    
                 }
 
-                OuterResource newArea = new OuterResource()
+                OuterResource outerResource = new OuterResource()
                 {
                     Name = model.Name,
-                    OuterInnerResources = machineAreas,
+                    OuterInnerResources = outerInnerResources,
                     ExternalId = model.ExternalId
                 };
 
-                await newArea.Create(_dbContext);
-                model.Id = newArea.Id;
+                await outerResource.Create(_dbContext);
+                model.Id = outerResource.Id;
                 await _bus.SendLocal(new OuterInnerResourceCreate(null, model));
 
                 return new OperationResult(true, 
@@ -180,25 +180,25 @@ namespace OuterInnerResource.Pn.Services
             }
         }
 
-        public async Task<OperationResult> UpdateArea(OuterResourceModel model)
+        public async Task<OperationResult> Update(OuterResourceModel model)
         {
             try
             {
-                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = model.RelatedInnerResourcesIds.Select(x =>
+                List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources = model.RelatedInnerResourcesIds.Select(x =>
                     new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
                     {
                         Id = x
                     }).ToList();
 
-                OuterResource selectedArea = new OuterResource()
+                OuterResource outerResource = new OuterResource()
                 {
                     Name = model.Name,
-                    OuterInnerResources = machineAreas,
+                    OuterInnerResources = outerInnerResources,
                     Id = model.Id,
                     ExternalId = model.ExternalId
                 };
 
-                await selectedArea.Update(_dbContext);
+                await outerResource.Update(_dbContext);
                 await _bus.SendLocal(new OuterInnerResourceUpdate(null, model));
                 return new OperationResult(true, _localizationService.GetString("AreaUpdatedSuccessfully"));
             }
@@ -211,17 +211,17 @@ namespace OuterInnerResource.Pn.Services
             }
         }
 
-        public async Task<OperationResult> DeleteArea(int areaId)
+        public async Task<OperationResult> Delete(int outerResourceId)
         {
             try
             {
-                OuterResource selectedArea = new OuterResource()
+                OuterResource outerResource = new OuterResource()
                 {
-                    Id = areaId
+                    Id = outerResourceId
                 };
                 
-                await selectedArea.Delete(_dbContext);
-                await _bus.SendLocal(new OuterInnerResourceDelete(null, new OuterResourceModel() { Id = areaId }));
+                await outerResource.Delete(_dbContext);
+                await _bus.SendLocal(new OuterInnerResourceDelete(null, new OuterResourceModel() { Id = outerResourceId }));
                 return new OperationResult(true, _localizationService.GetString("AreaDeletedSuccessfully"));
             }
             catch (Exception e)

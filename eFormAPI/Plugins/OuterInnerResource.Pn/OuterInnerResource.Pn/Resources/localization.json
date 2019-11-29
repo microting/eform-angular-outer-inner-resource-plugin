@@ -64,10 +64,10 @@
     }
   },
   {
-    "Key": "ErrorCreatingMachine",
+    "Key": "ErrorCreatingInnerResource",
     "LocalizedValue": {
-      "da": "Fejl under oprettelse af maskine",
-      "en-US": "Error while creating machine",
+      "da": "Fejl under oprettelse af indre resource",
+      "en-US": "Error while creating inner resource",
       "de-DE": "Fehler beim Erstellen der Maschine"
     }
   },
@@ -88,18 +88,18 @@
     }
   },
   {
-    "Key": "ErrorObtainMachine",
+    "Key": "ErrorObtainInnerResource",
     "LocalizedValue": {
-      "da": "Fejl under opnåelse af maskine",
-      "en-US": "Error while obtaining machine",
+      "da": "Fejl under opnåelse af indre resource",
+      "en-US": "Error while obtaining inner resource",
       "de-DE": "Fehler beim Abrufen der Maschine"
     }
   },
   {
-    "Key": "ErrorObtainMachines",
+    "Key": "ErrorObtainInnerResources",
     "LocalizedValue": {
-      "da": "Fejl under opnåelse af maskiner",
-      "en-US": "Error while obtaining machines",
+      "da": "Fejl under opnåelse af indre resourcer",
+      "en-US": "Error while obtaining inner resrouces",
       "de-DE": "Fehler beim Abrufen von Maschinen"
     }
   },
@@ -112,10 +112,10 @@
     }
   },
   {
-    "Key": "ErrorUpdatingMachine",
+    "Key": "ErrorUpdatingInnerResource",
     "LocalizedValue": {
-      "da": "Fejl under opdatering af maskine",
-      "en-US": "Error while updating machine",
+      "da": "Fejl under opdatering af indre resource",
+      "en-US": "Error while updating inner resource",
       "de-DE": "Fehler beim Aktualisieren der Maschine"
     }
   },
@@ -128,15 +128,15 @@
     }
   },
   {
-    "Key": "ErrorWhileDeletingMachine",
+    "Key": "ErrorWhileDeletingInnerResource",
     "LocalizedValue": {
-      "da": "Fejl under sletning af maskine",
-      "en-US": "Error while deleting machine",
+      "da": "Fejl under sletning af indre resource",
+      "en-US": "Error while deleting inner resource",
       "de-DE": "Fehler beim Löschen der Maschine"
     }
   },
   {
-    "Key": "MachineCreatedSuccesfully",
+    "Key": "InnerResourceCreatedSuccesfully",
     "LocalizedValue": {
       "da": "Indre resource {0} blev oprettet med succes",
       "en-US": "Inner resource {0} created successfully",
@@ -144,26 +144,26 @@
     }
   },
   {
-    "Key": "MachineDeletedSuccessfully",
+    "Key": "InnerResourceDeletedSuccessfully",
     "LocalizedValue": {
-      "da": "Maskinen er slettet korrekt",
-      "en-US": "Machine deleted successfully",
+      "da": "Indre resource er slettet korrekt",
+      "en-US": "Inner resource deleted successfully",
       "de-DE": "Maschine erfolgreich gelöscht"
     }
   },
   {
-    "Key": "MachineUpdatedSuccessfully",
+    "Key": "InnerResourceUpdatedSuccessfully",
     "LocalizedValue": {
-      "da": "Maskinen opdateres med succes",
-      "en-US": "Machine updated successfully",
+      "da": "Indre resource opdateret med succes",
+      "en-US": "Inner resource updated successfully",
       "de-DE": "Maschine erfolgreich aktualisiert"
     }
   },
   {
-    "Key": "MachineWithIdNotExist",
+    "Key": "InnerResourceWithIdNotExist",
     "LocalizedValue": {
-      "da": "Maskin med {0} id eksisterer ikke",
-      "en-US": "Machine with {0} id does not exist",
+      "da": "Indre resource med {0} id eksisterer ikke",
+      "en-US": "Inner resource with {0} id does not exist",
       "de-DE": "Maschine mit der ID {0} ist nicht vorhanden"
     }
   },

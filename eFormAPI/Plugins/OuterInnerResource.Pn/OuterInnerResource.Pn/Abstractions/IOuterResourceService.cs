@@ -6,10 +6,10 @@ namespace OuterInnerResource.Pn.Abstractions
 {
     public interface IOuterResourceService
     {
-        Task<OperationResult> CreateArea(OuterResourceModel model);
-        Task<OperationResult> DeleteArea(int areaId);
-        Task<OperationDataResult<OuterResourcesModel>> GetAllAreas(OuterResourceRequestModel requestModel);
-        Task<OperationDataResult<OuterResourceModel>> GetSingleArea(int areaId);
-        Task<OperationResult> UpdateArea(OuterResourceModel model);
+        Task<OperationResult> Create(OuterResourceModel model);
+        Task<OperationResult> Delete(int outerResourceId);
+        Task<OperationDataResult<OuterResourcesModel>> Index(OuterResourceRequestModel requestModel);
+        Task<OperationDataResult<OuterResourceModel>> Get(int areaId);
+        Task<OperationResult> Update(OuterResourceModel model);
     }
 }

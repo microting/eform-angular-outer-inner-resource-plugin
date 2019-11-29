@@ -91,51 +91,51 @@ namespace OuterInnerResource.Pn.Handlers
 
             if (message.InnerResourceModel != null)
             {
-                await CreateFromMachine(message.InnerResourceModel, mainElement, sites, eFormId);
+                await CreateFromInnerResource(message.InnerResourceModel, mainElement, sites, eFormId);
             }
             else
             {
-                await CreateFromArea(message.OuterResourceModel, mainElement, sites, eFormId);
+                await CreateFromOuterResource(message.OuterResourceModel, mainElement, sites, eFormId);
             }            
         }
 
-        private async Task CreateFromMachine(InnerResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromInnerResource(InnerResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
             if (model.RelatedOuterResourcesIds != null)
             {
-                foreach (int areaId in model.RelatedOuterResourcesIds)
+                foreach (int id in model.RelatedOuterResourcesIds)
                 {                
-                    OuterResource area = _dbContext.OuterResources.SingleOrDefault(x => x.Id == areaId);
-                    await CreateRelationships(model.Id, areaId, model.Name, area.Name, mainElement, sites, eFormId);              
+                    OuterResource outerResource = _dbContext.OuterResources.SingleOrDefault(x => x.Id == id);
+                    await CreateRelationships(model.Id, id, model.Name, outerResource.Name, mainElement, sites, eFormId);              
                 }    
             }
         }
 
-        private async Task CreateFromArea(OuterResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromOuterResource(OuterResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
             if (model.RelatedInnerResourcesIds != null)
             {
-                foreach (int machineId in model.RelatedInnerResourcesIds)
+                foreach (int id in model.RelatedInnerResourcesIds)
                 {
-                    InnerResource machine = _dbContext.InnerResources.SingleOrDefault(x => x.Id == machineId);
-                    await CreateRelationships(machineId, model.Id, machine.Name, model.Name, mainElement, sites, eFormId);
+                    InnerResource innerResource = _dbContext.InnerResources.SingleOrDefault(x => x.Id == id);
+                    await CreateRelationships(id, model.Id, innerResource.Name, model.Name, mainElement, sites, eFormId);
                 }    
             }
         }
 
-        private async Task CreateRelationships(int machineId, int areaId, string machineName, string areaName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
         {
             Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource match = _dbContext.OuterInnerResources.SingleOrDefault(x =>
-                    x.InnerResourceId == machineId && x.OuterResourceId == areaId);
+                    x.InnerResourceId == innerResourceId && x.OuterResourceId == outerResourceId);
             if (match == null)
             {
-                Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea =
+                Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource =
                     new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource();
-                machineArea.OuterResourceId = areaId;
-                machineArea.InnerResourceId = machineId;
-                await machineArea.Create(_dbContext);
-                mainElement.Label = machineName;
-                mainElement.ElementList[0].Label = machineName;
+                outerInnerResource.OuterResourceId = outerResourceId;
+                outerInnerResource.InnerResourceId = innerResourceId;
+                await outerInnerResource.Create(_dbContext);
+                mainElement.Label = innerResourceName;
+                mainElement.ElementList[0].Label = innerResourceName;
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 mainElement.Repeated = 0;
@@ -158,7 +158,7 @@ namespace OuterInnerResource.Pn.Handlers
                 int microtingUId = 0;
                 foreach (Folder_Dto folderDto in folderDtos)
                 {
-                    if (folderDto.Name == areaName)
+                    if (folderDto.Name == outerResourceName)
                     {
                         folderAlreadyExist = true;
                         microtingUId = (int)folderDto.MicrotingUId;
@@ -167,12 +167,12 @@ namespace OuterInnerResource.Pn.Handlers
 
                 if (!folderAlreadyExist)
                 {
-                    await _core.FolderCreate(areaName, "", null);
+                    await _core.FolderCreate(outerResourceName, "", null);
                     folderDtos = await _core.FolderGetAll(true);
                 
                     foreach (Folder_Dto folderDto in folderDtos)
                     {
-                        if (folderDto.Name == areaName)
+                        if (folderDto.Name == outerResourceName)
                         {
                             microtingUId = (int)folderDto.MicrotingUId;
                         }
@@ -184,19 +184,19 @@ namespace OuterInnerResource.Pn.Handlers
                 foreach (Site_Dto siteDto in sites)
                 {
                     OuterInnerResourceSite siteMatch = _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
-                        x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == machineArea.Id);
+                        x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == outerInnerResource.Id);
                     if (siteMatch == null)
                     {
                         int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
                         if (sdkCaseId != null)
                         {
-                            OuterInnerResourceSite machineAreaSite = new OuterInnerResourceSite();
-                            machineAreaSite.OuterInnerResourceId = machineArea.Id;
-                            machineAreaSite.MicrotingSdkSiteId = siteDto.SiteId;
-                            machineAreaSite.MicrotingSdkCaseId = (int)sdkCaseId;
-                            machineAreaSite.MicrotingSdkeFormId = eFormId;
-                            await machineAreaSite.Create(_dbContext);
+                            OuterInnerResourceSite outerInnerResourceSite = new OuterInnerResourceSite();
+                            outerInnerResourceSite.OuterInnerResourceId = outerInnerResource.Id;
+                            outerInnerResourceSite.MicrotingSdkSiteId = siteDto.SiteId;
+                            outerInnerResourceSite.MicrotingSdkCaseId = (int)sdkCaseId;
+                            outerInnerResourceSite.MicrotingSdkeFormId = eFormId;
+                            await outerInnerResourceSite.Create(_dbContext);
                         }    
                     }
                 }    

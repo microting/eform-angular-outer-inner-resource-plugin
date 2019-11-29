@@ -6,10 +6,10 @@ namespace OuterInnerResource.Pn.Abstractions
 {
     public interface IInnerResourceService
     {
-        Task<OperationResult> CreateMachine(InnerResourceModel model);
-        Task<OperationResult> DeleteMachine(int machineId);
-        Task<OperationDataResult<InnerResourcesModel>> GetAllMachines(InnerResourceRequestModel requestModel);
-        Task<OperationDataResult<InnerResourceModel>> GetSingleMachine(int machineId);
-        Task<OperationResult> UpdateMachine(InnerResourceModel model);
+        Task<OperationResult> Create(InnerResourceModel model);
+        Task<OperationResult> Delete(int innerResourceId);
+        Task<OperationDataResult<InnerResourcesModel>> Index(InnerResourceRequestModel requestModel);
+        Task<OperationDataResult<InnerResourceModel>> Get(int innerResourceId);
+        Task<OperationResult> Update(InnerResourceModel model);
     }
 }

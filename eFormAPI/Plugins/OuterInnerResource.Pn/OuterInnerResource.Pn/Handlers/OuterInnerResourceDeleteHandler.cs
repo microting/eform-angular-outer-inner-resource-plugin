@@ -52,44 +52,44 @@ namespace OuterInnerResource.Pn.Handlers
         {            
             if (message.InnerResourceModel != null)
             {
-                await DeleteFromMachine(message.InnerResourceModel);
+                await DeleteFromInnerResource(message.InnerResourceModel);
             }
             else
             {
-                await DeleteFromArea(message.OuterResourceModel);
+                await DeleteFromOuterResource(message.OuterResourceModel);
             }     
         }
 
-        private async Task DeleteFromMachine(InnerResourceModel innerResourceModel)
+        private async Task DeleteFromInnerResource(InnerResourceModel innerResourceModel)
         {
-            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
+            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources = _dbContext.OuterInnerResources.Where(x =>
                 x.InnerResourceId == innerResourceModel.Id).ToList();
-            await DeleteRelationships(machineAreas);
+            await DeleteRelationships(outerInnerResources);
         }
 
-        private async Task DeleteFromArea(OuterResourceModel outerResourceModel)
+        private async Task DeleteFromOuterResource(OuterResourceModel outerResourceModel)
         {
-            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas = _dbContext.OuterInnerResources.Where(x =>
+            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources = _dbContext.OuterInnerResources.Where(x =>
                 x.OuterResourceId == outerResourceModel.Id).ToList();
-            await DeleteRelationships(machineAreas);
+            await DeleteRelationships(outerInnerResources);
 
         }
 
-        private async Task DeleteRelationships(List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> machineAreas)
+        private async Task DeleteRelationships(List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources)
         {
-            foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource machineArea in machineAreas)
+            foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource in outerInnerResources)
             {
-                IQueryable<OuterInnerResourceSite> machineAreaSites = _dbContext.OuterInnerResourceSites.Where(x => x.OuterInnerResourceId == machineArea.Id);
-                int numSites = machineAreaSites.Count();
+                IQueryable<OuterInnerResourceSite> outerInnerResourceSites = _dbContext.OuterInnerResourceSites.Where(x => x.OuterInnerResourceId == outerInnerResource.Id);
+                int numSites = outerInnerResourceSites.Count();
                 int sitesDeleted = 0;
-                foreach (OuterInnerResourceSite machineAreaSite in machineAreaSites)
+                foreach (OuterInnerResourceSite outerInnerResourceSite in outerInnerResourceSites)
                 {
                     try
                     {
-                        bool result = await _core.CaseDelete(machineAreaSite.MicrotingSdkCaseId);
+                        bool result = await _core.CaseDelete(outerInnerResourceSite.MicrotingSdkCaseId);
                         if (result)
                         {
-                            await machineAreaSite.Delete(_dbContext);
+                            await outerInnerResourceSite.Delete(_dbContext);
                             sitesDeleted += 1;
                         }
                     }
@@ -102,7 +102,7 @@ namespace OuterInnerResource.Pn.Handlers
 
                 if (numSites == sitesDeleted)
                 {
-                    await machineArea.Delete(_dbContext);
+                    await outerInnerResource.Delete(_dbContext);
                 }
             }
         }
