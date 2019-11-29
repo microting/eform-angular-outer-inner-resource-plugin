@@ -206,16 +206,16 @@ namespace OuterInnerResource.Pn.Handlers
             mainElement.StartDate = DateTime.Now.ToUniversalTime();
             mainElement.Repeated = 0;
             
-            string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
-
-            bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
-                                        .FirstOrDefault(x => 
-                                            x.Name == lookup)?.Value == "true";
-
-            if (quickSyncEnabled)
-            {
+//            string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
+//
+//            bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
+//                                        .FirstOrDefault(x => 
+//                                            x.Name == lookup)?.Value == "true";
+//
+//            if (quickSyncEnabled)
+//            {
                 mainElement.EnableQuickSync = true;    
-            }
+//            }
             List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
 
             bool folderAlreadyExist = false;
