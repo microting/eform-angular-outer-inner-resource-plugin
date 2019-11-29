@@ -24,18 +24,21 @@ namespace OuterInnerResource.Pn.Services
             _coreHelper = coreHelper;
         }
 
-        public async Task Start(string connectionString)
+        public async Task Start(string connectionString, int maxParallelism, int numberOfWorkers)
         {
-            _connectionString = connectionString;   
+            _connectionString = connectionString;
+            //_sdkConnectionString = sdkConnectionString;
             _container = new WindsorContainer();
             _container.Install(
                 new RebusHandlerInstaller()
-                , new RebusInstaller(connectionString, 1, 1)
+                , new RebusInstaller(connectionString, maxParallelism, numberOfWorkers)
             );
             
-            Core _core = await _coreHelper.GetCore();
-            _container.Register(Component.For<Core>().Instance(_core));
-            _container.Register(Component.For<OuterInnerResourcePnDbContext>().Instance(GetContext()));
+            Core core = await _coreHelper.GetCore();
+            _dbContextHelper = new DbContextHelper(connectionString);
+            
+            _container.Register(Component.For<Core>().Instance(core));
+            _container.Register(Component.For<DbContextHelper>().Instance(_dbContextHelper));
             _bus = _container.Resolve<IBus>();
         }
 

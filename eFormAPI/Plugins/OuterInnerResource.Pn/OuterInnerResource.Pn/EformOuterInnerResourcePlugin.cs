@@ -32,6 +32,8 @@ namespace OuterInnerResource.Pn
         private string _connectionString;
         private string _outerResourceName = "OuterResources";
         private string _innerResourceName = "InnerResources";
+        private int _maxParallelism = 1;
+        private int _numberOfWorkers = 1;
 
         public Assembly PluginAssembly()
         {
@@ -97,13 +99,24 @@ namespace OuterInnerResource.Pn
 
             // Seed database
             SeedDatabase(connectionString);
+            
+            string temp = context.PluginConfigurationValues
+                .SingleOrDefault(x => x.Name == "TrashInspectionBaseSettings:MaxParallelism")?.Value;
+            _maxParallelism = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
+
+            temp = context.PluginConfigurationValues
+                .SingleOrDefault(x => x.Name == "TrashInspectionBaseSettings:NumberOfWorkers")?.Value;
+            _numberOfWorkers = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
         }
 
         public void Configure(IApplicationBuilder appBuilder)
         {
             IServiceProvider serviceProvider = appBuilder.ApplicationServices;
             IRebusService rebusService = serviceProvider.GetService<IRebusService>();
-            rebusService.Start(_connectionString);
+            if (!_connectionString.Contains("..."))
+            {
+                rebusService.Start(_connectionString, _maxParallelism, _numberOfWorkers);
+            }
         }
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)

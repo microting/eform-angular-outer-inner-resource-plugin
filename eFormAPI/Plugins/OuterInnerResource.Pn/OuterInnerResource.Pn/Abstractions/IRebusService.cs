@@ -5,7 +5,7 @@ namespace OuterInnerResource.Pn.Abstractions
 {
     public interface IRebusService
     {
-        Task Start(string connectionString);
+        Task Start(string connectionString, int maxParallelism, int numberOfWorkers);
         IBus GetBus();
     }
 }
