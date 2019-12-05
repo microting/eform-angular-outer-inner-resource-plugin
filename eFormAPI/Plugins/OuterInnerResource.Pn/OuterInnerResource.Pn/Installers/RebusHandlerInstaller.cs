@@ -38,6 +38,8 @@ namespace OuterInnerResource.Pn.Installers
             container.Register(Component.For<IHandleMessages<OuterInnerResourceCreate>>().ImplementedBy<OuterInnerResourceCreateHandler>().LifestyleTransient());            
             container.Register(Component.For<IHandleMessages<OuterInnerResourceUpdate>>().ImplementedBy<OuterInnerResourceUpdateHandler>().LifestyleTransient());            
             container.Register(Component.For<IHandleMessages<OuterInnerResourceDelete>>().ImplementedBy<OuterInnerResourceDeleteHandler>().LifestyleTransient());            
+            container.Register(Component.For<IHandleMessages<OuterInnerResourcePosteForm>>().ImplementedBy<OuterInnerResourcePosteFormHandler>().LifestyleTransient());            
+            container.Register(Component.For<IHandleMessages<OuterInnerResourceDeleteFromServer>>().ImplementedBy<OuterInnerResourceDeleteFromServerHandler>().LifestyleTransient());            
         }
     }
 }

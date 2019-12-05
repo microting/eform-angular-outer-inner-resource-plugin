@@ -38,6 +38,7 @@ using OuterInnerResource.Pn.Infrastructure.Helpers;
 using OuterInnerResource.Pn.Infrastructure.Models.InnerResources;
 using OuterInnerResource.Pn.Infrastructure.Models.OuterResources;
 using OuterInnerResource.Pn.Messages;
+using Rebus.Bus;
 using Rebus.Handlers;
 
 namespace OuterInnerResource.Pn.Handlers
@@ -45,12 +46,14 @@ namespace OuterInnerResource.Pn.Handlers
     public class OuterInnerResourceUpdateHandler : IHandleMessages<OuterInnerResourceUpdate>
     {  
         private readonly Core _core;
-        private readonly OuterInnerResourcePnDbContext _dbContext;        
+        private readonly OuterInnerResourcePnDbContext _dbContext;  
+        private readonly IBus _bus;      
         
-        public OuterInnerResourceUpdateHandler(Core core, DbContextHelper dbContextHelper)
+        public OuterInnerResourceUpdateHandler(Core core, DbContextHelper dbContextHelper, IBus bus)
         {
             _core = core;
             _dbContext = dbContextHelper.GetDbContext();
+            _bus = bus;
         }
         
         #pragma warning disable 1998
@@ -62,7 +65,7 @@ namespace OuterInnerResource.Pn.Handlers
                 .FirstOrDefault(x => 
                     x.Name == lookup)?.Value);
 
-            MainElement mainElement = await _core.TemplateRead(eFormId);
+//            MainElement mainElement = await _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
             lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
@@ -76,15 +79,15 @@ namespace OuterInnerResource.Pn.Handlers
             
             if (message.InnerResourceModel != null)
             {
-                await UpdateFromInnerResource(message.InnerResourceModel, mainElement, sites, eFormId);
+                await UpdateFromInnerResource(message.InnerResourceModel, sites, eFormId);
             }
             else
             {
-                await UpdateFromOuterResource(message.OuterResourceModel, mainElement, sites, eFormId);
+                await UpdateFromOuterResource(message.OuterResourceModel, sites, eFormId);
             }
         }
 
-        private async Task UpdateFromInnerResource(InnerResourceModel innerResourceModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task UpdateFromInnerResource(InnerResourceModel innerResourceModel, List<Site_Dto> sites, int eFormId)
         {
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources = _dbContext.OuterInnerResources.Where(x =>
                 x.InnerResourceId == innerResourceModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
@@ -101,7 +104,12 @@ namespace OuterInnerResource.Pn.Handlers
                 {
                     foreach (OuterInnerResourceSite outerInnerResourceSite in outerInnerResource.OuterInnerResourceSites)
                     {
-                        await DeleteRelationship(outerInnerResource.Id, outerInnerResourceSite.MicrotingSdkCaseId);
+                        if (outerInnerResourceSite.MicrotingSdkCaseId != null)
+                        {
+                            await outerInnerResourceSite.Delete(_dbContext);
+                            await _bus.SendLocal(new OuterInnerResourceDeleteFromServer(outerInnerResourceSite.Id));
+//                            await DeleteRelationship(outerInnerResource.Id, (int)outerInnerResourceSite.MicrotingSdkCaseId);
+                        }
                     }
                     
                     await outerInnerResource.Delete(_dbContext);
@@ -117,7 +125,7 @@ namespace OuterInnerResource.Pn.Handlers
             {
                 OuterResource outerResource = _dbContext.OuterResources.SingleOrDefault(x => x.Id == outerResourceId);
                 if (outerResource != null)
-                    await CreateRelationships(innerResourceModel.Id, outerResourceId, innerResourceModel.Name, outerResource.Name, mainElement, sites,
+                    await CreateRelationships(innerResourceModel.Id, outerResourceId, innerResourceModel.Name, outerResource.Name, sites,
                         eFormId);
             }
             
@@ -125,12 +133,12 @@ namespace OuterInnerResource.Pn.Handlers
             foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource in
                 outerInnerResources.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
             {
-                await CreateRelationships(outerInnerResource.InnerResourceId, outerInnerResource.OuterResourceId, innerResourceModel.Name, outerInnerResource.OuterResource.Name, mainElement, sites,
+                await CreateRelationships(outerInnerResource.InnerResourceId, outerInnerResource.OuterResourceId, innerResourceModel.Name, outerInnerResource.OuterResource.Name, sites,
                     eFormId);
             }
         }
 
-        private async Task UpdateFromOuterResource(OuterResourceModel outerResourceModel, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task UpdateFromOuterResource(OuterResourceModel outerResourceModel, List<Site_Dto> sites, int eFormId)
         {
             List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources = _dbContext.OuterInnerResources.Where(x =>
                 x.OuterResourceId == outerResourceModel.Id && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
@@ -147,7 +155,12 @@ namespace OuterInnerResource.Pn.Handlers
                 {
                     foreach (OuterInnerResourceSite outerInnerResourceSite in outerInnerResource.OuterInnerResourceSites)
                     {
-                        await DeleteRelationship(outerInnerResource.Id, outerInnerResourceSite.MicrotingSdkCaseId);
+                        if (outerInnerResourceSite.MicrotingSdkCaseId != null)
+                        {
+                            await outerInnerResourceSite.Delete(_dbContext);
+                            await _bus.SendLocal(new OuterInnerResourceDeleteFromServer(outerInnerResourceSite.Id));
+//                            await DeleteRelationship(outerInnerResource.Id, (int)outerInnerResourceSite.MicrotingSdkCaseId);
+                        }
                     }
                     await outerInnerResource.Delete(_dbContext);
                 }
@@ -162,7 +175,7 @@ namespace OuterInnerResource.Pn.Handlers
             {
                 InnerResource innerResource = _dbContext.InnerResources.SingleOrDefault(x => x.Id == innerResourceId);
                 if (innerResource != null)
-                    await CreateRelationships(innerResourceId, outerResourceModel.Id, innerResource.Name, outerResourceModel.Name, mainElement, sites,
+                    await CreateRelationships(innerResourceId, outerResourceModel.Id, innerResource.Name, outerResourceModel.Name, sites,
                         eFormId);
             }
 
@@ -170,16 +183,18 @@ namespace OuterInnerResource.Pn.Handlers
             foreach (Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource in
                 outerInnerResources.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed))
             {
-                await CreateRelationships(outerInnerResource.InnerResourceId, outerInnerResource.OuterResourceId, outerInnerResource.InnerResource.Name, outerResourceModel.Name, mainElement, sites,
+                await CreateRelationships(outerInnerResource.InnerResourceId, outerInnerResource.OuterResourceId, outerInnerResource.InnerResource.Name, outerResourceModel.Name, sites,
                     eFormId);
             }
         }
 
-        private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName,
-            MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName
+            , List<Site_Dto> sites, int eFormId)
         {
-            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource = _dbContext.OuterInnerResources.SingleOrDefault(x =>
-                    x.InnerResourceId == innerResourceId && x.OuterResourceId == outerResourceId);
+            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource = 
+                _dbContext.OuterInnerResources.SingleOrDefault(x =>
+                    x.InnerResourceId == innerResourceId 
+                    && x.OuterResourceId == outerResourceId);
 
             if (outerInnerResource != null)
             {
@@ -200,11 +215,11 @@ namespace OuterInnerResource.Pn.Handlers
                 await outerInnerResource.Create(_dbContext);
             }
             
-            mainElement.Label = innerResourceName;
-            mainElement.ElementList[0].Label = innerResourceName;
-            mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
-            mainElement.StartDate = DateTime.Now.ToUniversalTime();
-            mainElement.Repeated = 0;
+//            mainElement.Label = innerResourceName;
+//            mainElement.ElementList[0].Label = innerResourceName;
+//            mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+//            mainElement.StartDate = DateTime.Now.ToUniversalTime();
+//            mainElement.Repeated = 0;
             
 //            string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
 //
@@ -214,43 +229,42 @@ namespace OuterInnerResource.Pn.Handlers
 //
 //            if (quickSyncEnabled)
 //            {
-                mainElement.EnableQuickSync = true;    
+//                mainElement.EnableQuickSync = true;    
 //            }
-            List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
-
-            bool folderAlreadyExist = false;
-            int _microtingUId = 0;
-            foreach (Folder_Dto folderDto in folderDtos)
-            {
-                if (folderDto.Name == outerResourceName)
-                {
-                    folderAlreadyExist = true;
-                    _microtingUId = (int)folderDto.MicrotingUId;
-                }
-            }
-
-            if (!folderAlreadyExist)
-            {
-                await _core.FolderCreate(outerResourceName, "", null);
-                folderDtos = await _core.FolderGetAll(true);
-            
-                foreach (Folder_Dto folderDto in folderDtos)
-                {
-                    if (folderDto.Name == outerResourceName)
-                    {
-                        _microtingUId = (int)folderDto.MicrotingUId;
-                    }
-                }
-            }
-            
-            mainElement.CheckListFolderName = _microtingUId.ToString();
-            await UpdateSitesDeployed(outerInnerResource, mainElement, sites, eFormId);
+//            List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
+//
+//            bool folderAlreadyExist = false;
+//            int _microtingUId = 0;
+//            foreach (Folder_Dto folderDto in folderDtos)
+//            {
+//                if (folderDto.Name == outerResourceName)
+//                {
+//                    folderAlreadyExist = true;
+//                    _microtingUId = (int)folderDto.MicrotingUId;
+//                }
+//            }
+//
+//            if (!folderAlreadyExist)
+//            {
+//                await _core.FolderCreate(outerResourceName, "", null);
+//                folderDtos = await _core.FolderGetAll(true);
+//            
+//                foreach (Folder_Dto folderDto in folderDtos)
+//                {
+//                    if (folderDto.Name == outerResourceName)
+//                    {
+//                        _microtingUId = (int)folderDto.MicrotingUId;
+//                    }
+//                }
+//            }
+//            
+//            mainElement.CheckListFolderName = _microtingUId.ToString();
+            await UpdateSitesDeployed(outerInnerResource, sites, eFormId);
 
         }
 
         private async Task UpdateSitesDeployed(
-            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource,
-            MainElement mainElement, List<Site_Dto> sites, int eFormId)
+            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource, List<Site_Dto> sites, int eFormId)
         {
 
             WriteLogEntry("OuterInnerResourceUpdateHandler: UpdateSitesDeployed called");
@@ -259,22 +273,30 @@ namespace OuterInnerResource.Pn.Handlers
             foreach (Site_Dto siteDto in sites)
             {
                 siteIds.Add(siteDto.SiteId);
-                OuterInnerResourceSite siteMatch = _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
-                    x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == outerInnerResource.Id && x.WorkflowState == Constants.WorkflowStates.Created);
-                if (siteMatch == null)
+                OuterInnerResourceSite outerInnerResourceSite = _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
+                    x.MicrotingSdkSiteId == siteDto.SiteId 
+                    && x.OuterInnerResourceId == outerInnerResource.Id 
+                    && x.WorkflowState == Constants.WorkflowStates.Created 
+                    && x.MicrotingSdkCaseId == null);
+                if (outerInnerResourceSite == null)
                 {
-                    int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
+//                    int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
-                    if (sdkCaseId != null)
-                    {
-                        OuterInnerResourceSite outerInnerResourceSite = new OuterInnerResourceSite();
-                        outerInnerResourceSite.OuterInnerResourceId = outerInnerResource.Id;
-                        outerInnerResourceSite.MicrotingSdkSiteId = siteDto.SiteId;
-                        outerInnerResourceSite.MicrotingSdkCaseId = (int)sdkCaseId;
-                        outerInnerResourceSite.MicrotingSdkeFormId = eFormId;
+//                    if (sdkCaseId != null)
+//                    {
+                        outerInnerResourceSite = new OuterInnerResourceSite
+                        {
+                            OuterInnerResourceId = outerInnerResource.Id,
+                            MicrotingSdkSiteId = siteDto.SiteId,
+//                            MicrotingSdkCaseId = (int) sdkCaseId,
+                            MicrotingSdkeFormId = eFormId
+                        };
                         await outerInnerResourceSite.Create(_dbContext);
-                    }    
+
+//                    }    
                 }
+                await _bus.SendLocal(new OuterInnerResourcePosteForm(outerInnerResourceSite.Id, eFormId));
+
             }
 
             var sitesConfigured = _dbContext.OuterInnerResourceSites.Where(x => x.OuterInnerResourceId == outerInnerResource.Id).ToList();
@@ -288,29 +310,34 @@ namespace OuterInnerResource.Pn.Handlers
                 if (!siteIds.Contains(outerInnerResourceSite.MicrotingSdkSiteId))
                 {
                     WriteLogEntry($"OuterInnerResourceUpdateHandler: {outerInnerResourceSite.MicrotingSdkSiteId} not found in the list, so calling delete.");
-                    
-                    bool result = await _core.CaseDelete(outerInnerResourceSite.MicrotingSdkCaseId);
-                    if (result)
+
+                    if (outerInnerResourceSite.MicrotingSdkCaseId != null)
                     {
                         await outerInnerResourceSite.Delete(_dbContext);
+                        await _bus.SendLocal(new OuterInnerResourceDeleteFromServer(outerInnerResourceSite.Id));
+//                        bool result = await _core.CaseDelete((int) outerInnerResourceSite.MicrotingSdkCaseId);
+//                        if (result)
+//                        {
+//                            await outerInnerResourceSite.Delete(_dbContext);
+//                        }    
                     }
                 }
             }
         }
 
-        private async Task DeleteRelationship(int outerInnerResourceId, int microtingSdkCaseId)
-        {
-            OuterInnerResourceSite outerInnerResourceSite =  
-                _dbContext.OuterInnerResourceSites.SingleOrDefault(x => x.OuterInnerResourceId == outerInnerResourceId && x.MicrotingSdkCaseId == microtingSdkCaseId);
-            if (outerInnerResourceSite != null)
-            {
-                bool result = await _core.CaseDelete(microtingSdkCaseId);
-                if (result)
-                {
-                    await outerInnerResourceSite.Delete(_dbContext);
-                }
-            }
-        }
+//        private async Task DeleteRelationship(int outerInnerResourceId, int microtingSdkCaseId)
+//        {
+//            OuterInnerResourceSite outerInnerResourceSite =  
+//                _dbContext.OuterInnerResourceSites.SingleOrDefault(x => x.OuterInnerResourceId == outerInnerResourceId && x.MicrotingSdkCaseId == microtingSdkCaseId);
+//            if (outerInnerResourceSite != null)
+//            {
+//                bool result = await _core.CaseDelete(microtingSdkCaseId);
+//                if (result)
+//                {
+//                    await outerInnerResourceSite.Delete(_dbContext);
+//                }
+//            }
+//        }
 
         private void WriteLogEntry(string message)
         {

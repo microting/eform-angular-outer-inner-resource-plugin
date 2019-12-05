@@ -37,6 +37,7 @@ using OuterInnerResource.Pn.Infrastructure.Helpers;
 using OuterInnerResource.Pn.Infrastructure.Models.InnerResources;
 using OuterInnerResource.Pn.Infrastructure.Models.OuterResources;
 using OuterInnerResource.Pn.Messages;
+using Rebus.Bus;
 using Rebus.Handlers;
 
 namespace OuterInnerResource.Pn.Handlers
@@ -44,12 +45,14 @@ namespace OuterInnerResource.Pn.Handlers
     public class OuterInnerResourceCreateHandler : IHandleMessages<OuterInnerResourceCreate>
     {        
         private readonly Core _core;
-        private readonly OuterInnerResourcePnDbContext _dbContext;        
-        
-        public OuterInnerResourceCreateHandler(Core core, DbContextHelper dbContextHelper)
+        private readonly OuterInnerResourcePnDbContext _dbContext;  
+        private readonly IBus _bus;
+
+        public OuterInnerResourceCreateHandler(Core core, DbContextHelper dbContextHelper, IBus bus)
         {
             _core = core;
             _dbContext = dbContextHelper.GetDbContext();
+            _bus = bus;
         }
         
         #pragma warning disable 1998
@@ -68,7 +71,7 @@ namespace OuterInnerResource.Pn.Handlers
             
             int eFormId = int.Parse(result);
 
-            MainElement mainElement = await _core.TemplateRead(eFormId);
+//            MainElement mainElement = await _core.TemplateRead(eFormId);
             List<Site_Dto> sites = new List<Site_Dto>();
             
             lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
@@ -91,39 +94,39 @@ namespace OuterInnerResource.Pn.Handlers
 
             if (message.InnerResourceModel != null)
             {
-                await CreateFromInnerResource(message.InnerResourceModel, mainElement, sites, eFormId);
+                await CreateFromInnerResource(message.InnerResourceModel, sites, eFormId);
             }
             else
             {
-                await CreateFromOuterResource(message.OuterResourceModel, mainElement, sites, eFormId);
+                await CreateFromOuterResource(message.OuterResourceModel, sites, eFormId);
             }            
         }
 
-        private async Task CreateFromInnerResource(InnerResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromInnerResource(InnerResourceModel model, List<Site_Dto> sites, int eFormId)
         {
             if (model.RelatedOuterResourcesIds != null)
             {
                 foreach (int id in model.RelatedOuterResourcesIds)
                 {                
                     OuterResource outerResource = _dbContext.OuterResources.SingleOrDefault(x => x.Id == id);
-                    await CreateRelationships(model.Id, id, model.Name, outerResource.Name, mainElement, sites, eFormId);              
+                    await CreateRelationships(model.Id, id, model.Name, outerResource.Name, sites, eFormId);              
                 }    
             }
         }
 
-        private async Task CreateFromOuterResource(OuterResourceModel model, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromOuterResource(OuterResourceModel model, List<Site_Dto> sites, int eFormId)
         {
             if (model.RelatedInnerResourcesIds != null)
             {
                 foreach (int id in model.RelatedInnerResourcesIds)
                 {
                     InnerResource innerResource = _dbContext.InnerResources.SingleOrDefault(x => x.Id == id);
-                    await CreateRelationships(id, model.Id, innerResource.Name, model.Name, mainElement, sites, eFormId);
+                    await CreateRelationships(id, model.Id, innerResource.Name, model.Name, sites, eFormId);
                 }    
             }
         }
 
-        private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName, MainElement mainElement, List<Site_Dto> sites, int eFormId)
+        private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName, List<Site_Dto> sites, int eFormId)
         {
             Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource match = _dbContext.OuterInnerResources.SingleOrDefault(x =>
                     x.InnerResourceId == innerResourceId && x.OuterResourceId == outerResourceId);
@@ -134,11 +137,11 @@ namespace OuterInnerResource.Pn.Handlers
                 outerInnerResource.OuterResourceId = outerResourceId;
                 outerInnerResource.InnerResourceId = innerResourceId;
                 await outerInnerResource.Create(_dbContext);
-                mainElement.Label = innerResourceName;
-                mainElement.ElementList[0].Label = innerResourceName;
-                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
-                mainElement.StartDate = DateTime.Now.ToUniversalTime();
-                mainElement.Repeated = 0;
+//                mainElement.Label = innerResourceName;
+//                mainElement.ElementList[0].Label = innerResourceName;
+//                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+//                mainElement.StartDate = DateTime.Now.ToUniversalTime();
+//                mainElement.Repeated = 0;
 
 //                string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
 //                LogEvent($"lookup is {lookup}");
@@ -149,37 +152,37 @@ namespace OuterInnerResource.Pn.Handlers
 //
 //                if (quickSyncEnabled)
 //                {
-                    mainElement.EnableQuickSync = true;    
+//                    mainElement.EnableQuickSync = true;    
 //                }
 
-                List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
+//                List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
 
-                bool folderAlreadyExist = false;
-                int microtingUId = 0;
-                foreach (Folder_Dto folderDto in folderDtos)
-                {
-                    if (folderDto.Name == outerResourceName)
-                    {
-                        folderAlreadyExist = true;
-                        microtingUId = (int)folderDto.MicrotingUId;
-                    }
-                }
-
-                if (!folderAlreadyExist)
-                {
-                    await _core.FolderCreate(outerResourceName, "", null);
-                    folderDtos = await _core.FolderGetAll(true);
+//                bool folderAlreadyExist = false;
+//                int microtingUId = 0;
+//                foreach (Folder_Dto folderDto in folderDtos)
+//                {
+//                    if (folderDto.Name == outerResourceName)
+//                    {
+//                        folderAlreadyExist = true;
+//                        microtingUId = (int)folderDto.MicrotingUId;
+//                    }
+//                }
+//
+//                if (!folderAlreadyExist)
+//                {
+//                    await _core.FolderCreate(outerResourceName, "", null);
+//                    folderDtos = await _core.FolderGetAll(true);
+//                
+//                    foreach (Folder_Dto folderDto in folderDtos)
+//                    {
+//                        if (folderDto.Name == outerResourceName)
+//                        {
+//                            microtingUId = (int)folderDto.MicrotingUId;
+//                        }
+//                    }
+//                }
                 
-                    foreach (Folder_Dto folderDto in folderDtos)
-                    {
-                        if (folderDto.Name == outerResourceName)
-                        {
-                            microtingUId = (int)folderDto.MicrotingUId;
-                        }
-                    }
-                }
-                
-                mainElement.CheckListFolderName = microtingUId.ToString();
+//                mainElement.CheckListFolderName = microtingUId.ToString();
                 
                 foreach (Site_Dto siteDto in sites)
                 {
@@ -187,17 +190,23 @@ namespace OuterInnerResource.Pn.Handlers
                         x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == outerInnerResource.Id);
                     if (siteMatch == null)
                     {
-                        int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
-
-                        if (sdkCaseId != null)
+                        OuterInnerResourceSite outerInnerResourceSite = new OuterInnerResourceSite
                         {
-                            OuterInnerResourceSite outerInnerResourceSite = new OuterInnerResourceSite();
-                            outerInnerResourceSite.OuterInnerResourceId = outerInnerResource.Id;
-                            outerInnerResourceSite.MicrotingSdkSiteId = siteDto.SiteId;
-                            outerInnerResourceSite.MicrotingSdkCaseId = (int)sdkCaseId;
-                            outerInnerResourceSite.MicrotingSdkeFormId = eFormId;
-                            await outerInnerResourceSite.Create(_dbContext);
-                        }    
+                            OuterInnerResourceId = outerInnerResource.Id,
+                            MicrotingSdkSiteId = siteDto.SiteId,
+//                            MicrotingSdkCaseId = (int) sdkCaseId,
+                            MicrotingSdkeFormId = eFormId
+                        };
+                        await outerInnerResourceSite.Create(_dbContext);
+                        await _bus.SendLocal(new OuterInnerResourcePosteForm(outerInnerResourceSite.Id, eFormId));
+
+
+//                        int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
+//
+//                        if (sdkCaseId != null)
+//                        {
+//                            
+//                        }    
                     }
                 }    
             }     

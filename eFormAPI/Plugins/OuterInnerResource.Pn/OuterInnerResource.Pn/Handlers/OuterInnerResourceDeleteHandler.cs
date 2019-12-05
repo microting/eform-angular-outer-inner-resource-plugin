@@ -86,11 +86,13 @@ namespace OuterInnerResource.Pn.Handlers
                 {
                     try
                     {
-                        bool result = await _core.CaseDelete(outerInnerResourceSite.MicrotingSdkCaseId);
-                        if (result)
-                        {
-                            await outerInnerResourceSite.Delete(_dbContext);
-                            sitesDeleted += 1;
+                        if (outerInnerResourceSite.MicrotingSdkCaseId != null) {
+                            bool result = await _core.CaseDelete((int)outerInnerResourceSite.MicrotingSdkCaseId);
+                            if (result)
+                            {
+                                await outerInnerResourceSite.Delete(_dbContext);
+                                sitesDeleted += 1;
+                            }
                         }
                     }
                     catch
