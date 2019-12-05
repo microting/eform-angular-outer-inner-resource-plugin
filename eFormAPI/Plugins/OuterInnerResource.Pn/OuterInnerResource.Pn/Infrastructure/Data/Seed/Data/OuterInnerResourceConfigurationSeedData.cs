@@ -60,12 +60,12 @@ namespace OuterInnerResource.Pn.Infrastructure.Data.Seed.Data
             new PluginConfigurationValue()
             {
                 Name = "OuterInnerResourceSettings:OuterResourceName",
-                Value = "Inner resources"
+                Value = "Outer resources"
             },
             new PluginConfigurationValue()
             {
                 Name = "OuterInnerResourceSettings:InnerResourceName",
-                Value = "Outer resources"
+                Value = "Inner resources"
             },
             new PluginConfigurationValue()
             {

@@ -148,25 +148,47 @@ namespace OuterInnerResource.Pn.Services
             {
                 List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> outerInnerResources 
                     = new List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource>();
-                if (model.RelatedInnerResourcesIds != null)
-                {
-                    outerInnerResources = model.RelatedInnerResourcesIds.Select(x =>
-                        new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
-                        {
-                            Id = x
-                        }).ToList();    
-                }
+//                if (model.RelatedInnerResourcesIds != null)
+//                {
+//                    outerInnerResources = model.RelatedInnerResourcesIds.Select(x =>
+//                        new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
+//                        {
+//                            Id = x
+//                        }).ToList();    
+//                }
 
                 OuterResource outerResource = new OuterResource()
                 {
                     Name = model.Name,
-                    OuterInnerResources = outerInnerResources,
+//                    OuterInnerResources = outerInnerResources,
                     ExternalId = model.ExternalId
                 };
 
                 await outerResource.Create(_dbContext);
                 model.Id = outerResource.Id;
-                await _bus.SendLocal(new OuterInnerResourceCreate(null, model));
+                if (model.RelatedInnerResourcesIds != null)
+                {
+                    foreach (var innerResourceId in model.RelatedInnerResourcesIds)
+                    {
+                        var macth = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                            x.OuterResourceId == model.Id
+                            && x.InnerResourceId == innerResourceId);
+                        if (macth == null)
+                        {
+                            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource
+                                outerInnerResource =
+                                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.
+                                        OuterInnerResource
+                                        {
+                                            InnerResourceId = innerResourceId, 
+                                            OuterResourceId = model.Id
+                                        };
+                            await outerInnerResource.Create(_dbContext);
+                        }
+                    }
+                    await _bus.SendLocal(new OuterInnerResourceCreate(null, model));
+                }
+//                await _bus.SendLocal(new OuterInnerResourceCreate(null, model));
 
                 return new OperationResult(true, 
                     _localizationService.GetString("AreaCreatedSuccessfully", model.Name));

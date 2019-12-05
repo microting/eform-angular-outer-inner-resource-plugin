@@ -128,15 +128,15 @@ namespace OuterInnerResource.Pn.Handlers
 
         private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName, List<Site_Dto> sites, int eFormId)
         {
-            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource match = _dbContext.OuterInnerResources.SingleOrDefault(x =>
+            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource = _dbContext.OuterInnerResources.SingleOrDefault(x =>
                     x.InnerResourceId == innerResourceId && x.OuterResourceId == outerResourceId);
-            if (match == null)
-            {
-                Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource =
-                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource();
-                outerInnerResource.OuterResourceId = outerResourceId;
-                outerInnerResource.InnerResourceId = innerResourceId;
-                await outerInnerResource.Create(_dbContext);
+//            if (match == null)
+//            {
+//                Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource =
+//                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource();
+//                outerInnerResource.OuterResourceId = outerResourceId;
+//                outerInnerResource.InnerResourceId = innerResourceId;
+//                await outerInnerResource.Create(_dbContext);
 //                mainElement.Label = innerResourceName;
 //                mainElement.ElementList[0].Label = innerResourceName;
 //                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
@@ -186,9 +186,9 @@ namespace OuterInnerResource.Pn.Handlers
                 
                 foreach (Site_Dto siteDto in sites)
                 {
-                    OuterInnerResourceSite siteMatch = _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
-                        x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == outerInnerResource.Id);
-                    if (siteMatch == null)
+                    List<OuterInnerResourceSite> siteMatch = await _dbContext.OuterInnerResourceSites.Where(x =>
+                        x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == outerInnerResource.Id).ToListAsync();
+                    if (!siteMatch.Any())
                     {
                         OuterInnerResourceSite outerInnerResourceSite = new OuterInnerResourceSite
                         {
@@ -209,7 +209,7 @@ namespace OuterInnerResource.Pn.Handlers
 //                        }    
                     }
                 }    
-            }     
+//            }     
         }
         
         private void LogEvent(string appendText)
