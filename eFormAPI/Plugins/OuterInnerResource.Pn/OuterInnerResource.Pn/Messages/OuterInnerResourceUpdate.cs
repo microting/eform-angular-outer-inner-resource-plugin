@@ -29,13 +29,11 @@ namespace OuterInnerResource.Pn.Messages
 {
     public class OuterInnerResourceUpdate
     {
-        public InnerResourceModel InnerResourceModel { get; protected set; }
-        public OuterResourceModel OuterResourceModel { get; protected set; }
+        public int OuterInnerResourceId { get; protected set; }
 
-        public OuterInnerResourceUpdate(InnerResourceModel innerResourceModel, OuterResourceModel outerResourceModel)
+        public OuterInnerResourceUpdate(int outerInnerResourceId)
         {
-            InnerResourceModel = innerResourceModel;
-            OuterResourceModel = outerResourceModel;
+            OuterInnerResourceId = outerInnerResourceId;
         }
     }
 }

@@ -180,21 +180,13 @@ namespace OuterInnerResource.Pn.Services
 
         private void CreateNewSiteRelations()
         {
-            List<OuterResource> areas = _dbContext.OuterResources.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+            List<Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource> 
+                outerInnerResources = _dbContext.OuterInnerResources.Where(x => 
+                        x.WorkflowState != Constants.WorkflowStates.Removed)
                 .ToList();
-            foreach (OuterResource area in areas)
+            foreach (var outerInnerResource in outerInnerResources)
             {
-                OuterResourceModel outerResourceModel = new OuterResourceModel()
-                {
-                    Id = area.Id,
-                    RelatedInnerResourcesIds = _dbContext.OuterInnerResources.
-                        Where(x => x.OuterResourceId == area.Id && 
-                                   x.WorkflowState != Constants.WorkflowStates.Removed).
-                        Select(x => x.InnerResourceId).ToList(),
-                    Name = area.Name
-                };
-                        
-                _bus.SendLocal(new OuterInnerResourceUpdate(null, outerResourceModel));
+                _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id));
             }
         }
     }

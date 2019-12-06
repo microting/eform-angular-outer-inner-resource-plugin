@@ -9,7 +9,7 @@ namespace OuterInnerResource.Pn.Abstractions
         Task<OperationResult> Create(OuterResourceModel model);
         Task<OperationResult> Delete(int outerResourceId);
         Task<OperationDataResult<OuterResourcesModel>> Index(OuterResourceRequestModel requestModel);
-        Task<OperationDataResult<OuterResourceModel>> Get(int areaId);
+        Task<OperationDataResult<OuterResourceModel>> Get(int id);
         Task<OperationResult> Update(OuterResourceModel model);
     }
 }

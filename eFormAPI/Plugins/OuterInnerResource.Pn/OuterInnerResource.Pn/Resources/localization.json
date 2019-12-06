@@ -24,42 +24,42 @@
     }
   },
   {
-    "Key": "AreaCreatedSuccesfully",
+    "Key": "OuterResourceCreatedSuccesfully",
     "LocalizedValue": {
-      "da": "Område {0} blev oprettet med succes",
-      "en-US": "Area {0} created successfully",
+      "da": "Ydre resource {0} blev oprettet med succes",
+      "en-US": "Outer resource {0} created successfully",
       "de-De": "Bereich {0} wurde erfolgreich erstellt"
     }
   },
   {
-    "Key": "AreaDeletedSuccessfully",
+    "Key": "OuterResourceDeletedSuccessfully",
     "LocalizedValue": {
-      "da": "Området er slettet korrekt",
-      "en-US": "Area deleted successfully",
+      "da": "Ydre resource er slettet korrekt",
+      "en-US": "Outer resource deleted successfully",
       "de-De": "Bereich erfolgreich gelöscht"
     }
   },
   {
-    "Key": "AreaUpdatedSuccessfully",
+    "Key": "OuterResourceUpdatedSuccessfully",
     "LocalizedValue": {
-      "da": "Område opdateret med succes",
-      "en-US": "Area updated successfully",
+      "da": "Ydre resource opdateret med succes",
+      "en-US": "Outer resource updated successfully",
       "de-DE": "Bereich erfolgreich aktualisiert"
     }
   },
   {
-    "Key": "AreaWithIdNotExist",
+    "Key": "OuterResourceWithIdNotExist",
     "LocalizedValue": {
-      "da": "Område med {0} id eksisterer ikke",
-      "en-US": "Area with {0} id does not exist",
+      "da": "Ydre resource med {0} id eksisterer ikke",
+      "en-US": "Outer resource with {0} id does not exist",
       "de-De": "Bereich mit der ID {0} ist nicht vorhanden"
     }
   },
   {
-    "Key": "ErrorCreatingArea",
+    "Key": "ErrorCreatingOuterResource",
     "LocalizedValue": {
-      "da": "Fejl under oprettelse af område",
-      "en-US": "Error while creating area",
+      "da": "Fejl under oprettelse af ydre resource",
+      "en-US": "Error while creating outer resource",
       "de-DE": "Fehler beim Erstellen eines Bereichs"
     }
   },
@@ -72,18 +72,18 @@
     }
   },
   {
-    "Key": "ErrorObtainArea",
+    "Key": "ErrorObtainOuterResource",
     "LocalizedValue": {
-      "da": "Fejl under opnåelse af områder",
-      "en-US": "Error while obtaining area",
+      "da": "Fejl under opnåelse af ydre resource",
+      "en-US": "Error while obtaining outer resource",
       "de-DE": "Fehler beim Abrufen des Bereichs"
     }
   },
   {
-    "Key": "ErrorObtainAreas",
+    "Key": "ErrorObtainOuterResources",
     "LocalizedValue": {
-      "da": "Fejl under opnåelse af områder",
-      "en-US": "Error while obtaining areas",
+      "da": "Fejl under opnåelse af ydre resourcer",
+      "en-US": "Error while obtaining outer resources",
       "de-DE": "Fehler beim Abrufen von Bereichen"
     }
   },
@@ -104,10 +104,10 @@
     }
   },
   {
-    "Key": "ErrorUpdatingArea",
+    "Key": "ErrorUpdatingOuterResource",
     "LocalizedValue": {
-      "da": "Fejl under opdatering af område",
-      "en-US": "Error while updating area",
+      "da": "Fejl under opdatering af ydre resource",
+      "en-US": "Error while updating outer resource",
       "de-DE": "Fehler beim Aktualisieren des Bereichs"
     }
   },
@@ -120,10 +120,10 @@
     }
   },
   {
-    "Key": "ErrorWhileDeletingArea",
+    "Key": "ErrorWhileDeletingOuterResource",
     "LocalizedValue": {
-      "da": "Fejl under sletning af område",
-      "en-US": "Error while deleting area",
+      "da": "Fejl under sletning af ydre resource",
+      "en-US": "Error while deleting outer resource",
       "de-DE": "Fehler beim Löschen des Bereichs"
     }
   },
@@ -136,7 +136,7 @@
     }
   },
   {
-    "Key": "InnerResourceCreatedSuccesfully",
+    "Key": "InnerResourceCreatedSuccessfully",
     "LocalizedValue": {
       "da": "Indre resource {0} blev oprettet med succes",
       "en-US": "Inner resource {0} created successfully",
