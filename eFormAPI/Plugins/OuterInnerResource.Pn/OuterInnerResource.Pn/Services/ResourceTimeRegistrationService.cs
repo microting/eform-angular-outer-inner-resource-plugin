@@ -70,8 +70,16 @@ namespace OuterInnerResource.Pn.Services
                 }
                 else
                 {
-                    registration.DoneByDeviceUserName = _coreService.GetCore().Result.SiteRead(registration.DoneByDeviceUserId)?.Result.SiteName;
-                    _deviceUserNames.Add(new KeyValuePair<int, string>(registration.DoneByDeviceUserId, registration.DoneByDeviceUserName));
+                    try
+                    {
+                        registration.DoneByDeviceUserName = _coreService.GetCore().Result.SiteRead(registration.DoneByDeviceUserId)?.Result.SiteName;
+                        _deviceUserNames.Add(new KeyValuePair<int, string>(registration.DoneByDeviceUserId, registration.DoneByDeviceUserName));
+                    }
+                    catch
+                    {
+                        
+                    }
+                    
                 }
 
                 if (_outerResourceNames.Any(x => x.Key == registration.OuterResourceId))

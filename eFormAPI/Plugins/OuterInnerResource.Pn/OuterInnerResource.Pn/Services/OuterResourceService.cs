@@ -258,14 +258,14 @@ namespace OuterInnerResource.Pn.Services
                         await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id));
                     }
                 }
-                return new OperationResult(true, _localizationService.GetString("InnerResourceUpdatedSuccessfully"));
+                return new OperationResult(true, _localizationService.GetString("OuterResourceUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString("ErrorUpdatingInnerResource"));
+                    _localizationService.GetString("ErrorUpdatingOuterResource"));
             }
         }
 
