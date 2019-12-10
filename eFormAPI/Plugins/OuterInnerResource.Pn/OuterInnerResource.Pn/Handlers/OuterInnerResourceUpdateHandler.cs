@@ -68,7 +68,7 @@ namespace OuterInnerResource.Pn.Handlers
             {
                 int eFormId = int.Parse(result);
 
-                List<Site_Dto> sites = new List<Site_Dto>();
+                List<SiteDto> sites = new List<SiteDto>();
             
                 lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
                 result = _dbContext.PluginConfigurationValues.AsNoTracking()
@@ -92,7 +92,7 @@ namespace OuterInnerResource.Pn.Handlers
         }
 
         private async Task UpdateSitesDeployed(
-            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource, List<Site_Dto> sites, int eFormId)
+            Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource, List<SiteDto> sites, int eFormId)
         {
 
             WriteLogEntry("OuterInnerResourceUpdateHandler: UpdateSitesDeployed called");
@@ -100,7 +100,7 @@ namespace OuterInnerResource.Pn.Handlers
             
             if (outerInnerResource.WorkflowState == Constants.WorkflowStates.Created)
             {
-                foreach (Site_Dto siteDto in sites)
+                foreach (SiteDto siteDto in sites)
                 {
                     siteIds.Add(siteDto.SiteId);
                     List<OuterInnerResourceSite> outerInnerResourceSites = await _dbContext.OuterInnerResourceSites.Where(

@@ -105,7 +105,7 @@ namespace OuterInnerResource.Pn.Services
             {
                 var reportTimeType = _options.Value.ReportTimeType;
                 Core core = await _coreHelper.GetCore();
-                List<Site_Dto> sitesList = await core.SiteReadAll(false);
+                List<SiteDto> sitesList = await core.SiteReadAll(false);
 
                 DateTime modelDateFrom = new DateTime(
                     model.DateFrom.Year,

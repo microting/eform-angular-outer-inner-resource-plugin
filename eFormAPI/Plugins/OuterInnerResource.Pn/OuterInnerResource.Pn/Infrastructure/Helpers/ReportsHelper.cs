@@ -13,7 +13,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
     {
         public static ReportModel GetReportData(
             GenerateReportModel model, List<ResourceTimeRegistration> jobsList,
-            List<Site_Dto> sitesList, int timeType)
+            List<SiteDto> sitesList, int timeType)
         {
                 List<ReportEntityModel> reportEntitiesList = new List<ReportEntityModel>();
                 List<DateTime> reportDates = new List<DateTime>();

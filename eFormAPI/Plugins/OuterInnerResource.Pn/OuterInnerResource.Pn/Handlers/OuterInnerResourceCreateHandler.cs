@@ -72,7 +72,7 @@ namespace OuterInnerResource.Pn.Handlers
             int eFormId = int.Parse(result);
 
 //            MainElement mainElement = await _core.TemplateRead(eFormId);
-            List<Site_Dto> sites = new List<Site_Dto>();
+            List<SiteDto> sites = new List<SiteDto>();
             
             lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
             LogEvent($"lookup is {lookup}");
@@ -102,7 +102,7 @@ namespace OuterInnerResource.Pn.Handlers
             }            
         }
 
-        private async Task CreateFromInnerResource(InnerResourceModel model, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromInnerResource(InnerResourceModel model, List<SiteDto> sites, int eFormId)
         {
             if (model.RelatedOuterResourcesIds != null)
             {
@@ -114,7 +114,7 @@ namespace OuterInnerResource.Pn.Handlers
             }
         }
 
-        private async Task CreateFromOuterResource(OuterResourceModel model, List<Site_Dto> sites, int eFormId)
+        private async Task CreateFromOuterResource(OuterResourceModel model, List<SiteDto> sites, int eFormId)
         {
             if (model.RelatedInnerResourcesIds != null)
             {
@@ -126,7 +126,7 @@ namespace OuterInnerResource.Pn.Handlers
             }
         }
 
-        private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName, List<Site_Dto> sites, int eFormId)
+        private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName, List<SiteDto> sites, int eFormId)
         {
             Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource = _dbContext.OuterInnerResources.SingleOrDefault(x =>
                     x.InnerResourceId == innerResourceId && x.OuterResourceId == outerResourceId);
@@ -184,7 +184,7 @@ namespace OuterInnerResource.Pn.Handlers
                 
 //                mainElement.CheckListFolderName = microtingUId.ToString();
                 
-                foreach (Site_Dto siteDto in sites)
+                foreach (SiteDto siteDto in sites)
                 {
                     List<OuterInnerResourceSite> siteMatch = await _dbContext.OuterInnerResourceSites.Where(x =>
                         x.MicrotingSdkSiteId == siteDto.SiteId && x.OuterInnerResourceId == outerInnerResource.Id).ToListAsync();

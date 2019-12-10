@@ -86,10 +86,10 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Day
             };
 
-            List<Site_Dto> sitesList = new List<Site_Dto>()
+            List<SiteDto> sitesList = new List<SiteDto>()
             {
-                new Site_Dto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new Site_Dto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
+                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
             };
 
             DateTime modelDateFrom = new DateTime(
@@ -199,10 +199,10 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Week
             };
 
-            List<Site_Dto> sitesList = new List<Site_Dto>()
+            List<SiteDto> sitesList = new List<SiteDto>()
             {
-                new Site_Dto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new Site_Dto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
+                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
             };
 
             DateTime modelDateFrom = new DateTime(
@@ -303,10 +303,10 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Month
             };
 
-            List<Site_Dto> sitesList = new List<Site_Dto>()
+            List<SiteDto> sitesList = new List<SiteDto>()
             {
-                new Site_Dto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new Site_Dto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
+                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
             };
 
             DateTime modelDateFrom = new DateTime(

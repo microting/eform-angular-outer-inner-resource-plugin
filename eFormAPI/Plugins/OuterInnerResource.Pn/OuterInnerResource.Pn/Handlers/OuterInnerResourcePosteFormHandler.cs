@@ -32,7 +32,7 @@ namespace OuterInnerResource.Pn.Handlers
             OuterInnerResourceSite outerInnerResourceSite =
                 await _dbContext.OuterInnerResourceSites.SingleOrDefaultAsync(x =>
                     x.Id == message.OuterInnerResourceSiteId);
-            Site_Dto siteDto = await _core.SiteRead(outerInnerResourceSite.MicrotingSdkSiteId);
+            SiteDto siteDto = await _core.SiteRead(outerInnerResourceSite.MicrotingSdkSiteId);
             
             mainElement.Label = outerInnerResourceSite.OuterInnerResource.InnerResource.Name;
             mainElement.ElementList[0].Label = outerInnerResourceSite.OuterInnerResource.InnerResource.Name;
@@ -51,11 +51,11 @@ namespace OuterInnerResource.Pn.Handlers
                 mainElement.EnableQuickSync = true;    
             }
             
-            List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
+            List<FolderDto> folderDtos = await _core.FolderGetAll(true);
 //
             bool folderAlreadyExist = false;
             int _microtingUId = 0;
-            foreach (Folder_Dto folderDto in folderDtos)
+            foreach (FolderDto folderDto in folderDtos)
             {
                 if (folderDto.Name == outerInnerResourceSite.OuterInnerResource.OuterResource.Name)
                 {
@@ -70,7 +70,7 @@ namespace OuterInnerResource.Pn.Handlers
                     "", null);
                 folderDtos = await _core.FolderGetAll(true);
             
-                foreach (Folder_Dto folderDto in folderDtos)
+                foreach (FolderDto folderDto in folderDtos)
                 {
                     if (folderDto.Name == outerInnerResourceSite.OuterInnerResource.OuterResource.Name)
                     {
