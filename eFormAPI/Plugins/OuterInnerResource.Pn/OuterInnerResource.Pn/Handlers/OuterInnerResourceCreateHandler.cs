@@ -71,7 +71,6 @@ namespace OuterInnerResource.Pn.Handlers
             
             int eFormId = int.Parse(result);
 
-//            MainElement mainElement = await _core.TemplateRead(eFormId);
             List<SiteDto> sites = new List<SiteDto>();
             
             lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
@@ -130,60 +129,9 @@ namespace OuterInnerResource.Pn.Handlers
         {
             Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource = _dbContext.OuterInnerResources.SingleOrDefault(x =>
                     x.InnerResourceId == innerResourceId && x.OuterResourceId == outerResourceId);
-//            if (match == null)
-//            {
-//                Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource outerInnerResource =
-//                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource();
-//                outerInnerResource.OuterResourceId = outerResourceId;
-//                outerInnerResource.InnerResourceId = innerResourceId;
-//                await outerInnerResource.Create(_dbContext);
-//                mainElement.Label = innerResourceName;
-//                mainElement.ElementList[0].Label = innerResourceName;
-//                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
-//                mainElement.StartDate = DateTime.Now.ToUniversalTime();
-//                mainElement.Repeated = 0;
 
-//                string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
-//                LogEvent($"lookup is {lookup}");
-//
-//                bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
-//                    .FirstOrDefault(x => 
-//                        x.Name == lookup)?.Value == "true";
-//
-//                if (quickSyncEnabled)
-//                {
-//                    mainElement.EnableQuickSync = true;    
-//                }
-
-//                List<Folder_Dto> folderDtos = await _core.FolderGetAll(true);
-
-//                bool folderAlreadyExist = false;
-//                int microtingUId = 0;
-//                foreach (Folder_Dto folderDto in folderDtos)
-//                {
-//                    if (folderDto.Name == outerResourceName)
-//                    {
-//                        folderAlreadyExist = true;
-//                        microtingUId = (int)folderDto.MicrotingUId;
-//                    }
-//                }
-//
-//                if (!folderAlreadyExist)
-//                {
-//                    await _core.FolderCreate(outerResourceName, "", null);
-//                    folderDtos = await _core.FolderGetAll(true);
-//                
-//                    foreach (Folder_Dto folderDto in folderDtos)
-//                    {
-//                        if (folderDto.Name == outerResourceName)
-//                        {
-//                            microtingUId = (int)folderDto.MicrotingUId;
-//                        }
-//                    }
-//                }
-                
-//                mainElement.CheckListFolderName = microtingUId.ToString();
-                
+            if (sites.Any())
+            {
                 foreach (SiteDto siteDto in sites)
                 {
                     List<OuterInnerResourceSite> siteMatch = await _dbContext.OuterInnerResourceSites.Where(x =>
@@ -194,22 +142,13 @@ namespace OuterInnerResource.Pn.Handlers
                         {
                             OuterInnerResourceId = outerInnerResource.Id,
                             MicrotingSdkSiteId = siteDto.SiteId,
-//                            MicrotingSdkCaseId = (int) sdkCaseId,
                             MicrotingSdkeFormId = eFormId
                         };
                         await outerInnerResourceSite.Create(_dbContext);
                         await _bus.SendLocal(new OuterInnerResourcePosteForm(outerInnerResourceSite.Id, eFormId));
-
-
-//                        int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
-//
-//                        if (sdkCaseId != null)
-//                        {
-//                            
-//                        }    
                     }
-                }    
-//            }     
+                }   
+            }
         }
         
         private void LogEvent(string appendText)

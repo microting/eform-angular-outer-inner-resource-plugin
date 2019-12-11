@@ -100,53 +100,59 @@ namespace OuterInnerResource.Pn.Handlers
             
             if (outerInnerResource.WorkflowState == Constants.WorkflowStates.Created)
             {
-                foreach (SiteDto siteDto in sites)
+                if (sites.Any())
                 {
-                    siteIds.Add(siteDto.SiteId);
-                    List<OuterInnerResourceSite> outerInnerResourceSites = await _dbContext.OuterInnerResourceSites.Where(
-                        x =>
-                            x.MicrotingSdkSiteId == siteDto.SiteId
-                            && x.OuterInnerResourceId == outerInnerResource.Id
-                            && x.WorkflowState == Constants.WorkflowStates.Created).ToListAsync();
-                    if (!outerInnerResourceSites.Any())
+                    foreach (SiteDto siteDto in sites)
                     {
-                        OuterInnerResourceSite outerInnerResourceSite = new OuterInnerResourceSite
+                        siteIds.Add(siteDto.SiteId);
+                        List<OuterInnerResourceSite> outerInnerResourceSites = await _dbContext.OuterInnerResourceSites.Where(
+                            x =>
+                                x.MicrotingSdkSiteId == siteDto.SiteId
+                                && x.OuterInnerResourceId == outerInnerResource.Id
+                                && x.WorkflowState == Constants.WorkflowStates.Created).ToListAsync();
+                        if (!outerInnerResourceSites.Any())
                         {
-                            OuterInnerResourceId = outerInnerResource.Id,
-                            MicrotingSdkSiteId = siteDto.SiteId,
-                            MicrotingSdkeFormId = eFormId
-                        };
-                        await outerInnerResourceSite.Create(_dbContext);
-                        await _bus.SendLocal(new OuterInnerResourcePosteForm(outerInnerResourceSite.Id,
-                            eFormId));
-                    }
-                    else
-                    {
-                        if (outerInnerResourceSites.First().MicrotingSdkCaseId == null)
-                        {
-                            await _bus.SendLocal(new OuterInnerResourcePosteForm(
-                                outerInnerResourceSites.First().Id,
+                            OuterInnerResourceSite outerInnerResourceSite = new OuterInnerResourceSite
+                            {
+                                OuterInnerResourceId = outerInnerResource.Id,
+                                MicrotingSdkSiteId = siteDto.SiteId,
+                                MicrotingSdkeFormId = eFormId
+                            };
+                            await outerInnerResourceSite.Create(_dbContext);
+                            await _bus.SendLocal(new OuterInnerResourcePosteForm(outerInnerResourceSite.Id,
                                 eFormId));
                         }
+                        else
+                        {
+                            if (outerInnerResourceSites.First().MicrotingSdkCaseId == null)
+                            {
+                                await _bus.SendLocal(new OuterInnerResourcePosteForm(
+                                    outerInnerResourceSites.First().Id,
+                                    eFormId));
+                            }
+                        }
                     }
-                }
+                } 
             }
             var sitesConfigured = _dbContext.OuterInnerResourceSites.Where(x => 
                 x.OuterInnerResourceId == outerInnerResource.Id 
                 && x.WorkflowState != Constants.WorkflowStates.Removed).ToList();
             WriteLogEntry("OuterInnerResourceUpdateHandler: sitesConfigured looked up");
 
-            foreach (OuterInnerResourceSite outerInnerResourceSite in sitesConfigured)
+            if (sitesConfigured.Any())
             {
-                if (!siteIds.Contains(outerInnerResourceSite.MicrotingSdkSiteId) 
-                    || outerInnerResource.WorkflowState == Constants.WorkflowStates.Removed)
+                foreach (OuterInnerResourceSite outerInnerResourceSite in sitesConfigured)
                 {
-                    if (outerInnerResourceSite.MicrotingSdkCaseId != null)
+                    if (!siteIds.Contains(outerInnerResourceSite.MicrotingSdkSiteId) 
+                        || outerInnerResource.WorkflowState == Constants.WorkflowStates.Removed)
                     {
-                        await outerInnerResourceSite.Delete(_dbContext);
-                        await _bus.SendLocal(new OuterInnerResourceDeleteFromServer(outerInnerResourceSite.Id));
+                        if (outerInnerResourceSite.MicrotingSdkCaseId != null)
+                        {
+                            await outerInnerResourceSite.Delete(_dbContext);
+                            await _bus.SendLocal(new OuterInnerResourceDeleteFromServer(outerInnerResourceSite.Id));
+                        }
                     }
-                }
+                }    
             }
         }
 
