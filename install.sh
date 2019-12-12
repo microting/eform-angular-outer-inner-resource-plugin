@@ -44,6 +44,6 @@ su ubuntu -c \
 su ubuntu -c \
 "npm run build"
 echo "Recompiling angular done"
-./rabbitmqadmin declare queue name=eform-angular-outer-inner-resource-plugin durable=true
+/rabbitmqadmin declare queue name=eform-angular-outer-inner-resource-plugin durable=true
 
 
