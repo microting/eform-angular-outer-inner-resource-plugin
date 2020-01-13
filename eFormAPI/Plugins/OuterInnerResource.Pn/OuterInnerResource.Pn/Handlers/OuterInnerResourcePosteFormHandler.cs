@@ -66,14 +66,14 @@ namespace OuterInnerResource.Pn.Handlers
             
             string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}"; 
 
-//            bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
-//                                        .FirstOrDefault(x => 
-//                                            x.Name == lookup)?.Value == "true";
+            bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
+                                        .FirstOrDefault(x => 
+                                            x.Name == lookup)?.Value == "true";
 
-//            if (quickSyncEnabled)
-//            {
-            mainElement.EnableQuickSync = true;    
-//            }
+            if (quickSyncEnabled)
+            {
+                mainElement.EnableQuickSync = true;    
+            }
             
             List<FolderDto> folderDtos = await _core.FolderGetAll(true);
 
