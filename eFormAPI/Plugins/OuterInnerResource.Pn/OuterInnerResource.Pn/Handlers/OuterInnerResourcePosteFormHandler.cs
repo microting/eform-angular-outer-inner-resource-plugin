@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using eFormCore;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
@@ -104,6 +105,18 @@ namespace OuterInnerResource.Pn.Handlers
             }
             
             mainElement.CheckListFolderName = _microtingUId.ToString();
+
+            DataElement dataElement = (DataElement)mainElement.ElementList[0];
+            
+            dataElement.DataItemList.Add(new None(
+                1, 
+                false, 
+                true, 
+                outerInnerResourceSite.OuterInnerResource.OuterResource.Name, 
+                outerInnerResourceSite.OuterInnerResource.InnerResource.Name, 
+                Constants.FieldColors.Default, 
+                -999, 
+                false));
             
             int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
 
