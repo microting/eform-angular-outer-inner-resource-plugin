@@ -112,8 +112,8 @@ namespace OuterInnerResource.Pn.Handlers
                 1, 
                 false, 
                 true, 
-                outerInnerResourceSite.OuterInnerResource.OuterResource.Name, 
-                outerInnerResourceSite.OuterInnerResource.InnerResource.Name, 
+                $"{outerInnerResourceSite.OuterInnerResource.OuterResource.Name} - {outerInnerResourceSite.OuterInnerResource.InnerResource.Name}", 
+                "", 
                 Constants.FieldColors.Default, 
                 -999, 
                 false));
