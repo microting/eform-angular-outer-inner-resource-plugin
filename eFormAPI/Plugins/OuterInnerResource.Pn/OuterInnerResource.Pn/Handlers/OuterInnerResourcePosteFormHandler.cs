@@ -111,7 +111,7 @@ namespace OuterInnerResource.Pn.Handlers
             dataElement.DataItemList.Add(new None(
                 1, 
                 false, 
-                true, 
+                false, 
                 $"{outerInnerResourceSite.OuterInnerResource.OuterResource.Name} - {outerInnerResourceSite.OuterInnerResource.InnerResource.Name}", 
                 "", 
                 Constants.FieldColors.Default, 
