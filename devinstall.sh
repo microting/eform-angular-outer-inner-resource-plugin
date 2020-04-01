@@ -11,8 +11,8 @@ rm -fR Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/Out
 cp -a Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/OuterInnerResource.Pn
 
 # Test files rm
-rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/e2e/Tests/monitoring-settings
-rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/e2e/Tests/monitoring-general
+rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-settings
+rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-general
 rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/e2e/Page\ objects/outer-inner-resource
 rm -fR Documents/workspace/microting/eform-angular-frontend/eform-client/wdio-plugin-step2.conf.js
 
