@@ -14,7 +14,7 @@ import {
   styleUrls: ['./inner-resource-edit.component.scss']
 })
 export class InnerResourceEditComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Input() mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
   @Output() onMachineUpdated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;

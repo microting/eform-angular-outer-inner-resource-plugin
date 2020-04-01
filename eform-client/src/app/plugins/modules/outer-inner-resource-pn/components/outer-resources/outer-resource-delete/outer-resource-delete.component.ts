@@ -8,7 +8,7 @@ import {OuterResourcePnModel} from '../../../models/area';
   styleUrls: ['./outer-resource-delete.component.scss']
 })
 export class OuterResourceDeleteComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Output() onAreaDeleted: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
   selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();

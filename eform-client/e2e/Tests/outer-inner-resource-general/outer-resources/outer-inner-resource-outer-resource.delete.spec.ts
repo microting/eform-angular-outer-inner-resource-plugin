@@ -13,20 +13,20 @@ describe('Machine Area Machine delete', function () {
     const newEformLabel = 'Machine Area machine eForm';
     outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
     outerInnerResourceOuterResourcePage.goToOuterResource();
-    // browser.waitForVisible('#newAreaBtn', 20000);
+    // $('#newAreaBtn').waitForDisplayed(20000);
     browser.pause(8000);
   });
   it('should add machine', function () {
     outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createOuterResourceName', 20000);
+    $('#createOuterResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
     browser.pause(8000);
   });
   it('should delete machine', function () {
     const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
-    browser.waitForVisible('#outerResourceDeleteBtn', 20000);
+    $('#outerResourceDeleteBtn').waitForDisplayed(20000);
     listRowObject.deleteBtn.click();
     browser.pause(2000);
     outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();

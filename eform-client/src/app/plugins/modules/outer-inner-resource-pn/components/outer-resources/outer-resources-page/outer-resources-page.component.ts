@@ -11,9 +11,9 @@ import {OuterInnerResourcePnInnerResourceService, OuterInnerResourcePnOuterResou
   styleUrls: ['./outer-resources-page.component.scss']
 })
 export class OuterResourcesPageComponent implements OnInit {
-  @ViewChild('createAreaModal') createAreaModal;
-  @ViewChild('editAreaModal') editAreaModal;
-  @ViewChild('deleteAreaModal') deleteAreaModal;
+  @ViewChild('createAreaModal', {static: false}) createAreaModal;
+  @ViewChild('editAreaModal', {static: false}) editAreaModal;
+  @ViewChild('deleteAreaModal', {static: false}) deleteAreaModal;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   areasModel: OuterResourcesPnModel = new OuterResourcesPnModel();
   mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();

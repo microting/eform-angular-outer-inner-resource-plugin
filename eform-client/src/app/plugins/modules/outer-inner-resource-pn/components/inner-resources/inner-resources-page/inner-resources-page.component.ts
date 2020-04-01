@@ -19,9 +19,9 @@ import {OuterInnerResourcePnClaims} from '../../../enums';
   styleUrls: ['./inner-resources-page.component.scss']
 })
 export class InnerResourcesPageComponent implements OnInit {
-  @ViewChild('createMachineModal') createMachineModal;
-  @ViewChild('editMachineModal') editMachineModal;
-  @ViewChild('deleteMachineModal') deleteMachineModal;
+  @ViewChild('createMachineModal', {static: false}) createMachineModal;
+  @ViewChild('editMachineModal', {static: false}) editMachineModal;
+  @ViewChild('deleteMachineModal', {static: false}) deleteMachineModal;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   machinesModel: InnerResourcesPnModel = new InnerResourcesPnModel();
   machinesRequestModel: InnerResourcesPnRequestModel = new InnerResourcesPnRequestModel();

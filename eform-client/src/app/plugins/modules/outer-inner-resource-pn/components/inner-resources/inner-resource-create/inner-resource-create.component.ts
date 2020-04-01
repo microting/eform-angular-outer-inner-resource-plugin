@@ -9,7 +9,7 @@ import {OuterInnerResourcePnInnerResourceService} from '../../../services';
   styleUrls: ['./inner-resource-create.component.scss']
 })
 export class InnerResourceCreateComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Input() mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
   @Output() onMachineCreated: EventEmitter<void> = new EventEmitter<void>();
   checked = false;

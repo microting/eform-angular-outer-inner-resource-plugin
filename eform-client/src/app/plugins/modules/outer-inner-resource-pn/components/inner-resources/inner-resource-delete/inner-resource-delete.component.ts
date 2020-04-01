@@ -8,7 +8,7 @@ import {OuterInnerResourcePnInnerResourceService} from '../../../services';
   styleUrls: ['./inner-resource-delete.component.scss']
 })
 export class InnerResourceDeleteComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Output() onMachineDeleted: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
   selectedMachineModel: InnerResourcePnModel = new InnerResourcePnModel();

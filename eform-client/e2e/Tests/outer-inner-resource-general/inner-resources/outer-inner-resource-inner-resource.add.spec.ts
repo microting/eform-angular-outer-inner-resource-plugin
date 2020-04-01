@@ -12,27 +12,24 @@ describe('Machine Area Area Add', function () {
     const newEformLabel = 'Machine Area area eForm';
     outerInnerResourceInnerResourcePage.createNewEform(newEformLabel);
     outerInnerResourceInnerResourcePage.goToInnerResource();
-    // browser.waitForVisible('#newAreaBtn', 20000);
-    browser.pause(8000);
+    // $('#newAreaBtn').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should add area with only name', function () {
     outerInnerResourceInnerResourcePage.newInnerResourceBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createInnerResourceName', 20000);
+    $('#createInnerResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.innerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const listRowObject = new ListRowObject(1);
     expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
-    browser.refresh();
   });
   it('should clean up', function () {
     const listRowObject = new ListRowObject(outerInnerResourceInnerResourcePage.rowNum());
-    browser.waitForVisible('#innerResourceDeleteBtn', 20000);
+    $('#innerResourceDeleteBtn').waitForDisplayed(20000);
     listRowObject.deleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     outerInnerResourceModalPage.innerResourceDeleteDeleteBtn.click();
-    browser.pause(5000);
-    browser.refresh();
   });
 });

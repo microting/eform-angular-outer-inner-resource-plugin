@@ -13,13 +13,13 @@ describe('Machine Area Machine edit', function () {
     const newEformLabel = 'Machine Area machine eForm';
     outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
     outerInnerResourceOuterResourcePage.goToOuterResource();
-    // browser.waitForVisible('#newAreaBtn', 20000);
+    // $('#newAreaBtn').waitForDisplayed(20000);
     browser.pause(8000);
   });
   it('should create a new machine', function () {
     outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createOuterResourceName', 20000);
+    $('#createOuterResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
     browser.pause(8000);
@@ -40,7 +40,7 @@ describe('Machine Area Machine edit', function () {
   // });
   it('should clean up', function () {
     const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
-    browser.waitForVisible('#outerResourceDeleteBtn', 20000);
+    $('#outerResourceDeleteBtn').waitForDisplayed(20000);
     listRowObject.deleteBtn.click();
     browser.pause(2000);
     outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();

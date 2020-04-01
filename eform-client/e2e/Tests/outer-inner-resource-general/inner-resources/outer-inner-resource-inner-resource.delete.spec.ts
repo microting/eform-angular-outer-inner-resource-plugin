@@ -12,25 +12,22 @@ describe('Machine Area Area delete', function () {
     const newEformLabel = 'Number 1';
     // machineAreaAreaPage.createNewEform(newEformLabel);
     outerInnerResourceInnerResourcePage.goToInnerResource();
-    // browser.waitForVisible('#newAreaBtn', 20000);
-    browser.pause(8000);
+    // $('#newAreaBtn').waitForDisplayed(20000);
   });
   it('should create a new area', function () {
     outerInnerResourceInnerResourcePage.newInnerResourceBtn.click();
     const newName = Guid.create().toString();
-    browser.waitForVisible('#createInnerResourceName', 20000);
+    $('#createInnerResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.innerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
-    browser.pause(8000);
   });
   it('should delete area', function () {
     const listRowObject = new ListRowObject(1);
     listRowObject.deleteBtn.click();
-    browser.waitForVisible('#innerResourceDeleteName', 20000);
-    browser.pause(2000);
+    $('#innerResourceDeleteName').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     outerInnerResourceModalPage.innerResourceDeleteDeleteBtn.click();
-    browser.pause(2000);
-    browser.refresh();
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(listRowObject.id === null, 'Area is not deleted');
 
   });

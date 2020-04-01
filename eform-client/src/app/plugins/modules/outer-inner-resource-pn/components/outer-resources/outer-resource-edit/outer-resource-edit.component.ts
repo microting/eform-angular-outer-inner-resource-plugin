@@ -10,7 +10,7 @@ import {OuterInnerResourcePnOuterResourceService} from '../../../services';
   styleUrls: ['./outer-resource-edit.component.scss']
 })
 export class OuterResourceEditComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Input() mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
   @Output() onAreaUpdated: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
