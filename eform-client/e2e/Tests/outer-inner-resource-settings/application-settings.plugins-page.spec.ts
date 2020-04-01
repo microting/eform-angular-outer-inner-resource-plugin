@@ -40,6 +40,6 @@ describe('Application settings page - site header section', function () {
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Outer Inner Resource plugin');
         expect(plugin.version).equal('1.0.0.0');
-        expect(plugin.settingsBtn.isVisible());
+        plugin.settingsBtn.waitForDisplayed(20000);
     });
 });
