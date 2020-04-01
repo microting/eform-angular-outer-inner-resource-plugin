@@ -40,9 +40,6 @@ import {OuterInnerResourcePnRouting} from './outer-inner-resource-pn-routing.mod
     TranslateModule,
     FormsModule,
     NgSelectModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    OwlMomentDateTimeModule,
     ReactiveFormsModule,
     FontAwesomeModule
   ],
@@ -66,7 +63,6 @@ import {OuterInnerResourcePnRouting} from './outer-inner-resource-pn-routing.mod
     OuterInnerResourcePnInnerResourceService,
     OuterInnerResourcePnSettingsService,
     OuterInnerResourcePnReportsService,
-  {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
   ]
 })
 export class OuterInnerResourcePnModule { }
