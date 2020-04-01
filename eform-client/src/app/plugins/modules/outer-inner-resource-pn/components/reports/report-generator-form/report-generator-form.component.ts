@@ -1,13 +1,13 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DateTimeAdapter} from 'ng-pick-datetime';
 import {LocaleService} from 'src/app/common/services/auth';
 
 import {ReportPnGenerateModel} from '../../../models';
-import {format} from "date-fns";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {format} from 'date-fns';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {OuterInnerResourcePnReportsService} from '../../../services';
 import {ReportNamesModel} from '../../../models/report/report-names.model';
 import {OuterInnerResourcePnReportTypeEnum} from '../../../enums';
+import {DateTimeAdapter} from 'ng-pick-datetime-ex';
 
 @Component({
   selector: 'app-machine-area-pn-report-generator-form',
