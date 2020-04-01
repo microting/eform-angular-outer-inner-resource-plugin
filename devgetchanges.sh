@@ -2,7 +2,7 @@
 
 cd ~
 
-rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/src/app/plugins/modules/outer-inner-resource-pn
+rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/src/app/plugins/modules/outer-inner-resource-pn
 
 cp -a Documents/workspace/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/outer-inner-resource-pn Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/src/app/plugins/modules/outer-inner-resource-pn
 
