@@ -6,14 +6,14 @@ rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eform-clien
 
 cp -a Documents/workspace/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/outer-inner-resource-pn Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/src/app/plugins/modules/outer-inner-resource-pn
 
-rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eFormAPI/Plugins/OuterInnerResource.Pn
+rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn
 
-cp -a Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/OuterInnerResource.Pn Documents/workspace/microting/eform-angular-monitoring-plugin/eFormAPI/Plugins/OuterInnerResource.Pn
+cp -a Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/OuterInnerResource.Pn Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn
 
 # Test files rm
-rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/monitoring-settings/
-rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/monitoring-general/
-rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Page\ objects/Monitoring/
+rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-settings/
+rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-general/
+rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/e2e/Page\ objects/outer-inner-resource/
 rm -fR Documents/workspace/microting/eform-angular-outer-inner-resource-plugin/eform-client/wdio-headless-plugin-step2.conf.js
 
 # Test files cp
