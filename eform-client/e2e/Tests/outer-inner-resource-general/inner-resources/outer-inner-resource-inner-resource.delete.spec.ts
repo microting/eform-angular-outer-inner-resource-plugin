@@ -20,8 +20,10 @@ describe('Machine Area Area delete', function () {
     $('#createInnerResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.innerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should delete area', function () {
+    browser.pause(500);
     const listRowObject = new ListRowObject(1);
     listRowObject.deleteBtn.click();
     $('#innerResourceDeleteName').waitForDisplayed(20000);

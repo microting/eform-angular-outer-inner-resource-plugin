@@ -29,6 +29,7 @@ import {
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {OuterInnerResourcePnRouting} from './outer-inner-resource-pn-routing.module';
+import {OwlDateTimeModule} from 'ng-pick-datetime-ex';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {OuterInnerResourcePnRouting} from './outer-inner-resource-pn-routing.mod
     FormsModule,
     NgSelectModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    OwlDateTimeModule
   ],
   declarations: [
     OuterResourcesPageComponent,

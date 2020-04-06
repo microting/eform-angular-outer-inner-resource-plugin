@@ -68,37 +68,40 @@ namespace OuterInnerResource.Pn.Handlers
                 ?.Value;
             
             LogEvent($"result is {result}");
-            
-            int eFormId = int.Parse(result);
 
-            List<SiteDto> sites = new List<SiteDto>();
-            
-            lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
-            LogEvent($"lookup is {lookup}");
-
-            string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
-                .FirstOrDefault(x => 
-                    x.Name == lookup)?.Value;
-
-
-            if (sdkSiteIds != null)
+            if (result != null)
             {
-                LogEvent($"sdkSiteIds is {sdkSiteIds}");
-                foreach (string siteId in sdkSiteIds.Split(","))
+                int eFormId = int.Parse(result);
+
+                List<SiteDto> sites = new List<SiteDto>();
+            
+                lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+                LogEvent($"lookup is {lookup}");
+
+                string sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
+                    .FirstOrDefault(x => 
+                        x.Name == lookup)?.Value;
+
+
+                if (sdkSiteIds != null)
                 {
-                    LogEvent($"found siteId {siteId}");
-                    sites.Add(await _core.SiteRead(int.Parse(siteId)));
+                    LogEvent($"sdkSiteIds is {sdkSiteIds}");
+                    foreach (string siteId in sdkSiteIds.Split(","))
+                    {
+                        LogEvent($"found siteId {siteId}");
+                        sites.Add(await _core.SiteRead(int.Parse(siteId)));
+                    }
+                }
+
+                if (message.InnerResourceModel != null)
+                {
+                    await CreateFromInnerResource(message.InnerResourceModel, sites, eFormId);
+                }
+                else
+                {
+                    await CreateFromOuterResource(message.OuterResourceModel, sites, eFormId);
                 }
             }
-
-            if (message.InnerResourceModel != null)
-            {
-                await CreateFromInnerResource(message.InnerResourceModel, sites, eFormId);
-            }
-            else
-            {
-                await CreateFromOuterResource(message.OuterResourceModel, sites, eFormId);
-            }            
         }
 
         private async Task CreateFromInnerResource(InnerResourceModel model, List<SiteDto> sites, int eFormId)

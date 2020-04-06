@@ -11,10 +11,10 @@ describe('Machine Area Machine Add', function () {
     loginPage.open('/auth');
     loginPage.login();
     const newEformLabel = 'Machine Area machine eForm';
-    outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
+    //outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
     outerInnerResourceOuterResourcePage.goToOuterResource();
     // $('#newAreaBtn').waitForDisplayed(20000);
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should add machine with only name', function () {
     outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
@@ -22,19 +22,17 @@ describe('Machine Area Machine Add', function () {
     $('#createOuterResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const listRowObject = new ListRowObject(1);
     expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
-    browser.refresh();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should clean up', function () {
     const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
     $('#outerResourceDeleteBtn').waitForDisplayed(20000);
     listRowObject.deleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();
-    browser.pause(5000);
-    browser.refresh();
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
 });

@@ -11,10 +11,10 @@ describe('Machine Area Machine edit', function () {
     loginPage.open('/auth');
     loginPage.login();
     const newEformLabel = 'Machine Area machine eForm';
-    outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
+    //outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
     outerInnerResourceOuterResourcePage.goToOuterResource();
     // $('#newAreaBtn').waitForDisplayed(20000);
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should create a new machine', function () {
     outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
@@ -22,7 +22,7 @@ describe('Machine Area Machine edit', function () {
     $('#createOuterResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   // can't change name.
   // it('should edit machine', function () {
@@ -33,18 +33,18 @@ describe('Machine Area Machine edit', function () {
   //   outerInnerResourceModalPage.outerResourceEditNameInput.clearElement();
   //   outerInnerResourceModalPage.outerResourceEditNameInput.addValue(newName);
   //   outerInnerResourceModalPage.outerResourceEditSaveBtn.click();
-  //   browser.pause(2000);
+  //   $('#spinner-animation').waitForDisplayed(90000, true);
   //   browser.refresh();
   //   browser.waitForVisible(listRowObject.updateBtn, 20000);
   //   expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   // });
   it('should clean up', function () {
+    browser.pause(500);
     const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
     $('#outerResourceDeleteBtn').waitForDisplayed(20000);
     listRowObject.deleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();
-    browser.pause(5000);
-    browser.refresh();
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
 });

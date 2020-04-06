@@ -20,8 +20,9 @@ describe('Machine Area Area edit', function () {
     $('#createInnerResourceName').waitForDisplayed(20000);
     outerInnerResourceModalPage.innerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
-  // Can't change name.
+  // TODO Can't change name.
   // it('should edit area', function () {
   //   const listRowObject = new ListRowObject(outerInnerResourceInnerResourcePage.rowNum());
   //   const newName = 'New Name';
@@ -36,6 +37,7 @@ describe('Machine Area Area edit', function () {
   //   expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   // });
   it('should clean up', function () {
+    browser.pause(500);
     const listRowObject = new ListRowObject(outerInnerResourceInnerResourcePage.rowNum());
     $('#innerResourceDeleteBtn').waitForDisplayed(20000);
     listRowObject.deleteBtn.click();
