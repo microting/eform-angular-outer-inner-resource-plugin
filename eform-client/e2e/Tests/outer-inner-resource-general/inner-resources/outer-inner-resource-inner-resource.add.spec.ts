@@ -12,24 +12,24 @@ describe('Machine Area Area Add', function () {
     const newEformLabel = 'Machine Area area eForm';
     outerInnerResourceInnerResourcePage.createNewEform(newEformLabel);
     outerInnerResourceInnerResourcePage.goToInnerResource();
-    // $('#newAreaBtn').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    // $('#newAreaBtn').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('should add area with only name', function () {
     outerInnerResourceInnerResourcePage.newInnerResourceBtn.click();
     const newName = Guid.create().toString();
-    $('#createInnerResourceName').waitForDisplayed(20000);
+    $('#createInnerResourceName').waitForDisplayed({timeout: 20000});
     outerInnerResourceModalPage.innerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const listRowObject = new ListRowObject(1);
     expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   });
   it('should clean up', function () {
     const listRowObject = new ListRowObject(outerInnerResourceInnerResourcePage.rowNum());
-    $('#innerResourceDeleteBtn').waitForDisplayed(20000);
+    $('#innerResourceDeleteBtn').waitForDisplayed({timeout: 20000});
     listRowObject.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     outerInnerResourceModalPage.innerResourceDeleteDeleteBtn.click();
   });
 });

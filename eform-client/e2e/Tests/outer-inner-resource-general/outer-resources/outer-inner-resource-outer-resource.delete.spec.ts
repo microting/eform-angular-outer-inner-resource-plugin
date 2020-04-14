@@ -13,24 +13,24 @@ describe('Machine Area Machine delete', function () {
     const newEformLabel = 'Machine Area machine eForm';
     //outerInnerResourceOuterResourcePage.createNewEform(newEformLabel);
     outerInnerResourceOuterResourcePage.goToOuterResource();
-    // $('#newAreaBtn').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    // $('#newAreaBtn').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('should add machine', function () {
     outerInnerResourceOuterResourcePage.newOuterResourceBtn.click();
     const newName = Guid.create().toString();
-    $('#createOuterResourceName').waitForDisplayed(20000);
+    $('#createOuterResourceName').waitForDisplayed({timeout: 20000});
     outerInnerResourceModalPage.outerResourceCreateNameInput.addValue(newName);
     outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('should delete machine', function () {
     browser.pause(500);
     const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
-    $('#outerResourceDeleteBtn').waitForDisplayed(20000);
+    $('#outerResourceDeleteBtn').waitForDisplayed({timeout: 20000});
     listRowObject.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
 });

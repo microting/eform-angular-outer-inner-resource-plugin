@@ -10,8 +10,8 @@
             <div class="row mb-2">
               <div class="col-md-12 col-xs-12">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
+                  <input mdbInput
+
                          [(ngModel)]="selectedMachineModel.name"
                          type="text" id="updateInnerResourceName"
                          name="updateInnerResourceName" class="form-control" [readOnly]="true">
@@ -22,8 +22,8 @@
             <div class="row mb-2">
               <div class="col-md-12 col-xs-12">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
+                  <input mdbInput
+
                          [(ngModel)]="selectedMachineModel.externalId"
                          type="text" id="updateInnerResourceExternalId"
                          name="updateInnerResourceExternalId" class="form-control" [readOnly]="true">
@@ -70,10 +70,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" id="innerResourceEditSaveBtn" [disabled]="!selectedMachineModel.name" (click)="updateMachine()">
+        <button mdbBtn class="btn-success" id="innerResourceEditSaveBtn" [disabled]="!selectedMachineModel.name" (click)="updateMachine()">
           {{ 'Save' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" id="innerResourceEditCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50" id="innerResourceEditCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

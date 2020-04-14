@@ -66,13 +66,13 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2"
+            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Edit' | translate }}"
                     id="innerResourceEditBtn"
                     (click)="showEditMachineModal(machine)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 "
+            <button mdbBtn class="btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete' | translate }}"
                     id="innerResourceDeleteBtn"
                     (click)="showDeleteMachineModal(machine)">

@@ -13,56 +13,56 @@ export class OuterInnerResourceInnerResourcePage extends PageWithNavbarPage {
         return $$('#tableBody > tr').length;
     }
     public get newEformBtn() {
-        $('#newEFormBtn').waitForDisplayed(20000);
+        $('#newEFormBtn').waitForDisplayed({timeout: 20000});
         $('#newEFormBtn').waitForClickable({timeout: 20000});
         return $('#newEFormBtn');
     }
     public get xmlTextArea() {
-        $('#eFormXml').waitForDisplayed(20000);
+        $('#eFormXml').waitForDisplayed({timeout: 20000});
         $('#eFormXml').waitForClickable({timeout: 20000});
         return $('#eFormXml');
     }
     public get createEformBtn() {
-        $('#createEformBtn').waitForDisplayed(20000);
+        $('#createEformBtn').waitForDisplayed({timeout: 20000});
         $('#createEformBtn').waitForClickable({timeout: 20000});
         return $('#createEformBtn');
     }
     public get createEformTagSelector() {
-        $('#createEFormMultiSelector').waitForDisplayed(20000);
+        $('#createEFormMultiSelector').waitForDisplayed({timeout: 20000});
         $('#createEFormMultiSelector').waitForClickable({timeout: 20000});
         return $('#createEFormMultiSelector');
     }
     public get createEformNewTagInput() {
-        $('#addTagInput').waitForDisplayed(20000);
+        $('#addTagInput').waitForDisplayed({timeout: 20000});
         $('#addTagInput').waitForClickable({timeout: 20000});
         return $('#addTagInput');
     }
     public get outerInnerResourceDropdownMenu() {
-        $('#outer-inner-resource-pn').waitForDisplayed(20000);
+        $('#outer-inner-resource-pn').waitForDisplayed({timeout: 20000});
         $('#outer-inner-resource-pn').waitForClickable({timeout: 20000});
         return $('#outer-inner-resource-pn');
     }
     public get innerResourceMenuPoint() {
-        $('#outer-inner-resource-pn-inner-resources').waitForDisplayed(20000);
+        $('#outer-inner-resource-pn-inner-resources').waitForDisplayed({timeout: 20000});
         $('#outer-inner-resource-pn-inner-resources').waitForClickable({timeout: 20000});
         return $('#outer-inner-resource-pn-inner-resources');
     }
     public get newInnerResourceBtn() {
-        $('#newInnerResource').waitForDisplayed(20000);
+        $('#newInnerResource').waitForDisplayed({timeout: 20000});
         $('#newInnerResource').waitForClickable({timeout: 20000});
         return $('#newInnerResource');
     }
 
     goToInnerResource() {
         this.outerInnerResourceDropdownMenu.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         this.innerResourceMenuPoint.click();
-        $('#newInnerResource').waitForDisplayed(20000);
+        $('#newInnerResource').waitForDisplayed({timeout: 20000});
     }
 
     createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
         this.newEformBtn.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         // Create replaced xml and insert it in textarea
         const xml = XMLForEformFractions.XML.replace('TEST_LABEL', eFormLabel);
         browser.execute(function (xmlText) {
@@ -73,23 +73,23 @@ export class OuterInnerResourceInnerResourcePage extends PageWithNavbarPage {
         const addedTags: string[] = newTagsList;
         if (newTagsList.length > 0) {
             this.createEformNewTagInput.setValue(newTagsList.join(','));
-            $('#spinner-animation').waitForDisplayed(90000, true);
+            $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         }
         // Add existing tags
         const selectedTags: string[] = [];
         if (tagAddedNum > 0) {
-            $('#spinner-animation').waitForDisplayed(90000, true);
+            $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
             for (let i = 0; i < tagAddedNum; i++) {
                 this.createEformTagSelector.click();
                 const selectedTag = $('.ng-option:not(.ng-option-selected)');
                 selectedTags.push(selectedTag.getText());
                 console.log('selectedTags is ' + JSON.stringify(selectedTags));
                 selectedTag.click();
-                $('#spinner-animation').waitForDisplayed(90000, true);
+                $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
             }
         }
         this.createEformBtn.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         return {added: addedTags, selected: selectedTags};
     }
 }

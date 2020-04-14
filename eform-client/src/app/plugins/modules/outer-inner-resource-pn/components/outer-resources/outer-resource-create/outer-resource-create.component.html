@@ -9,8 +9,8 @@
           <div class="row mb-2">
             <div class="col-md-12 col-xs-12">
               <div class="md-form">
-                <input mdbInputDirective
-                       [mdbValidate]="false"
+                <input mdbInput
+
                        [(ngModel)]="newAreaModel.name"
                        type="text" id="createOuterResourceName"
                        name="createOuterResourceName" class="form-control">
@@ -21,8 +21,8 @@
           <div class="row mb-2">
             <div class="col-md-12 col-xs-12">
               <div class="md-form">
-                <input mdbInputDirective
-                       [mdbValidate]="false"
+                <input mdbInput
+
                        [(ngModel)]="newAreaModel.externalId"
                        type="text" id="createOuterResourceExternalId"
                        name="createOuterResourceExternalId" class="form-control">
@@ -65,10 +65,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" id="outerResourceCreateSaveBtn" [disabled]="!newAreaModel.name" (click)="createArea()">
+        <button mdbBtn class="btn-success" id="outerResourceCreateSaveBtn" [disabled]="!newAreaModel.name" (click)="createArea()">
           {{ 'Create' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" id="outerResourceCreateCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50" id="outerResourceCreateCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>
