@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
-import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {MY_MOMENT_FORMATS} from 'src/app/common/helpers';
 
