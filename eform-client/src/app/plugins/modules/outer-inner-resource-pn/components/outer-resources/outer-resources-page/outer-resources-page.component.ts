@@ -18,7 +18,6 @@ export class OuterResourcesPageComponent implements OnInit {
   areasModel: OuterResourcesPnModel = new OuterResourcesPnModel();
   mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
   areasRequestModel: OuterResourcesPnRequestModel = new OuterResourcesPnRequestModel();
-  spinnerStatus = false;
 
   constructor(private sharedPnService: SharedPnService,
               private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
@@ -46,23 +45,21 @@ export class OuterResourcesPageComponent implements OnInit {
   }
 
   getAllAreas() {
-    this.spinnerStatus = true;
     this.areasRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.areasRequestModel.sort = this.localPageSettings.sort;
     this.areasRequestModel.pageSize = this.localPageSettings.pageSize;
     this.machineAreaPnAreasService.getAllAreas(this.areasRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.areasModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   getMachinesForMapping() {
-    this.spinnerStatus = true;
     this.machineAreaPnMachinesService.getAllMachines(new InnerResourcesPnRequestModel()).subscribe((data) => {
       if (data && data.success) {
         this.mappingMachines = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 

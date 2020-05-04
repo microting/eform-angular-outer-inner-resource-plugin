@@ -26,7 +26,6 @@ export class InnerResourcesPageComponent implements OnInit {
   machinesModel: InnerResourcesPnModel = new InnerResourcesPnModel();
   machinesRequestModel: InnerResourcesPnRequestModel = new InnerResourcesPnRequestModel();
   mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
-  spinnerStatus = false;
   name: string;
 
   get pluginClaimsHelper() {
@@ -66,23 +65,21 @@ export class InnerResourcesPageComponent implements OnInit {
   }
 
   getAllMachines() {
-    this.spinnerStatus = true;
     this.machinesRequestModel.pageSize = this.localPageSettings.pageSize;
     this.machinesRequestModel.sort = this.localPageSettings.sort;
     this.machinesRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.machineAreaPnMachinesService.getAllMachines(this.machinesRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.machinesModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   getMappedAreas() {
-    this.spinnerStatus = true;
     this.machineAreaPnAreasService.getAllAreas(new OuterResourcesPnRequestModel()).subscribe((data) => {
       if (data && data.success) {
         this.mappingAreas = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 

@@ -13,7 +13,6 @@ import {EFormService} from '../../../../../common/services/eform';
   styleUrls: ['./outer-inner-resource-settings.component.scss']
 })
 export class OuterInnerResourceSettingsComponent implements OnInit {
-  spinnerStatus = false;
   typeahead = new EventEmitter<string>();
   settingsModel: OuterInnerResourceBaseSettingsModel = new OuterInnerResourceBaseSettingsModel();
   templatesModel: TemplateListModel = new TemplateListModel();
@@ -44,20 +43,18 @@ export class OuterInnerResourceSettingsComponent implements OnInit {
   }
 
   getSettings() {
-    this.spinnerStatus = true;
     this.machineAreaPnSettingsService.getAllSettings().subscribe((data) => {
       if (data && data.success) {
         this.settingsModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
   updateSettings() {
-    this.spinnerStatus = true;
     this.machineAreaPnSettingsService.updateSettings(this.settingsModel)
       .subscribe((data) => {
         if (data && data.success) {
 
-        } this.spinnerStatus = false;
+        }
       });
   }
 

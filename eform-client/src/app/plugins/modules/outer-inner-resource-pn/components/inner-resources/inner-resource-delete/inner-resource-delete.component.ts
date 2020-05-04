@@ -10,7 +10,6 @@ import {OuterInnerResourcePnInnerResourceService} from '../../../services';
 export class InnerResourceDeleteComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;
   @Output() onMachineDeleted: EventEmitter<void> = new EventEmitter<void>();
-  spinnerStatus = false;
   selectedMachineModel: InnerResourcePnModel = new InnerResourcePnModel();
   constructor(private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService) { }
 
@@ -23,13 +22,12 @@ export class InnerResourceDeleteComponent implements OnInit {
   }
 
   deleteMachine() {
-    this.spinnerStatus = true;
     this.machineAreaPnMachinesService.deleteMachine(this.selectedMachineModel.id).subscribe((data) => {
       if (data && data.success) {
         this.onMachineDeleted.emit();
         this.selectedMachineModel = new InnerResourcePnModel();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

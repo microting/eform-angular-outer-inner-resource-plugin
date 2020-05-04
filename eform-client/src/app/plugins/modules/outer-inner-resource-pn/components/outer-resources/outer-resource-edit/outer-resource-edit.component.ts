@@ -13,7 +13,6 @@ export class OuterResourceEditComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;
   @Input() mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
   @Output() onAreaUpdated: EventEmitter<void> = new EventEmitter<void>();
-  spinnerStatus = false;
   selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();
   constructor(private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService) { }
 
@@ -26,22 +25,20 @@ export class OuterResourceEditComponent implements OnInit {
   }
 
   getSelectedArea(id: number) {
-    this.spinnerStatus = true;
     this.machineAreaPnAreasService.getSingleArea(id).subscribe((data) => {
       if (data && data.success) {
         this.selectedAreaModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   updateArea() {
-    this.spinnerStatus = true;
     this.machineAreaPnAreasService.updateArea(new OuterResourcePnUpdateModel(this.selectedAreaModel)).subscribe((data) => {
       if (data && data.success) {
         this.onAreaUpdated.emit();
         this.selectedAreaModel = new OuterResourcePnModel();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

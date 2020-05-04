@@ -13,7 +13,6 @@ export class InnerResourceCreateComponent implements OnInit {
   @Input() mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
   @Output() onMachineCreated: EventEmitter<void> = new EventEmitter<void>();
   checked = false;
-  spinnerStatus = false;
   newMachineModel: InnerResourcePnCreateModel = new InnerResourcePnCreateModel();
 
   constructor(private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService) { }
@@ -27,14 +26,13 @@ export class InnerResourceCreateComponent implements OnInit {
   }
 
   createMachine() {
-    this.spinnerStatus = true;
     this.machineAreaPnMachinesService.createMachine(this.newMachineModel).subscribe((data) => {
       if (data && data.success) {
         this.onMachineCreated.emit();
         this.newMachineModel = new InnerResourcePnCreateModel();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
+
     });
   }
 

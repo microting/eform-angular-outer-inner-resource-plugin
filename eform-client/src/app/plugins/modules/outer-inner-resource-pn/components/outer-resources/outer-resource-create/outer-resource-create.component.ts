@@ -11,7 +11,6 @@ export class OuterResourceCreateComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;
   @Input() mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
   @Output() onAreaCreated: EventEmitter<void> = new EventEmitter<void>();
-  spinnerStatus = false;
   newAreaModel: OuterResourcePnCreateModel = new OuterResourcePnCreateModel();
 
   constructor(private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService) { }
@@ -25,13 +24,12 @@ export class OuterResourceCreateComponent implements OnInit {
   }
 
   createArea() {
-    this.spinnerStatus = true;
     this.machineAreaPnAreasService.createArea(this.newAreaModel).subscribe((data) => {
       if (data && data.success) {
         this.onAreaCreated.emit();
         this.newAreaModel = new OuterResourcePnCreateModel();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

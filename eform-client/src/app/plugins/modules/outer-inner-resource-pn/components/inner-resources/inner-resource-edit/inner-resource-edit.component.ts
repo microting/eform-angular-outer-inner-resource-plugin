@@ -17,7 +17,6 @@ export class InnerResourceEditComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;
   @Input() mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
   @Output() onMachineUpdated: EventEmitter<void> = new EventEmitter<void>();
-  spinnerStatus = false;
   selectedMachineModel: InnerResourcePnModel = new InnerResourcePnModel();
   constructor(private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService) { }
 
@@ -30,23 +29,21 @@ export class InnerResourceEditComponent implements OnInit {
   }
 
   getSelectedMachine(id: number) {
-    this.spinnerStatus = true;
     this.machineAreaPnMachinesService.getSingleMachine(id).subscribe((data) => {
       if (data && data.success) {
         this.selectedMachineModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   updateMachine() {
-    this.spinnerStatus = true;
     this.machineAreaPnMachinesService.updateMachine(new InnerResourcePnUpdateModel(this.selectedMachineModel))
       .subscribe((data) => {
       if (data && data.success) {
         this.onMachineUpdated.emit();
         this.selectedMachineModel = new InnerResourcePnModel();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

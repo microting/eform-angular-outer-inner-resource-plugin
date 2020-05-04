@@ -10,7 +10,6 @@ import {OuterResourcePnModel} from '../../../models/area';
 export class OuterResourceDeleteComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;
   @Output() onAreaDeleted: EventEmitter<void> = new EventEmitter<void>();
-  spinnerStatus = false;
   selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();
   constructor(private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService) { }
 
@@ -23,13 +22,12 @@ export class OuterResourceDeleteComponent implements OnInit {
   }
 
   deleteArea() {
-    this.spinnerStatus = true;
     this.machineAreaPnAreasService.deleteArea(this.selectedAreaModel.id).subscribe((data) => {
       if (data && data.success) {
         this.onAreaDeleted.emit();
         this.selectedAreaModel = new OuterResourcePnModel();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 }
