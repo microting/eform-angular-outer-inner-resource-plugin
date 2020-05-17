@@ -56,7 +56,7 @@ namespace OuterInnerResource.Pn.Handlers
             MainElement mainElement = await _core.TemplateRead(message.SdkeFormId);
             OuterInnerResourceSite outerInnerResourceSite =
                 await _dbContext.OuterInnerResourceSites.SingleOrDefaultAsync(x =>
-                    x.Id == message.OuterInnerResourceSiteId);
+                    x.Id == message.OuterInnerResourceSiteId).ConfigureAwait(false);
             SiteDto siteDto = await _core.SiteRead(outerInnerResourceSite.MicrotingSdkSiteId);
             
             mainElement.Label = outerInnerResourceSite.OuterInnerResource.InnerResource.Name;
@@ -76,30 +76,33 @@ namespace OuterInnerResource.Pn.Handlers
                 mainElement.EnableQuickSync = true;    
             }
             
-            List<FolderDto> folderDtos = await _core.FolderGetAll(true);
+            List<FolderDto> folderDtos = await _core.FolderGetAll(true).ConfigureAwait(false);
 
             bool folderAlreadyExist = false;
             int _microtingUId = 0;
+            int sdkFolderId = 0;
             foreach (FolderDto folderDto in folderDtos)
             {
                 if (folderDto.Name == outerInnerResourceSite.OuterInnerResource.OuterResource.Name)
                 {
                     folderAlreadyExist = true;
                     _microtingUId = (int)folderDto.MicrotingUId;
+                    sdkFolderId = (int)folderDto.Id;
                 }
             }
 
             if (!folderAlreadyExist)
             {
                 await _core.FolderCreate(outerInnerResourceSite.OuterInnerResource.OuterResource.Name, 
-                    "", null);
-                folderDtos = await _core.FolderGetAll(true);
+                    "", null).ConfigureAwait(false);
+                folderDtos = await _core.FolderGetAll(true).ConfigureAwait(false);
             
                 foreach (FolderDto folderDto in folderDtos)
                 {
                     if (folderDto.Name == outerInnerResourceSite.OuterInnerResource.OuterResource.Name)
                     {
-                        _microtingUId = (int)folderDto.MicrotingUId;
+                        _microtingUId = (int) folderDto.MicrotingUId;
+                        sdkFolderId = (int)folderDto.Id;
                     }
                 }
             }
@@ -118,10 +121,10 @@ namespace OuterInnerResource.Pn.Handlers
                 -999, 
                 false));
             
-            int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId);
+            int? sdkCaseId = await _core.CaseCreate(mainElement, "", siteDto.SiteId, sdkFolderId).ConfigureAwait(false);
 
             outerInnerResourceSite.MicrotingSdkCaseId = sdkCaseId;
-            await outerInnerResourceSite.Update(_dbContext);
+            await outerInnerResourceSite.Update(_dbContext).ConfigureAwait(false);
         }
 
     }
