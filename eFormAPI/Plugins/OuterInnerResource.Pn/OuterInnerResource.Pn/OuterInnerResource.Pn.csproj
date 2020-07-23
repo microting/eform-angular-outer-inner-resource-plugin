@@ -20,6 +20,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\localization.json" />
   </ItemGroup>
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
