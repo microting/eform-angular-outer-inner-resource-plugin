@@ -27,10 +27,10 @@
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.41" />
-    <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="2.0.31" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.57" />
+    <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="2.0.48" />
    <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
-    <PackageReference Include="Microting.eForm" Version="4.0.34" />
+    <PackageReference Include="Microting.eForm" Version="4.1.6" />
   </ItemGroup>
 
 </Project>
