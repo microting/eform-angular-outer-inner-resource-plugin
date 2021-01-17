@@ -39,14 +39,6 @@ namespace MachineArea.Pn.Test
         protected OuterInnerResourcePnDbContext DbContext;
         protected string ConnectionString;
 
-#pragma warning disable 414
-        private static string userName = "__USER_NAME__";
-        private static string password = "__PASSWORD__";
-        private static string databaseName = "__DBNAME__";
-        private static string databaseServerId = "__DB_SERVER_ID__";
-        private static string directoryId = "__DIRECTORY_ID__";
-        private static string applicationId = "__APPLICATION_ID__";
-#pragma warning restore 414
         //public RentableItemsPnDbAnySql db;
 
         public void GetContext(string connectionStr)
@@ -61,18 +53,9 @@ namespace MachineArea.Pn.Test
         [SetUp]
         public void Setup()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=outer-inner-resource-pn-tests;Integrated Security=True";
-            }
-            else
-            {
-                ConnectionString = @"Server = localhost; port = 3306; Database = outer-inner-resource-pn-tests; user = root; Convert Zero Datetime = true;";
-            }
-
+            ConnectionString = @"Server = localhost; port = 3306; Database = outer-inner-resource-pn-tests; user = root;password=secretpassword; Convert Zero Datetime = true;";
 
             GetContext(ConnectionString);
-
 
             DbContext.Database.SetCommandTimeout(300);
 
