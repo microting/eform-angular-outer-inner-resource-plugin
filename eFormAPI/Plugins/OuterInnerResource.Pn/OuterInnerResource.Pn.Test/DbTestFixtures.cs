@@ -50,10 +50,10 @@ namespace MachineArea.Pn.Test
         //public RentableItemsPnDbAnySql db;
 
         public void GetContext(string connectionStr)
-        {          
+        {
             OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
             DbContext = contextFactory.CreateDbContext(new[] {connectionStr});
-            
+
             DbContext.Database.Migrate();
             DbContext.Database.EnsureCreated();
         }
@@ -93,36 +93,48 @@ namespace MachineArea.Pn.Test
         {
 
             ClearDb();
-            
+
             DbContext.Dispose();
         }
 
-        public void ClearDb()
+        private void ClearDb()
         {
-            List<string> modelNames = new List<string>();
-            modelNames.Add("OuterResources");
-            modelNames.Add("OuterResourceVersions");
-            modelNames.Add("InnerResources");
-            modelNames.Add("InnerResourceVersions");
-            modelNames.Add("OuterInnerResources");
-            modelNames.Add("OuterInnerResourceVersions");
-            modelNames.Add("ResourceTimeRegistrations");
-            modelNames.Add("ResourceTimeRegistrationVersions");
-            modelNames.Add("PluginConfigurationValues");
-            modelNames.Add("PluginConfigurationValueVersions");
+            List<string> modelNames = new List<string>
+            {
+                "OuterResources",
+                "OuterResourceVersions",
+                "InnerResources",
+                "InnerResourceVersions",
+                "OuterInnerResources",
+                "OuterInnerResourceVersions",
+                "ResourceTimeRegistrations",
+                "ResourceTimeRegistrationVersions",
+                "PluginConfigurationValues",
+                "PluginConfigurationValueVersions"
+            };
+
+            bool firstRunNotDone = true;
 
             foreach (var modelName in modelNames)
             {
                 try
                 {
-                    var sqlCmd = DbContext.Database.IsMySql() ? $"SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `outer-inner-resource-pn-tests`.`{modelName}`" : $"DELETE FROM [{modelName}]";
-#pragma warning disable EF1000
-                    DbContext.Database.ExecuteSqlCommand(sqlCmd);
-#pragma warning restore EF1000
+                    if (firstRunNotDone)
+                    {
+                        DbContext.Database.ExecuteSqlRaw(
+                            $"SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{modelName}`");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    if (ex.Message == "Unknown database 'outer-inner-resource-pn-tests'")
+                    {
+                        firstRunNotDone = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
         }
