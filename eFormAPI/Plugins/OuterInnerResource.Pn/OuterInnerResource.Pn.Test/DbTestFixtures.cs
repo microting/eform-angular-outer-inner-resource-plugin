@@ -39,21 +39,13 @@ namespace MachineArea.Pn.Test
         protected OuterInnerResourcePnDbContext DbContext;
         protected string ConnectionString;
 
-#pragma warning disable 414
-        private static string userName = "__USER_NAME__";
-        private static string password = "__PASSWORD__";
-        private static string databaseName = "__DBNAME__";
-        private static string databaseServerId = "__DB_SERVER_ID__";
-        private static string directoryId = "__DIRECTORY_ID__";
-        private static string applicationId = "__APPLICATION_ID__";
-#pragma warning restore 414
         //public RentableItemsPnDbAnySql db;
 
         public void GetContext(string connectionStr)
-        {          
+        {
             OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
             DbContext = contextFactory.CreateDbContext(new[] {connectionStr});
-            
+
             DbContext.Database.Migrate();
             DbContext.Database.EnsureCreated();
         }
@@ -61,18 +53,9 @@ namespace MachineArea.Pn.Test
         [SetUp]
         public void Setup()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=outer-inner-resource-pn-tests;Integrated Security=True";
-            }
-            else
-            {
-                ConnectionString = @"Server = localhost; port = 3306; Database = outer-inner-resource-pn-tests; user = root; Convert Zero Datetime = true;";
-            }
-
+            ConnectionString = @"Server = localhost; port = 3306; Database = outer-inner-resource-pn-tests; user = root;password=secretpassword; Convert Zero Datetime = true;";
 
             GetContext(ConnectionString);
-
 
             DbContext.Database.SetCommandTimeout(300);
 
@@ -93,36 +76,48 @@ namespace MachineArea.Pn.Test
         {
 
             ClearDb();
-            
+
             DbContext.Dispose();
         }
 
-        public void ClearDb()
+        private void ClearDb()
         {
-            List<string> modelNames = new List<string>();
-            modelNames.Add("OuterResources");
-            modelNames.Add("OuterResourceVersions");
-            modelNames.Add("InnerResources");
-            modelNames.Add("InnerResourceVersions");
-            modelNames.Add("OuterInnerResources");
-            modelNames.Add("OuterInnerResourceVersions");
-            modelNames.Add("ResourceTimeRegistrations");
-            modelNames.Add("ResourceTimeRegistrationVersions");
-            modelNames.Add("PluginConfigurationValues");
-            modelNames.Add("PluginConfigurationValueVersions");
+            List<string> modelNames = new List<string>
+            {
+                "OuterResources",
+                "OuterResourceVersions",
+                "InnerResources",
+                "InnerResourceVersions",
+                "OuterInnerResources",
+                "OuterInnerResourceVersions",
+                "ResourceTimeRegistrations",
+                "ResourceTimeRegistrationVersions",
+                "PluginConfigurationValues",
+                "PluginConfigurationValueVersions"
+            };
+
+            bool firstRunNotDone = true;
 
             foreach (var modelName in modelNames)
             {
                 try
                 {
-                    var sqlCmd = DbContext.Database.IsMySql() ? $"SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `outer-inner-resource-pn-tests`.`{modelName}`" : $"DELETE FROM [{modelName}]";
-#pragma warning disable EF1000
-                    DbContext.Database.ExecuteSqlCommand(sqlCmd);
-#pragma warning restore EF1000
+                    if (firstRunNotDone)
+                    {
+                        DbContext.Database.ExecuteSqlRaw(
+                            $"SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{modelName}`");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    if (ex.Message == "Unknown database 'outer-inner-resource-pn-tests'")
+                    {
+                        firstRunNotDone = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
         }
