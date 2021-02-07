@@ -15,6 +15,12 @@ describe('Machine Area Area delete', function () {
   it('should create a new area', function () {
     outerInnerResourceInnerResourcePage.createNewInnerResource(nameInnerResource);
   });
+  it('should not delete area', function () {
+    const rowNumBeforeDelete = outerInnerResourceInnerResourcePage.rowNum;
+    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(nameInnerResource);
+    listRowObject.delete(true);
+    expect(outerInnerResourceInnerResourcePage.rowNum, 'Area is deleted').eq(rowNumBeforeDelete);
+  });
   it('should delete area', function () {
     const rowNumBeforeDelete = outerInnerResourceInnerResourcePage.rowNum;
     const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(nameInnerResource);

@@ -65,10 +65,10 @@ export class OuterInnerResourceInnerResourcePage extends PageWithNavbarPage {
 
   closeCreateModal(clickCancel = false) {
     if (!clickCancel) {
-      outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
+      outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
       $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     } else {
-      outerInnerResourceModalPage.outerResourceCreateCancelBtn.click();
+      outerInnerResourceModalPage.innerResourceCreateCancelBtn.click();
       this.newInnerResourceBtn.waitForDisplayed({timeout: 20000});
     }
   }

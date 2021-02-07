@@ -14,6 +14,11 @@ describe('Machine Area Machine delete', function () {
   it('should add machine', function () {
     outerInnerResourceOuterResourcePage.createNewInnerResource(newName);
   });
+  it('should not delete machine', function () {
+    const rowNumBeforeDelete = outerInnerResourceOuterResourcePage.rowNum;
+    outerInnerResourceOuterResourcePage.getOuterObjectByName(newName).delete(true);
+    expect(outerInnerResourceOuterResourcePage.rowNum, 'Area is deleted').eq(rowNumBeforeDelete);
+  });
   it('should delete machine', function () {
     const rowNumBeforeDelete = outerInnerResourceOuterResourcePage.rowNum;
     outerInnerResourceOuterResourcePage.getOuterObjectByName(newName).delete();
