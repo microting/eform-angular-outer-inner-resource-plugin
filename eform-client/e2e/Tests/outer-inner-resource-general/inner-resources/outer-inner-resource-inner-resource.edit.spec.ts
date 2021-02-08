@@ -29,7 +29,7 @@ describe('Machine Area Area edit', function () {
   //   browser.waitForVisible(listRowObject.updateBtn, 20000);
   //   expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   // });
-  it('should clean up', function () {
+  after('clean up', function () {
     const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(newName);
     listRowObject.delete();
   });
