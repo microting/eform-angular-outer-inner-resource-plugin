@@ -22,26 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eFormCore;
-using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Dto;
-using Microting.eForm.Infrastructure;
-using Microting.eForm.Infrastructure.Constants;
-using Microting.eForm.Infrastructure.Data.Entities;
-using Microting.eForm.Infrastructure.Models;
-using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
-using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
-using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
-using OuterInnerResource.Pn.Infrastructure.Helpers;
-using OuterInnerResource.Pn.Messages;
-using Rebus.Handlers;
-
 namespace OuterInnerResource.Pn.Handlers
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using eFormCore;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eForm.Infrastructure.Models;
+    using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
+    using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Constants;
+    using Infrastructure.Helpers;
+    using Messages;
+    using Rebus.Handlers;
+
     public class OuterInnerResourcePosteFormHandler : IHandleMessages<OuterInnerResourcePosteForm>
     {
         private readonly Core _core;
@@ -55,7 +50,7 @@ namespace OuterInnerResource.Pn.Handlers
 
         public async Task Handle(OuterInnerResourcePosteForm message)
         {
-            OuterInnerResourceSite outerInnerResourceSite =
+            var outerInnerResourceSite =
                 await _dbContext.OuterInnerResourceSites.SingleOrDefaultAsync(x =>
                     x.Id == message.OuterInnerResourceSiteId).ConfigureAwait(false);
             await using MicrotingDbContext microtingDbContext = _core.DbContextHelper.GetDbContext();
@@ -69,9 +64,9 @@ namespace OuterInnerResource.Pn.Handlers
             mainElement.StartDate = DateTime.Now.ToUniversalTime();
             mainElement.Repeated = 0;
 
-            string lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled.ToString()}";
+            var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled}";
 
-            bool quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
+            var quickSyncEnabled = _dbContext.PluginConfigurationValues.AsNoTracking()
                                         .FirstOrDefault(x =>
                                             x.Name == lookup)?.Value == "true";
 
@@ -80,12 +75,12 @@ namespace OuterInnerResource.Pn.Handlers
                 mainElement.EnableQuickSync = true;
             }
 
-            List<FolderDto> folderDtos = await _core.FolderGetAll(true).ConfigureAwait(false);
+            var folderDtos = await _core.FolderGetAll(true).ConfigureAwait(false);
 
-            bool folderAlreadyExist = false;
-            int _microtingUId = 0;
-            int sdkFolderId = 0;
-            foreach (FolderDto folderDto in folderDtos)
+            var folderAlreadyExist = false;
+            var _microtingUId = 0;
+            var sdkFolderId = 0;
+            foreach (var folderDto in folderDtos)
             {
                 if (folderDto.Name == outerInnerResourceSite.OuterInnerResource.OuterResource.Name)
                 {
@@ -101,7 +96,7 @@ namespace OuterInnerResource.Pn.Handlers
                     "", null).ConfigureAwait(false);
                 folderDtos = await _core.FolderGetAll(true).ConfigureAwait(false);
 
-                foreach (FolderDto folderDto in folderDtos)
+                foreach (var folderDto in folderDtos)
                 {
                     if (folderDto.Name == outerInnerResourceSite.OuterInnerResource.OuterResource.Name)
                     {
@@ -113,7 +108,7 @@ namespace OuterInnerResource.Pn.Handlers
 
             mainElement.CheckListFolderName = _microtingUId.ToString();
 
-            DataElement dataElement = (DataElement)mainElement.ElementList[0];
+            var dataElement = (DataElement)mainElement.ElementList[0];
 
             dataElement.DataItemList.Add(new None(
                 1,
@@ -125,7 +120,7 @@ namespace OuterInnerResource.Pn.Handlers
                 -999,
                 false));
 
-            int? sdkCaseId = await _core.CaseCreate(mainElement, "", (int)siteDto.MicrotingUid, sdkFolderId).ConfigureAwait(false);
+            var sdkCaseId = await _core.CaseCreate(mainElement, "", (int)siteDto.MicrotingUid, sdkFolderId).ConfigureAwait(false);
 
             outerInnerResourceSite.MicrotingSdkCaseId = sdkCaseId;
             await outerInnerResourceSite.Update(_dbContext).ConfigureAwait(false);

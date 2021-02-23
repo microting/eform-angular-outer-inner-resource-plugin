@@ -1,117 +1,165 @@
 import {PageWithNavbarPage} from '../PageWithNavbar.page';
-import {Guid} from 'guid-typescript';
-import XMLForEformFractions from '../../Constants/XMLForEformFractions';
-import {parseTwoDigitYear} from 'moment';
+import outerInnerResourceModalPage from './outer-inner-resource-modal.page';
 
 export class OuterInnerResourceInnerResourcePage extends PageWithNavbarPage {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    public rowNum(): number {
-        browser.pause(500);
-        return $$('#tableBody > tr').length;
-    }
-    public get newEformBtn() {
-        $('#newEFormBtn').waitForDisplayed({timeout: 20000});
-        $('#newEFormBtn').waitForClickable({timeout: 20000});
-        return $('#newEFormBtn');
-    }
-    public get xmlTextArea() {
-        $('#eFormXml').waitForDisplayed({timeout: 20000});
-        $('#eFormXml').waitForClickable({timeout: 20000});
-        return $('#eFormXml');
-    }
-    public get createEformBtn() {
-        $('#createEformBtn').waitForDisplayed({timeout: 20000});
-        $('#createEformBtn').waitForClickable({timeout: 20000});
-        return $('#createEformBtn');
-    }
-    public get createEformTagSelector() {
-        $('#createEFormMultiSelector').waitForDisplayed({timeout: 20000});
-        $('#createEFormMultiSelector').waitForClickable({timeout: 20000});
-        return $('#createEFormMultiSelector');
-    }
-    public get createEformNewTagInput() {
-        $('#addTagInput').waitForDisplayed({timeout: 20000});
-        $('#addTagInput').waitForClickable({timeout: 20000});
-        return $('#addTagInput');
-    }
-    public get outerInnerResourceDropdownMenu() {
-        $('#outer-inner-resource-pn').waitForDisplayed({timeout: 20000});
-        $('#outer-inner-resource-pn').waitForClickable({timeout: 20000});
-        return $('#outer-inner-resource-pn');
-    }
-    public get innerResourceMenuPoint() {
-        $('#outer-inner-resource-pn-inner-resources').waitForDisplayed({timeout: 20000});
-        $('#outer-inner-resource-pn-inner-resources').waitForClickable({timeout: 20000});
-        return $('#outer-inner-resource-pn-inner-resources');
-    }
-    public get newInnerResourceBtn() {
-        $('#newInnerResource').waitForDisplayed({timeout: 20000});
-        $('#newInnerResource').waitForClickable({timeout: 20000});
-        return $('#newInnerResource');
-    }
+  public get rowNum(): number {
+    browser.pause(500);
+    return $$('#tableBodyInnerResources > tr').length;
+  }
 
-    goToInnerResource() {
-        this.outerInnerResourceDropdownMenu.click();
-        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-        this.innerResourceMenuPoint.click();
-        $('#newInnerResource').waitForDisplayed({timeout: 20000});
-    }
+  public get outerInnerResourceDropdownMenu() {
+    const ele = $('#outer-inner-resource-pn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
+  }
 
-    createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
-        this.newEformBtn.click();
-        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-        // Create replaced xml and insert it in textarea
-        const xml = XMLForEformFractions.XML.replace('TEST_LABEL', eFormLabel);
-        browser.execute(function (xmlText) {
-            (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
-        }, xml);
-        this.xmlTextArea.addValue(' ');
-        // Create new tags
-        const addedTags: string[] = newTagsList;
-        if (newTagsList.length > 0) {
-            this.createEformNewTagInput.setValue(newTagsList.join(','));
-            $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-        }
-        // Add existing tags
-        const selectedTags: string[] = [];
-        if (tagAddedNum > 0) {
-            $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-            for (let i = 0; i < tagAddedNum; i++) {
-                this.createEformTagSelector.click();
-                const selectedTag = $('.ng-option:not(.ng-option-selected)');
-                selectedTags.push(selectedTag.getText());
-                console.log('selectedTags is ' + JSON.stringify(selectedTags));
-                selectedTag.click();
-                $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-            }
-        }
-        this.createEformBtn.click();
-        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-        return {added: addedTags, selected: selectedTags};
+  public get innerResourceMenuPoint() {
+    const ele = $('#outer-inner-resource-pn-inner-resources');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
+  }
+
+  public get newInnerResourceBtn() {
+    const ele = $('#newInnerResource');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
+  }
+
+  goToInnerResource() {
+    this.outerInnerResourceDropdownMenu.click();
+    this.innerResourceMenuPoint.click();
+    this.newInnerResourceBtn.waitForDisplayed({timeout: 20000});
+  }
+
+  getInnerObjectByName(name: string) {
+    browser.pause(500);
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const listRowObject = this.getEformRowObj(i);
+      if (listRowObject.name === name) {
+        return listRowObject;
+      }
     }
+    return null;
+  }
+
+  public getEformRowObj(i: number): ListRowObject {
+    return new ListRowObject(i);
+  }
+
+  openCreateModal(name?: string, externalId?: number|string) {
+    this.newInnerResourceBtn.click();
+    if (name) {
+      outerInnerResourceModalPage.innerResourceCreateNameInput.setValue(name);
+    }
+    if (externalId) {
+      outerInnerResourceModalPage.createInnerResourceId.setValue(externalId);
+    }
+  }
+
+  closeCreateModal(clickCancel = false) {
+    if (!clickCancel) {
+      outerInnerResourceModalPage.innerResourceCreateSaveBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    } else {
+      outerInnerResourceModalPage.innerResourceCreateCancelBtn.click();
+      this.newInnerResourceBtn.waitForDisplayed({timeout: 20000});
+    }
+  }
+
+  createNewInnerResource(name?: string, externalId?: number|string, clickCancel = false) {
+    this.openCreateModal(name, externalId);
+    this.closeCreateModal(clickCancel);
+  }
+
 }
+
 const outerInnerResourceInnerResourcePage = new OuterInnerResourceInnerResourcePage();
 export default outerInnerResourceInnerResourcePage;
 
 export class ListRowObject {
-    constructor(rowNum) {
-        if ($$('#innerResourceId')[rowNum - 1]) {
-            try {
-                this.name = $$('#innerResourceName')[rowNum - 1].getText();
-            } catch (e) {}
-            try {
-                this.updateBtn = $$('#innerResourceEditBtn')[rowNum - 1];
-            } catch (e) {}
-            try {
-                this.deleteBtn = $$('#innerResourceDeleteBtn')[rowNum - 1];
-            } catch (e) {}
-        }
+  constructor(rowNum) {
+    this.element = $$('#tableBodyInnerResources > tr')[rowNum - 1];
+    if (this.element) {
+      try {
+        this.id = + this.element.$('#innerResourceId').getText();
+      } catch (e) {
+      }
+      try {
+        this.name = this.element.$('#innerResourceName').getText();
+      } catch (e) {
+      }
+      try {
+        this.externalId = + this.element.$('#innerResourceExternalId').getText();
+      } catch (e) {
+      }
+      try {
+        this.updateBtn = this.element.$('#innerResourceEditBtn');
+      } catch (e) {
+      }
+      try {
+        this.deleteBtn = this.element.$('#innerResourceDeleteBtn');
+      } catch (e) {
+      }
     }
-    public id;
-    public name;
-    public updateBtn;
-    public deleteBtn;
+  }
+
+  public id: number;
+  public name: string;
+  public externalId: number;
+  public element;
+  public updateBtn;
+  public deleteBtn;
+
+  openDeleteModal() {
+    this.deleteBtn.click();
+    outerInnerResourceModalPage.innerResourceDeleteDeleteBtn.waitForDisplayed({timeout: 20000});
+  }
+
+  closeDeleteModal(clickCancel = false) {
+    if (!clickCancel) {
+      outerInnerResourceModalPage.innerResourceDeleteDeleteBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    } else {
+      outerInnerResourceModalPage.innerResourceDeleteCancelBtn.click();
+      outerInnerResourceInnerResourcePage.newInnerResourceBtn.waitForDisplayed({timeout: 20000});
+    }
+  }
+
+  delete(clickCancel = false) {
+    this.openDeleteModal();
+    this.closeDeleteModal(clickCancel);
+  }
+
+  openEditModal(newName?: string, newExternalId?: number|string) {
+    this.updateBtn.click();
+    if (newName) {
+      outerInnerResourceModalPage.innerResourceEditName.setValue(newName);
+    }
+    if (newExternalId) {
+      outerInnerResourceModalPage.innerResourceEditExternalIdInput.setValue(newExternalId);
+    }
+  }
+
+  closeEditModal(clickCancel = false) {
+    if (!clickCancel) {
+      outerInnerResourceModalPage.innerResourceEditSaveBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    } else {
+      outerInnerResourceModalPage.innerResourceEditCancelBtn.click();
+      outerInnerResourceInnerResourcePage.newInnerResourceBtn.waitForDisplayed({timeout: 20000});
+    }
+  }
+
+  edit(newName?: string, newExternalId?: number|string, clickCancel = false) {
+    this.openEditModal(newName, newExternalId);
+    this.closeEditModal(clickCancel);
+  }
+
 }
