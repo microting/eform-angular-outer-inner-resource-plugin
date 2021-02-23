@@ -99,16 +99,8 @@ namespace OuterInnerResource.Pn
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
             _connectionString = connectionString;
-            if (connectionString.ToLower().Contains("convert zero datetime"))
-            {
-                services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseMySql(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
-            else
-            {
-                services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseSqlServer(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
+            services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseMySql(connectionString,
+                b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
             var contextFactory = new OuterInnerResourcePnContextFactory();
 
@@ -135,8 +127,8 @@ namespace OuterInnerResource.Pn
 
             // Seed database
             SeedDatabase(connectionString);
-            
-            
+
+
         }
 
         public void Configure(IApplicationBuilder appBuilder)

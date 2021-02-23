@@ -53,10 +53,10 @@ namespace OuterInnerResource.Pn.Handlers
             var outerInnerResourceSite =
                 await _dbContext.OuterInnerResourceSites.SingleOrDefaultAsync(x =>
                     x.Id == message.OuterInnerResourceSiteId).ConfigureAwait(false);
-            await using var microtingDbContext = _core.DbContextHelper.GetDbContext();
-            var siteDto = await microtingDbContext.Sites.SingleAsync(x => x.Id == outerInnerResourceSite.MicrotingSdkSiteId);
-            var language = await microtingDbContext.Languages.SingleAsync(x => x.Id == siteDto.LanguageId);
-            var mainElement = await _core.ReadeForm(message.SdkeFormId, language);
+            await using MicrotingDbContext microtingDbContext = _core.DbContextHelper.GetDbContext();
+            Site siteDto = await microtingDbContext.Sites.SingleAsync(x => x.Id == outerInnerResourceSite.MicrotingSdkSiteId);
+            Language language = await microtingDbContext.Languages.SingleAsync(x => x.Id == siteDto.LanguageId);
+            MainElement mainElement = await _core.ReadeForm(message.SdkeFormId, language);
 
             mainElement.Label = outerInnerResourceSite.OuterInnerResource.InnerResource.Name;
             mainElement.ElementList[0].Label = outerInnerResourceSite.OuterInnerResource.InnerResource.Name;
