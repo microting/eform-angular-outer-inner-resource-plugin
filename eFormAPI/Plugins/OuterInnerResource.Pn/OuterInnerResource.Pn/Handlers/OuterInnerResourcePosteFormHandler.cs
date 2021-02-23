@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eForm.Infrastructure;
+using Microting.eForm.Infrastructure.Data.Entities;
+
 namespace OuterInnerResource.Pn.Handlers
 {
     using System;
