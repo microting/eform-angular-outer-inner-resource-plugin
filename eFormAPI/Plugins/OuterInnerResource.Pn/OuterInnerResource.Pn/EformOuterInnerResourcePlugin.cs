@@ -99,21 +99,13 @@ namespace OuterInnerResource.Pn
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
             _connectionString = connectionString;
-            if (connectionString.ToLower().Contains("convert zero datetime"))
-            {
-                services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseMySql(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
-            else
-            {
-                services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseSqlServer(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
+            services.AddDbContext<OuterInnerResourcePnDbContext>(o => o.UseMySql(connectionString,
+                b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
             OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
 
             using (OuterInnerResourcePnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
-            {  
+            {
                 context.Database.Migrate();
                 try
                 {
@@ -127,13 +119,13 @@ namespace OuterInnerResource.Pn
                         .SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:NumberOfWorkers")?.Value;
                     _numberOfWorkers = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
                 } catch {}
-                
+
             }
 
             // Seed database
             SeedDatabase(connectionString);
-            
-            
+
+
         }
 
         public void Configure(IApplicationBuilder appBuilder)

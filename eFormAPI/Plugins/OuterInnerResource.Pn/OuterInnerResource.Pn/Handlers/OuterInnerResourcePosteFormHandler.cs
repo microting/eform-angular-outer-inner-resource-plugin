@@ -58,7 +58,7 @@ namespace OuterInnerResource.Pn.Handlers
             OuterInnerResourceSite outerInnerResourceSite =
                 await _dbContext.OuterInnerResourceSites.SingleOrDefaultAsync(x =>
                     x.Id == message.OuterInnerResourceSiteId).ConfigureAwait(false);
-            await using MicrotingDbContext microtingDbContext = _core.dbContextHelper.GetDbContext();
+            await using MicrotingDbContext microtingDbContext = _core.DbContextHelper.GetDbContext();
             Site siteDto = await microtingDbContext.Sites.SingleAsync(x => x.Id == outerInnerResourceSite.MicrotingSdkSiteId);
             Language language = await microtingDbContext.Languages.SingleAsync(x => x.Id == siteDto.LanguageId);
             MainElement mainElement = await _core.ReadeForm(message.SdkeFormId, language);
