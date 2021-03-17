@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.0.136](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.136) (2021-03-17)
+
+[Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.135...v1.0.136)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormApi.BasePn from 2.0.103 to 2.0.104 [\#71](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/71)
+- Bump Microting.eForm from 4.4.8 to 4.4.9 [\#70](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/70)
+
 ## [v1.0.135](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.135) (2021-03-16)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.134...v1.0.135)
