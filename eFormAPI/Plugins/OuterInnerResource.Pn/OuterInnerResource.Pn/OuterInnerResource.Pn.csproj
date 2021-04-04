@@ -30,7 +30,7 @@
     <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.109" />
     <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="2.0.89" />
    <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
-    <PackageReference Include="Microting.eForm" Version="4.4.16" />
+    <PackageReference Include="Microting.eForm" Version="4.4.17" />
   </ItemGroup>
 
 </Project>
