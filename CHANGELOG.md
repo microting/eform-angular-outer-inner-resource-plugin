@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.0.141](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.141) (2021-04-05)
+
+[Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.140...v1.0.141)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormApi.BasePn from 2.0.110 to 2.0.111 [\#89](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/89)
+- Bump Microting.eForm from 4.4.17 to 4.4.19 [\#88](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/88)
+
 ## [v1.0.140](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.140) (2021-04-04)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.139...v1.0.140)
@@ -710,6 +719,7 @@
 **Merged pull requests:**
 
 - Added new reports with logic [\#7](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/7) ([Gid733](https://github.com/Gid733))
+- Fixed settings update/get [\#6](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/6) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.1.5](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.1.5) (2019-04-29)
 
@@ -741,7 +751,6 @@
 
 **Merged pull requests:**
 
-- Fixed settings update/get [\#6](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/6) ([Gid733](https://github.com/Gid733))
 - Updates [\#5](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/5) ([Gid733](https://github.com/Gid733))
 - Transferred logic to entities, refactoring [\#4](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/4) ([Gid733](https://github.com/Gid733))
 - Added reports functionality [\#3](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/3) ([Gid733](https://github.com/Gid733))
