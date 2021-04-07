@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.143](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.143) (2021-04-07)
+
+[Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.142...v1.0.143)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormOuterInnerResourceBase from 2.0.91 to 2.0.93 [\#97](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/97)
+- Bump Microting.eFormApi.BasePn from 2.0.111 to 2.0.113 [\#96](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/96)
+- Bump Microting.eForm from 4.4.20 to 4.4.21 [\#95](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/95)
+
 ## [v1.0.142](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.142) (2021-04-06)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.141...v1.0.142)
@@ -728,6 +738,7 @@
 **Merged pull requests:**
 
 - Added new reports with logic [\#7](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/7) ([Gid733](https://github.com/Gid733))
+- Transferred logic to entities, refactoring [\#4](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/4) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.1.5](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.1.5) (2019-04-29)
 
@@ -761,7 +772,6 @@
 
 - Fixed settings update/get [\#6](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/6) ([Gid733](https://github.com/Gid733))
 - Updates [\#5](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/5) ([Gid733](https://github.com/Gid733))
-- Transferred logic to entities, refactoring [\#4](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/4) ([Gid733](https://github.com/Gid733))
 - Added reports functionality [\#3](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/3) ([Gid733](https://github.com/Gid733))
 - Minor bugfix [\#2](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/2) ([Gid733](https://github.com/Gid733))
 - Added entire machines pn architecture [\#1](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/1) ([Gid733](https://github.com/Gid733))
