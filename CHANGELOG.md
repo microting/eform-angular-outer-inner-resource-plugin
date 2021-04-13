@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.148](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.148) (2021-04-13)
+
+[Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.147...v1.0.148)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormOuterInnerResourceBase from 2.0.97 to 2.0.98 [\#113](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/113)
+- Bump Microting.eFormApi.BasePn from 2.0.118 to 2.0.120 [\#112](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/112)
+- Bump Microting.eForm from 4.4.27 to 4.4.29 [\#111](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/111)
+
 ## [v1.0.147](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.147) (2021-04-12)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.146...v1.0.147)
@@ -224,7 +234,6 @@
 **Merged pull requests:**
 
 - Bump Microsoft.NET.Test.Sdk from 16.7.1 to 16.8.3 in /eFormAPI/Plugins/OuterInnerResource.Pn [\#20](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/20) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Updates [\#14](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/14) ([emleonid](https://github.com/emleonid))
 
 ## [v1.0.115](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.115) (2021-01-15)
 
@@ -662,6 +671,10 @@
 ## [v1.0.10](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.10) (2019-11-08)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.9...v1.0.10)
+
+**Merged pull requests:**
+
+- Updates [\#14](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/14) ([emleonid](https://github.com/emleonid))
 
 ## [v1.0.9](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.9) (2019-11-04)
 
