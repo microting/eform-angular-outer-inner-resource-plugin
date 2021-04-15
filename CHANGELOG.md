@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.150](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.150) (2021-04-15)
+
+[Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.149...v1.0.150)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormOuterInnerResourceBase from 2.0.99 to 2.0.100 [\#125](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/125)
+- Bump Microting.eFormApi.BasePn from 2.0.122 to 2.0.126 [\#124](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/124)
+- Bump Microting.eForm from 4.4.31 to 4.4.35 [\#123](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/123)
+
 ## [v1.0.149](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.149) (2021-04-14)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.148...v1.0.149)
@@ -152,6 +162,7 @@
 
 - Bump Microting.eFormApi.BasePn from 2.0.98 to 2.0.99 [\#58](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/58)
 - Bump Microting.eForm from 4.4.2 to 4.4.3 [\#57](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/57)
+- Bump Microting.eForm from 4.3.17 to 4.4.1 [\#50](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/50)
 
 ## [v1.0.133](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.133) (2021-02-24)
 
@@ -175,7 +186,6 @@
 
 - Bump Microting.eFormOuterInnerResourceBase from 2.0.84 to 2.0.86 [\#52](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/52)
 - Bump Microting.eFormApi.BasePn from 2.0.95 to 2.0.97 [\#51](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/51)
-- Bump Microting.eForm from 4.3.17 to 4.4.1 [\#50](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/50)
 
 ## [v1.0.131](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.131) (2021-02-18)
 
