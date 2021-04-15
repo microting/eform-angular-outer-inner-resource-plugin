@@ -59,7 +59,7 @@ export class OuterInnerResourceInnerResourcePage extends PageWithNavbarPage {
       outerInnerResourceModalPage.innerResourceCreateNameInput.setValue(name);
     }
     if (externalId) {
-      outerInnerResourceModalPage.createInnerResourceId.setValue(externalId);
+      outerInnerResourceModalPage.createInnerResourceId.setValue(externalId.toString());
     }
   }
 
@@ -143,7 +143,7 @@ export class ListRowObject {
       outerInnerResourceModalPage.innerResourceEditName.setValue(newName);
     }
     if (newExternalId) {
-      outerInnerResourceModalPage.innerResourceEditExternalIdInput.setValue(newExternalId);
+      outerInnerResourceModalPage.innerResourceEditExternalIdInput.setValue(newExternalId.toString());
     }
   }
 
