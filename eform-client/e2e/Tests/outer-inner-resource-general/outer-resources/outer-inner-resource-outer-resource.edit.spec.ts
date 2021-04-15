@@ -1,11 +1,12 @@
-import outerInnerResourceOuterResourcePage , {ListRowObject} from '../../../Page objects/outer-inner-resource/outer-inner-resource-outer-resource.page';
-import outerInnerResourceModalPage from '../../../Page objects/outer-inner-resource/outer-inner-resource-modal.page';
+import outerInnerResourceOuterResourcePage, {
+  ListRowObject,
+} from '../../../Page objects/OuterInnerResource/OuterInnerResourceOuterResource.page';
+import outerInnerResourceModalPage from '../../../Page objects/OuterInnerResource/OuterInnerResourceModal.page';
 import loginPage from '../../../Page objects/Login.page';
-import {generateRandmString} from '../../../Helpers/helper-functions';
+import { generateRandmString } from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 const newName = generateRandmString();
-
 
 describe('Machine Area Machine edit', function () {
   before(function () {
@@ -33,6 +34,9 @@ describe('Machine Area Machine edit', function () {
   after('should delete machine', function () {
     const rowNumBeforeDelete = outerInnerResourceOuterResourcePage.rowNum;
     outerInnerResourceOuterResourcePage.getOuterObjectByName(newName).delete();
-    expect(outerInnerResourceOuterResourcePage.rowNum, 'Area is not deleted').eq(rowNumBeforeDelete - 1);
+    expect(
+      outerInnerResourceOuterResourcePage.rowNum,
+      'Area is not deleted'
+    ).eq(rowNumBeforeDelete - 1);
   });
 });
