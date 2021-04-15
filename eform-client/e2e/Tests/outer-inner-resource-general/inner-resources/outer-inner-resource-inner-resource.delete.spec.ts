@@ -1,6 +1,6 @@
 import outerInnerResourceInnerResourcePage, {
   ListRowObject,
-} from '../../../Page objects/outer-inner-resource/outer-inner-resource-inner-resource.page';
+} from '../../../Page objects/OuterInnerResource/OuterInnerResourceInnerResource.page';
 import outerInnerResourceModalPage from '../../../Page objects/OuterInnerResource/OuterInnerResourceModal.page';
 import loginPage from '../../../Page objects/Login.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
