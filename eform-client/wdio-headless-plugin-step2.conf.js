@@ -158,7 +158,7 @@ exports.config = {
         ui: 'bdd',
         // require: 'ts-node/register',
         compilers: ['tsconfig-paths/register'],
-        timeout: 60000
+        timeout: 180000
     },
     //
     // =====
