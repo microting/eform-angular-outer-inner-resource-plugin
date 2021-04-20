@@ -1,7 +1,9 @@
-import outerInnerResourceInnerResourcePage , {ListRowObject} from '../../../Page objects/outer-inner-resource/outer-inner-resource-inner-resource.page';
-import outerInnerResourceModalPage from '../../../Page objects/outer-inner-resource/outer-inner-resource-modal.page';
+import outerInnerResourceInnerResourcePage, {
+  ListRowObject,
+} from '../../../Page objects/OuterInnerResource/OuterInnerResourceInnerResource.page';
+import outerInnerResourceModalPage from '../../../Page objects/OuterInnerResource/OuterInnerResourceModal.page';
 import loginPage from '../../../Page objects/Login.page';
-import {generateRandmString} from '../../../Helpers/helper-functions';
+import { generateRandmString } from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 const newName = generateRandmString();
@@ -30,7 +32,9 @@ describe('Machine Area Area edit', function () {
   //   expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   // });
   after('clean up', function () {
-    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(newName);
+    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(
+      newName
+    );
     listRowObject.delete();
   });
 });

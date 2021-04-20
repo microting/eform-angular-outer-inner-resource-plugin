@@ -1,6 +1,6 @@
-import {PageWithNavbarPage} from '../PageWithNavbar.page';
-import outerInnerResourceInnerResourcePage from './outer-inner-resource-inner-resource.page';
-import outerInnerResourceModalPage from './outer-inner-resource-modal.page';
+import { PageWithNavbarPage } from '../PageWithNavbar.page';
+import outerInnerResourceInnerResourcePage from './OuterInnerResourceInnerResource.page';
+import outerInnerResourceModalPage from './OuterInnerResourceModal.page';
 
 export class OuterInnerResourceOuterResourcePage extends PageWithNavbarPage {
   constructor() {
@@ -14,22 +14,22 @@ export class OuterInnerResourceOuterResourcePage extends PageWithNavbarPage {
 
   public get outerResourceMenuPoint() {
     const ele = $('#outer-inner-resource-pn-outer-resources');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
     return ele;
   }
 
   public get newOuterResourceBtn() {
     const ele = $('#newOuterResourceBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
     return ele;
   }
 
   goToOuterResource() {
     outerInnerResourceInnerResourcePage.outerInnerResourceDropdownMenu.click();
     this.outerResourceMenuPoint.click();
-    this.newOuterResourceBtn.waitForDisplayed({timeout: 20000});
+    this.newOuterResourceBtn.waitForDisplayed({ timeout: 20000 });
   }
 
   getOuterObjectByName(name: string): ListRowObject {
@@ -47,31 +47,39 @@ export class OuterInnerResourceOuterResourcePage extends PageWithNavbarPage {
     return new ListRowObject(i);
   }
 
-  openCreateModal(name?: string, externalId?: number|string) {
+  openCreateModal(name?: string, externalId?: number | string) {
     this.newOuterResourceBtn.click();
     if (name) {
       outerInnerResourceModalPage.outerResourceCreateNameInput.setValue(name);
     }
     if (externalId) {
-      outerInnerResourceModalPage.createOuterResourceExternalId.setValue(externalId);
+      outerInnerResourceModalPage.createOuterResourceExternalId.setValue(
+        externalId.toString()
+      );
     }
   }
 
   closeCreateModal(clickCancel = false) {
     if (!clickCancel) {
       outerInnerResourceModalPage.outerResourceCreateSaveBtn.click();
-      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+      $('#spinner-animation').waitForDisplayed({
+        timeout: 20000,
+        reverse: true,
+      });
     } else {
       outerInnerResourceModalPage.outerResourceCreateCancelBtn.click();
-      this.newOuterResourceBtn.waitForDisplayed({timeout: 20000});
+      this.newOuterResourceBtn.waitForDisplayed({ timeout: 20000 });
     }
   }
 
-  createNewInnerResource(name?: string, externalId?: number|string, clickCancel = false) {
+  createNewInnerResource(
+    name?: string,
+    externalId?: number | string,
+    clickCancel = false
+  ) {
     this.openCreateModal(name, externalId);
     this.closeCreateModal(clickCancel);
   }
-
 }
 
 const outerInnerResourceOuterResourcePage = new OuterInnerResourceOuterResourcePage();
@@ -83,24 +91,19 @@ export class ListRowObject {
     if (this.element) {
       try {
         this.name = this.element.$('#outerResourceName').getText();
-      } catch (e) {
-      }
+      } catch (e) {}
       try {
-        this.id = + this.element.$('#outerResourceId').getText();
-      } catch (e) {
-      }
+        this.id = +this.element.$('#outerResourceId').getText();
+      } catch (e) {}
       try {
-        this.externalId = + this.element.$('#outerResourceExternalId').getText();
-      } catch (e) {
-      }
+        this.externalId = +this.element.$('#outerResourceExternalId').getText();
+      } catch (e) {}
       try {
         this.updateBtn = this.element.$('#outerResourceEditBtn');
-      } catch (e) {
-      }
+      } catch (e) {}
       try {
         this.deleteBtn = this.element.$('#outerResourceDeleteBtn');
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   }
 
@@ -111,19 +114,25 @@ export class ListRowObject {
   public updateBtn;
   public deleteBtn;
 
-
   openDeleteModal() {
     this.deleteBtn.click();
-    outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.waitForDisplayed({timeout: 20000});
+    outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.waitForDisplayed({
+      timeout: 20000,
+    });
   }
 
   closeDeleteModal(clickCancel = false) {
     if (!clickCancel) {
       outerInnerResourceModalPage.outerResourceDeleteDeleteBtn.click();
-      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+      $('#spinner-animation').waitForDisplayed({
+        timeout: 20000,
+        reverse: true,
+      });
     } else {
       outerInnerResourceModalPage.outerResourceDeleteCancelBtn.click();
-      outerInnerResourceOuterResourcePage.newOuterResourceBtn.waitForDisplayed({timeout: 20000});
+      outerInnerResourceOuterResourcePage.newOuterResourceBtn.waitForDisplayed({
+        timeout: 20000,
+      });
     }
   }
 
@@ -132,29 +141,35 @@ export class ListRowObject {
     this.closeDeleteModal(clickCancel);
   }
 
-  openEditModal(newName?: string, newExternalId?: number|string) {
+  openEditModal(newName?: string, newExternalId?: number | string) {
     this.updateBtn.click();
     if (newName) {
       outerInnerResourceModalPage.outerResourceEditNameInput.setValue(newName);
     }
     if (newExternalId) {
-      outerInnerResourceModalPage.outerResourceEditExternalIdInput.setValue(newExternalId);
+      outerInnerResourceModalPage.outerResourceEditExternalIdInput.setValue(
+        newExternalId.toString()
+      );
     }
   }
 
   closeEditModal(clickCancel = false) {
     if (!clickCancel) {
       outerInnerResourceModalPage.outerResourceEditSaveBtn.click();
-      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+      $('#spinner-animation').waitForDisplayed({
+        timeout: 20000,
+        reverse: true,
+      });
     } else {
       outerInnerResourceModalPage.outerResourceEditCancelBtn.click();
-      outerInnerResourceOuterResourcePage.newOuterResourceBtn.waitForDisplayed({timeout: 20000});
+      outerInnerResourceOuterResourcePage.newOuterResourceBtn.waitForDisplayed({
+        timeout: 20000,
+      });
     }
   }
 
-  edit(newName?: string, newExternalId?: number|string, clickCancel = false) {
+  edit(newName?: string, newExternalId?: number | string, clickCancel = false) {
     this.openEditModal(newName, newExternalId);
     this.closeEditModal(clickCancel);
   }
-
 }
