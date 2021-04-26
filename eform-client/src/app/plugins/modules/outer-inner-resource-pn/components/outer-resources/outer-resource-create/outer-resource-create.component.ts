@@ -8,8 +8,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  OuterResourcePnCreateModel,
   InnerResourcesPnModel,
+  OuterResourcePnCreateModel,
 } from '../../../models';
 import { OuterInnerResourcePnOuterResourceService } from '../../../services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';

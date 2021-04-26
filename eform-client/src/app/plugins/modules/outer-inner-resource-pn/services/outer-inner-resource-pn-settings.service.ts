@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult} from '../../../../common/models';
-import {OuterInnerResourceBaseSettingsModel} from '../models';
-import {BaseService} from '../../../../common/services/base.service';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import {
+  OperationDataResult,
+  OperationResult,
+} from '../../../../common/models';
+import { OuterInnerResourceBaseSettingsModel } from '../models';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let OuterInnerResourceSettingsMethods = {
-  MachineAreaSettings: 'api/outer-inner-resource-pn/settings'
-
+  MachineAreaSettings: 'api/outer-inner-resource-pn/settings',
 };
 @Injectable()
-export class OuterInnerResourcePnSettingsService extends BaseService {
+export class OuterInnerResourcePnSettingsService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
+  getAllSettings(): Observable<
+    OperationDataResult<OuterInnerResourceBaseSettingsModel>
+  > {
+    return this.apiBaseService.get(
+      OuterInnerResourceSettingsMethods.MachineAreaSettings
+    );
   }
-
-  getAllSettings(): Observable<OperationDataResult<OuterInnerResourceBaseSettingsModel>> {
-    return this.get(OuterInnerResourceSettingsMethods.MachineAreaSettings);
-  }
-  updateSettings(model: OuterInnerResourceBaseSettingsModel): Observable<OperationResult> {
-    return this.post(OuterInnerResourceSettingsMethods.MachineAreaSettings, model);
+  updateSettings(
+    model: OuterInnerResourceBaseSettingsModel
+  ): Observable<OperationResult> {
+    return this.apiBaseService.post(
+      OuterInnerResourceSettingsMethods.MachineAreaSettings,
+      model
+    );
   }
 }

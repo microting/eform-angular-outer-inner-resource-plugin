@@ -2,7 +2,7 @@
   <div class="p-3">
     <button
       *ngIf="
-        pluginClaimsHelper.check(outerInnerResourcePnClaims.createMachines)
+        authStateService.checkClaim(outerInnerResourcePnClaims.createMachines)
       "
       class="btn btn-success"
       id="newInnerResource"

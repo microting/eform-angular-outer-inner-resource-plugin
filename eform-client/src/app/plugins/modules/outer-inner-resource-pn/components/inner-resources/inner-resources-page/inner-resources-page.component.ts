@@ -1,21 +1,20 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
+  InnerResourcePnModel,
   InnerResourcesPnModel,
   OuterResourcesPnModel,
   OuterResourcesPnRequestModel,
-  InnerResourcePnModel,
 } from '../../../models';
 import {
-  OuterInnerResourcePnOuterResourceService,
   OuterInnerResourcePnInnerResourceService,
+  OuterInnerResourcePnOuterResourceService,
 } from '../../../services';
-import { AuthService } from 'src/app/common/services';
-import { PluginClaimsHelper } from 'src/app/common/helpers';
 import { OuterInnerResourcePnClaims } from '../../../enums';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { InnerResourcesStateService } from '../state/inner-resources-state-service';
+import { InnerResourcesStateService } from '../store/inner-resources-state-service';
 import { TableHeaderElementModel } from 'src/app/common/models';
+import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -46,23 +45,19 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     { name: 'Actions', elementId: '', sortable: false },
   ];
 
-  get pluginClaimsHelper() {
-    return PluginClaimsHelper;
-  }
-
   get outerInnerResourcePnClaims() {
     return OuterInnerResourcePnClaims;
   }
 
   constructor(
     private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
-    private authService: AuthService,
     private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
-    public innerResourcesStateService: InnerResourcesStateService
+    public innerResourcesStateService: InnerResourcesStateService,
+    public authStateService: AuthStateService
   ) {}
 
   get currentRole(): string {
-    return this.authService.currentRole;
+    return this.authStateService.currentRole;
   }
 
   ngOnInit() {

@@ -6,33 +6,34 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import {
-  OuterInnerResourcePnOuterResourceService,
   OuterInnerResourcePnInnerResourceService,
+  OuterInnerResourcePnOuterResourceService,
   OuterInnerResourcePnReportsService,
   OuterInnerResourcePnSettingsService,
 } from './services';
 import { OuterInnerResourcePnLayoutComponent } from './layouts';
 import { SharedPnModule } from '../shared/shared-pn.module';
 import {
-  OuterResourceCreateComponent,
-  OuterResourceDeleteComponent,
-  OuterResourcesPageComponent,
-  OuterResourceEditComponent,
   InnerResourceCreateComponent,
   InnerResourceDeleteComponent,
-  InnerResourcesPageComponent,
   InnerResourceEditComponent,
-  ReportPreviewTableComponent,
-  ReportGeneratorFormComponent,
-  OuterInnerResourceSettingsComponent,
-  ReportGeneratorContainerComponent,
+  InnerResourcesPageComponent,
   InnerResourcesStateService,
+  OuterInnerResourceSettingsComponent,
+  OuterResourceCreateComponent,
+  OuterResourceDeleteComponent,
+  OuterResourceEditComponent,
+  OuterResourcesPageComponent,
   OuterResourcesStateService,
+  ReportGeneratorContainerComponent,
+  ReportGeneratorFormComponent,
+  ReportPreviewTableComponent,
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OuterInnerResourcePnRouting } from './outer-inner-resource-pn-routing.module';
 import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import { outerInnerResourcesStoreProviders } from './store-providers.config';
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     OuterInnerResourcePnReportsService,
     InnerResourcesStateService,
     OuterResourcesStateService,
+    ...outerInnerResourcesStoreProviders,
   ],
 })
 export class OuterInnerResourcePnModule {}

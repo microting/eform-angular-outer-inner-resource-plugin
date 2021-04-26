@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import {
-  InnerResourcesStore,
   InnerResourcesState,
+  InnerResourcesStore,
 } from './inner-resources-store';
 
 @Injectable({ providedIn: 'root' })
@@ -15,8 +15,8 @@ export class InnerResourcesQuery extends Query<InnerResourcesState> {
     return this.getValue();
   }
 
-  selectPageSize$ = this.select('pageSize');
-  selectIsSortDsc$ = this.select('isSortDsc');
-  selectSort$ = this.select('sort');
-  selectOffset$ = this.select('offset');
+  selectPageSize$ = this.select((state) => state.pagination.pageSize);
+  selectIsSortDsc$ = this.select((state) => state.pagination.isSortDsc);
+  selectSort$ = this.select((state) => state.pagination.sort);
+  selectOffset$ = this.select((state) => state.pagination.offset);
 }

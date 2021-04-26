@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 
 import {
-  OuterResourcesPnModel,
   InnerResourcePnCreateModel,
+  OuterResourcesPnModel,
 } from '../../../models';
 import { OuterInnerResourcePnInnerResourceService } from '../../../services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';

@@ -11,7 +11,7 @@ import {
   OuterInnerResourcePnInnerResourceService,
   OuterInnerResourcePnOuterResourceService,
 } from '../../../services';
-import { OuterResourcesStateService } from '../state/outer-resources-state-service';
+import { OuterResourcesStateService } from '../store/outer-resources-state-service';
 import { TableHeaderElementModel } from 'src/app/common/models';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
