@@ -789,18 +789,18 @@
           "lib/net5.0/Microting.eFormApi.BasePn.dll": {}
         }
       },
-      "Microting.eFormOuterInnerResourceBase/2.1.2": {
+      "Microting.eFormOuterInnerResourceBase/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Design": "3.1.14",
-          "Microting.eForm": "4.5.3",
-          "Microting.eFormApi.BasePn": "2.1.3"
+          "Microsoft.EntityFrameworkCore.Design": "5.0.5",
+          "Microting.eForm": "5.0.2",
+          "Microting.eFormApi.BasePn": "3.0.0"
         },
         "compile": {
-          "lib/netcoreapp3.1/Microting.eFormOuterInnerResourceBase.dll": {}
+          "lib/net5.0/Microting.eFormOuterInnerResourceBase.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microting.eFormOuterInnerResourceBase.dll": {}
+          "lib/net5.0/Microting.eFormOuterInnerResourceBase.dll": {}
         }
       },
       "MySqlConnector/1.3.7": {
@@ -3958,17 +3958,17 @@
         "microting.eformapi.basepn.nuspec"
       ]
     },
-    "Microting.eFormOuterInnerResourceBase/2.1.2": {
-      "sha512": "d6s3YB+I6MBDSA1H2tdP1kdaRPYkK8sGbW36tb0wE9v2Pp7LBmRfHAbb8vjKO0jtSX8+peUhDbjTw0rZkVMqEQ==",
+    "Microting.eFormOuterInnerResourceBase/3.0.0": {
+      "sha512": "MLzBOnPJLU9T1kHecELSayA9zT7oleuULOfzuizE9vLt/Ey3+92IO4YWIhxLJZcH7RihunUXqZ9HQOjpra0OYg==",
       "type": "package",
-      "path": "microting.eformouterinnerresourcebase/2.1.2",
+      "path": "microting.eformouterinnerresourcebase/3.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "icon.png",
-        "lib/netcoreapp3.1/Microting.eFormOuterInnerResourceBase.dll",
-        "lib/netcoreapp3.1/Microting.eFormOuterInnerResourceBase.runtimeconfig.json",
-        "microting.eformouterinnerresourcebase.2.1.2.nupkg.sha512",
+        "lib/net5.0/Microting.eFormOuterInnerResourceBase.dll",
+        "lib/net5.0/Microting.eFormOuterInnerResourceBase.runtimeconfig.json",
+        "microting.eformouterinnerresourcebase.3.0.0.nupkg.sha512",
         "microting.eformouterinnerresourcebase.nuspec"
       ]
     },
@@ -9052,7 +9052,7 @@
       "ExcelDataReader >= 3.6.0",
       "Microting.eForm >= 5.0.2",
       "Microting.eFormApi.BasePn >= 3.0.0",
-      "Microting.eFormOuterInnerResourceBase >= 2.1.2",
+      "Microting.eFormOuterInnerResourceBase >= 3.0.0",
       "OtpSharp.Core >= 1.0.0"
     ]
   },
@@ -9115,7 +9115,7 @@
           },
           "Microting.eFormOuterInnerResourceBase": {
             "target": "Package",
-            "version": "[2.1.2, )"
+            "version": "[3.0.0, )"
           },
           "OtpSharp.Core": {
             "target": "Package",
