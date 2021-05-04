@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.159](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.159) (2021-05-04)
+
+[Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.158...v1.0.159)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormOuterInnerResourceBase from 3.0.3 to 3.0.4 [\#166](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/166)
+- Bump Microting.eFormApi.BasePn from 3.0.4 to 3.0.5 [\#165](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/165)
+- Bump Microting.eForm from 5.1.0 to 5.1.1 [\#164](https://github.com/microting/eform-angular-outer-inner-resource-plugin/issues/164)
+
 ## [v1.0.158](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.158) (2021-05-04)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.157...v1.0.158)
@@ -840,6 +850,7 @@
 **Merged pull requests:**
 
 - Fixed datepicker to be Monday [\#13](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/13) ([Gid733](https://github.com/Gid733))
+- Added time type to tests [\#12](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/12) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.3.0](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.3.0) (2019-06-06)
 
@@ -852,10 +863,6 @@
 ## [v1.0.2.4](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.2.4) (2019-05-16)
 
 [Full Changelog](https://github.com/microting/eform-angular-outer-inner-resource-plugin/compare/v1.0.2.3...v1.0.2.4)
-
-**Merged pull requests:**
-
-- Added time type to tests [\#12](https://github.com/microting/eform-angular-outer-inner-resource-plugin/pull/12) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.2.3](https://github.com/microting/eform-angular-outer-inner-resource-plugin/tree/v1.0.2.3) (2019-05-15)
 
