@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
-import { CommonPaginationState } from 'src/app/common/models/common-pagination-state';
+import { CommonPaginationState } from 'src/app/common/models';
 
 export interface InnerResourcesState {
   pagination: CommonPaginationState;
+  total: number;
 }
 
 export function createInitialState(): InnerResourcesState {
@@ -14,16 +15,23 @@ export function createInitialState(): InnerResourcesState {
       isSortDsc: false,
       offset: 0,
     },
+    total: 0,
   };
 }
 
-export const innerResourcesPersistStorage = persistState({
-  include: ['outerInnerResourcesPnInnerResources'],
-  key: 'pluginsStore',
+const innerResourcesPersistStorage = persistState({
+  include: ['innerResources'],
+  key: 'outerInnerResourcesPn',
+  preStorageUpdate(storeName, state: InnerResourcesState) {
+    return {
+      pagination: state.pagination,
+      // filters: state.filters,
+    };
+  },
 });
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'outerInnerResourcesPnInnerResources', resettable: true })
+@StoreConfig({ name: 'innerResources', resettable: true })
 export class InnerResourcesStore extends Store<InnerResourcesState> {
   constructor() {
     super(createInitialState());

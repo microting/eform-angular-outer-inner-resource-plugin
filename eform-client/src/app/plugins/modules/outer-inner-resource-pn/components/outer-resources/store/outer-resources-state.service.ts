@@ -1,37 +1,36 @@
 import { Injectable } from '@angular/core';
-import { InnerResourcesStore } from './inner-resources-store';
 import { Observable } from 'rxjs';
-import { OperationDataResult } from 'src/app/common/models';
-import { updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
+import {
+  OperationDataResult,
+  PaginationModel,
+  SortModel,
+} from 'src/app/common/models';
+import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
-import { InnerResourcesQuery } from './inner-resources-query';
-import { OuterInnerResourcePnInnerResourceService } from '../../../services';
-import { InnerResourcesPnModel } from '../../../models';
+import { OuterResourcesQuery, OuterResourcesStore } from './';
+import { OuterInnerResourcePnOuterResourceService } from '../../../services';
+import { OuterResourcesPnModel } from '../../../models';
 
 @Injectable({ providedIn: 'root' })
-export class InnerResourcesStateService {
+export class OuterResourcesStateService {
   constructor(
-    private store: InnerResourcesStore,
-    private service: OuterInnerResourcePnInnerResourceService,
-    private query: InnerResourcesQuery
+    private store: OuterResourcesStore,
+    private service: OuterInnerResourcePnOuterResourceService,
+    private query: OuterResourcesQuery
   ) {}
 
-  private total: number;
-
-  getAllMachines(): Observable<OperationDataResult<InnerResourcesPnModel>> {
+  getAllAreas(): Observable<OperationDataResult<OuterResourcesPnModel>> {
     return this.service
-      .getAllMachines({
-        isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-        offset: this.query.pageSetting.pagination.offset,
-        pageSize: this.query.pageSetting.pagination.pageSize,
-        sort: this.query.pageSetting.pagination.sort,
-        pageIndex: 0,
+      .getAllAreas({
+        ...this.query.pageSetting.pagination,
+        // ...this.query.pageSetting.filters,
       })
       .pipe(
         map((response) => {
           if (response && response.success && response.model) {
-            this.total = response.model.total;
+            this.store.update(() => ({
+              total: response.model.total,
+            }));
           }
           return response;
         })
@@ -48,20 +47,12 @@ export class InnerResourcesStateService {
     this.checkOffset();
   }
 
-  getOffset(): Observable<number> {
-    return this.query.selectOffset$;
-  }
-
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<string> {
+  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
-  }
-
-  getIsSortDsc(): Observable<boolean> {
-    return this.query.selectIsSortDsc$;
   }
 
   changePage(offset: number) {
@@ -74,7 +65,9 @@ export class InnerResourcesStateService {
   }
 
   onDelete() {
-    this.total -= 1;
+    this.store.update((state) => ({
+      total: state.total - 1,
+    }));
     this.checkOffset();
   }
 
@@ -97,7 +90,7 @@ export class InnerResourcesStateService {
     const newOffset = getOffset(
       this.query.pageSetting.pagination.pageSize,
       this.query.pageSetting.pagination.offset,
-      this.total
+      this.query.pageSetting.total
     );
     if (newOffset !== this.query.pageSetting.pagination.offset) {
       this.store.update((state) => ({
@@ -107,5 +100,9 @@ export class InnerResourcesStateService {
         },
       }));
     }
+  }
+
+  getPagination(): Observable<PaginationModel> {
+    return this.query.selectPagination$;
   }
 }

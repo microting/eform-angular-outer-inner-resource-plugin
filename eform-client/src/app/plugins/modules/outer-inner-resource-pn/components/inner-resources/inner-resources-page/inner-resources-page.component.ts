@@ -12,7 +12,7 @@ import {
 import { OuterInnerResourcePnClaims } from '../../../enums';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { InnerResourcesStateService } from '../store/inner-resources-state-service';
+import { InnerResourcesStateService } from '../store';
 import { TableHeaderElementModel } from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
 

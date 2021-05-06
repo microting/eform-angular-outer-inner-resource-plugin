@@ -20,9 +20,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="innerResourcesStateService.getSort() | async"
+        [sort]="innerResourcesStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="innerResourcesStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="tableBodyInnerResources">
         <tr *ngFor="let machine of machinesModel.innerResourceList">
@@ -75,9 +74,7 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-        [limit]="innerResourcesStateService.getPageSize() | async"
-        [size]="machinesModel.total"
-        [offset]="innerResourcesStateService.getOffset() | async"
+        [pagination]="innerResourcesStateService.getPagination() | async"
         (onPageChanged)="changePage($event)"
       ></eform-pagination>
     </div>

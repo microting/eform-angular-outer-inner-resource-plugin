@@ -18,13 +18,11 @@ import {
   InnerResourceDeleteComponent,
   InnerResourceEditComponent,
   InnerResourcesPageComponent,
-  InnerResourcesStateService,
   OuterInnerResourceSettingsComponent,
   OuterResourceCreateComponent,
   OuterResourceDeleteComponent,
   OuterResourceEditComponent,
   OuterResourcesPageComponent,
-  OuterResourcesStateService,
   ReportGeneratorContainerComponent,
   ReportGeneratorFormComponent,
   ReportPreviewTableComponent,
@@ -34,6 +32,8 @@ import { OuterInnerResourcePnRouting } from './outer-inner-resource-pn-routing.m
 import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { outerInnerResourcesStoreProviders } from './store-providers.config';
+import { InnerResourcesStateService } from './components/inner-resources/store';
+import { OuterResourcesStateService } from './components/outer-resources/store';
 
 @NgModule({
   imports: [
