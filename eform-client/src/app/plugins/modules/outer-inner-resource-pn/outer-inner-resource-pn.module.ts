@@ -31,7 +31,7 @@ import {
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OuterInnerResourcePnRouting } from './outer-inner-resource-pn-routing.module';
-import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
+import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { outerInnerResourcesStoreProviders } from './store-providers.config';
 

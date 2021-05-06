@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OuterInnerResourcePnReportsService } from '../../../services';
 import { ReportNamesModel } from '../../../models/report/report-names.model';
 import { OuterInnerResourcePnReportTypeEnum } from '../../../enums';
-import { DateTimeAdapter } from 'ng-pick-datetime-ex';
+import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
