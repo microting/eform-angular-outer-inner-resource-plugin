@@ -8,9 +8,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  OuterResourcesPnModel,
   InnerResourcePnModel,
   InnerResourcePnUpdateModel,
+  OuterResourcesPnModel,
 } from '../../../models';
 import { OuterInnerResourcePnInnerResourceService } from '../../../services';
 import { Subscription } from 'rxjs';

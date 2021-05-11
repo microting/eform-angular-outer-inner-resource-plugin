@@ -17,9 +17,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="outerResourcesStateService.getSort() | async"
+        [sort]="outerResourcesStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="outerResourcesStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="tableBodyOuterResources">
         <tr *ngFor="let area of areasModel.outerResourceList">
@@ -72,9 +71,7 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-        [limit]="outerResourcesStateService.getPageSize() | async"
-        [size]="areasModel.total"
-        [offset]="outerResourcesStateService.getOffset() | async"
+        [pagination]="outerResourcesStateService.getPagination() | async"
         (onPageChanged)="changePage($event)"
       ></eform-pagination>
     </div>

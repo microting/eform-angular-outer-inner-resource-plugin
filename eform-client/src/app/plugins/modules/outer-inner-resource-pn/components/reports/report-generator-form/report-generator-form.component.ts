@@ -1,40 +1,48 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {LocaleService} from 'src/app/common/services/auth';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { LocaleService } from 'src/app/common/services/auth';
 
-import {ReportPnGenerateModel} from '../../../models';
-import {format} from 'date-fns';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {OuterInnerResourcePnReportsService} from '../../../services';
-import {ReportNamesModel} from '../../../models/report/report-names.model';
-import {OuterInnerResourcePnReportTypeEnum} from '../../../enums';
-import {DateTimeAdapter} from 'ng-pick-datetime-ex';
+import { ReportPnGenerateModel } from '../../../models';
+import { format } from 'date-fns';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { OuterInnerResourcePnReportsService } from '../../../services';
+import { ReportNamesModel } from '../../../models/report/report-names.model';
+import { OuterInnerResourcePnReportTypeEnum } from '../../../enums';
+import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-machine-area-pn-report-generator-form',
   templateUrl: './report-generator-form.component.html',
-  styleUrls: ['./report-generator-form.component.scss']
+  styleUrls: ['./report-generator-form.component.scss'],
 })
 export class ReportGeneratorFormComponent implements OnInit {
-  @Output() generateReport: EventEmitter<ReportPnGenerateModel> = new EventEmitter();
-  @Output() saveReport: EventEmitter<ReportPnGenerateModel> = new EventEmitter();
+  @Output()
+  generateReport: EventEmitter<ReportPnGenerateModel> = new EventEmitter();
+  @Output()
+  saveReport: EventEmitter<ReportPnGenerateModel> = new EventEmitter();
   generateForm: FormGroup;
   reportNames: ReportNamesModel = new ReportNamesModel();
 
-  get reportType() { return OuterInnerResourcePnReportTypeEnum; }
+  get reportType() {
+    return OuterInnerResourcePnReportTypeEnum;
+  }
   // get relationshipTypes() { return OuterInnerResourcePnReportRelationshipEnum; }
 
-  constructor(dateTimeAdapter: DateTimeAdapter<any>,
-              private localeService: LocaleService,
-              private reportService: OuterInnerResourcePnReportsService,
-              private formBuilder: FormBuilder) {
-    dateTimeAdapter.setLocale(this.localeService.getCurrentUserLocale());
+  constructor(
+    dateTimeAdapter: DateTimeAdapter<any>,
+    private localeService: LocaleService,
+    private reportService: OuterInnerResourcePnReportsService,
+    private formBuilder: FormBuilder,
+    authStateService: AuthStateService
+  ) {
+    dateTimeAdapter.setLocale(authStateService.currentUserLocale);
   }
 
   ngOnInit() {
     this.generateForm = this.formBuilder.group({
       dateRange: ['', Validators.required],
       type: [null, Validators.required],
-      relationship: [null, Validators.required]
+      relationship: [null, Validators.required],
     });
     this.getReportNames();
   }
@@ -51,10 +59,8 @@ export class ReportGeneratorFormComponent implements OnInit {
 
   getReportNames() {
     // this.getReportNames();
-    // debugger;
-    this.reportService.getReportNames().subscribe( (data) => {
+    this.reportService.getReportNames().subscribe((data) => {
       if (data && data.success) {
-        // debugger;
         this.reportNames = data.model;
       }
     });
@@ -62,13 +68,11 @@ export class ReportGeneratorFormComponent implements OnInit {
   }
 
   private extractData(formValue: any): ReportPnGenerateModel {
-    return new ReportPnGenerateModel(
-      {
-        type: formValue.type,
-        relationship: formValue.relationship,
-        dateFrom: format(formValue.dateRange[0], 'YYYY-MM-DD'),
-        dateTo: format(formValue.dateRange[1], 'YYYY-MM-DD')
-      }
-    );
+    return new ReportPnGenerateModel({
+      type: formValue.type,
+      relationship: formValue.relationship,
+      dateFrom: format(formValue.dateRange[0], 'YYYY-MM-DD'),
+      dateTo: format(formValue.dateRange[1], 'YYYY-MM-DD'),
+    });
   }
 }

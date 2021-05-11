@@ -1,4 +1,4 @@
-import {ReportEntityModel} from './report-entity.model';
+import { ReportEntityModel } from './report-entity.model';
 
 export class ReportPnSubReportModel {
   entities: Array<ReportEntityModel> = [];
