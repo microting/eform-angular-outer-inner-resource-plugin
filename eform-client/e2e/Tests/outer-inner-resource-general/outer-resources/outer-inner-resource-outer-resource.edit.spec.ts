@@ -35,7 +35,7 @@ describe('Machine Area Machine edit', function () {
     const rowNumBeforeDelete = await outerInnerResourceOuterResourcePage.rowNum();
     await (await outerInnerResourceOuterResourcePage.getOuterObjectByName(newName)).delete();
     expect(
-      await outerInnerResourceOuterResourcePage.rowNum,
+      await outerInnerResourceOuterResourcePage.rowNum(),
       'Area is not deleted'
     ).eq(rowNumBeforeDelete - 1);
   });
