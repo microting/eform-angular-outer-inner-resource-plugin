@@ -7,35 +7,35 @@ const expect = require('chai').expect;
 const newName = generateRandmString();
 
 describe('Machine Area Machine Add', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
-    outerInnerResourceOuterResourcePage.goToOuterResource();
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
+    await outerInnerResourceOuterResourcePage.goToOuterResource();
   });
-  it('should add machine with only name', function () {
-    const rowNumBeforeCreate = outerInnerResourceOuterResourcePage.rowNum;
-    outerInnerResourceOuterResourcePage.createNewInnerResource(newName);
-    expect(outerInnerResourceOuterResourcePage.rowNum).eq(
+  it('should add machine with only name', async () => {
+    const rowNumBeforeCreate = await outerInnerResourceOuterResourcePage.rowNum();
+    await outerInnerResourceOuterResourcePage.createNewInnerResource(newName);
+    expect(await outerInnerResourceOuterResourcePage.rowNum()).eq(
       rowNumBeforeCreate + 1
     );
-    const listRowObject = outerInnerResourceOuterResourcePage.getOuterObjectByName(
+    const listRowObject = await outerInnerResourceOuterResourcePage.getOuterObjectByName(
       newName
     );
     expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   });
-  it('should not create machine without name', function () {
-    const rowNumBeforeCreate = outerInnerResourceOuterResourcePage.rowNum;
-    outerInnerResourceOuterResourcePage.openCreateModal();
+  it('should not create machine without name', async () => {
+    const rowNumBeforeCreate = await outerInnerResourceOuterResourcePage.rowNum();
+    await outerInnerResourceOuterResourcePage.openCreateModal();
     expect(
-      outerInnerResourceModalPage.outerResourceCreateSaveBtn.isEnabled()
+      (await outerInnerResourceModalPage.outerResourceCreateSaveBtn()).isEnabled()
     ).eq(false);
-    outerInnerResourceOuterResourcePage.closeCreateModal(true);
+    await outerInnerResourceOuterResourcePage.closeCreateModal(true);
     expect(
-      outerInnerResourceOuterResourcePage.rowNum,
+      await outerInnerResourceOuterResourcePage.rowNum(),
       'An extra outerResource was created'
     ).eq(rowNumBeforeCreate);
   });
-  after('clean up', function () {
-    outerInnerResourceOuterResourcePage.getOuterObjectByName(newName).delete();
+  after('clean up', async () => {
+    await (await outerInnerResourceOuterResourcePage.getOuterObjectByName(newName)).delete();
   });
 });

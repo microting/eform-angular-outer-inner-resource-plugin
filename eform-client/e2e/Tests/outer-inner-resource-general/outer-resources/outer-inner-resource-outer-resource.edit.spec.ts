@@ -9,16 +9,16 @@ const expect = require('chai').expect;
 const newName = generateRandmString();
 
 describe('Machine Area Machine edit', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
-    outerInnerResourceOuterResourcePage.goToOuterResource();
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
+    await outerInnerResourceOuterResourcePage.goToOuterResource();
   });
-  it('should add machine', function () {
-    outerInnerResourceOuterResourcePage.createNewInnerResource(newName);
+  it('should add machine', async () => {
+    await outerInnerResourceOuterResourcePage.createNewInnerResource(newName);
   });
   // TODO can't change name.
-  // it('should edit machine', function () {
+  // it('should edit machine', async () => {
   //   const listRowObject = new ListRowObject(outerInnerResourceOuterResourcePage.rowNum());
   //   const newName = 'New Name';
   //   listRowObject.updateBtn.click();
@@ -31,11 +31,11 @@ describe('Machine Area Machine edit', function () {
   //   browser.waitForVisible(listRowObject.updateBtn, 20000);
   //   expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   // });
-  after('should delete machine', function () {
-    const rowNumBeforeDelete = outerInnerResourceOuterResourcePage.rowNum;
-    outerInnerResourceOuterResourcePage.getOuterObjectByName(newName).delete();
+  after('should delete machine', async () => {
+    const rowNumBeforeDelete = await outerInnerResourceOuterResourcePage.rowNum();
+    await (await outerInnerResourceOuterResourcePage.getOuterObjectByName(newName)).delete();
     expect(
-      outerInnerResourceOuterResourcePage.rowNum,
+      await outerInnerResourceOuterResourcePage.rowNum,
       'Area is not deleted'
     ).eq(rowNumBeforeDelete - 1);
   });

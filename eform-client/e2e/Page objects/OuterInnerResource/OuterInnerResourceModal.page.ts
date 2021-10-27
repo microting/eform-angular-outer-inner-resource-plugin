@@ -5,159 +5,159 @@ export class OuterInnerResourceModalPage extends Page {
     super();
   }
 
-  public get outerResourceCreateNameInput() {
-    const ele = $('#createOuterResourceName');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async outerResourceCreateNameInput() {
+    const ele = await $('#createOuterResourceName');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get outerResourceCreateSaveBtn() {
-    const ele = $('#outerResourceCreateSaveBtn');
-    ele.waitForDisplayed({timeout: 20000});
+  public async outerResourceCreateSaveBtn() {
+    const ele = await $('#outerResourceCreateSaveBtn');
+    await ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
 
-  public get outerResourceCreateCancelBtn() {
-    const ele = $('#outerResourceCreateCancelBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async outerResourceCreateCancelBtn() {
+    const ele = await $('#outerResourceCreateCancelBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get outerResourceEditNameInput() {
-    const ele = $('#updateOuterResourceName');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async outerResourceEditNameInput() {
+    const ele = await $('#updateOuterResourceName');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get outerResourceEditSaveBtn() {
+  public async outerResourceEditSaveBtn() {
     const ele = $('#outerResourceEditSaveBtn');
     ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
 
-  public get outerResourceEditCancelBtn() {
-    const ele = $('#outerResourceEditCancelBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async outerResourceEditCancelBtn() {
+    const ele = await $('#outerResourceEditCancelBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  // public get outerResourceDeleteAreaId() {
+  // public async outerResourceDeleteAreaId() {
   //   const ele = $('#selectedOuterResourceId');
   //   ele.waitForDisplayed({timeout: 20000});
   //   ele.waitForClickable({timeout: 20000});
   //   return ele;
   // }
 
-  // public get outerResourceDeleteAreaName() {
+  // public async outerResourceDeleteAreaName() {
   //   const ele = $('#selectedOuterResourceName');
   //   ele.waitForDisplayed({timeout: 20000});
   //   ele.waitForClickable({timeout: 20000});
   //   return ele;
   // }
 
-  public get outerResourceDeleteDeleteBtn() {
-    const ele = $('#outerResourceDeleteDeleteBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async outerResourceDeleteDeleteBtn() {
+    const ele = await $('#outerResourceDeleteDeleteBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get outerResourceDeleteCancelBtn() {
-    const ele = $('#outerResourceDeleteCancelBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async outerResourceDeleteCancelBtn() {
+    const ele = await $('#outerResourceDeleteCancelBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceCreateNameInput() {
-    const ele = $('#createInnerResourceName');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async innerResourceCreateNameInput() {
+    const ele = await $('#createInnerResourceName');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceCreateSaveBtn() {
-    const ele = $('#innerResourceCreateSaveBtn');
-    ele.waitForDisplayed({timeout: 20000});
+  public async innerResourceCreateSaveBtn() {
+    const ele = await $('#innerResourceCreateSaveBtn');
+    await ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceCreateCancelBtn() {
-    const ele = $('#innerResourceCreateCancelBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async innerResourceCreateCancelBtn() {
+    const ele = await $('#innerResourceCreateCancelBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceEditName() {
-    const ele = $('#updateInnerResourceName');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async innerResourceEditName() {
+    const ele = await $('#updateInnerResourceName');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceEditSaveBtn() {
-    const ele = $('#innerResourceEditSaveBtn');
-    ele.waitForDisplayed({timeout: 20000});
+  public async innerResourceEditSaveBtn() {
+    const ele = await $('#innerResourceEditSaveBtn');
+    await ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceEditCancelBtn() {
-    const ele = $('#innerResourceEditCancelBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async innerResourceEditCancelBtn() {
+    const ele = await $('#innerResourceEditCancelBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  // public get innerResourceDeleteName() {
+  // public async innerResourceDeleteName() {
   //   const ele = $('#innerResourceDeleteName');
   //   ele.waitForDisplayed({timeout: 20000});
   //   ele.waitForClickable({timeout: 20000});
   //   return ele;
   // }
 
-  public get innerResourceDeleteDeleteBtn() {
-    const ele = $('#innerResourceDeleteDeleteBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async innerResourceDeleteDeleteBtn() {
+    const ele = await $('#innerResourceDeleteDeleteBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceDeleteCancelBtn() {
-    const ele = $('#innerResourceDeleteCancelBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async innerResourceDeleteCancelBtn() {
+    const ele = await $('#innerResourceDeleteCancelBtn');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get innerResourceEditExternalIdInput() {
-    const ele = $('#updateInnerResourceExternalId');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public async innerResourceEditExternalIdInput() {
+    const ele = await $('#updateInnerResourceExternalId');
+    await ele.waitForDisplayed({timeout: 20000});
+    await ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
-  public get createInnerResourceId() {
-    const ele = $('#createInnerResourceId');
-    ele.waitForDisplayed({timeout: 20000});
+  public async createInnerResourceId() {
+    const ele = await $('#createInnerResourceId');
+    await ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
 
-  public get createOuterResourceExternalId() {
-    const ele = $('#createOuterResourceExternalId');
-    ele.waitForDisplayed({timeout: 20000});
+  public async createOuterResourceExternalId() {
+    const ele = await $('#createOuterResourceExternalId');
+    await ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
 
-  public get outerResourceEditExternalIdInput() {
+  public async outerResourceEditExternalIdInput() {
     // const ele = $('#createOuterResourceExternalId');
     // ele.waitForDisplayed({timeout: 20000});
     // return ele;
-    return this.createOuterResourceExternalId;
+    return this.createOuterResourceExternalId();
   }
 }
 
