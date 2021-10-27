@@ -34,7 +34,7 @@ if [ -d "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plu
 fi
 
 su ubuntu -c \
-"cp -av /var/www/microting/eform-angular-outer-inner-resource-plugin/eFormAPI/Plugins/OuterInnerResource.Pn/OuterInnerResource.Pn/out /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/OuterInnerResource"
+"cp -av /var/www/microting/eform-angular-outer-inner-resource-plugin/out /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/OuterInnerResource"
 
 
 echo "Recompile angular"
