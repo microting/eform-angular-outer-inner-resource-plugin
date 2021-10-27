@@ -42,8 +42,6 @@ cd /var/www/microting/eform-angular-frontend/eform-client
 su ubuntu -c \
 "/var/www/microting/eform-angular-outer-inner-resource-plugin/testinginstallpn.sh"
 su ubuntu -c \
-"npm run build"
+"export NODE_OPTIONS=--max_old_space_size=8192 && time GENERATE_SOURCEMAP=false npm run build"
 echo "Recompiling angular done"
 /rabbitmqadmin declare queue name=eform-angular-outer-inner-resource-plugin durable=true
-
-
