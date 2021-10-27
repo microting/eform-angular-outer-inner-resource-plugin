@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Text.RegularExpressions;
+
 namespace OuterInnerResource.Pn
 {
     using System;
@@ -140,8 +142,17 @@ namespace OuterInnerResource.Pn
         public void Configure(IApplicationBuilder appBuilder)
         {
             var serviceProvider = appBuilder.ApplicationServices;
-            var rebusService = serviceProvider.GetService<IRebusService>();
-            rebusService.Start(_connectionString, _maxParallelism, _numberOfWorkers);
+
+            string rabbitMqHost = "localhost";
+
+            if (_connectionString.Contains("frontend"))
+            {
+                var dbPrefix = Regex.Match(_connectionString, @"atabase=(\d*)_").Groups[1].Value;
+                rabbitMqHost = $"frontend-{dbPrefix}-rabbitmq";
+            }
+
+            IRebusService rebusService = serviceProvider.GetService<IRebusService>();
+            rebusService.Start(_connectionString, "admin", "password", rabbitMqHost);
         }
 
         public List<PluginMenuItemModel> GetNavigationMenu(IServiceProvider serviceProvider)

@@ -16,7 +16,7 @@ describe('Machine Area Area Add', function () {
     const rowNumBeforeCreate = await outerInnerResourceInnerResourcePage.rowNum();
     await outerInnerResourceInnerResourcePage.openCreateModal();
     expect(
-      (await outerInnerResourceModalPage.innerResourceCreateSaveBtn()).isEnabled()
+      await (await outerInnerResourceModalPage.innerResourceCreateSaveBtn()).isEnabled()
     ).eq(false);
     await outerInnerResourceInnerResourcePage.closeCreateModal(true);
     expect(
