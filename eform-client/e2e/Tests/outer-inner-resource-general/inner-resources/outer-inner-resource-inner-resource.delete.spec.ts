@@ -9,34 +9,34 @@ const expect = require('chai').expect;
 const nameInnerResource = generateRandmString();
 
 describe('Machine Area Area delete', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
-    outerInnerResourceInnerResourcePage.goToInnerResource();
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
+    await outerInnerResourceInnerResourcePage.goToInnerResource();
   });
-  it('should create a new area', function () {
-    outerInnerResourceInnerResourcePage.createNewInnerResource(
+  it('should create a new area', async () => {
+    await outerInnerResourceInnerResourcePage.createNewInnerResource(
       nameInnerResource
     );
   });
-  it('should not delete area', function () {
-    const rowNumBeforeDelete = outerInnerResourceInnerResourcePage.rowNum;
-    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(
+  it('should not delete area', async () => {
+    const rowNumBeforeDelete = await outerInnerResourceInnerResourcePage.rowNum();
+    const listRowObject = await outerInnerResourceInnerResourcePage.getInnerObjectByName(
       nameInnerResource
     );
-    listRowObject.delete(true);
-    expect(outerInnerResourceInnerResourcePage.rowNum, 'Area is deleted').eq(
+    await listRowObject.delete(true);
+    expect(await outerInnerResourceInnerResourcePage.rowNum(), 'Area is deleted').eq(
       rowNumBeforeDelete
     );
   });
-  it('should delete area', function () {
-    const rowNumBeforeDelete = outerInnerResourceInnerResourcePage.rowNum;
-    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(
+  it('should delete area', async () => {
+    const rowNumBeforeDelete = await outerInnerResourceInnerResourcePage.rowNum();
+    const listRowObject = await outerInnerResourceInnerResourcePage.getInnerObjectByName(
       nameInnerResource
     );
-    listRowObject.delete();
+    await listRowObject.delete();
     expect(
-      outerInnerResourceInnerResourcePage.rowNum,
+      await outerInnerResourceInnerResourcePage.rowNum(),
       'Area is not deleted'
     ).eq(rowNumBeforeDelete - 1);
   });

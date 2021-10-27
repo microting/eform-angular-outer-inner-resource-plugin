@@ -7,42 +7,42 @@ const expect = require('chai').expect;
 const newNameInnerResources = generateRandmString();
 
 describe('Machine Area Area Add', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
-    outerInnerResourceInnerResourcePage.goToInnerResource();
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
+    await outerInnerResourceInnerResourcePage.goToInnerResource();
   });
-  it('should not create a new area without everything', function () {
-    const rowNumBeforeCreate = outerInnerResourceInnerResourcePage.rowNum;
-    outerInnerResourceInnerResourcePage.openCreateModal();
+  it('should not create a new area without everything', async () => {
+    const rowNumBeforeCreate = await outerInnerResourceInnerResourcePage.rowNum();
+    await outerInnerResourceInnerResourcePage.openCreateModal();
     expect(
-      outerInnerResourceModalPage.innerResourceCreateSaveBtn.isEnabled()
+      await (await outerInnerResourceModalPage.innerResourceCreateSaveBtn()).isEnabled()
     ).eq(false);
-    outerInnerResourceInnerResourcePage.closeCreateModal(true);
+    await outerInnerResourceInnerResourcePage.closeCreateModal(true);
     expect(
-      outerInnerResourceInnerResourcePage.rowNum,
+      await outerInnerResourceInnerResourcePage.rowNum(),
       'An extra innerResource was created'
     ).eq(rowNumBeforeCreate);
   });
-  it('should add area with only name', function () {
-    const rowNumBeforeCreate = outerInnerResourceInnerResourcePage.rowNum;
-    outerInnerResourceInnerResourcePage.createNewInnerResource(
+  it('should add area with only name', async () => {
+    const rowNumBeforeCreate = await outerInnerResourceInnerResourcePage.rowNum();
+    await outerInnerResourceInnerResourcePage.createNewInnerResource(
       newNameInnerResources
     );
-    expect(outerInnerResourceInnerResourcePage.rowNum).eq(
+    expect(await outerInnerResourceInnerResourcePage.rowNum()).eq(
       rowNumBeforeCreate + 1
     );
-    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(
+    const listRowObject = await outerInnerResourceInnerResourcePage.getInnerObjectByName(
       newNameInnerResources
     );
     expect(listRowObject.name, 'Name in table is incorrect').equal(
       newNameInnerResources
     );
   });
-  after('clean up', function () {
-    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(
+  after('clean up', async () => {
+    const listRowObject = await outerInnerResourceInnerResourcePage.getInnerObjectByName(
       newNameInnerResources
     );
-    listRowObject.delete();
+    await listRowObject.delete();
   });
 });

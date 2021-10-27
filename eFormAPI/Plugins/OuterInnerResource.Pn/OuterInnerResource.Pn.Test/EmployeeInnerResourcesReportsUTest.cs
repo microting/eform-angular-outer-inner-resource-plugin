@@ -88,8 +88,32 @@ namespace MachineArea.Pn.Test
 
             List<SiteDto> sitesList = new List<SiteDto>()
             {
-                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                // new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
+                new SiteDto()
+                {
+                    CustomerNo = 1,
+                    Email = "bla",
+                    FirstName = "Test",
+                    LastName = "Site 1",
+                    OtpCode = 1,
+                    SiteId = 1,
+                    SiteName = "Test Site 1",
+                    UnitId = 1,
+                    WorkerUid = 1
+                },
+                // new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new SiteDto()
+                {
+                    CustomerNo = 1,
+                    Email = "bla",
+                    FirstName = "Test",
+                    LastName = "Site 2",
+                    OtpCode = 1,
+                    SiteId = 2,
+                    SiteName = "Test Site 2",
+                    UnitId = 1,
+                    WorkerUid = 1
+                }
             };
 
             DateTime modelDateFrom = new DateTime(
@@ -201,8 +225,32 @@ namespace MachineArea.Pn.Test
 
             List<SiteDto> sitesList = new List<SiteDto>()
             {
-                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                // new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
+                new SiteDto()
+                {
+                    CustomerNo = 1,
+                    Email = "bla",
+                    FirstName = "Test",
+                    LastName = "Site 1",
+                    OtpCode = 1,
+                    SiteId = 1,
+                    SiteName = "Test Site 1",
+                    UnitId = 1,
+                    WorkerUid = 1
+                },
+                // new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new SiteDto()
+                {
+                    CustomerNo = 1,
+                    Email = "bla",
+                    FirstName = "Test",
+                    LastName = "Site 2",
+                    OtpCode = 1,
+                    SiteId = 2,
+                    SiteName = "Test Site 2",
+                    UnitId = 1,
+                    WorkerUid = 1
+                }
             };
 
             DateTime modelDateFrom = new DateTime(
@@ -305,8 +353,32 @@ namespace MachineArea.Pn.Test
 
             List<SiteDto> sitesList = new List<SiteDto>()
             {
-                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                // new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
+                new SiteDto()
+                {
+                    CustomerNo = 1,
+                    Email = "bla",
+                    FirstName = "Test",
+                    LastName = "Site 1",
+                    OtpCode = 1,
+                    SiteId = 1,
+                    SiteName = "Test Site 1",
+                    UnitId = 1,
+                    WorkerUid = 1
+                },
+                // new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new SiteDto()
+                {
+                    CustomerNo = 1,
+                    Email = "bla",
+                    FirstName = "Test",
+                    LastName = "Site 2",
+                    OtpCode = 1,
+                    SiteId = 2,
+                    SiteName = "Test Site 2",
+                    UnitId = 1,
+                    WorkerUid = 1
+                }
             };
 
             DateTime modelDateFrom = new DateTime(

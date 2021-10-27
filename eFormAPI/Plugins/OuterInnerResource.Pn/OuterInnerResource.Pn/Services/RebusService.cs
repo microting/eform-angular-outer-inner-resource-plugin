@@ -51,14 +51,13 @@ namespace OuterInnerResource.Pn.Services
             _coreHelper = coreHelper;
         }
 
-        public async Task Start(string connectionString, int maxParallelism, int numberOfWorkers)
+        public async Task Start(string connectionString, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost)
         {
             _connectionString = connectionString;
-            //_sdkConnectionString = sdkConnectionString;
             _container = new WindsorContainer();
             _container.Install(
                 new RebusHandlerInstaller()
-                , new RebusInstaller(connectionString, maxParallelism, numberOfWorkers)
+                , new RebusInstaller(connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitMqHost)
             );
             
             Core core = await _coreHelper.GetCore();
