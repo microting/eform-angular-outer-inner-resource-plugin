@@ -73,10 +73,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success" id="outerResourceEditSaveBtn" [disabled]="!selectedAreaModel.name" (click)="updateArea()">
+        <button mdbBtn class="btn-success btn-small-height" id="outerResourceEditSaveBtn" [disabled]="!selectedAreaModel.name" (click)="updateArea()">
           {{ 'Save' | translate }}
         </button>
-        <button mdbBtn class="btn-accent text-black-50" id="outerResourceEditCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="outerResourceEditCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

@@ -9,16 +9,16 @@ const expect = require('chai').expect;
 const newName = generateRandmString();
 
 describe('Machine Area Area edit', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
-    outerInnerResourceInnerResourcePage.goToInnerResource();
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
+    await outerInnerResourceInnerResourcePage.goToInnerResource();
   });
-  it('should create a new area', function () {
-    outerInnerResourceInnerResourcePage.createNewInnerResource(newName);
+  it('should create a new area', async () => {
+    await outerInnerResourceInnerResourcePage.createNewInnerResource(newName);
   });
   // TODO Can't change name.
-  // it('should edit area', function () {
+  // it('should edit area', async () => {
   //   const listRowObject = new ListRowObject(outerInnerResourceInnerResourcePage.rowNum());
   //   const newName = 'New Name';
   //   listRowObject.updateBtn.click();
@@ -31,10 +31,10 @@ describe('Machine Area Area edit', function () {
   //   browser.waitForVisible(listRowObject.updateBtn, 20000);
   //   expect(listRowObject.name, 'Name in table is incorrect').equal(newName);
   // });
-  after('clean up', function () {
-    const listRowObject = outerInnerResourceInnerResourcePage.getInnerObjectByName(
+  after('clean up', async () => {
+    const listRowObject = await outerInnerResourceInnerResourcePage.getInnerObjectByName(
       newName
     );
-    listRowObject.delete();
+    await listRowObject.delete();
   });
 });
