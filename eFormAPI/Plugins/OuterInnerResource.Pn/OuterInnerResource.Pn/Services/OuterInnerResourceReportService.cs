@@ -141,15 +141,15 @@ namespace OuterInnerResource.Pn.Services
                     model.DateTo.Month,
                     model.DateTo.Day,
                     23, 59, 59);
-                
+
                 // results to exclude
-                
+
                 string outerResourceName = "";
                 OuterResource areaToExclude;
                 InnerResource machineToExclude;
                 string innerResourceName = "";
                 List<ResourceTimeRegistration> jobsList;
-                
+
                 outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterTotalTimeName")?.Value;
                 areaToExclude = _dbContext.OuterResources.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
                 innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
@@ -171,6 +171,8 @@ namespace OuterInnerResource.Pn.Services
                         query = query.Where(x =>
                             x.OuterResourceId != areaToExclude.Id && x.InnerResourceId != machineToExclude.Id);
                     }
+                    query = query
+                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo);
                 }
                 else
                 {
@@ -203,13 +205,13 @@ namespace OuterInnerResource.Pn.Services
                 {
                     return new OperationDataResult<FileStreamModel>(false, reportDataResult.Message);
                 }
-                
+
                 string outerResourceName = "";
                 string innerResourceName = "";
                 try
                 {
                     outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
-                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value; 
+                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;
                 }
                 catch
                 {
