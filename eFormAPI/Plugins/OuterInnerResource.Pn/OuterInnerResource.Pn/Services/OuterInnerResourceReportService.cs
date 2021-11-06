@@ -32,6 +32,7 @@ using eFormCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -156,6 +157,7 @@ namespace OuterInnerResource.Pn.Services
                 machineToExclude = await _dbContext.InnerResources.SingleOrDefaultAsync(x => x.Name == innerResourceName);
 
                 IQueryable<ResourceTimeRegistration> query = _dbContext.ResourceTimeRegistrations
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Include(x => x.InnerResource)
                     .Include(x => x.OuterResource);
 
