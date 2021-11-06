@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eForm.Infrastructure.Constants;
+
 namespace OuterInnerResource.Pn.Services
 {
     using System.Collections.Generic;
@@ -50,7 +52,7 @@ namespace OuterInnerResource.Pn.Services
             _outerResourceNames = new List<KeyValuePair<int, string>>();
             _innerResourceNames = new List<KeyValuePair<int, string>>();
         }
-        
+
         public async Task<OperationDataResult<ResourceTimeRegistrationsModel>> GetAllRegistrations(int lastRegistrationId)
         {
             var resourceTimeRegistrationsModel = new ResourceTimeRegistrationsModel
@@ -58,7 +60,12 @@ namespace OuterInnerResource.Pn.Services
                 ResourceTimeRegistrationModels = new List<ResourceTimeRegistrationModel>()
             };
 
-            var results = await _dbContext.ResourceTimeRegistrations.AsNoTracking().Where(x => x.Id > lastRegistrationId).Take(10).OrderBy(x => x.Id).ToListAsync();
+            var results = await _dbContext.ResourceTimeRegistrations.AsNoTracking()
+                .Where(x => x.Id > lastRegistrationId)
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Take(10)
+                .OrderBy(x => x.Id)
+                .ToListAsync();
             foreach (var resourceTimeRegistration in results)
             {
                 var registration = new ResourceTimeRegistrationModel()
@@ -74,7 +81,7 @@ namespace OuterInnerResource.Pn.Services
                     SdkCaseId = resourceTimeRegistration.SDKCaseId,
                     TimeInSeconds = resourceTimeRegistration.TimeInSeconds
                 };
-                
+
                 if (_deviceUserNames.Any(x => x.Key == registration.DoneByDeviceUserId))
                 {
                     registration.DoneByDeviceUserName =
@@ -117,14 +124,14 @@ namespace OuterInnerResource.Pn.Services
                     _innerResourceNames.Add(new KeyValuePair<int, string>(registration.InnerResourceId, registration.InnerResourceName));
                 }
                 resourceTimeRegistrationsModel.ResourceTimeRegistrationModels.Add(registration);
-                
+
             }
 
             if (results.Count > 0)
             {
                 resourceTimeRegistrationsModel.LastResourceTimeRegistrationId = results.Last().Id;
             }
-            
+
             return new OperationDataResult<ResourceTimeRegistrationsModel>(true, resourceTimeRegistrationsModel);
         }
     }
