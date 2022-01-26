@@ -59,71 +59,90 @@ namespace OuterInnerResource.Pn.Handlers
             var language = await sdkDbContext.Languages.SingleAsync(x => x.Id == siteDto.LanguageId);
             var mainElement = await _core.ReadeForm(message.SdkeFormId, language);
 
-            mainElement.Label = outerInnerResourceSite.OuterInnerResource.InnerResource.Name;
-            mainElement.ElementList[0].Label = outerInnerResourceSite.OuterInnerResource.InnerResource.Name;
-            mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
-            mainElement.StartDate = DateTime.Now.ToUniversalTime();
-            mainElement.Repeated = 0;
-
-            var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled}";
-
-            var quickSyncEnabled = _dbContext.PluginConfigurationValues
-                .AsNoTracking()
-                .FirstOrDefault(x =>x.Name == lookup)?.Value == "true";
-
-            if (quickSyncEnabled)
+            if (outerInnerResourceSite != null)
             {
-                mainElement.EnableQuickSync = true;
-            }
-            
-            var folderQuery = sdkDbContext.Folders
-                .AsNoTracking()
-                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                .Where(x => x.FolderTranslations.Any(y =>
-                    y.Name == outerInnerResourceSite.OuterInnerResource.OuterResource.Name))
-                .Select(x => new {x.MicrotingUid, x.Id});
-            var folder = await folderQuery
-                .FirstOrDefaultAsync();
-            
-            if (folder == null)
-            {
-                var languages = await sdkDbContext.Languages
-                    .AsNoTracking()
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .ToListAsync();
-                var names = new List<KeyValuePair<string, string>>();
-                var descriptions = new List<KeyValuePair<string, string>>();
-
-                foreach (var languageLocal in languages)
+                var outerInnerResource = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                    x.Id == outerInnerResourceSite.OuterInnerResourceId);
+                if (outerInnerResource != null)
                 {
-                    names.Add(new KeyValuePair<string, string>(languageLocal.LanguageCode, outerInnerResourceSite.OuterInnerResource.OuterResource.Name));
-                    descriptions.Add(new KeyValuePair<string, string>(languageLocal.LanguageCode, ""));
+                    var innerResource = await _dbContext.InnerResources.SingleOrDefaultAsync(x =>
+                        x.Id == outerInnerResource.InnerResourceId);
+                    var outerResource = await _dbContext.OuterResources.SingleOrDefaultAsync(x =>
+                        x.Id == outerInnerResource.OuterResourceId);
+                    if (innerResource != null)
+                    {
+                        mainElement.Label = innerResource.Name;
+                        mainElement.ElementList[0].Label = innerResource.Name;
+
+
+                        mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+                        mainElement.StartDate = DateTime.Now.ToUniversalTime();
+                        mainElement.Repeated = 0;
+
+                        var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.QuickSyncEnabled}";
+
+                        var quickSyncEnabled = _dbContext.PluginConfigurationValues
+                            .AsNoTracking()
+                            .FirstOrDefault(x => x.Name == lookup)?.Value == "true";
+
+                        if (quickSyncEnabled)
+                        {
+                            mainElement.EnableQuickSync = true;
+                        }
+
+                        var folderQuery = sdkDbContext.Folders
+                            .AsNoTracking()
+                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Where(x => x.FolderTranslations.Any(y =>
+                                y.Name == outerResource.Name))
+                            .Select(x => new { x.MicrotingUid, x.Id });
+                        var folder = await folderQuery
+                            .FirstOrDefaultAsync();
+
+                        if (folder == null)
+                        {
+                            var languages = await sdkDbContext.Languages
+                                .AsNoTracking()
+                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                                .ToListAsync();
+                            var names = new List<KeyValuePair<string, string>>();
+                            var descriptions = new List<KeyValuePair<string, string>>();
+
+                            foreach (var languageLocal in languages)
+                            {
+                                names.Add(new KeyValuePair<string, string>(languageLocal.LanguageCode,
+                                    outerInnerResourceSite.OuterInnerResource.OuterResource.Name));
+                                descriptions.Add(new KeyValuePair<string, string>(languageLocal.LanguageCode, ""));
+                            }
+
+                            await _core.FolderCreate(names, descriptions, null);
+
+                            folder = await folderQuery
+                                .FirstOrDefaultAsync();
+                        }
+
+                        mainElement.CheckListFolderName = folder.MicrotingUid.ToString();
+
+                        var dataElement = (DataElement)mainElement.ElementList[0];
+
+                        dataElement.DataItemList.Add(new None(
+                            1,
+                            false,
+                            false,
+                            $"{outerInnerResourceSite.OuterInnerResource.OuterResource.Name} - {outerInnerResourceSite.OuterInnerResource.InnerResource.Name}",
+                            "",
+                            Constants.FieldColors.Default,
+                            -999,
+                            false));
+
+                        var sdkCaseId = await _core.CaseCreate(mainElement, "", (int)siteDto.MicrotingUid, folder.Id);
+
+                        outerInnerResourceSite.MicrotingSdkCaseId = sdkCaseId;
+                    }
                 }
 
-                await _core.FolderCreate(names, descriptions, null);
-                
-                folder = await folderQuery
-                    .FirstOrDefaultAsync();
+                await outerInnerResourceSite.Update(_dbContext).ConfigureAwait(false);
             }
-
-            mainElement.CheckListFolderName = folder.MicrotingUid.ToString();
-
-            var dataElement = (DataElement)mainElement.ElementList[0];
-
-            dataElement.DataItemList.Add(new None(
-                1,
-                false,
-                false,
-                $"{outerInnerResourceSite.OuterInnerResource.OuterResource.Name} - {outerInnerResourceSite.OuterInnerResource.InnerResource.Name}",
-                "",
-                Constants.FieldColors.Default,
-                -999,
-                false));
-
-            var sdkCaseId = await _core.CaseCreate(mainElement, "", (int)siteDto.MicrotingUid, folder.Id);
-
-            outerInnerResourceSite.MicrotingSdkCaseId = sdkCaseId;
-            await outerInnerResourceSite.Update(_dbContext).ConfigureAwait(false);
         }
 
     }
