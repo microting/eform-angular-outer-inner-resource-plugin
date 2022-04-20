@@ -55,7 +55,7 @@ namespace OuterInnerResource.Pn.Services
             ILogger<OuterInnerResourceSettingsService> logger,
             OuterInnerResourcePnDbContext dbContext,
             IOuterInnerResourceLocalizationService outerInnerResourceLocalizationService,
-            IPluginDbOptions<OuterInnerResourceSettings> options, 
+            IPluginDbOptions<OuterInnerResourceSettings> options,
             IRebusService rebusService,
             IUserService userService)
         {
@@ -106,11 +106,11 @@ namespace OuterInnerResource.Pn.Services
         {
             try
             {
-                var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds}"; 
+                var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds}";
                 var oldSdkSiteIds = _dbContext.PluginConfigurationValues
-                    .FirstOrDefault(x => 
+                    .FirstOrDefault(x =>
                         x.Name == lookup)?.Value;
-            
+
                 await _options.UpdateDb(settings =>
                 {
                     settings.EnabledSiteIds = machineAreaSettingsModel.EnabledSiteIds;
@@ -130,11 +130,11 @@ namespace OuterInnerResource.Pn.Services
                     settings.QuickSyncEnabled = machineAreaSettingsModel.QuickSyncEnabled;
                 }, _dbContext, _userService.UserId);
 
-                if (oldSdkSiteIds != machineAreaSettingsModel.EnabledSiteIds)
-                {
-                    CreateNewSiteRelations();
-                }
-                
+                // if (oldSdkSiteIds != machineAreaSettingsModel.EnabledSiteIds)
+                // {
+                CreateNewSiteRelations();
+                // }
+
                 return new OperationResult(true,
                     _outerInnerResourceLocalizationService.GetString("SettingsHaveBeenUpdatedSuccessfully"));
             }
@@ -149,9 +149,9 @@ namespace OuterInnerResource.Pn.Services
 
         public OperationDataResult<List<int>> GetSitesEnabled()
         {
-            var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds}"; 
+            var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds}";
             var oldSdkSiteIds = _dbContext.PluginConfigurationValues
-                .FirstOrDefault(x => 
+                .FirstOrDefault(x =>
                     x.Name == lookup)?.Value;
             var siteIds = new List<int>();
             if (!string.IsNullOrEmpty(oldSdkSiteIds))
@@ -161,21 +161,21 @@ namespace OuterInnerResource.Pn.Services
                     siteIds.Add(int.Parse(s));
                 }
             }
-            
+
             return new OperationDataResult<List<int>>(true, siteIds);
            // throw new oldSdkSiteIds.sp;
         }
 
         public async Task<OperationResult> UpdateSitesEnabled(List<int> siteIds)
         {
-            //var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds}"; 
+            //var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds}";
             //var oldSdkSiteIds = _dbContext.PluginConfigurationValues
-            //    .FirstOrDefault(x => 
+            //    .FirstOrDefault(x =>
             //        x.Name == lookup)?.Value;
 
             var sdkSiteIds = "";
             var i = 0;
-            
+
             foreach (var siteId in siteIds)
             {
                 if (i > 0)
@@ -185,14 +185,14 @@ namespace OuterInnerResource.Pn.Services
             }
 
             await _options.UpdateDb(settings => { settings.EnabledSiteIds = sdkSiteIds; }, _dbContext, _userService.UserId);
-            
+
             return new OperationResult(true);
         }
 
         private void CreateNewSiteRelations()
         {
-            var 
-                outerInnerResources = _dbContext.OuterInnerResources.Where(x => 
+            var
+                outerInnerResources = _dbContext.OuterInnerResources.Where(x =>
                         x.WorkflowState != Constants.WorkflowStates.Removed)
                 .ToList();
             foreach (var outerInnerResource in outerInnerResources)
