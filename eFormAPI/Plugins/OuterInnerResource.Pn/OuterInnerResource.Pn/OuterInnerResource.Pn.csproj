@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource</OutputPath>
+    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource.Pn</OutputPath>
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource</OutputPath>
+    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource.Pn</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
