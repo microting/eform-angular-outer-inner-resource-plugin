@@ -68,7 +68,7 @@ jobs:
         cp -av main/eform-client/wdio-headless-plugin-step2.conf.js eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
         cp -av main/eform-client/wdio-plugin-step2.conf.js eform-angular-frontend/eform-client/wdio-plugin-step2.conf.js
         mkdir -p eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
-        cp -av main/eFormAPI/eFormAPI.Web/Plugins/OuterInnerResource eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/OuterInnerResource
+        cp -av main/eFormAPI/eFormAPI.Web/Plugins/OuterInnerResource.Pn eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/OuterInnerResource.Pn
         cd eform-angular-frontend/eform-client && ../../main/testinginstallpn.sh
     - name: Build frontend
       run: dotnet build eform-angular-frontend/eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
