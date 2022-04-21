@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Threading.Tasks;
+using Castle.Windsor;
 using Rebus.Bus;
 
 namespace OuterInnerResource.Pn.Abstractions
@@ -31,5 +32,6 @@ namespace OuterInnerResource.Pn.Abstractions
     {
         Task Start(string connectionString, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost);
         IBus GetBus();
+        WindsorContainer GetContainer();
     }
 }

@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 using System.Text.RegularExpressions;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
 
 namespace OuterInnerResource.Pn
 {
@@ -109,7 +111,7 @@ namespace OuterInnerResource.Pn
                     builder.EnableRetryOnFailure();
                     builder.MigrationsAssembly(PluginAssembly().FullName);
                 }));
-            
+
             var contextFactory = new OuterInnerResourcePnContextFactory();
 
             using (var context = contextFactory.CreateDbContext(new[] { connectionString }))
@@ -152,6 +154,9 @@ namespace OuterInnerResource.Pn
             }
 
             IRebusService rebusService = serviceProvider.GetService<IRebusService>();
+
+            WindsorContainer container = rebusService.GetContainer();
+            container.Register(Component.For<EformOuterInnerResourcePlugin>().Instance(this));
             rebusService.Start(_connectionString, "admin", "password", rabbitMqHost);
         }
 
