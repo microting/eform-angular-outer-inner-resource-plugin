@@ -28,6 +28,7 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Rebus.Config;
 using Rebus.Logging;
+using Rebus.Serialization.Json;
 
 namespace OuterInnerResource.Pn.Installers
 {
@@ -52,8 +53,9 @@ namespace OuterInnerResource.Pn.Installers
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             Configure.With(new CastleWindsorContainerAdapter(container))
+                .Serialization(s => s.UseNewtonsoftJson())
                 .Logging(l => l.ColoredConsole(LogLevel.Info))
-                .Transport(t => t.UseRabbitMq($"amqp://{_rabbitMqUser}:{_rabbitMqPassword}@{_rabbitMqHost}", 
+                .Transport(t => t.UseRabbitMq($"amqp://{_rabbitMqUser}:{_rabbitMqPassword}@{_rabbitMqHost}",
                     "eform-angular-outer-inner-resource-plugin"))
                 .Options(o =>
                 {

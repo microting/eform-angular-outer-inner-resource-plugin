@@ -22,9 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using OuterInnerResource.Pn.Infrastructure.Models.InnerResources;
-using OuterInnerResource.Pn.Infrastructure.Models.OuterResources;
-
 namespace OuterInnerResource.Pn.Messages
 {
     public class OuterInnerResourceUpdate

@@ -55,16 +55,16 @@ namespace OuterInnerResource.Pn.Services
         public async Task Start(string connectionString, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost)
         {
             _connectionString = connectionString;
+
+            Core core = await _coreHelper.GetCore();
+            _dbContextHelper = new DbContextHelper(connectionString);
+            _container.Register(Component.For<Core>().Instance(core));
+            _container.Register(Component.For<DbContextHelper>().Instance(_dbContextHelper));
             _container.Install(
                 new RebusHandlerInstaller()
                 , new RebusInstaller(connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitMqHost)
             );
 
-            Core core = await _coreHelper.GetCore();
-            _dbContextHelper = new DbContextHelper(connectionString);
-
-            _container.Register(Component.For<Core>().Instance(core));
-            _container.Register(Component.For<DbContextHelper>().Instance(_dbContextHelper));
             _bus = _container.Resolve<IBus>();
         }
 
