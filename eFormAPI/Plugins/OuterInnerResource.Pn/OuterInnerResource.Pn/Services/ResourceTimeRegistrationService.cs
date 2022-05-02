@@ -55,6 +55,9 @@ namespace OuterInnerResource.Pn.Services
 
         public async Task<OperationDataResult<ResourceTimeRegistrationsModel>> GetAllRegistrations(int lastRegistrationId)
         {
+            var core = await _coreService.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            var sites = await sdkDbContext.Sites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
             var resourceTimeRegistrationsModel = new ResourceTimeRegistrationsModel
             {
                 ResourceTimeRegistrationModels = new List<ResourceTimeRegistrationModel>()
@@ -71,7 +74,9 @@ namespace OuterInnerResource.Pn.Services
                 var registration = new ResourceTimeRegistrationModel()
                 {
                     DoneAt = resourceTimeRegistration.DoneAt,
-                    DoneByDeviceUserId = resourceTimeRegistration.SDKSiteId,
+                    DoneByDeviceUserId = sites.Any(x => x.Id == resourceTimeRegistration.SDKSiteId)
+                        ? (int)sites.Single(x => x.Id == resourceTimeRegistration.SDKSiteId).MicrotingUid
+                        : resourceTimeRegistration.SDKSiteId,
                     DoneByDeviceUserName = "",
                     Id = resourceTimeRegistration.Id,
                     InnerResourceId = resourceTimeRegistration.InnerResourceId,
