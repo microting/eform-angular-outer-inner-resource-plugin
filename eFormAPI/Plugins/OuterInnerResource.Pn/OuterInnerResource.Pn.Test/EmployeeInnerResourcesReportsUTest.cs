@@ -28,6 +28,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
 using OuterInnerResource.Pn.Infrastructure.Enums;
@@ -86,33 +87,15 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Day
             };
 
-            List<SiteDto> sitesList = new List<SiteDto>()
+            List<Site> sitesList = new List<Site>()
             {
-                // new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto()
+                new Site()
                 {
-                    CustomerNo = 1,
-                    Email = "bla",
-                    FirstName = "Test",
-                    LastName = "Site 1",
-                    OtpCode = 1,
-                    SiteId = 1,
-                    SiteName = "Test Site 1",
-                    UnitId = 1,
-                    WorkerUid = 1
+                    Name = "Test Site 1",
                 },
-                // new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
-                new SiteDto()
+                new Site()
                 {
-                    CustomerNo = 1,
-                    Email = "bla",
-                    FirstName = "Test",
-                    LastName = "Site 2",
-                    OtpCode = 1,
-                    SiteId = 2,
-                    SiteName = "Test Site 2",
-                    UnitId = 1,
-                    WorkerUid = 1
+                    Name = "Test Site 2"
                 }
             };
 
@@ -139,11 +122,11 @@ namespace MachineArea.Pn.Test
 
             Assert.AreEqual(reportModel.SubReports[0].TotalTime, 1800);
             Assert.AreEqual(reportModel.SubReports[0].Entities.Count, 3);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[0].RelatedEntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].RelatedEntityName, newMachine1.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[2].RelatedEntityName, newMachine2.Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[0].TotalTime, 600);
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].TotalTime, 600);
@@ -158,9 +141,9 @@ namespace MachineArea.Pn.Test
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3], 0);
 
             Assert.AreEqual(reportModel.SubReports[1].TotalTime, 2400);
-            Assert.AreEqual(reportModel.SubReports[1].Entities[0].EntityName, sitesList[1].SiteName);
+            Assert.AreEqual(reportModel.SubReports[1].Entities[0].EntityName, sitesList[1].Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[0].RelatedEntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[1].Entities[1].EntityName, sitesList[1].SiteName);
+            Assert.AreEqual(reportModel.SubReports[1].Entities[1].EntityName, sitesList[1].Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[1].RelatedEntityName, newMachine1.Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[0].TotalTime, 600);
             Assert.AreEqual(reportModel.SubReports[1].Entities[1].TotalTime, 1200);
@@ -223,33 +206,15 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Week
             };
 
-            List<SiteDto> sitesList = new List<SiteDto>()
+            List<Site> sitesList = new List<Site>()
             {
-                // new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto()
+                new Site()
                 {
-                    CustomerNo = 1,
-                    Email = "bla",
-                    FirstName = "Test",
-                    LastName = "Site 1",
-                    OtpCode = 1,
-                    SiteId = 1,
-                    SiteName = "Test Site 1",
-                    UnitId = 1,
-                    WorkerUid = 1
+                    Name = "Test Site 1",
                 },
-                // new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
-                new SiteDto()
+                new Site()
                 {
-                    CustomerNo = 1,
-                    Email = "bla",
-                    FirstName = "Test",
-                    LastName = "Site 2",
-                    OtpCode = 1,
-                    SiteId = 2,
-                    SiteName = "Test Site 2",
-                    UnitId = 1,
-                    WorkerUid = 1
+                    Name = "Test Site 2"
                 }
             };
 
@@ -276,11 +241,11 @@ namespace MachineArea.Pn.Test
 
             Assert.AreEqual(reportModel.SubReports[0].TotalTime, 1800);
             Assert.AreEqual(reportModel.SubReports[0].Entities.Count, 3);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[0].RelatedEntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].RelatedEntityName, newMachine1.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[2].RelatedEntityName, newMachine2.Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[0].TotalTime, 600);
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].TotalTime, 600);
@@ -295,7 +260,7 @@ namespace MachineArea.Pn.Test
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3], 0);
 
             Assert.AreEqual(reportModel.SubReports[1].TotalTime, 1800);
-            Assert.AreEqual(reportModel.SubReports[1].Entities[0].EntityName, sitesList[1].SiteName);
+            Assert.AreEqual(reportModel.SubReports[1].Entities[0].EntityName, sitesList[1].Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[0].RelatedEntityName, newMachine1.Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[0].TotalTime, 1200);
             Assert.AreEqual(reportModel.SubReports[1].Entities[0].TimePerTimeUnit[0], 0);
@@ -350,34 +315,17 @@ namespace MachineArea.Pn.Test
                 Relationship = ReportRelationshipType.EmployeeInnerResource,
                 Type = ReportType.Month
             };
-
-            List<SiteDto> sitesList = new List<SiteDto>()
+            
+            List<Site> sitesList = new List<Site>()
             {
-                // new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto()
+                
+                new Site()
                 {
-                    CustomerNo = 1,
-                    Email = "bla",
-                    FirstName = "Test",
-                    LastName = "Site 1",
-                    OtpCode = 1,
-                    SiteId = 1,
-                    SiteName = "Test Site 1",
-                    UnitId = 1,
-                    WorkerUid = 1
+                    Name = "Test Site 1",
                 },
-                // new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
-                new SiteDto()
+                new Site()
                 {
-                    CustomerNo = 1,
-                    Email = "bla",
-                    FirstName = "Test",
-                    LastName = "Site 2",
-                    OtpCode = 1,
-                    SiteId = 2,
-                    SiteName = "Test Site 2",
-                    UnitId = 1,
-                    WorkerUid = 1
+                    Name = "Test Site 2"
                 }
             };
 
@@ -404,11 +352,11 @@ namespace MachineArea.Pn.Test
 
             Assert.AreEqual(reportModel.SubReports[0].TotalTime, 1800);
             Assert.AreEqual(reportModel.SubReports[0].Entities.Count, 3);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[0].RelatedEntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].RelatedEntityName, newMachine1.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, sitesList[0].SiteName);
+            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, sitesList[0].Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[2].RelatedEntityName, newMachine2.Name);
             Assert.AreEqual(reportModel.SubReports[0].Entities[0].TotalTime, 600);
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].TotalTime, 600);
@@ -425,9 +373,9 @@ namespace MachineArea.Pn.Test
             Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[4], 0);
 
             Assert.AreEqual(reportModel.SubReports[1].TotalTime, 1200);
-            Assert.AreEqual(reportModel.SubReports[1].Entities[0].EntityName, sitesList[1].SiteName);
+            Assert.AreEqual(reportModel.SubReports[1].Entities[0].EntityName, sitesList[1].Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[0].RelatedEntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[1].Entities[1].EntityName, sitesList[1].SiteName);
+            Assert.AreEqual(reportModel.SubReports[1].Entities[1].EntityName, sitesList[1].Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[1].RelatedEntityName, newMachine1.Name);
             Assert.AreEqual(reportModel.SubReports[1].Entities[0].TotalTime, 600);
             Assert.AreEqual(reportModel.SubReports[1].Entities[1].TotalTime, 600);
