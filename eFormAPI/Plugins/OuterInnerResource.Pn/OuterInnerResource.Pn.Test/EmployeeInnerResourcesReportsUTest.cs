@@ -92,10 +92,12 @@ namespace MachineArea.Pn.Test
                 new Site()
                 {
                     Name = "Test Site 1",
+                    MicrotingUid = 1
                 },
                 new Site()
                 {
-                    Name = "Test Site 2"
+                    Name = "Test Site 2",
+                    MicrotingUid = 2
                 }
             };
 
@@ -211,10 +213,12 @@ namespace MachineArea.Pn.Test
                 new Site()
                 {
                     Name = "Test Site 1",
+                    MicrotingUid = 1
                 },
                 new Site()
                 {
-                    Name = "Test Site 2"
+                    Name = "Test Site 2",
+                    MicrotingUid = 2
                 }
             };
 
@@ -318,14 +322,15 @@ namespace MachineArea.Pn.Test
             
             List<Site> sitesList = new List<Site>()
             {
-                
                 new Site()
                 {
                     Name = "Test Site 1",
+                    MicrotingUid = 1
                 },
                 new Site()
                 {
-                    Name = "Test Site 2"
+                    Name = "Test Site 2",
+                    MicrotingUid = 2
                 }
             };
 
