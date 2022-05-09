@@ -33,6 +33,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -130,7 +131,9 @@ namespace OuterInnerResource.Pn.Services
             {
                 var reportTimeType = _options.Value.ReportTimeType;
                 Core core = await _coreHelper.GetCore();
-                List<SiteDto> sitesList = await core.SiteReadAll(false);
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                List<Site> sites = await sdkDbContext.Sites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
+                // List<SiteDto> sitesList = await core.SiteReadAll(false);
 
                 DateTime modelDateFrom = new DateTime(
                     model.DateFrom.Year,
@@ -184,7 +187,7 @@ namespace OuterInnerResource.Pn.Services
 
                 jobsList = await query.ToListAsync();
 
-                ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, reportTimeType);
+                ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sites, reportTimeType);
 
                 return new OperationDataResult<ReportModel>(true, reportModel);
             }
