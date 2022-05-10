@@ -197,7 +197,7 @@ namespace OuterInnerResource.Pn.Services
                 .ToList();
             foreach (var outerInnerResource in outerInnerResources)
             {
-                _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id));
+                _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, null, null, null, null));
             }
         }
     }
