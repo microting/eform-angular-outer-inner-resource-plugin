@@ -52,7 +52,7 @@ namespace OuterInnerResource.Pn.Handlers
         public async Task Handle(OuterInnerResourcePosteForm message)
         {
             var outerInnerResourceSite =
-                await _dbContext.OuterInnerResourceSites.SingleOrDefaultAsync(x =>
+                await _dbContext.OuterInnerResourceSites.FirstOrDefaultAsync(x =>
                     x.Id == message.OuterInnerResourceSiteId);
             await using var sdkDbContext = _core.DbContextHelper.GetDbContext();
             var siteDto = await sdkDbContext.Sites.SingleAsync(x => x.Id == outerInnerResourceSite.MicrotingSdkSiteId);
@@ -61,13 +61,13 @@ namespace OuterInnerResource.Pn.Handlers
 
             if (outerInnerResourceSite != null)
             {
-                var outerInnerResource = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                var outerInnerResource = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                     x.Id == outerInnerResourceSite.OuterInnerResourceId);
                 if (outerInnerResource != null)
                 {
-                    var innerResource = await _dbContext.InnerResources.SingleOrDefaultAsync(x =>
+                    var innerResource = await _dbContext.InnerResources.FirstOrDefaultAsync(x =>
                         x.Id == outerInnerResource.InnerResourceId);
-                    var outerResource = await _dbContext.OuterResources.SingleOrDefaultAsync(x =>
+                    var outerResource = await _dbContext.OuterResources.FirstOrDefaultAsync(x =>
                         x.Id == outerInnerResource.OuterResourceId);
                     if (innerResource != null)
                     {

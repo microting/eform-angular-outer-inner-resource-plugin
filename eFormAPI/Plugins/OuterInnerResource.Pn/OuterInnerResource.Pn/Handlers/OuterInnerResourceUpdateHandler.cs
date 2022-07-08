@@ -81,7 +81,7 @@ namespace OuterInnerResource.Pn.Handlers
                     {
                         if (int.TryParse(siteId, out var siteIdResultParse))
                         {
-                            var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.MicrotingUid == siteIdResultParse);
+                            var site = await sdkDbContext.Sites.FirstOrDefaultAsync(x => x.MicrotingUid == siteIdResultParse);
                             if (site != null)
                             {
                                 sites.Add(site);
@@ -90,7 +90,7 @@ namespace OuterInnerResource.Pn.Handlers
                     }
 
                     var outerInnerResource =
-                        await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                        await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                             x.Id == message.OuterInnerResourceId);
 
                     await UpdateSitesDeployed(outerInnerResource, sites, eFormId);

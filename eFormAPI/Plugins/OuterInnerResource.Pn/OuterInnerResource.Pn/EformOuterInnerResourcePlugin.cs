@@ -119,14 +119,14 @@ namespace OuterInnerResource.Pn
                 context.Database.Migrate();
                 try
                 {
-                    _outerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
-                    _innerResourceName = context.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;
+                    _outerResourceName = context.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
+                    _innerResourceName = context.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;
                     var temp = context.PluginConfigurationValues
-                        .SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:MaxParallelism")?.Value;
+                        .FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:MaxParallelism")?.Value;
                     _maxParallelism = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
 
                     temp = context.PluginConfigurationValues
-                        .SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:NumberOfWorkers")?.Value;
+                        .FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:NumberOfWorkers")?.Value;
                     _numberOfWorkers = string.IsNullOrEmpty(temp) ? 1 : int.Parse(temp);
                 }
                 catch

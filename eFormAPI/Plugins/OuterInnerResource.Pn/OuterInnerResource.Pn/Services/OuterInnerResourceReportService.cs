@@ -154,10 +154,10 @@ namespace OuterInnerResource.Pn.Services
                 string innerResourceName = "";
                 List<ResourceTimeRegistration> jobsList;
 
-                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterTotalTimeName")?.Value;
-                areaToExclude = _dbContext.OuterResources.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
-                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
-                machineToExclude = await _dbContext.InnerResources.SingleOrDefaultAsync(x => x.Name == innerResourceName);
+                outerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterTotalTimeName")?.Value;
+                areaToExclude = _dbContext.OuterResources.FirstOrDefaultAsync(x => x.Name == outerResourceName).Result;
+                innerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
+                machineToExclude = await _dbContext.InnerResources.FirstOrDefaultAsync(x => x.Name == innerResourceName);
 
                 IQueryable<ResourceTimeRegistration> query = _dbContext.ResourceTimeRegistrations
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -215,8 +215,8 @@ namespace OuterInnerResource.Pn.Services
                 string innerResourceName = "";
                 try
                 {
-                    outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
-                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;
+                    outerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
+                    innerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;
                 }
                 catch
                 {

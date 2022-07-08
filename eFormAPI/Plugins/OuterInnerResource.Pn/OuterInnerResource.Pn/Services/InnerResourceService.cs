@@ -164,7 +164,7 @@ namespace OuterInnerResource.Pn.Services
                 {
                     foreach (var outerResourceId in model.RelatedOuterResourcesIds)
                     {
-                        var macth = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                        var macth = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                             x.InnerResourceId == model.Id
                             && x.OuterResourceId == outerResourceId);
                         if (macth == null)
@@ -239,12 +239,12 @@ namespace OuterInnerResource.Pn.Services
 
                 foreach (var outerResourceId in toBeDeployed)
                 {
-                    var outerResource = _dbContext.OuterResources.SingleOrDefault(x =>
+                    var outerResource = _dbContext.OuterResources.FirstOrDefault(x =>
                         x.Id == outerResourceId);
                     if (outerResource != null)
                     {
                         var
-                            outerInnerResource = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                            outerInnerResource = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                             x.InnerResourceId == innerResource.Id
                             && x.OuterResourceId == outerResourceId);
 
