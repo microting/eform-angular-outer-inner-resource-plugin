@@ -222,15 +222,14 @@ namespace OuterInnerResource.Pn.Services
 
         public async Task<OperationResult> Update(OuterResourceModel model)
         {
-            var oldName = "";
             int? oldExternalId;
             try
             {
                 var outerResource =
                     await _dbContext.OuterResources.FirstAsync(x => x.Id == model.Id);
 
-                var _core = await _coreHelper.GetCore();
-                var sdkDbContext = _core.DbContextHelper.GetDbContext();
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
 
                 var folderQuery = sdkDbContext.Folders
                     .AsNoTracking()
@@ -249,10 +248,9 @@ namespace OuterInnerResource.Pn.Services
                         Name = model.Name
                     };
                     translationsModels.Add(translations);
-                    await _core.FolderUpdate(folderQuery.First().Id, translationsModels, folderQuery.First().ParentId);
+                    await core.FolderUpdate(folderQuery.First().Id, translationsModels, folderQuery.First().ParentId);
                 }
 
-                oldName = outerResource.Name;
                 oldExternalId = outerResource.ExternalId;
                 outerResource.ExternalId = model.ExternalId;
                 outerResource.Name = model.Name;
@@ -275,7 +273,7 @@ namespace OuterInnerResource.Pn.Services
                     if (!model.RelatedInnerResourcesIds.Contains(outerInnerResource.InnerResourceId))
                     {
                         await outerInnerResource.Delete(_dbContext);
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, oldExternalId, null, null));
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, null, null, null, null, null));
                     }
                 }
 
@@ -312,7 +310,7 @@ namespace OuterInnerResource.Pn.Services
                             await outerInnerResource.Update(_dbContext);
                         }
 
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, oldExternalId, null, null));
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, null, oldExternalId, null, null, null));
                     }
                 }
                 return new OperationResult(true, _localizationService.GetString("OuterResourceUpdatedSuccessfully"));

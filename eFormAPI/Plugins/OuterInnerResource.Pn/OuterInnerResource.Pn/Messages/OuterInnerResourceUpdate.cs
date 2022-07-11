@@ -30,19 +30,22 @@ namespace OuterInnerResource.Pn.Messages
 
         public string OldInnerResourceName { get; protected set; }
 
+        public string NewInnerResourceName { get; protected set; }
+
         public int? OldInnerResourceExternalId { get; protected set; }
 
         public string OldOuterResourceName { get; protected set; }
 
         public int? OldOuterResourceExternalId { get; protected set; }
 
-        public OuterInnerResourceUpdate(int outerInnerResourceId, string oldInnerResourceName, int? oldInnerResourceExternalId, string oldOuterResourceName, int? oldOuterResourceExternalId)
+        public OuterInnerResourceUpdate(int outerInnerResourceId, string oldInnerResourceName, int? oldInnerResourceExternalId, string oldOuterResourceName, int? oldOuterResourceExternalId, string newInnerResourceName)
         {
             OuterInnerResourceId = outerInnerResourceId;
             OldInnerResourceName = oldInnerResourceName;
             OldInnerResourceExternalId = oldInnerResourceExternalId;
             OldOuterResourceName = oldOuterResourceName;
             OldOuterResourceExternalId = oldOuterResourceExternalId;
+            NewInnerResourceName = newInnerResourceName;
         }
     }
 }

@@ -202,7 +202,7 @@ namespace OuterInnerResource.Pn.Services
             try
             {
                 var innerResource =
-                    await _dbContext.InnerResources.SingleAsync(x => x.Id == model.Id);
+                    await _dbContext.InnerResources.FirstAsync(x => x.Id == model.Id);
 
                 oldName = innerResource.Name;
                 oldExternalId = innerResource.ExternalId;
@@ -227,7 +227,7 @@ namespace OuterInnerResource.Pn.Services
                     if (!model.RelatedOuterResourcesIds.Contains(outerInnerResource.OuterResourceId))
                     {
                         await outerInnerResource.Delete(_dbContext);
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, oldExternalId, null, null));
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, null, null, null, innerResource.Name));
                     }
                 }
 
@@ -264,7 +264,7 @@ namespace OuterInnerResource.Pn.Services
                             await outerInnerResource.Update(_dbContext);
                         }
 
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, oldExternalId, null, null));
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, oldExternalId, null, null, innerResource.Name));
                     }
                 }
                 return new OperationResult(true, _localizationService.GetString("InnerResourceUpdatedSuccessfully"));

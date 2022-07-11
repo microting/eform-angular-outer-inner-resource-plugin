@@ -93,17 +93,32 @@ namespace OuterInnerResource.Pn.Handlers
                         await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                             x.Id == message.OuterInnerResourceId);
 
-                    await UpdateSitesDeployed(outerInnerResource, sites, eFormId);
+                    await UpdateSitesDeployed(message.OldInnerResourceName, message.NewInnerResourceName, outerInnerResource, sites, eFormId);
                 }
             }
         }
 
-        private async Task UpdateSitesDeployed(
+        private async Task UpdateSitesDeployed(string oldName, string newName,
             OuterInnerResource outerInnerResource, List<Site> sites, int eFormId)
         {
 
             WriteLogEntry("OuterInnerResourceUpdateHandler: UpdateSitesDeployed called");
             var siteIds = new List<int>();
+
+            if (oldName != newName)
+            {
+                var outerInnerResourceSites = await _dbContext.OuterInnerResourceSites.Where(
+                    x => x.OuterInnerResourceId == outerInnerResource.Id
+                        && x.WorkflowState == Constants.WorkflowStates.Created).ToListAsync();
+                foreach (var outerInnerResourceSite in outerInnerResourceSites)
+                {
+                    if (outerInnerResourceSite.MicrotingSdkCaseId != null)
+                    {
+                        await _core.CaseDelete((int) outerInnerResourceSite.MicrotingSdkCaseId);
+                        await outerInnerResourceSite.Delete(_dbContext);
+                    }
+                }
+            }
 
             if (outerInnerResource.WorkflowState == Constants.WorkflowStates.Created)
             {
