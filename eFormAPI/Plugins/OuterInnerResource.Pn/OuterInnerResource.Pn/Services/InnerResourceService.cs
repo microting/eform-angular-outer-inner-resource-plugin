@@ -237,34 +237,51 @@ namespace OuterInnerResource.Pn.Services
                         !deployedOuterResourceIds.Contains(x)));
                 }
 
-                foreach (var outerResourceId in toBeDeployed)
+                if (toBeDeployed.Count == 0)
                 {
-                    var outerResource = _dbContext.OuterResources.FirstOrDefault(x =>
-                        x.Id == outerResourceId);
-                    if (outerResource != null)
+                    var
+                        outerInnerResourceList =
+                            await _dbContext.OuterInnerResources.Where(x =>
+                                x.InnerResourceId == innerResource.Id
+                                && x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
+                    foreach (var outerInnerResource in outerInnerResourceList)
                     {
-                        var
-                            outerInnerResource = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
-                            x.InnerResourceId == innerResource.Id
-                            && x.OuterResourceId == outerResourceId);
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName,
+                            oldExternalId, null, null, innerResource.Name));
+                    }
 
-                        if (outerInnerResource == null)
+                } else {
+                    foreach (var outerResourceId in toBeDeployed)
+                    {
+                        var outerResource = _dbContext.OuterResources.FirstOrDefault(x =>
+                            x.Id == outerResourceId);
+                        if (outerResource != null)
                         {
-                            outerInnerResource =
-                                new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource()
-                                {
-                                    OuterResourceId = outerResourceId,
-                                    InnerResourceId = innerResource.Id
-                                };
-                            await outerInnerResource.Create(_dbContext);
-                        }
-                        else
-                        {
-                            outerInnerResource.WorkflowState = Constants.WorkflowStates.Created;
-                            await outerInnerResource.Update(_dbContext);
-                        }
+                            var
+                                outerInnerResource = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
+                                    x.InnerResourceId == innerResource.Id
+                                    && x.OuterResourceId == outerResourceId);
 
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, oldExternalId, null, null, innerResource.Name));
+                            if (outerInnerResource == null)
+                            {
+                                outerInnerResource =
+                                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.
+                                        OuterInnerResource()
+                                        {
+                                            OuterResourceId = outerResourceId,
+                                            InnerResourceId = innerResource.Id
+                                        };
+                                await outerInnerResource.Create(_dbContext);
+                            }
+                            else
+                            {
+                                outerInnerResource.WorkflowState = Constants.WorkflowStates.Created;
+                                await outerInnerResource.Update(_dbContext);
+                            }
+
+                            await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName,
+                                oldExternalId, null, null, innerResource.Name));
+                        }
                     }
                 }
                 return new OperationResult(true, _localizationService.GetString("InnerResourceUpdatedSuccessfully"));
