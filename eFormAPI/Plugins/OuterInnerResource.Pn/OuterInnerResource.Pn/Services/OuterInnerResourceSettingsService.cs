@@ -22,6 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure;
+using Microting.eForm.Infrastructure.Models;
+using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
+
 namespace OuterInnerResource.Pn.Services
 {
     using System;
@@ -49,6 +54,7 @@ namespace OuterInnerResource.Pn.Services
         private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IPluginDbOptions<OuterInnerResourceSettings> _options;
         private readonly IUserService _userService;
+        private readonly IEFormCoreService _coreService;
         private readonly IBus _bus;
 
         public OuterInnerResourceSettingsService(
@@ -57,7 +63,7 @@ namespace OuterInnerResource.Pn.Services
             IOuterInnerResourceLocalizationService outerInnerResourceLocalizationService,
             IPluginDbOptions<OuterInnerResourceSettings> options,
             IRebusService rebusService,
-            IUserService userService)
+            IUserService userService, IEFormCoreService coreService)
         {
             _logger = logger;
             _dbContext = dbContext;
@@ -65,6 +71,7 @@ namespace OuterInnerResource.Pn.Services
             _options = options;
             _bus = rebusService.GetBus();
             _userService = userService;
+            _coreService = coreService;
         }
 
         public async Task<OperationDataResult<OuterInnerResourceSettings>> GetSettings()
@@ -77,28 +84,129 @@ namespace OuterInnerResource.Pn.Services
                     const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                     var random = new Random();
                     var result = new string(chars.Select(c => chars[random.Next(chars.Length)]).Take(32).ToArray());
-                    await _options.UpdateDb(settings => { settings.Token = result;}, _dbContext, _userService.UserId);
+                    await _options.UpdateDb(settings => { settings.Token = result; }, _dbContext, _userService.UserId);
                 }
 
                 if (option.SdkConnectionString == "...")
                 {
                     var connectionString = _dbContext.Database.GetDbConnection().ConnectionString;
 
-                    var dbNameSection = Regex.Match(connectionString, @"(Database=(...)_eform-angular-outer-inner-resource-plugin;)").Groups[0].Value;
+                    var dbNameSection = Regex.Match(connectionString,
+                        @"(Database=(...)_eform-angular-outer-inner-resource-plugin;)").Groups[0].Value;
                     var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
                     var sdk = $"Database={dbPrefix}_SDK;";
                     connectionString = connectionString.Replace(dbNameSection, sdk);
-                    await _options.UpdateDb(settings => { settings.SdkConnectionString = connectionString;}, _dbContext, _userService.UserId);
+                    await _options.UpdateDb(settings => { settings.SdkConnectionString = connectionString; },
+                        _dbContext, _userService.UserId);
+                }
+
+                var timeZone = "Europe/Copenhagen";
+
+                TimeZoneInfo timeZoneInfo;
+
+                try
+                {
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+                }
+                catch
+                {
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+                }
+
+                var _sdkCore = await _coreService.GetCore();
+                await using MicrotingDbContext microtingDbContext = _sdkCore.DbContextHelper.GetDbContext();
+                List<Microting.eForm.Infrastructure.Data.Entities.Case> list = await microtingDbContext.Cases
+                    .Where(x => x.DoneAt > new DateTime(2022, 7, 11, 0, 0, 0)).ToListAsync();
+                var language = await microtingDbContext.Languages.SingleAsync(x => x.LanguageCode == "da");
+
+                foreach (var @case in list)
+                {
+                    //CaseDto caseDto = await _sdkCore.CaseLookup((int)@case.MicrotingUid, (int)@case.MicrotingCheckUid).ConfigureAwait(false);
+
+
+                    OuterInnerResourceSite machineAreaSite =
+                        _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
+                            x.MicrotingSdkCaseId == @case.MicrotingUid);
+
+                    var machineAreaTimeRegistrations =
+                        await _dbContext.ResourceTimeRegistrations.Where(x =>
+                            // x.DoneAt == replyElement.DoneAt &&
+                            x.SDKCaseId == (int)@case.Id &&
+                            x.SDKSiteId == machineAreaSite.MicrotingSdkSiteId).ToListAsync().ConfigureAwait(false);
+                    if (machineAreaTimeRegistrations.Count == 0)
+                    {
+                        if (@case.DoneAt > new DateTime(2022, 07, 11, 0, 0, 0))
+                        {
+                            ReplyElement replyElement = await _sdkCore
+                                .CaseRead((int)@case.MicrotingUid, (int)@case.MicrotingCheckUid, language)
+                                .ConfigureAwait(false);
+
+                            ResourceTimeRegistration machineAreaTimeRegistration = new ResourceTimeRegistration();
+                            if (machineAreaSite != null)
+                            {
+                                var outerInnerResource =
+                                    await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                                        x.Id == machineAreaSite.OuterInnerResourceId);
+                                machineAreaTimeRegistration.OuterResourceId = outerInnerResource.OuterResourceId;
+                                machineAreaTimeRegistration.InnerResourceId = outerInnerResource.InnerResourceId;
+                                machineAreaTimeRegistration.DoneAt = replyElement.DoneAt;
+                                if (@case.Id != null) machineAreaTimeRegistration.SDKCaseId = @case.Id;
+                                machineAreaTimeRegistration.SDKSiteId = machineAreaSite.MicrotingSdkSiteId;
+                            }
+
+                            CheckListValue dataElement = (CheckListValue)replyElement.ElementList[0];
+                            foreach (var field in dataElement.DataItemList)
+                            {
+                                Field f = (Field)field;
+                                if (f.Label.ToLower().Contains("start/stop tid"))
+                                {
+                                    try
+                                    {
+
+                                        Console.WriteLine($"The field is {f.Label}");
+                                        FieldValue fv = f.FieldValues[0];
+                                        String fieldValue = fv.Value;
+                                        if (!string.IsNullOrEmpty(fieldValue))
+                                        {
+                                            Console.WriteLine($"Current field_value is {fieldValue}");
+                                            int registeredTime = int.Parse(fieldValue.Split("|")[3]);
+                                            Console.WriteLine(
+                                                $"We are setting the registered time to {registeredTime.ToString()}");
+
+                                            machineAreaTimeRegistration.SDKFieldValueId = fv.Id;
+                                            machineAreaTimeRegistration.TimeInSeconds = (registeredTime / 1000);
+                                            machineAreaTimeRegistration.TimeInMinutes = ((registeredTime / 1000) / 60);
+                                            machineAreaTimeRegistration.TimeInHours = ((registeredTime / 1000) / 3600);
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }
+                            }
+
+                            await machineAreaTimeRegistration.Create(_dbContext).ConfigureAwait(false);
+                            if (machineAreaTimeRegistration.SDKFieldValueId == 0)
+                            {
+                                await machineAreaTimeRegistration.Delete(_dbContext).ConfigureAwait(false);
+                            }
+
+                            Console.WriteLine("here");
+                        }
+                    }
+
                 }
 
                 return new OperationDataResult<OuterInnerResourceSettings>(true, option);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<OuterInnerResourceSettings>(false,
-                    _outerInnerResourceLocalizationService.GetString("ErrorWhileObtainingTrashInspectionSettings") + e.Message);
+                    _outerInnerResourceLocalizationService.GetString("ErrorWhileObtainingTrashInspectionSettings") +
+                    e.Message);
             }
         }
 
