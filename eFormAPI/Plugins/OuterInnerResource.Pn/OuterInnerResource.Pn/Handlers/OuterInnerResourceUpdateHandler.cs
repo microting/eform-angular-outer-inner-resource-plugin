@@ -134,6 +134,7 @@ namespace OuterInnerResource.Pn.Handlers
                                 && x.WorkflowState == Constants.WorkflowStates.Created).ToListAsync();
                         if (!outerInnerResourceSites.Any())
                         {
+                            Console.WriteLine("OuterInnerResourceUpdateHandler: Create new OuterInnerResourceSite for siteId: " + site.MicrotingUid);
                             var outerInnerResourceSite = new OuterInnerResourceSite
                             {
                                 OuterInnerResourceId = outerInnerResource.Id,
@@ -148,6 +149,7 @@ namespace OuterInnerResource.Pn.Handlers
                         {
                             if (outerInnerResourceSites.First().MicrotingSdkCaseId == null)
                             {
+                                Console.WriteLine("OuterInnerResourceUpdateHandler: Create new OuterInnerResourceSite for siteId: " + site.MicrotingUid + " and MicrotingSdkCaseId is null");
                                 await _bus.SendLocal(new OuterInnerResourcePosteForm(
                                     outerInnerResourceSites.First().Id,
                                     eFormId));

@@ -61,6 +61,7 @@ namespace OuterInnerResource.Pn.Handlers
 
             if (outerInnerResourceSite != null)
             {
+                Console.WriteLine("OuterInnerResourcePosteFormHandler.Handle: outerInnerResourceSite != null");
                 var outerInnerResource = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                     x.Id == outerInnerResourceSite.OuterInnerResourceId);
                 if (outerInnerResource != null)
@@ -135,6 +136,7 @@ namespace OuterInnerResource.Pn.Handlers
                             -999,
                             false));
 
+                        Console.WriteLine("OuterInnerResourcePosteFormHandler.Handle: before _core.CaseCreate for siteDto.MicrotingUid: " + siteDto.MicrotingUid);
                         var sdkCaseId = await _core.CaseCreate(mainElement, "", (int)siteDto.MicrotingUid, folder.Id);
 
                         outerInnerResourceSite.MicrotingSdkCaseId = sdkCaseId;
