@@ -100,103 +100,103 @@ namespace OuterInnerResource.Pn.Services
                         _dbContext, _userService.UserId);
                 }
 
-                var timeZone = "Europe/Copenhagen";
+                // var timeZone = "Europe/Copenhagen";
 
-                TimeZoneInfo timeZoneInfo;
+                // TimeZoneInfo timeZoneInfo;
+                //
+                // try
+                // {
+                //     timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+                // }
+                // catch
+                // {
+                //     timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+                // }
 
-                try
-                {
-                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-                }
-                catch
-                {
-                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
-                }
-
-                var _sdkCore = await _coreService.GetCore();
-                await using MicrotingDbContext microtingDbContext = _sdkCore.DbContextHelper.GetDbContext();
-                List<Microting.eForm.Infrastructure.Data.Entities.Case> list = await microtingDbContext.Cases
-                    .Where(x => x.DoneAt > new DateTime(2022, 7, 11, 0, 0, 0)).ToListAsync();
-                var language = await microtingDbContext.Languages.SingleAsync(x => x.LanguageCode == "da");
-
-                foreach (var @case in list)
-                {
-                    //CaseDto caseDto = await _sdkCore.CaseLookup((int)@case.MicrotingUid, (int)@case.MicrotingCheckUid).ConfigureAwait(false);
-
-
-                    OuterInnerResourceSite machineAreaSite =
-                        _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
-                            x.MicrotingSdkCaseId == @case.MicrotingUid);
-
-                    var machineAreaTimeRegistrations =
-                        await _dbContext.ResourceTimeRegistrations.Where(x =>
-                            // x.DoneAt == replyElement.DoneAt &&
-                            x.SDKCaseId == (int)@case.Id &&
-                            x.SDKSiteId == machineAreaSite.MicrotingSdkSiteId).ToListAsync().ConfigureAwait(false);
-                    if (machineAreaTimeRegistrations.Count == 0)
-                    {
-                        if (@case.DoneAt > new DateTime(2022, 07, 11, 0, 0, 0))
-                        {
-                            ReplyElement replyElement = await _sdkCore
-                                .CaseRead((int)@case.MicrotingUid, (int)@case.MicrotingCheckUid, language)
-                                .ConfigureAwait(false);
-
-                            ResourceTimeRegistration machineAreaTimeRegistration = new ResourceTimeRegistration();
-                            if (machineAreaSite != null)
-                            {
-                                var outerInnerResource =
-                                    await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
-                                        x.Id == machineAreaSite.OuterInnerResourceId);
-                                machineAreaTimeRegistration.OuterResourceId = outerInnerResource.OuterResourceId;
-                                machineAreaTimeRegistration.InnerResourceId = outerInnerResource.InnerResourceId;
-                                machineAreaTimeRegistration.DoneAt = replyElement.DoneAt;
-                                if (@case.Id != null) machineAreaTimeRegistration.SDKCaseId = @case.Id;
-                                machineAreaTimeRegistration.SDKSiteId = machineAreaSite.MicrotingSdkSiteId;
-                            }
-
-                            CheckListValue dataElement = (CheckListValue)replyElement.ElementList[0];
-                            foreach (var field in dataElement.DataItemList)
-                            {
-                                Field f = (Field)field;
-                                if (f.Label.ToLower().Contains("start/stop tid"))
-                                {
-                                    try
-                                    {
-
-                                        Console.WriteLine($"The field is {f.Label}");
-                                        FieldValue fv = f.FieldValues[0];
-                                        String fieldValue = fv.Value;
-                                        if (!string.IsNullOrEmpty(fieldValue))
-                                        {
-                                            Console.WriteLine($"Current field_value is {fieldValue}");
-                                            int registeredTime = int.Parse(fieldValue.Split("|")[3]);
-                                            Console.WriteLine(
-                                                $"We are setting the registered time to {registeredTime.ToString()}");
-
-                                            machineAreaTimeRegistration.SDKFieldValueId = fv.Id;
-                                            machineAreaTimeRegistration.TimeInSeconds = (registeredTime / 1000);
-                                            machineAreaTimeRegistration.TimeInMinutes = ((registeredTime / 1000) / 60);
-                                            machineAreaTimeRegistration.TimeInHours = ((registeredTime / 1000) / 3600);
-                                        }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Console.WriteLine(ex.Message);
-                                    }
-                                }
-                            }
-
-                            await machineAreaTimeRegistration.Create(_dbContext).ConfigureAwait(false);
-                            if (machineAreaTimeRegistration.SDKFieldValueId == 0)
-                            {
-                                await machineAreaTimeRegistration.Delete(_dbContext).ConfigureAwait(false);
-                            }
-
-                            Console.WriteLine("here");
-                        }
-                    }
-
-                }
+                // var _sdkCore = await _coreService.GetCore();
+                // await using MicrotingDbContext microtingDbContext = _sdkCore.DbContextHelper.GetDbContext();
+                // List<Microting.eForm.Infrastructure.Data.Entities.Case> list = await microtingDbContext.Cases
+                //     .Where(x => x.DoneAt > new DateTime(2022, 7, 11, 0, 0, 0)).ToListAsync();
+                // var language = await microtingDbContext.Languages.SingleAsync(x => x.LanguageCode == "da");
+                //
+                // foreach (var @case in list)
+                // {
+                //     //CaseDto caseDto = await _sdkCore.CaseLookup((int)@case.MicrotingUid, (int)@case.MicrotingCheckUid).ConfigureAwait(false);
+                //
+                //
+                //     OuterInnerResourceSite machineAreaSite =
+                //         _dbContext.OuterInnerResourceSites.SingleOrDefault(x =>
+                //             x.MicrotingSdkCaseId == @case.MicrotingUid);
+                //
+                //     var machineAreaTimeRegistrations =
+                //         await _dbContext.ResourceTimeRegistrations.Where(x =>
+                //             // x.DoneAt == replyElement.DoneAt &&
+                //             x.SDKCaseId == (int)@case.Id &&
+                //             x.SDKSiteId == machineAreaSite.MicrotingSdkSiteId).ToListAsync().ConfigureAwait(false);
+                //     if (machineAreaTimeRegistrations.Count == 0)
+                //     {
+                //         if (@case.DoneAt > new DateTime(2022, 07, 11, 0, 0, 0))
+                //         {
+                //             ReplyElement replyElement = await _sdkCore
+                //                 .CaseRead((int)@case.MicrotingUid, (int)@case.MicrotingCheckUid, language)
+                //                 .ConfigureAwait(false);
+                //
+                //             ResourceTimeRegistration machineAreaTimeRegistration = new ResourceTimeRegistration();
+                //             if (machineAreaSite != null)
+                //             {
+                //                 var outerInnerResource =
+                //                     await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                //                         x.Id == machineAreaSite.OuterInnerResourceId);
+                //                 machineAreaTimeRegistration.OuterResourceId = outerInnerResource.OuterResourceId;
+                //                 machineAreaTimeRegistration.InnerResourceId = outerInnerResource.InnerResourceId;
+                //                 machineAreaTimeRegistration.DoneAt = replyElement.DoneAt;
+                //                 if (@case.Id != null) machineAreaTimeRegistration.SDKCaseId = @case.Id;
+                //                 machineAreaTimeRegistration.SDKSiteId = machineAreaSite.MicrotingSdkSiteId;
+                //             }
+                //
+                //             CheckListValue dataElement = (CheckListValue)replyElement.ElementList[0];
+                //             foreach (var field in dataElement.DataItemList)
+                //             {
+                //                 Field f = (Field)field;
+                //                 if (f.Label.ToLower().Contains("start/stop tid"))
+                //                 {
+                //                     try
+                //                     {
+                //
+                //                         Console.WriteLine($"The field is {f.Label}");
+                //                         FieldValue fv = f.FieldValues[0];
+                //                         String fieldValue = fv.Value;
+                //                         if (!string.IsNullOrEmpty(fieldValue))
+                //                         {
+                //                             Console.WriteLine($"Current field_value is {fieldValue}");
+                //                             int registeredTime = int.Parse(fieldValue.Split("|")[3]);
+                //                             Console.WriteLine(
+                //                                 $"We are setting the registered time to {registeredTime.ToString()}");
+                //
+                //                             machineAreaTimeRegistration.SDKFieldValueId = fv.Id;
+                //                             machineAreaTimeRegistration.TimeInSeconds = (registeredTime / 1000);
+                //                             machineAreaTimeRegistration.TimeInMinutes = ((registeredTime / 1000) / 60);
+                //                             machineAreaTimeRegistration.TimeInHours = ((registeredTime / 1000) / 3600);
+                //                         }
+                //                     }
+                //                     catch (Exception ex)
+                //                     {
+                //                         Console.WriteLine(ex.Message);
+                //                     }
+                //                 }
+                //             }
+                //
+                //             await machineAreaTimeRegistration.Create(_dbContext).ConfigureAwait(false);
+                //             if (machineAreaTimeRegistration.SDKFieldValueId == 0)
+                //             {
+                //                 await machineAreaTimeRegistration.Delete(_dbContext).ConfigureAwait(false);
+                //             }
+                //
+                //             Console.WriteLine("here");
+                //         }
+                //     }
+                //
+                // }
 
                 return new OperationDataResult<OuterInnerResourceSettings>(true, option);
             }
@@ -293,6 +293,8 @@ namespace OuterInnerResource.Pn.Services
             }
 
             await _options.UpdateDb(settings => { settings.EnabledSiteIds = sdkSiteIds; }, _dbContext, _userService.UserId);
+
+            CreateNewSiteRelations();
 
             return new OperationResult(true);
         }
