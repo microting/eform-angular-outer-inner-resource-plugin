@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,7 +29,7 @@
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="3.1.100" />
     <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="3.1.45" />
-   <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
+    <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microting.eForm" Version="5.5.73" />
   </ItemGroup>
 
