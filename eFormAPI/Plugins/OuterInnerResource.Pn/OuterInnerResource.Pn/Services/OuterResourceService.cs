@@ -27,9 +27,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using eFormCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Models;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
@@ -47,15 +50,18 @@ namespace OuterInnerResource.Pn.Services
         private readonly IOuterInnerResourceLocalizationService _localizationService;
         private readonly ILogger<OuterResourceService> _logger;
         private readonly IBus _bus;
+        private readonly IEFormCoreService _coreHelper;
 
         public OuterResourceService(OuterInnerResourcePnDbContext dbContext,
             IOuterInnerResourceLocalizationService localizationService,
-            ILogger<OuterResourceService> logger, 
-            IRebusService rebusService)
+            ILogger<OuterResourceService> logger,
+            IRebusService rebusService,
+            IEFormCoreService coreHelper)
         {
             _dbContext = dbContext;
             _localizationService = localizationService;
             _logger = logger;
+            _coreHelper = coreHelper;
             _bus = rebusService.GetBus();
         }
 
@@ -99,18 +105,18 @@ namespace OuterInnerResource.Pn.Services
                     Name = x.Name,
                     Id = x.Id,
                     ExternalId = x.ExternalId,
-                    RelatedInnerResourcesIds = _dbContext.OuterInnerResources.AsNoTracking().Where(y => 
+                    RelatedInnerResourcesIds = _dbContext.OuterInnerResources.AsNoTracking().Where(y =>
                         y.OuterResourceId == x.Id && y.WorkflowState != Constants.WorkflowStates.Removed).Select(z => z.InnerResourceId).ToList()
                 }).AsNoTracking().ToListAsync();
 
                 outerResourcesModel.Total = await _dbContext.OuterResources.AsNoTracking().Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).CountAsync();
                 outerResourcesModel.OuterResourceList = outerResourceList;
-                
+
                 try
                 {
-                    outerResourcesModel.Name = _dbContext.PluginConfigurationValues.SingleOrDefault(x => 
+                    outerResourcesModel.Name = _dbContext.PluginConfigurationValues.FirstOrDefault(x =>
                         x.Name == "OuterInnerResourceSettings:OuterResourceName")
-                        ?.Value;  
+                        ?.Value;
                 }
                 catch (Exception)
                 {
@@ -139,7 +145,7 @@ namespace OuterInnerResource.Pn.Services
                         ExternalId = x.ExternalId
                     })
                     .FirstOrDefaultAsync(x => x.Id == id);
-                                
+
                 if (outerResource == null)
                 {
                     return new OperationDataResult<OuterResourceModel>(false,
@@ -178,12 +184,12 @@ namespace OuterInnerResource.Pn.Services
 
                 await outerResource.Create(_dbContext);
                 model.Id = outerResource.Id;
-                
+
                 if (model.RelatedInnerResourcesIds != null)
                 {
                     foreach (var innerResourceId in model.RelatedInnerResourcesIds)
                     {
-                        var macth = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                        var macth = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                             x.OuterResourceId == model.Id
                             && x.InnerResourceId == innerResourceId);
                         if (macth == null)
@@ -193,7 +199,7 @@ namespace OuterInnerResource.Pn.Services
                                     new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.
                                         OuterInnerResource
                                         {
-                                            InnerResourceId = innerResourceId, 
+                                            InnerResourceId = innerResourceId,
                                             OuterResourceId = model.Id
                                         };
                             await outerInnerResource.Create(_dbContext);
@@ -202,7 +208,7 @@ namespace OuterInnerResource.Pn.Services
                     await _bus.SendLocal(new OuterInnerResourceCreate(null, model));
                 }
 
-                return new OperationResult(true, 
+                return new OperationResult(true,
                     _localizationService.GetString("OuterResourceCreatedSuccessfully", model.Name));
             }
             catch (Exception e)
@@ -216,21 +222,46 @@ namespace OuterInnerResource.Pn.Services
 
         public async Task<OperationResult> Update(OuterResourceModel model)
         {
+            int? oldExternalId;
             try
             {
                 var outerResource =
-                    await _dbContext.OuterResources.SingleOrDefaultAsync(x => x.Id == model.Id);
+                    await _dbContext.OuterResources.FirstAsync(x => x.Id == model.Id);
 
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                var folderQuery = sdkDbContext.Folders
+                    .AsNoTracking()
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.FolderTranslations.Any(y =>
+                        y.Name == outerResource.Name))
+                    .Select(x => new { x.MicrotingUid, x.Id, x.Name, x.ParentId });
+
+                if (folderQuery.First().Name != model.Name)
+                {
+                    List<CommonTranslationsModel> translationsModels = new List<CommonTranslationsModel>();
+                    var translations = new CommonTranslationsModel()
+                    {
+                        Description = "",
+                        LanguageId = 1,
+                        Name = model.Name
+                    };
+                    translationsModels.Add(translations);
+                    await core.FolderUpdate(folderQuery.First().Id, translationsModels, folderQuery.First().ParentId);
+                }
+
+                oldExternalId = outerResource.ExternalId;
                 outerResource.ExternalId = model.ExternalId;
                 outerResource.Name = model.Name;
                 await outerResource.Update(_dbContext);
-                
+
                 var
                     outerInnerResources =
-                        await _dbContext.OuterInnerResources.Where(x => 
+                        await _dbContext.OuterInnerResources.Where(x =>
                             x.OuterResourceId == outerResource.Id
                             && x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
-                
+
                 var requestedInnerResourceIds = model.RelatedInnerResourcesIds;
                 var deployedInnerResourceIds = new List<int>();
                 var toBeDeployed = new List<int>();
@@ -242,27 +273,27 @@ namespace OuterInnerResource.Pn.Services
                     if (!model.RelatedInnerResourcesIds.Contains(outerInnerResource.InnerResourceId))
                     {
                         await outerInnerResource.Delete(_dbContext);
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id));
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, null, null, null, null, null));
                     }
                 }
 
                 if (requestedInnerResourceIds.Count != 0)
                 {
-                    toBeDeployed.AddRange(requestedInnerResourceIds.Where(x => 
+                    toBeDeployed.AddRange(requestedInnerResourceIds.Where(x =>
                         !deployedInnerResourceIds.Contains(x)));
                 }
 
                 foreach (var innerResourceId in toBeDeployed)
                 {
-                    var innerResource = _dbContext.InnerResources.SingleOrDefault(x => 
+                    var innerResource = _dbContext.InnerResources.FirstOrDefault(x =>
                         x.Id == innerResourceId);
                     if (innerResource != null)
                     {
-                        var 
-                            outerInnerResource = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                        var
+                            outerInnerResource = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                             x.OuterResourceId == outerResource.Id
                             && x.InnerResourceId == innerResourceId);
-                        
+
                         if (outerInnerResource == null)
                         {
                             outerInnerResource =
@@ -271,7 +302,7 @@ namespace OuterInnerResource.Pn.Services
                                     InnerResourceId = innerResourceId,
                                     OuterResourceId = outerResource.Id
                                 };
-                            await outerInnerResource.Create(_dbContext);    
+                            await outerInnerResource.Create(_dbContext);
                         }
                         else
                         {
@@ -279,7 +310,7 @@ namespace OuterInnerResource.Pn.Services
                             await outerInnerResource.Update(_dbContext);
                         }
 
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id));
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, null, oldExternalId, null, null, null));
                     }
                 }
                 return new OperationResult(true, _localizationService.GetString("OuterResourceUpdatedSuccessfully"));
@@ -301,7 +332,7 @@ namespace OuterInnerResource.Pn.Services
                 {
                     Id = outerResourceId
                 };
-                
+
                 await outerResource.Delete(_dbContext);
                 await _bus.SendLocal(new OuterInnerResourceDelete(null, new OuterResourceModel() { Id = outerResourceId }));
                 return new OperationResult(true, _localizationService.GetString("OuterResourceDeletedSuccessfully"));

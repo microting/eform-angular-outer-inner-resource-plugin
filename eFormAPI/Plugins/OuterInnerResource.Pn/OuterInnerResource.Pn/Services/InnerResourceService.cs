@@ -164,7 +164,7 @@ namespace OuterInnerResource.Pn.Services
                 {
                     foreach (var outerResourceId in model.RelatedOuterResourcesIds)
                     {
-                        var macth = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
+                        var macth = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
                             x.InnerResourceId == model.Id
                             && x.OuterResourceId == outerResourceId);
                         if (macth == null)
@@ -197,11 +197,15 @@ namespace OuterInnerResource.Pn.Services
 
         public async Task<OperationResult> Update(InnerResourceModel model)
         {
+            var oldName = "";
+            int? oldExternalId;
             try
             {
                 var innerResource =
-                    await _dbContext.InnerResources.SingleOrDefaultAsync(x => x.Id == model.Id);
+                    await _dbContext.InnerResources.FirstAsync(x => x.Id == model.Id);
 
+                oldName = innerResource.Name;
+                oldExternalId = innerResource.ExternalId;
                 innerResource.ExternalId = model.ExternalId;
                 innerResource.Name = model.Name;
                 await innerResource.Update(_dbContext);
@@ -223,7 +227,7 @@ namespace OuterInnerResource.Pn.Services
                     if (!model.RelatedOuterResourcesIds.Contains(outerInnerResource.OuterResourceId))
                     {
                         await outerInnerResource.Delete(_dbContext);
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id));
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName, null, null, null, innerResource.Name));
                     }
                 }
 
@@ -233,34 +237,51 @@ namespace OuterInnerResource.Pn.Services
                         !deployedOuterResourceIds.Contains(x)));
                 }
 
-                foreach (var outerResourceId in toBeDeployed)
+                if (toBeDeployed.Count == 0)
                 {
-                    var outerResource = _dbContext.OuterResources.SingleOrDefault(x =>
-                        x.Id == outerResourceId);
-                    if (outerResource != null)
+                    var
+                        outerInnerResourceList =
+                            await _dbContext.OuterInnerResources.Where(x =>
+                                x.InnerResourceId == innerResource.Id
+                                && x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
+                    foreach (var outerInnerResource in outerInnerResourceList)
                     {
-                        var
-                            outerInnerResource = await _dbContext.OuterInnerResources.SingleOrDefaultAsync(x =>
-                            x.InnerResourceId == innerResource.Id
-                            && x.OuterResourceId == outerResourceId);
+                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName,
+                            oldExternalId, null, null, innerResource.Name));
+                    }
 
-                        if (outerInnerResource == null)
+                } else {
+                    foreach (var outerResourceId in toBeDeployed)
+                    {
+                        var outerResource = _dbContext.OuterResources.FirstOrDefault(x =>
+                            x.Id == outerResourceId);
+                        if (outerResource != null)
                         {
-                            outerInnerResource =
-                                new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.OuterInnerResource()
-                                {
-                                    OuterResourceId = outerResourceId,
-                                    InnerResourceId = innerResource.Id
-                                };
-                            await outerInnerResource.Create(_dbContext);
-                        }
-                        else
-                        {
-                            outerInnerResource.WorkflowState = Constants.WorkflowStates.Created;
-                            await outerInnerResource.Update(_dbContext);
-                        }
+                            var
+                                outerInnerResource = await _dbContext.OuterInnerResources.FirstOrDefaultAsync(x =>
+                                    x.InnerResourceId == innerResource.Id
+                                    && x.OuterResourceId == outerResourceId);
 
-                        await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id));
+                            if (outerInnerResource == null)
+                            {
+                                outerInnerResource =
+                                    new Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities.
+                                        OuterInnerResource()
+                                        {
+                                            OuterResourceId = outerResourceId,
+                                            InnerResourceId = innerResource.Id
+                                        };
+                                await outerInnerResource.Create(_dbContext);
+                            }
+                            else
+                            {
+                                outerInnerResource.WorkflowState = Constants.WorkflowStates.Created;
+                                await outerInnerResource.Update(_dbContext);
+                            }
+
+                            await _bus.SendLocal(new OuterInnerResourceUpdate(outerInnerResource.Id, oldName,
+                                oldExternalId, null, null, innerResource.Name));
+                        }
                     }
                 }
                 return new OperationResult(true, _localizationService.GetString("InnerResourceUpdatedSuccessfully"));

@@ -32,6 +32,8 @@ using eFormCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -129,7 +131,9 @@ namespace OuterInnerResource.Pn.Services
             {
                 var reportTimeType = _options.Value.ReportTimeType;
                 Core core = await _coreHelper.GetCore();
-                List<SiteDto> sitesList = await core.SiteReadAll(false);
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                List<Site> sites = await sdkDbContext.Sites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync();
+                // List<SiteDto> sitesList = await core.SiteReadAll(false);
 
                 DateTime modelDateFrom = new DateTime(
                     model.DateFrom.Year,
@@ -141,21 +145,22 @@ namespace OuterInnerResource.Pn.Services
                     model.DateTo.Month,
                     model.DateTo.Day,
                     23, 59, 59);
-                
+
                 // results to exclude
-                
+
                 string outerResourceName = "";
                 OuterResource areaToExclude;
                 InnerResource machineToExclude;
                 string innerResourceName = "";
                 List<ResourceTimeRegistration> jobsList;
-                
-                outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterTotalTimeName")?.Value;
-                areaToExclude = _dbContext.OuterResources.SingleOrDefaultAsync(x => x.Name == outerResourceName).Result;
-                innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
-                machineToExclude = await _dbContext.InnerResources.SingleOrDefaultAsync(x => x.Name == innerResourceName);
+
+                outerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterTotalTimeName")?.Value;
+                areaToExclude = _dbContext.OuterResources.FirstOrDefaultAsync(x => x.Name == outerResourceName).Result;
+                innerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
+                machineToExclude = await _dbContext.InnerResources.FirstOrDefaultAsync(x => x.Name == innerResourceName);
 
                 IQueryable<ResourceTimeRegistration> query = _dbContext.ResourceTimeRegistrations
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Include(x => x.InnerResource)
                     .Include(x => x.OuterResource);
 
@@ -171,6 +176,8 @@ namespace OuterInnerResource.Pn.Services
                         query = query.Where(x =>
                             x.OuterResourceId != areaToExclude.Id && x.InnerResourceId != machineToExclude.Id);
                     }
+                    query = query
+                        .Where(x => x.DoneAt >= modelDateFrom && x.DoneAt <= modelDateTo);
                 }
                 else
                 {
@@ -180,7 +187,7 @@ namespace OuterInnerResource.Pn.Services
 
                 jobsList = await query.ToListAsync();
 
-                ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, reportTimeType);
+                ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sites, reportTimeType);
 
                 return new OperationDataResult<ReportModel>(true, reportModel);
             }
@@ -203,13 +210,13 @@ namespace OuterInnerResource.Pn.Services
                 {
                     return new OperationDataResult<FileStreamModel>(false, reportDataResult.Message);
                 }
-                
+
                 string outerResourceName = "";
                 string innerResourceName = "";
                 try
                 {
-                    outerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
-                    innerResourceName = _dbContext.PluginConfigurationValues.SingleOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value; 
+                    outerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
+                    innerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerResourceName")?.Value;
                 }
                 catch
                 {

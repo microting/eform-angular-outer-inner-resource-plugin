@@ -28,6 +28,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
 using OuterInnerResource.Pn.Infrastructure.Enums;
@@ -85,10 +86,16 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Day
             };
 
-            List<SiteDto> sitesList = new List<SiteDto>()
+            List<Site> sitesList = new List<Site>()
             {
-                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new Site()
+                {
+                    Name = "Test Site 1",
+                },
+                new Site()
+                {
+                    Name = "Test Site 2"
+                }
             };
 
             DateTime modelDateFrom = new DateTime(
@@ -178,10 +185,16 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Week
             };
 
-            List<SiteDto> sitesList = new List<SiteDto>()
+            List<Site> sitesList = new List<Site>()
             {
-                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new Site()
+                {
+                    Name = "Test Site 1",
+                },
+                new Site()
+                {
+                    Name = "Test Site 2"
+                }
             };
 
             DateTime modelDateFrom = new DateTime(
@@ -271,10 +284,16 @@ namespace MachineArea.Pn.Test
                 Type = ReportType.Month
             };
 
-            List<SiteDto> sitesList = new List<SiteDto>()
+            List<Site> sitesList = new List<Site>()
             {
-                new SiteDto(1, "Test Site 1", "", "", 1, 1, 1, 1),
-                new SiteDto(2, "Test Site 2", "", "", 1, 1, 1, 1)
+                new Site()
+                {
+                    Name = "Test Site 1",
+                },
+                new Site()
+                {
+                    Name = "Test Site 2"
+                }
             };
 
             DateTime modelDateFrom = new DateTime(

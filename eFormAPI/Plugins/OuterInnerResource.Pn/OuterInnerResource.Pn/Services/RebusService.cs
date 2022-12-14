@@ -46,26 +46,25 @@ namespace OuterInnerResource.Pn.Services
 
 
         public RebusService(IEFormCoreService coreHelper)
-        {            
+        {
             //_dbContext = dbContext;
             _coreHelper = coreHelper;
+            _container = new WindsorContainer();
         }
 
-        public async Task Start(string connectionString, int maxParallelism, int numberOfWorkers)
+        public async Task Start(string connectionString, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost)
         {
             _connectionString = connectionString;
-            //_sdkConnectionString = sdkConnectionString;
-            _container = new WindsorContainer();
-            _container.Install(
-                new RebusHandlerInstaller()
-                , new RebusInstaller(connectionString, maxParallelism, numberOfWorkers)
-            );
-            
+
             Core core = await _coreHelper.GetCore();
             _dbContextHelper = new DbContextHelper(connectionString);
-            
             _container.Register(Component.For<Core>().Instance(core));
             _container.Register(Component.For<DbContextHelper>().Instance(_dbContextHelper));
+            _container.Install(
+                new RebusHandlerInstaller()
+                , new RebusInstaller(connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitMqHost)
+            );
+
             _bus = _container.Resolve<IBus>();
         }
 
@@ -73,12 +72,17 @@ namespace OuterInnerResource.Pn.Services
         {
             return _bus;
         }
-        
+
         private OuterInnerResourcePnDbContext GetContext()
         {
             OuterInnerResourcePnContextFactory contextFactory = new OuterInnerResourcePnContextFactory();
             return contextFactory.CreateDbContext(new[] {_connectionString});
 
-        }        
+        }
+
+        public WindsorContainer GetContainer()
+        {
+            return (WindsorContainer)_container;
+        }
     }
 }

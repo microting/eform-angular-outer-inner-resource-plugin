@@ -37,21 +37,21 @@ namespace OuterInnerResource.Pn.Handlers
     {
         private readonly Core _core;
         private readonly OuterInnerResourcePnDbContext _dbContext;
-        
+
         public OuterInnerResourceDeleteFromServerHandler(Core core, DbContextHelper dbContextHelper)
         {
             _core = core;
             _dbContext = dbContextHelper.GetDbContext();
         }
-        
+
         public async Task Handle(OuterInnerResourceDeleteFromServer message)
         {
             OuterInnerResourceSite outerInnerResourceSite =
-                await _dbContext.OuterInnerResourceSites.SingleOrDefaultAsync(x =>
+                await _dbContext.OuterInnerResourceSites.FirstOrDefaultAsync(x =>
                     x.Id == message.OuterInnerResourceSiteId);
             if (outerInnerResourceSite.MicrotingSdkCaseId != null)
             {
-                await _core.CaseDelete((int) outerInnerResourceSite.MicrotingSdkCaseId); 
+                await _core.CaseDelete((int) outerInnerResourceSite.MicrotingSdkCaseId);
             }
         }
     }

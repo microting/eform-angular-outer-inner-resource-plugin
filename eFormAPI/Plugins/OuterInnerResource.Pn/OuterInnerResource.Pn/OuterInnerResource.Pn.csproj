@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource</OutputPath>
+    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource.Pn</OutputPath>
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource</OutputPath>
+    <OutputPath>../../../eFormAPI.Web/Plugins/OuterInnerResource.Pn</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,10 +27,10 @@
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.0.9" />
-    <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="3.0.8" />
-   <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
-    <PackageReference Include="Microting.eForm" Version="5.1.5" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="7.0.1" />
+    <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="7.0.1" />
+    <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
+    <PackageReference Include="Microting.eForm" Version="7.0.1" />
   </ItemGroup>
 
 </Project>

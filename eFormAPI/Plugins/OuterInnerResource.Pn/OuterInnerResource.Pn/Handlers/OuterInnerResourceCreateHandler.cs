@@ -42,9 +42,9 @@ using Rebus.Handlers;
 namespace OuterInnerResource.Pn.Handlers
 {
     public class OuterInnerResourceCreateHandler : IHandleMessages<OuterInnerResourceCreate>
-    {        
+    {
         private readonly Core _core;
-        private readonly OuterInnerResourcePnDbContext _dbContext;  
+        private readonly OuterInnerResourcePnDbContext _dbContext;
         private readonly IBus _bus;
 
         public OuterInnerResourceCreateHandler(Core core, DbContextHelper dbContextHelper, IBus bus)
@@ -53,31 +53,31 @@ namespace OuterInnerResource.Pn.Handlers
             _dbContext = dbContextHelper.GetDbContext();
             _bus = bus;
         }
-        
+
         #pragma warning disable 1998
         public async Task Handle(OuterInnerResourceCreate message)
-        {            
-            var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}"; 
-            
+        {
+            var lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.SdkeFormId.ToString()}";
+
             LogEvent($"lookup is {lookup}");
 
             var result = _dbContext.PluginConfigurationValues.AsNoTracking()
                 .FirstOrDefault(x =>
                     x.Name == lookup)
                 ?.Value;
-            
+
             LogEvent($"result is {result}");
 
             if (int.TryParse(result, out var eFormId))
             {
 
                 var sites = new List<SiteDto>();
-            
-                lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}"; 
+
+                lookup = $"OuterInnerResourceSettings:{OuterInnerResourceSettingsEnum.EnabledSiteIds.ToString()}";
                 LogEvent($"lookup is {lookup}");
 
                 var sdkSiteIds = _dbContext.PluginConfigurationValues.AsNoTracking()
-                    .FirstOrDefault(x => 
+                    .FirstOrDefault(x =>
                         x.Name == lookup)?.Value;
 
 
@@ -110,10 +110,10 @@ namespace OuterInnerResource.Pn.Handlers
             if (model.RelatedOuterResourcesIds != null)
             {
                 foreach (var id in model.RelatedOuterResourcesIds)
-                {                
-                    var outerResource = _dbContext.OuterResources.SingleOrDefault(x => x.Id == id);
-                    await CreateRelationships(model.Id, id, model.Name, outerResource.Name, sites, eFormId);              
-                }    
+                {
+                    var outerResource = _dbContext.OuterResources.FirstOrDefault(x => x.Id == id);
+                    await CreateRelationships(model.Id, id, model.Name, outerResource.Name, sites, eFormId);
+                }
             }
         }
 
@@ -123,15 +123,15 @@ namespace OuterInnerResource.Pn.Handlers
             {
                 foreach (var id in model.RelatedInnerResourcesIds)
                 {
-                    var innerResource = _dbContext.InnerResources.SingleOrDefault(x => x.Id == id);
+                    var innerResource = _dbContext.InnerResources.FirstOrDefault(x => x.Id == id);
                     await CreateRelationships(id, model.Id, innerResource.Name, model.Name, sites, eFormId);
-                }    
+                }
             }
         }
 
         private async Task CreateRelationships(int innerResourceId, int outerResourceId, string innerResourceName, string outerResourceName, List<SiteDto> sites, int eFormId)
         {
-            var outerInnerResource = _dbContext.OuterInnerResources.SingleOrDefault(x =>
+            var outerInnerResource = _dbContext.OuterInnerResources.FirstOrDefault(x =>
                     x.InnerResourceId == innerResourceId && x.OuterResourceId == outerResourceId);
 
             if (sites.Any())
@@ -152,14 +152,14 @@ namespace OuterInnerResource.Pn.Handlers
                         await outerInnerResourceSite.Create(_dbContext);
                         await _bus.SendLocal(new OuterInnerResourcePosteForm(outerInnerResourceSite.Id, eFormId));
                     }
-                }   
+                }
             }
         }
-        
+
         private void LogEvent(string appendText)
         {
             try
-            {                
+            {
                 var oldColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("[DBG] " + appendText);

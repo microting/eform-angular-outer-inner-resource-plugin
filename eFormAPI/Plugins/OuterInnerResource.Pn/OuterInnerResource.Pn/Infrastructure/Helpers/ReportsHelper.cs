@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Entities;
 using OuterInnerResource.Pn.Infrastructure.Enums;
 using OuterInnerResource.Pn.Infrastructure.Extensions;
@@ -37,7 +38,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
     {
         public static ReportModel GetReportData(
             GenerateReportModel model, List<ResourceTimeRegistration> jobsList,
-            List<SiteDto> sitesList, int timeType)
+            List<Site> sitesList, int timeType)
         {
                 List<ReportEntityModel> reportEntitiesList = new List<ReportEntityModel>();
                 List<DateTime> reportDates = new List<DateTime>();
@@ -78,7 +79,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key)?.Name,
                                         EntityId = x.Key,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
@@ -134,7 +135,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key.SDKSiteId)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId)?.Name,
                                         EntityId = x.Key.SDKSiteId,
                                         RelatedEntityId = x.Key.InnerResourceId,
                                         RelatedEntityName = x.Key.InnerResource.Name,
@@ -153,7 +154,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key.SDKSiteId)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId)?.Name,
                                         EntityId = x.Key.SDKSiteId,
                                         RelatedEntityId = x.Key.OuterResourceId,
                                         RelatedEntityName = x.Key.OuterResource.Name,
@@ -249,7 +250,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key)?.Name,
                                         EntityId = x.Key,
                                         TimePerTimeUnit = reportDates.Select(z =>
                                                 x
@@ -300,7 +301,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key.SDKSiteId)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId)?.Name,
                                         EntityId = x.Key.SDKSiteId,
                                         RelatedEntityId = x.Key.OuterResourceId,
                                         RelatedEntityName = x.Key.OuterResource.Name,
@@ -318,7 +319,8 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key.SDKSiteId)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId)?.Name,
+
                                         EntityId = x.Key.SDKSiteId,
                                         RelatedEntityId = x.Key.InnerResourceId,
                                         RelatedEntityName = x.Key.InnerResource.Name,
@@ -411,7 +413,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => x.SDKSiteId)
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key)?.Name,
                                         EntityId = x.Key,
                                         // Fill dates array foreach date and calc sum for this date
                                         TimePerTimeUnit = reportDates.Select(z =>
@@ -463,7 +465,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.OuterResourceId, x.OuterResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key.SDKSiteId)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId)?.Name,
                                         EntityId = x.Key.SDKSiteId,
                                         RelatedEntityId = x.Key.OuterResourceId,
                                         RelatedEntityName = x.Key.OuterResource.Name,
@@ -481,7 +483,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
                                 reportEntitiesList = jobsList.GroupBy(x => new { x.SDKSiteId, x.InnerResourceId, x.InnerResource })
                                     .Select(x => new ReportEntityModel()
                                     {
-                                        EntityName = sitesList.FirstOrDefault(y => y.SiteId == x.Key.SDKSiteId)?.SiteName,
+                                        EntityName = sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId) == null ? sitesList.FirstOrDefault(y => y.Id == x.Key.SDKSiteId)?.Name : sitesList.FirstOrDefault(y => y.MicrotingUid == x.Key.SDKSiteId)?.Name,
                                         EntityId = x.Key.SDKSiteId,
                                         RelatedEntityId = x.Key.InnerResourceId,
                                         RelatedEntityName = x.Key.InnerResource.Name,
