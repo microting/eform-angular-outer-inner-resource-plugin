@@ -17,7 +17,9 @@ export let OuterInnerResourcePnInnerResourceMethods = {
   InnerResources: 'api/outer-inner-resource-pn/inner-resources',
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OuterInnerResourcePnInnerResourceService {
   constructor(private apiBaseService: ApiBaseService) {}
 
