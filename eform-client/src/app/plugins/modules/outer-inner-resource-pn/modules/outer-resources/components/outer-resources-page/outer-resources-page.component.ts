@@ -10,9 +10,12 @@ import {
   OuterInnerResourcePnOuterResourceService,
 } from '../../../../services';
 import { OuterResourcesStateService } from '../store';
-import { TableHeaderElementModel } from 'src/app/common/models';
+import {PaginationModel, TableHeaderElementModel} from 'src/app/common/models';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {Sort} from '@angular/material/sort';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -30,22 +33,37 @@ export class OuterResourcesPageComponent implements OnInit, OnDestroy {
   getAllMachinesSub$: Subscription;
   getAllAreasSub$: Subscription;
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: 'idTableHeader', sortable: true },
-    { name: 'Name', elementId: 'nameTableHeader', sortable: true },
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
+    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
+    {header: this.translateService.stream('External ID'), field: 'externalId', sortable: true, sortProp: {id: 'ExternalId'}},
     {
-      name: 'ExternalId',
-      elementId: 'externalIdTableHeader',
-      sortable: true,
-      visibleName: 'External ID',
+      header: this.translateService.stream('Actions'), field: 'actions',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          color: 'accent',
+          icon: 'edit',
+          click: (record) => this.showEditAreaModal(record),
+          tooltip: this.translateService.stream('Edit'),
+        },
+        {
+          type: 'icon',
+          color: 'warn',
+          icon: 'delete',
+          click: (record) => this.showDeleteAreaModal(record),
+          tooltip: this.translateService.stream('Delete'),
+        },
+      ]
     },
-    { name: 'Actions', elementId: '', sortable: false },
-  ];
+  ]
 
   constructor(
     private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
     private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
-    public outerResourcesStateService: OuterResourcesStateService
+    public outerResourcesStateService: OuterResourcesStateService,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -91,8 +109,8 @@ export class OuterResourcesPageComponent implements OnInit, OnDestroy {
     this.createAreaModal.show();
   }
 
-  sortTable(sort: string) {
-    this.outerResourcesStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.outerResourcesStateService.onSortTable(sort.active);
     this.getAllAreas();
   }
 
@@ -108,6 +126,11 @@ export class OuterResourcesPageComponent implements OnInit, OnDestroy {
 
   onAreaDeleted() {
     this.outerResourcesStateService.onDelete();
+    this.getAllAreas();
+  }
+
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.outerResourcesStateService.updatePagination(paginationModel);
     this.getAllAreas();
   }
 }

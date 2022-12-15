@@ -19,6 +19,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import {outerResourcesPersistProvider} from './components/store';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
     ReactiveFormsModule,
     EformSharedTagsModule,
     MDBBootstrapModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MtxGridModule,
   ],
   providers: [outerResourcesPersistProvider],
 })
