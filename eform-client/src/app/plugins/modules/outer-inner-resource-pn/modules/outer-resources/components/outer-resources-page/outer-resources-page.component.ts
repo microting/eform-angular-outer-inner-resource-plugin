@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   OuterResourcePnModel,
   OuterResourcesPnModel,
@@ -9,13 +9,21 @@ import {
   OuterInnerResourcePnInnerResourceService,
   OuterInnerResourcePnOuterResourceService,
 } from '../../../../services';
-import { OuterResourcesStateService } from '../store';
-import {PaginationModel, TableHeaderElementModel} from 'src/app/common/models';
-import { Subscription } from 'rxjs';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {OuterResourcesStateService} from '../store';
+import {PaginationModel} from 'src/app/common/models';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Sort} from '@angular/material/sort';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {TranslateService} from '@ngx-translate/core';
+import {dialogConfigHelper} from 'src/app/common/helpers';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {
+  OuterResourceDeleteComponent,
+  OuterResourceEditComponent,
+  OuterResourceCreateComponent
+} from '../';
 
 @AutoUnsubscribe()
 @Component({
@@ -24,9 +32,6 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./outer-resources-page.component.scss'],
 })
 export class OuterResourcesPageComponent implements OnInit, OnDestroy {
-  @ViewChild('createAreaModal', { static: false }) createAreaModal;
-  @ViewChild('editAreaModal', { static: false }) editAreaModal;
-  @ViewChild('deleteAreaModal', { static: false }) deleteAreaModal;
   areasModel: OuterResourcesPnModel = new OuterResourcesPnModel();
   mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
 
@@ -57,20 +62,27 @@ export class OuterResourcesPageComponent implements OnInit, OnDestroy {
         },
       ]
     },
-  ]
+  ];
+  deleteOuterResourceSub$: Subscription;
+  areaUpdatedSub$: Subscription;
+  areaCreatedSub$: Subscription;
 
   constructor(
     private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
     private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
     public outerResourcesStateService: OuterResourcesStateService,
     private translateService: TranslateService,
-  ) {}
+    public dialog: MatDialog,
+    private overlay: Overlay,
+  ) {
+  }
 
   ngOnInit() {
     this.getAllInitialData();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   getAllInitialData() {
     this.getAllAreas();
@@ -98,29 +110,25 @@ export class OuterResourcesPageComponent implements OnInit, OnDestroy {
   }
 
   showEditAreaModal(area: OuterResourcePnModel) {
-    this.editAreaModal.show(area);
+    const outerResourceEditModal = this.dialog.open(OuterResourceEditComponent, dialogConfigHelper(this.overlay, {
+      areaModel: area,
+      mappingMachines: this.mappingMachines,
+    }));
+    this.areaUpdatedSub$ = outerResourceEditModal.componentInstance.onAreaUpdated.subscribe(_ => this.getAllAreas());
   }
 
   showDeleteAreaModal(area: OuterResourcePnModel) {
-    this.deleteAreaModal.show(area);
+    const outerResourceDeleteModal = this.dialog.open(OuterResourceDeleteComponent, dialogConfigHelper(this.overlay, area));
+    this.deleteOuterResourceSub$ = outerResourceDeleteModal.componentInstance.onAreaDeleted.subscribe(_ => this.onAreaDeleted());
   }
 
   showCreateAreaModal() {
-    this.createAreaModal.show();
+    const outerResourceCreateModal = this.dialog.open(OuterResourceCreateComponent, dialogConfigHelper(this.overlay, this.mappingMachines));
+    this.areaCreatedSub$ = outerResourceCreateModal.componentInstance.onAreaCreated.subscribe(_ => this.getAllAreas());
   }
 
   sortTable(sort: Sort) {
     this.outerResourcesStateService.onSortTable(sort.active);
-    this.getAllAreas();
-  }
-
-  changePage(offset: number) {
-    this.outerResourcesStateService.changePage(offset);
-    this.getAllAreas();
-  }
-
-  onPageSizeChanged(pageSize: number) {
-    this.outerResourcesStateService.updatePageSize(pageSize);
     this.getAllAreas();
   }
 

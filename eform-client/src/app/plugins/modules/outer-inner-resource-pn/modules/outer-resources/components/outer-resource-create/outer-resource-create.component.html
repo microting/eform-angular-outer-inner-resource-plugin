@@ -1,78 +1,56 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'New Area' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-md-12 col-xs-12">
-              <div class="md-form">
-                <input mdbInput
-
-                       [(ngModel)]="newAreaModel.name"
-                       type="text" id="createOuterResourceName"
-                       name="createOuterResourceName" class="form-control">
-                <label for="createOuterResourceName">{{'Name' | translate}}</label>
-              </div>
-            </div>
-          </div>
-          <div class="row mb-2">
-            <div class="col-md-12 col-xs-12">
-              <div class="md-form">
-                <input mdbInput
-
-                       [(ngModel)]="newAreaModel.externalId"
-                       type="text" id="createOuterResourceExternalId"
-                       name="createOuterResourceExternalId" class="form-control">
-                <label for="createOuterResourceExternalId">{{'External ID' | translate}}</label>
-              </div>
-            </div>
-          </div>
-          <div class="row p-1 table-responsive table-fixed-scrollable no-gutters">
-            <table class="table table-sm table-striped text-center z-depth-1">
-              <thead>
-              <tr>
-                <th scope="col" id="idTableHeader">ID</th>
-                <th scope="col" id="nameTableHeader">{{'Name' | translate}}</th>
-                <th scope="col" id="relationshipTableHeader" >{{ 'Relationship' | translate }}</th>
-              </tr>
-              </thead>
-              <tbody id="tableBody">
-              <tr *ngFor="let machine of mappingMachines.innerResourceList">
-                <td id="innerResourceId">
-                  {{machine.id}}
-                </td>
-                <td id="innerREsourceName">
-                  {{machine.name}}
-                </td>
-                <td id="innerResourceExternalId">
-                  {{machine.externalId}}
-                </td>
-                <td>
-                  <div class="mat-checkbox">
-                    <input id="checkbox{{machine.id}}" (change)="addToArray($event, machine.id)"
-                           [checked]="isChecked(machine.id)"
-                           color="primary" type="checkbox">
-                    <label for="checkbox{{machine.id}}"></label>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" id="outerResourceCreateSaveBtn" [disabled]="!newAreaModel.name" (click)="createArea()">
-          {{ 'Create' | translate }}
-        </button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="outerResourceCreateCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
-      </div>
-    </div>
-  </div>
+<h3 mat-dialog-title>{{'New Area' | translate}}</h3>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>{{'Name' | translate}}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="newAreaModel.name"
+      type="text"
+      id="createOuterResourceName"
+      name="createOuterResourceName">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{'External ID' | translate}}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="newAreaModel.externalId"
+      type="text"
+      id="createOuterResourceExternalId"
+      name="createOuterResourceExternalId">
+  </mat-form-field>
+  <mtx-grid
+    id="userInfoTable"
+    [data]="mappingMachines.innerResourceList"
+    [columns]="tableHeaders"
+    [cellTemplate]="{relationship: relationshipTpl}"
+    [showPaginator]="false"
+    [pageOnFront]="false"
+    [rowStriped]="true"
+    [showToolbar]="false"
+    [showColumnMenuButton]="false"
+  ></mtx-grid>
 </div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    id="outerResourceCreateSaveBtn"
+    [disabled]="!newAreaModel.name"
+    (click)="createArea()">
+    {{'Create' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="outerResourceCreateCancelBtn"
+    (click)="hide()">
+    {{'Cancel' | translate}}
+  </button>
+</div>
+
+<ng-template #relationshipTpl let-row>
+  <mat-checkbox
+    id="update-checkbox{{row.id}}"
+    [ngModel]="isChecked(row.id)"
+    (ngModelChange)="addToArray($event, row.id)"
+  ></mat-checkbox>
+</ng-template>

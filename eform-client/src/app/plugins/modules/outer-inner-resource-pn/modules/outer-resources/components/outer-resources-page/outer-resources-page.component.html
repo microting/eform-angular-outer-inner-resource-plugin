@@ -30,19 +30,3 @@
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>
-
-<app-machine-area-pn-area-create
-  #createAreaModal
-  [mappingMachines]="mappingMachines"
-  (onAreaCreated)="getAllAreas()"
->
-</app-machine-area-pn-area-create>
-<app-machine-area-pn-area-edit
-  #editAreaModal
-  [mappingMachines]="mappingMachines"
-  (onAreaUpdated)="getAllAreas()"
-></app-machine-area-pn-area-edit>
-<app-machine-area-pn-area-delete
-  #deleteAreaModal
-  (onAreaDeleted)="onAreaDeleted()"
-></app-machine-area-pn-area-delete>

@@ -13,11 +13,8 @@ import {
 } from './components';
 import {ReportsRouting} from './reports.routing';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -39,12 +36,9 @@ import {MatButtonModule} from '@angular/material/button';
     ReportsRouting,
     OwlMomentDateTimeModule,
     EformSharedModule,
-    FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
     EformSharedTagsModule,
-    NgSelectModule,
-    MDBBootstrapModule,
     MtxGridModule,
     MatFormFieldModule,
     MatIconModule,

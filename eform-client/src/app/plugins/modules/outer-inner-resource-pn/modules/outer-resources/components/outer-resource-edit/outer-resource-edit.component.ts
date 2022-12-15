@@ -1,20 +1,21 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Inject,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import {
   OuterResourcePnModel,
   OuterResourcePnUpdateModel,
   InnerResourcesPnModel,
 } from '../../../../models';
-import { OuterInnerResourcePnOuterResourceService } from '../../../../services';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { Subscription } from 'rxjs';
+import {OuterInnerResourcePnOuterResourceService} from '../../../../services';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -23,25 +24,34 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./outer-resource-edit.component.scss'],
 })
 export class OuterResourceEditComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', { static: false }) frame;
-  @Input() mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
-  @Output() onAreaUpdated: EventEmitter<void> = new EventEmitter<void>();
+  mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
+  onAreaUpdated: EventEmitter<void> = new EventEmitter<void>();
   selectedAreaModel: OuterResourcePnModel = new OuterResourcePnModel();
 
   updateAreaSub$: Subscription;
   getSingleAreaSub$: Subscription;
 
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id',},
+    {header: this.translateService.stream('Name'), field: 'name',},
+    {header: this.translateService.stream('Relationship'), field: 'relationship',},
+  ];
+
   constructor(
-    private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService
-  ) {}
+    private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
+    private translateService: TranslateService,
+    public dialogRef: MatDialogRef<OuterResourceEditComponent>,
+    @Inject(MAT_DIALOG_DATA) model:
+      { mappingMachines: InnerResourcesPnModel, areaModel: OuterResourcePnModel }
+  ) {
+    this.mappingMachines = model.mappingMachines;
+    this.getSelectedArea(model.areaModel.id);
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  ngOnDestroy() {}
-
-  show(areaModel: OuterResourcePnModel) {
-    this.getSelectedArea(areaModel.id);
-    this.frame.show();
+  ngOnDestroy() {
   }
 
   getSelectedArea(id: number) {
@@ -61,13 +71,13 @@ export class OuterResourceEditComponent implements OnInit, OnDestroy {
         if (data && data.success) {
           this.onAreaUpdated.emit();
           this.selectedAreaModel = new OuterResourcePnModel();
-          this.frame.hide();
+          this.hide(true);
         }
       });
   }
 
-  addToEditMapping(e: any, machineId: number) {
-    if (e.target.checked) {
+  addToEditMapping(checked: boolean, machineId: number) {
+    if (checked) {
       this.selectedAreaModel.relatedInnerResourcesIds.push(machineId);
     } else {
       this.selectedAreaModel.relatedInnerResourcesIds = this.selectedAreaModel.relatedInnerResourcesIds.filter(
@@ -88,5 +98,9 @@ export class OuterResourceEditComponent implements OnInit, OnDestroy {
       );
     }
     return false;
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }
