@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import {
   OperationDataResult,
   PaginationModel,
-  SortModel,
 } from 'src/app/common/models';
 import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';

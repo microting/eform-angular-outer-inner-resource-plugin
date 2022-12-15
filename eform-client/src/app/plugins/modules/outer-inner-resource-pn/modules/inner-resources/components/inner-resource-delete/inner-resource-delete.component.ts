@@ -1,15 +1,14 @@
 import {
   Component,
-  EventEmitter,
+  EventEmitter, Inject,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
-import { InnerResourcePnModel } from '../../../../models';
+import {InnerResourcePnModel,} from '../../../../models';
 import { OuterInnerResourcePnInnerResourceService } from '../../../../services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
@@ -18,24 +17,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./inner-resource-delete.component.scss'],
 })
 export class InnerResourceDeleteComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', { static: false }) frame;
-  @Output() onMachineDeleted: EventEmitter<void> = new EventEmitter<void>();
-  selectedMachineModel: InnerResourcePnModel = new InnerResourcePnModel();
+  onMachineDeleted: EventEmitter<void> = new EventEmitter<void>();
 
   deleteMachineSub$: Subscription;
 
   constructor(
-    private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService
+    private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
+    public dialogRef: MatDialogRef<InnerResourceDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedMachineModel: InnerResourcePnModel = new InnerResourcePnModel(),
   ) {}
 
   ngOnInit() {}
 
   ngOnDestroy() {}
-
-  show(machineModel: InnerResourcePnModel) {
-    this.selectedMachineModel = machineModel;
-    this.frame.show();
-  }
 
   deleteMachine() {
     this.deleteMachineSub$ = this.machineAreaPnMachinesService
@@ -44,8 +38,12 @@ export class InnerResourceDeleteComponent implements OnInit, OnDestroy {
         if (data && data.success) {
           this.onMachineDeleted.emit();
           this.selectedMachineModel = new InnerResourcePnModel();
-          this.frame.hide();
+          this.hide(true);
         }
       });
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }

@@ -1,11 +1,9 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Inject,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import {
   InnerResourcePnModel,
@@ -15,6 +13,9 @@ import {
 import { OuterInnerResourcePnInnerResourceService } from '../../../../services';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
@@ -23,26 +24,34 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
   styleUrls: ['./inner-resource-edit.component.scss'],
 })
 export class InnerResourceEditComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', { static: false }) frame;
-  @Input() mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
-  @Output() onMachineUpdated: EventEmitter<void> = new EventEmitter<void>();
+  mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
+  onMachineUpdated: EventEmitter<void> = new EventEmitter<void>();
   selectedMachineModel: InnerResourcePnModel = new InnerResourcePnModel();
 
   updateMachineSub$: Subscription;
   getSingleMachineSub$: Subscription;
 
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id',},
+    {header: this.translateService.stream('Name'), field: 'name',},
+    {header: this.translateService.stream('External ID'), field: 'externalId',},
+    {header: this.translateService.stream('Relationship'), field: 'relationship',},
+  ];
+
   constructor(
-    private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService
-  ) {}
+    private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
+    private translateService: TranslateService,
+    public dialogRef: MatDialogRef<InnerResourceEditComponent>,
+    @Inject(MAT_DIALOG_DATA) model:
+      { mappingAreas: OuterResourcesPnModel, machineModel: InnerResourcePnModel }
+  ) {
+    this.mappingAreas = model.mappingAreas;
+    this.getSelectedMachine(model.machineModel.id);
+  }
 
   ngOnInit() {}
 
   ngOnDestroy() {}
-
-  show(machineModel: InnerResourcePnModel) {
-    this.getSelectedMachine(machineModel.id);
-    this.frame.show();
-  }
 
   getSelectedMachine(id: number) {
     this.getSingleMachineSub$ = this.machineAreaPnMachinesService
@@ -61,13 +70,13 @@ export class InnerResourceEditComponent implements OnInit, OnDestroy {
         if (data && data.success) {
           this.onMachineUpdated.emit();
           this.selectedMachineModel = new InnerResourcePnModel();
-          this.frame.hide();
+          this.hide(true);
         }
       });
   }
 
-  addToEditMapping(e: any, areaId: number) {
-    if (e.target.checked) {
+  addToEditMapping(checked: boolean, areaId: number) {
+    if (checked) {
       this.selectedMachineModel.relatedOuterResourcesIds.push(areaId);
     } else {
       this.selectedMachineModel.relatedOuterResourcesIds = this.selectedMachineModel.relatedOuterResourcesIds.filter(
@@ -88,5 +97,9 @@ export class InnerResourceEditComponent implements OnInit, OnDestroy {
       );
     }
     return false;
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }

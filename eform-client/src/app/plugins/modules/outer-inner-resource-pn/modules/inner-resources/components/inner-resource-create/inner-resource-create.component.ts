@@ -1,19 +1,20 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Inject,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild,
 } from '@angular/core';
 import {
   InnerResourcePnCreateModel,
   OuterResourcesPnModel,
 } from '../../../../models';
-import { OuterInnerResourcePnInnerResourceService } from '../../../../services';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { Subscription } from 'rxjs';
+import {OuterInnerResourcePnInnerResourceService} from '../../../../services';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
@@ -22,24 +23,31 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./inner-resource-create.component.scss'],
 })
 export class InnerResourceCreateComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', { static: false }) frame;
-  @Input() mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
-  @Output() onMachineCreated: EventEmitter<void> = new EventEmitter<void>();
+  onMachineCreated: EventEmitter<void> = new EventEmitter<void>();
   checked = false;
   newMachineModel: InnerResourcePnCreateModel = new InnerResourcePnCreateModel();
 
   createMachineSub$: Subscription;
 
+  tableHeaders: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id',},
+    {header: this.translateService.stream('Name'), field: 'name',},
+    {header: this.translateService.stream('External ID'), field: 'externalId',},
+    {header: this.translateService.stream('Relationship'), field: 'relationship',},
+  ];
+
   constructor(
-    private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService
-  ) {}
+    private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
+    private translateService: TranslateService,
+    public dialogRef: MatDialogRef<InnerResourceCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel()
+  ) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  ngOnDestroy() {}
-
-  show() {
-    this.frame.show();
+  ngOnDestroy() {
   }
 
   createMachine() {
@@ -49,13 +57,13 @@ export class InnerResourceCreateComponent implements OnInit, OnDestroy {
         if (data && data.success) {
           this.onMachineCreated.emit();
           this.newMachineModel = new InnerResourcePnCreateModel();
-          this.frame.hide();
+          this.hide(true);
         }
       });
   }
 
-  addToArray(e: any, areaId: number) {
-    if (e.target.checked) {
+  addToArray(checked: boolean, areaId: number) {
+    if (checked) {
       this.newMachineModel.relatedOuterResourcesIds.push(areaId);
     } else {
       this.newMachineModel.relatedOuterResourcesIds = this.newMachineModel.relatedOuterResourcesIds.filter(
@@ -69,5 +77,9 @@ export class InnerResourceCreateComponent implements OnInit, OnDestroy {
       this.newMachineModel.relatedOuterResourcesIds.indexOf(relatedAreaId) !==
       -1
     );
+  }
+
+  hide(result = false) {
+    this.dialogRef.close(result);
   }
 }

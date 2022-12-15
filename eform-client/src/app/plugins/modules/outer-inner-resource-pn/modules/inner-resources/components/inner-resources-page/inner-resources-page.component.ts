@@ -13,8 +13,19 @@ import { OuterInnerResourcePnClaims } from '../../../../enums';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { InnerResourcesStateService } from '../store';
-import { TableHeaderElementModel } from 'src/app/common/models';
+import {PaginationModel, TableHeaderElementModel} from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
+import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {TranslateService} from '@ngx-translate/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Overlay} from '@angular/cdk/overlay';
+import {Sort} from '@angular/material/sort';
+import {
+  InnerResourceCreateComponent,
+  InnerResourceDeleteComponent,
+  InnerResourceEditComponent
+} from '../';
+import {dialogConfigHelper} from 'src/app/common/helpers';
 
 @AutoUnsubscribe()
 @Component({
@@ -45,6 +56,35 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     { name: 'Actions', elementId: '', sortable: false },
   ];
 
+  tableHeaders1: MtxGridColumn[] = [
+    {header: this.translateService.stream('Id'), field: 'id', sortProp: {id: 'Id'}, sortable: true},
+    {header: this.translateService.stream('Name'), sortProp: {id: 'Name'}, field: 'name', sortable: true},
+    {header: this.translateService.stream('External ID'), field: 'externalId', sortable: true, sortProp: {id: 'ExternalId'}},
+    {
+      header: this.translateService.stream('Actions'), field: 'actions',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          color: 'accent',
+          icon: 'edit',
+          click: (record) => this.showEditMachineModal(record),
+          tooltip: this.translateService.stream('Edit'),
+        },
+        {
+          type: 'icon',
+          color: 'warn',
+          icon: 'delete',
+          click: (record) => this.showDeleteMachineModal(record),
+          tooltip: this.translateService.stream('Delete'),
+        },
+      ]
+    },
+  ];
+  deleteInnerResourceSub$: Subscription;
+  machineUpdatedSub$: Subscription;
+  machineCreatedSub$: Subscription;
+
   get outerInnerResourcePnClaims() {
     return OuterInnerResourcePnClaims;
   }
@@ -53,12 +93,11 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
     private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
     public innerResourcesStateService: InnerResourcesStateService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private translateService: TranslateService,
+    public dialog: MatDialog,
+    private overlay: Overlay,
   ) {}
-
-  get currentRole(): string {
-    return this.authStateService.currentRole;
-  }
 
   ngOnInit() {
     this.getAllInitialData();
@@ -92,19 +131,25 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
   }
 
   showEditMachineModal(machine: InnerResourcePnModel) {
-    this.editMachineModal.show(machine);
+    const innerResourceEditModal = this.dialog.open(InnerResourceEditComponent, dialogConfigHelper(this.overlay, {
+      machineModel: machine,
+      mappingAreas: this.mappingAreas,
+    }));
+    this.machineUpdatedSub$ = innerResourceEditModal.componentInstance.onMachineUpdated.subscribe(_ => this.getAllMachines());
   }
 
   showDeleteMachineModal(machine: InnerResourcePnModel) {
-    this.deleteMachineModal.show(machine);
+    const innerResourceDeleteModal = this.dialog.open(InnerResourceDeleteComponent, dialogConfigHelper(this.overlay, machine));
+    this.deleteInnerResourceSub$ = innerResourceDeleteModal.componentInstance.onMachineDeleted.subscribe(_ => this.onMachineDeleted());
   }
 
   showCreateMachineModal() {
-    this.createMachineModal.show();
+    const innerResourceCreateModal = this.dialog.open(InnerResourceCreateComponent, dialogConfigHelper(this.overlay, this.mappingAreas));
+    this.machineCreatedSub$ = innerResourceCreateModal.componentInstance.onMachineCreated.subscribe(_ => this.getAllMachines());
   }
 
-  sortTable(sort: string) {
-    this.innerResourcesStateService.onSortTable(sort);
+  sortTable(sort: Sort) {
+    this.innerResourcesStateService.onSortTable(sort.active);
     this.getAllMachines();
   }
 
@@ -118,8 +163,8 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     this.getAllMachines();
   }
 
-  onPageSizeChanged(pageSize: number) {
-    this.innerResourcesStateService.updatePageSize(pageSize);
+  onPaginationChanged(paginationModel: PaginationModel) {
+    this.innerResourcesStateService.updatePagination(paginationModel);
     this.getAllMachines();
   }
 }

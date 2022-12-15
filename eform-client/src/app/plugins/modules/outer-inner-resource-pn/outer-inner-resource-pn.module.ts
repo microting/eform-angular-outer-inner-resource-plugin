@@ -1,9 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {NgSelectModule} from '@ng-select/ng-select';
 import {
   OuterInnerResourcePnInnerResourceService,
   OuterInnerResourcePnOuterResourceService,
@@ -15,24 +13,27 @@ import {SharedPnModule} from '../shared/shared-pn.module';
 import {
   OuterInnerResourceSettingsComponent,
 } from './components';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {OuterInnerResourcePnRouting} from './outer-inner-resource-pn.routing';
-import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MtxSelectModule} from '@ng-matero/extensions/select';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedPnModule,
-    MDBBootstrapModule,
     OuterInnerResourcePnRouting,
     TranslateModule,
     FormsModule,
-    NgSelectModule,
-    ReactiveFormsModule,
-    FontAwesomeModule,
-    OwlDateTimeModule,
     EformSharedModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MtxSelectModule,
+    MatCardModule,
   ],
   declarations: [
     OuterInnerResourcePnLayoutComponent,

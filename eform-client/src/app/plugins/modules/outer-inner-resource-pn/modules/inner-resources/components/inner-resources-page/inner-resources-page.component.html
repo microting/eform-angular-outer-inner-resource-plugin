@@ -1,104 +1,33 @@
-<eform-subheader [title]="machinesModel.name">
-  <div class="p-3">
-    <button
-      *ngIf="
-        authStateService.checkClaim(outerInnerResourcePnClaims.createMachines)
-      "
-      class="btn btn-success btn-small-height"
-      id="newInnerResource"
-      mdbTooltip="{{ 'Create' | translate }}"
-      (click)="showCreateMachineModal()"
-    >
-      {{ 'New' | translate }}
-    </button>
-  </div>
-</eform-subheader>
+<eform-new-subheader [title]="machinesModel.name">
+  <button
+    *ngIf="authStateService.checkClaim(outerInnerResourcePnClaims.createMachines)"
+    mat-raised-button
+    color="accent"
+    id="newInnerResource"
+    matTooltip="{{ 'Create' | translate }}"
+    (click)="showCreateMachineModal()"
+  >
+    {{ 'New' | translate }}
+  </button>
+</eform-new-subheader>
 
-<div class="container-fluid">
-  <div class="row p-1 mt-4 table-responsive no-gutters">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
-      <thead
-        table-headers
-        [tableHeaders]="tableHeaders"
-        [sort]="innerResourcesStateService.getSort() | async"
-        (sortChanged)="sortTable($event)"
-      ></thead>
-      <tbody id="tableBodyInnerResources">
-        <tr *ngFor="let machine of machinesModel.innerResourceList">
-          <td id="innerResourceId">
-            {{ machine.id }}
-          </td>
-          <td id="innerResourceName">
-            {{ machine.name }}
-          </td>
-          <td id="innerResourceExternalId">
-            {{ machine.externalId }}
-          </td>
-          <td>
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                mdbBtn
-                class="btn-accent text-black-50 btn-icon mb-2"
-                mdbTooltip="{{ 'Edit' | translate }}"
-                id="innerResourceEditBtn"
-                (click)="showEditMachineModal(machine)"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                mdbBtn
-                class="btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Delete' | translate }}"
-                id="innerResourceDeleteBtn"
-                (click)="showDeleteMachineModal(machine)"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="row justify-content-between mr-2 ml-2">
-    <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="innerResourcesStateService.getPageSize() | async"
-        (onPageSizeChanged)="onPageSizeChanged($event)"
-      >
-      </eform-page-size>
-    </div>
-    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination
-        [pagination]="innerResourcesStateService.getPagination() | async"
-        (onPageChanged)="changePage($event)"
-      ></eform-pagination>
-    </div>
-  </div>
-</div>
+<mtx-grid
+  [data]="machinesModel.innerResourceList"
+  [columns]="tableHeaders1"
+  [showPaginator]="true"
+  [paginationTemplate]="paginatorTpl"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="false"
+  [showColumnMenuButton]="false"
+  [sortActive]="innerResourcesStateService.getActiveSort() | async"
+  [sortDirection]="innerResourcesStateService.getActiveSortDirection() | async"
+  (sortChange)="sortTable($event)">
+</mtx-grid>
 
-<app-machine-area-pn-machine-create
-  #createMachineModal
-  [mappingAreas]="mappingAreas"
-  (onMachineCreated)="getAllMachines()"
->
-</app-machine-area-pn-machine-create>
-<app-machine-area-pn-machine-edit
-  #editMachineModal
-  [mappingAreas]="mappingAreas"
-  (onMachineUpdated)="getAllMachines()"
-></app-machine-area-pn-machine-edit>
-<app-machine-area-pn-machine-delete
-  #deleteMachineModal
-  (onMachineDeleted)="onMachineDeleted()"
-></app-machine-area-pn-machine-delete>
+<ng-template #paginatorTpl>
+  <eform-pagination
+    [pagination]="innerResourcesStateService.getPagination() | async"
+    (paginationChanged)="onPaginationChanged($event)"
+  ></eform-pagination>
+</ng-template>

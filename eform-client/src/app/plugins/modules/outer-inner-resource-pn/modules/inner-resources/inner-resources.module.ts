@@ -1,10 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {
-  OwlDateTimeModule,
-  OwlMomentDateTimeModule,
-} from '@danielmoncada/angular-datetime-picker';
 import {TranslateModule} from '@ngx-translate/core';
 import {
   InnerResourceCreateComponent,
@@ -14,11 +10,15 @@ import {
 } from './components';
 import {InnerResourcesRouting} from './inner-resources.routing';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import {innerResourcesPersistProvider} from './components/store';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {FormsModule} from '@angular/forms';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {MtxGridModule} from '@ng-matero/extensions/grid';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -31,14 +31,16 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     TranslateModule,
     RouterModule,
-    OwlDateTimeModule,
     InnerResourcesRouting,
-    OwlMomentDateTimeModule,
     EformSharedModule,
-    FontAwesomeModule,
-    EformSharedTagsModule,
-    MDBBootstrapModule,
     FormsModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MtxGridModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [innerResourcesPersistProvider],
 })
