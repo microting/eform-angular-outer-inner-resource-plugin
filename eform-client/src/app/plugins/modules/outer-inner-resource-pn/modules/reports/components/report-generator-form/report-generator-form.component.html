@@ -1,0 +1,78 @@
+<form [formGroup]="generateForm">
+  <div class="d-flex justify-content-between align-items-center flex-nowrap">
+    <div class="d-flex justify-content-start flex-nowrap">
+      <div class="d-flex flex-column mr-2 ml-2">
+        <mat-form-field [owlDateTimeTrigger]="dateRangePicker">
+          <mat-label>{{ 'Selected date range' | translate }}</mat-label>
+          <mat-icon matPrefix>calendar_today</mat-icon>
+          <input
+            matInput
+            formControlName="dateRange"
+            type="text"
+            id="dateFormInput"
+            [owlDateTime]="dateRangePicker"
+            [selectMode]="'range'"
+          >
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-column mr-2 ml-2">
+        <mat-form-field>
+          <mat-label>{{ 'Type' | translate }}</mat-label>
+          <mtx-select
+            class="custom"
+            [dropdownPosition]="'bottom'"
+            formControlName="type"
+            required
+            [items]="[
+              {id: reportType.Month, name: reportType[reportType.Month] | translate},
+              {id: reportType.Week, name: reportType[reportType.Week] | translate},
+              {id: reportType.Day, name: reportType[reportType.Day] | translate}
+             ]"
+            [clearable]="false"
+            [bindLabel]="'name'"
+            [bindValue]="'id'"
+            id="typeSelector"
+            style="max-height: 500px;"
+          ></mtx-select>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-column mr-2 ml-2">
+        <mat-form-field>
+          <mat-label>{{ 'Report' | translate }}</mat-label>
+          <mtx-select
+            class="custom"
+            [dropdownPosition]="'bottom'"
+            formControlName="relationship"
+            required
+            [placeholder]="'Report' | translate"
+            [items]="reportNames.reportNameModels"
+            [bindLabel]="'name'"
+            [bindValue]="'id'"
+            [clearable]="false"
+            id="relationshipSelector"
+          ></mtx-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-flex justify-content-start flex-nowrap">
+      <button
+        mat-raised-button
+        [disabled]="generateForm.invalid"
+        (click)="onSubmit()"
+        color="accent"
+      >
+        {{'Generate' | translate}}
+      </button>
+      <button
+        mat-icon-button
+        [disabled]="generateForm.invalid"
+        (click)="onSave()"
+        color="accent"
+      >
+        <mat-icon svgIcon="file-excel"></mat-icon>
+      </button>
+    </div>
+  </div>
+</form>
+
+<owl-date-time [pickerType]="'calendar'" #dateRangePicker></owl-date-time>

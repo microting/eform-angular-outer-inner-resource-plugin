@@ -1,0 +1,11 @@
+<eform-new-subheader></eform-new-subheader>
+
+<ng-template #toolbarTpl>
+  <app-machine-area-pn-report-generator-form
+    (saveReport)="onSaveReport($event)"
+    (generateReport)="onGenerateReport($event)"
+  >
+  </app-machine-area-pn-report-generator-form>
+</ng-template>
+  <app-machine-area-pn-report-preview-table [reportData]="reportModel" [toolbarTemplate]="toolbarTpl">
+  </app-machine-area-pn-report-preview-table>

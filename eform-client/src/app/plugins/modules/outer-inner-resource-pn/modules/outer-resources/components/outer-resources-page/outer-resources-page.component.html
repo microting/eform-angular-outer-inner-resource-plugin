@@ -1,0 +1,32 @@
+<eform-new-subheader [title]="areasModel.name">
+  <button
+    mat-raised-button
+    color="accent"
+    matTooltip="{{ 'Create' | translate }}"
+    id="newOuterResourceBtn"
+    (click)="showCreateAreaModal()"
+  >
+    {{ 'New' | translate }}
+  </button>
+</eform-new-subheader>
+
+<mtx-grid
+  [data]="areasModel.outerResourceList"
+  [columns]="tableHeaders"
+  [showPaginator]="true"
+  [paginationTemplate]="paginatorTpl"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="false"
+  [showColumnMenuButton]="false"
+  [sortActive]="outerResourcesStateService.getActiveSort() | async"
+  [sortDirection]="outerResourcesStateService.getActiveSortDirection() | async"
+  (sortChange)="sortTable($event)">
+</mtx-grid>
+
+<ng-template #paginatorTpl>
+  <eform-pagination
+    [pagination]="outerResourcesStateService.getPagination() | async"
+    (paginationChanged)="onPaginationChanged($event)"
+  ></eform-pagination>
+</ng-template>

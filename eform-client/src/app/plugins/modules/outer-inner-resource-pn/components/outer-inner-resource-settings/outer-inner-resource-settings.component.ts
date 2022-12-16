@@ -4,16 +4,16 @@ import {
   EventEmitter,
   OnInit,
 } from '@angular/core';
-import { OuterInnerResourcePnSettingsService } from '../../services';
-import { Router } from '@angular/router';
-import { OuterInnerResourceBaseSettingsModel } from '../../models';
-import { debounceTime, switchMap } from 'rxjs/operators';
-import { EntitySearchService } from '../../../../../common/services/advanced';
+import {OuterInnerResourcePnSettingsService} from '../../services';
+import {Router} from '@angular/router';
+import {OuterInnerResourceBaseSettingsModel} from '../../models';
+import {debounceTime, switchMap} from 'rxjs/operators';
+import {EntitySearchService} from 'src/app/common/services';
 import {
   TemplateListModel,
   TemplateRequestModel,
-} from '../../../../../common/models/eforms';
-import { EFormService } from '../../../../../common/services/eform';
+} from 'src/app/common/models';
+import {EFormService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-machine-area-settings',
@@ -58,6 +58,7 @@ export class OuterInnerResourceSettingsComponent implements OnInit {
       }
     });
   }
+
   updateSettings() {
     this.machineAreaPnSettingsService
       .updateSettings(this.settingsModel)

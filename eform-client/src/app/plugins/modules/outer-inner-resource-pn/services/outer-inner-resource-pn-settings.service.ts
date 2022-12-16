@@ -3,14 +3,17 @@ import { Observable } from 'rxjs';
 import {
   OperationDataResult,
   OperationResult,
-} from '../../../../common/models';
+} from 'src/app/common/models';
 import { OuterInnerResourceBaseSettingsModel } from '../models';
 import { ApiBaseService } from 'src/app/common/services';
 
 export let OuterInnerResourceSettingsMethods = {
   MachineAreaSettings: 'api/outer-inner-resource-pn/settings',
 };
-@Injectable()
+
+@Injectable({
+  providedIn: 'root',
+})
 export class OuterInnerResourcePnSettingsService {
   constructor(private apiBaseService: ApiBaseService) {}
 

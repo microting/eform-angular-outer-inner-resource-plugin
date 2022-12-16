@@ -12,7 +12,9 @@ export let OuterInnerResourcePnReportsMethods = {
   Reports: 'api/outer-inner-resource-pn/reports',
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OuterInnerResourcePnReportsService {
   constructor(private apiBaseService: ApiBaseService) {}
 

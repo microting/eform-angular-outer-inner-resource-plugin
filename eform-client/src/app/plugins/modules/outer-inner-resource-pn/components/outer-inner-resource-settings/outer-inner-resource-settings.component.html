@@ -1,254 +1,185 @@
-<eform-subheader [title]="'Machine Area plugin settings' | translate">
-  <div class="p-3">
-    <button class="btn btn-success btn-small-height" (click)="updateSettings()">
-      {{ 'Save' | translate }}
-    </button>
-  </div>
-</eform-subheader>
-
-<div class="container-fluid">
-  <div class="row mt-4">
-    <div class="col-md-12 col-xs-12 control-block">
-      <eform-subheader [title]="'Settings' | translate" [heandingSizeRem]="1">
-      </eform-subheader>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.sdkConnectionString"
-                type="text"
-                name="sdkconnectionstring"
-                #sdkconnectionstring="ngModel"
-                id="sdkconnectionstring"
-                class="form-control"
-              />
-              <label for="sdkconnectionstring">{{
-                'SDK connection string' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.logLevel"
-                type="text"
-                name="loglevel"
-                #loglevel="ngModel"
-                id="loglevel"
-                class="form-control"
-              />
-              <label for="loglevel">{{ 'Log Level' | translate }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.logLimit"
-                type="text"
-                name="loglimit"
-                #loglimit="ngModel"
-                id="loglimit"
-                class="form-control"
-              />
-              <label for="loglimit">{{ 'Log Limit' | translate }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.maxParallelism"
-                type="text"
-                name="maxparallelism"
-                #maxparallelism="ngModel"
-                id="maxparallelism"
-                class="form-control"
-              />
-              <label for="maxparallelism">{{
-                'Max parallelism' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.numberOfWorkers"
-                type="text"
-                name="numberofworkers"
-                #numberofworkers="ngModel"
-                id="numberofworkers"
-                class="form-control"
-              />
-              <label for="numberofworkers">{{
-                'Number of workers' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.token"
-                type="text"
-                name="token"
-                #token="ngModel"
-                id="token"
-                class="form-control"
-              />
-              <label for="token">{{ 'Token' | translate }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <ng-select
-                [items]="templatesModel.templates"
-                bindLabel="label"
-                [placeholder]="
-                  settingsModel.sdkeFormId || ('Selected template' | translate)
-                "
-                bindValue="id"
-                [typeahead]="typeahead"
-                (change)="onSelectedChanged($event)"
-              >
-              </ng-select>
-              <label>{{ 'SDK eForm ID' | translate }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <ng-select
-                required
-                bindLabel="name"
-                bindValue="id"
-                [clearable]="false"
-                [(ngModel)]="settingsModel.reportTimeType"
-                name="editTime"
-                [placeholder]="'Report time units' | translate"
-                [items]="[
-                  { id: 1, name: 'Seconds' | translate },
-                  { id: 2, name: 'Minutes' | translate },
-                  { id: 3, name: 'Hours' | translate }
-                ]"
-              ></ng-select>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.enabledSiteIds"
-                type="text"
-                name="sdkSiteIds"
-                #sdkSiteIds="ngModel"
-                id="sdkSiteIds"
-                class="form-control"
-              />
-              <label for="sdkSiteIds">{{ 'SDK site ids' | translate }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.quickSyncEnabled"
-                type="text"
-                name="quickSyncEnabled"
-                #sdkSiteIds="ngModel"
-                id="quickSyncEnabled"
-                class="form-control"
-              />
-              <label for="quickSyncEnabled">{{
-                'Quick sync enabled' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.outerResourceName"
-                type="text"
-                name="outerResourceName"
-                #outerResourceName="ngModel"
-                id="outerResourceName"
-                class="form-control"
-              />
-              <label for="outerResourceName">{{
-                'Outer resource name' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.innerResourceName"
-                type="text"
-                name="innerResourceName"
-                #innerResourceName="ngModel"
-                id="innerResourceName"
-                class="form-control"
-              />
-              <label for="innerResourceName">{{
-                'Inner resource name' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.outerTotalTimeName"
-                type="text"
-                name="outerTotalTimeName"
-                #outerTotalTimeName="ngModel"
-                id="outerTotalTimeName"
-                class="form-control"
-              />
-              <label for="outerTotalTimeName">{{
-                'Outer total time name' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.innerTotalTimeName"
-                type="text"
-                name="innerTotalTimeName"
-                #innerTotalTimeName="ngModel"
-                id="innerTotalTimeName"
-                class="form-control"
-              />
-              <label for="innerTotalTimeName">{{
-                'Inner total time name' | translate
-              }}</label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="md-form input-group">
-              <input
-                mdbInput
-                [(ngModel)]="settingsModel.shouldCheckAllCases"
-                type="text"
-                name="shouldCheckAllCases"
-                #sdkSiteIds="ngModel"
-                id="shouldCheckAllCases"
-                class="form-control"
-              />
-              <label for="shouldCheckAllCases">{{
-                'Should check all cases' | translate
-              }}</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<eform-new-subheader
+  [forceStaticTitle]="true"
+  [title]="'Machine Area plugin settings' | translate"
+  [subtitle]="'Settings' | translate"
+>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="updateSettings()">
+    {{ 'Save' | translate }}
+  </button>
+</eform-new-subheader>
+<mat-card>
+  <mat-card-content class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{'SDK connection string' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.sdkConnectionString"
+        type="text"
+        name="sdkconnectionstring"
+        #sdkconnectionstring="ngModel"
+        id="sdkconnectionstring"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Log Level' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.logLevel"
+        type="text"
+        name="loglevel"
+        #loglevel="ngModel"
+        id="loglevel"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Log Limit' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.logLimit"
+        type="text"
+        name="loglimit"
+        #loglimit="ngModel"
+        id="loglimit"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Max parallelism' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.maxParallelism"
+        type="text"
+        name="maxparallelism"
+        #maxparallelism="ngModel"
+        id="maxparallelism"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Number of workers' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.numberOfWorkers"
+        type="text"
+        name="numberofworkers"
+        #numberofworkers="ngModel"
+        id="numberofworkers"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Token' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.token"
+        type="text"
+        name="token"
+        #token="ngModel"
+        id="token"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{settingsModel.sdkeFormId || ('Selected template' | translate)}}</mat-label>
+      <mtx-select
+        [items]="templatesModel.templates"
+        bindLabel="label"
+        bindValue="id"
+        [typeahead]="typeahead"
+        (change)="onSelectedChanged($event)"
+      ></mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Report time units' | translate}}</mat-label>
+      <mtx-select
+        required
+        bindLabel="name"
+        bindValue="id"
+        [clearable]="false"
+        [(ngModel)]="settingsModel.reportTimeType"
+        name="editTime"
+        [items]="[
+        { id: 1, name: 'Seconds' | translate },
+        { id: 2, name: 'Minutes' | translate },
+        { id: 3, name: 'Hours' | translate }
+      ]"
+      ></mtx-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'SDK site ids' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.enabledSiteIds"
+        type="text"
+        name="sdkSiteIds"
+        #sdkSiteIds="ngModel"
+        id="sdkSiteIds"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Quick sync enabled' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.quickSyncEnabled"
+        type="text"
+        name="quickSyncEnabled"
+        #sdkSiteIds="ngModel"
+        id="quickSyncEnabled"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Outer resource name' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.outerResourceName"
+        type="text"
+        name="outerResourceName"
+        #outerResourceName="ngModel"
+        id="outerResourceName"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Inner resource name' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.innerResourceName"
+        type="text"
+        name="innerResourceName"
+        #innerResourceName="ngModel"
+        id="innerResourceName"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Outer total time name' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.outerTotalTimeName"
+        type="text"
+        name="outerTotalTimeName"
+        #outerTotalTimeName="ngModel"
+        id="outerTotalTimeName"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Inner total time name' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.innerTotalTimeName"
+        type="text"
+        name="innerTotalTimeName"
+        #innerTotalTimeName="ngModel"
+        id="innerTotalTimeName"
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'Should check all cases' | translate}}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="settingsModel.shouldCheckAllCases"
+        type="text"
+        name="shouldCheckAllCases"
+        #sdkSiteIds="ngModel"
+        id="shouldCheckAllCases"
+      >
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   OperationDataResult,
   OperationResult,
-} from 'src/app/common/models/operation.models';
+} from 'src/app/common/models';
 import {
   OuterResourcePnCreateModel,
   OuterResourcePnModel,
@@ -17,7 +17,9 @@ export let OuterInnerResourcePnOuterResourceMethods = {
   Areas: 'api/outer-inner-resource-pn/outer-resources',
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OuterInnerResourcePnOuterResourceService {
   constructor(private apiBaseService: ApiBaseService) {}
 
