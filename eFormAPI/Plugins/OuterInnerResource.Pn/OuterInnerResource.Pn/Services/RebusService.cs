@@ -22,10 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using eFormCore;
+using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data;
 using Microting.eFormOuterInnerResourceBase.Infrastructure.Data.Factories;
@@ -52,17 +55,25 @@ namespace OuterInnerResource.Pn.Services
             _container = new WindsorContainer();
         }
 
-        public async Task Start(string connectionString, string rabbitMqUser, string rabbitMqPassword, string rabbitMqHost)
+        public async Task Start(string connectionString)
         {
             _connectionString = connectionString;
 
             Core core = await _coreHelper.GetCore();
+            _connectionString = connectionString;
+            var dbPrefix = Regex.Match(_connectionString, @"Database=(\d*)_").Groups[1].Value;
+            var rabbitmqHost = core.GetSdkSetting(Settings.rabbitMqHost).GetAwaiter().GetResult();
+            Console.WriteLine($"rabbitmqHost: {rabbitmqHost}");
+            var rabbitMqUser = core.GetSdkSetting(Settings.rabbitMqUser).GetAwaiter().GetResult();
+            Console.WriteLine($"rabbitMqUser: {rabbitMqUser}");
+            var rabbitMqPassword = core.GetSdkSetting(Settings.rabbitMqPassword).GetAwaiter().GetResult();
+            Console.WriteLine($"rabbitMqPassword: {rabbitMqPassword}");
             _dbContextHelper = new DbContextHelper(connectionString);
             _container.Register(Component.For<Core>().Instance(core));
             _container.Register(Component.For<DbContextHelper>().Instance(_dbContextHelper));
             _container.Install(
                 new RebusHandlerInstaller()
-                , new RebusInstaller(connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitMqHost)
+                , new RebusInstaller(dbPrefix, connectionString, 1, 1, rabbitMqUser, rabbitMqPassword, rabbitmqHost)
             );
 
             _bus = _container.Resolve<IBus>();

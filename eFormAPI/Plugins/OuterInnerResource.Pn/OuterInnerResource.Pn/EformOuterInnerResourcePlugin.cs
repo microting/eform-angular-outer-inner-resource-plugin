@@ -145,19 +145,11 @@ namespace OuterInnerResource.Pn
         {
             var serviceProvider = appBuilder.ApplicationServices;
 
-            string rabbitMqHost = "localhost";
-
-            if (_connectionString.Contains("frontend"))
-            {
-                var dbPrefix = Regex.Match(_connectionString, @"atabase=(\d*)_").Groups[1].Value;
-                rabbitMqHost = $"frontend-{dbPrefix}-rabbitmq";
-            }
-
             IRebusService rebusService = serviceProvider.GetService<IRebusService>();
 
             WindsorContainer container = rebusService.GetContainer();
             container.Register(Component.For<EformOuterInnerResourcePlugin>().Instance(this));
-            rebusService.Start(_connectionString, "admin", "password", rabbitMqHost);
+            rebusService.Start(_connectionString).GetAwaiter().GetResult();
         }
 
         public List<PluginMenuItemModel> GetNavigationMenu(IServiceProvider serviceProvider)
