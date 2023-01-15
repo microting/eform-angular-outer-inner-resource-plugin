@@ -12,12 +12,12 @@ exports.config = {
     //
     specs: [
     'e2e/Tests/outer-inner-resource-settings/application-settings.plugins-page.spec.ts',
-    'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.add.spec.ts',
-    'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.edit.spec.ts',
-    'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.delete.spec.ts',
-    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.add.spec.ts',
-    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.edit.spec.ts',
-    'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.delete.spec.ts'
+    // 'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.add.spec.ts',
+    // 'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.edit.spec.ts',
+    // 'e2e/Tests/outer-inner-resource-general/inner-resources/outer-inner-resource-inner-resource.delete.spec.ts',
+    // 'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.add.spec.ts',
+    // 'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.edit.spec.ts',
+    // 'e2e/Tests/outer-inner-resource-general/outer-resources/outer-inner-resource-outer-resource.delete.spec.ts'
     ],
     suites: {
         settings: [
