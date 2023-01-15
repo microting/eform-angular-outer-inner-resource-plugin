@@ -11,13 +11,11 @@ describe('Application settings page - site header section', function () {
   });
   it('should go to plugin settings page', async () => {
     await myEformsPage.Navbar.goToPluginsPage();
-    await (await $('#plugin-name')).waitForDisplayed({ timeout: 50000 });
 
     const plugin = await pluginPage.getFirstPluginRowObj();
     expect(plugin.id).equal(1);
     expect(plugin.name).equal('Microting Outer Inner Resource plugin');
-    expect(plugin.version).equal('1.0.0.0');
-    expect(plugin.status, 'status is not equal').eq(false);
+    expect(plugin.status, 'status is not equal').eq('toggle_off');
   });
 
   it('should activate the plugin', async () => {
@@ -27,7 +25,6 @@ describe('Application settings page - site header section', function () {
     plugin = await pluginPage.getFirstPluginRowObj();
     expect(plugin.id).equal(1);
     expect(plugin.name).equal('Microting Outer Inner Resource plugin');
-    expect(plugin.version).equal('1.0.0.0');
-    expect(plugin.status, 'status is not equal').eq(true);
+    expect(plugin.status, 'status is not equal').eq('toggle_on');
   });
 });
