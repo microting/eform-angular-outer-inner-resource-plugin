@@ -27,6 +27,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Security.Claims;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
@@ -58,28 +59,37 @@ namespace OuterInnerResource.Pn.Services
 
         public bool WriteRecordsExportModelsToExcelFile(ReportModel reportModel, GenerateReportModel generateReportModel, string destFile)
         {
-            FileInfo file = new FileInfo(destFile);
-            using (ExcelPackage package = new ExcelPackage(file))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets[ExcelConsts.MachineAreaReportSheetNumber];
+            Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "results"));
+
+            var resultDocument = Path.Combine(Path.GetTempPath(), "results",
+                $"report.xlsx");
+
+            IXLWorkbook wb = new XLWorkbook();
+            var worksheet = wb.Worksheets.Add("Report");
+
+
+            // FileInfo file = new FileInfo(destFile);
+            // using (ExcelPackage package = new ExcelPackage(file))
+            // {
+                // ExcelWorksheet worksheet = package.Workbook.Worksheets[ExcelConsts.MachineAreaReportSheetNumber];
                 // Fill base info
                 string periodFromTitle = _outerInnerResourceLocalizationService.GetString("DateFrom");
-                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodFromTitleRow, ExcelConsts.EmployeeReport.PeriodFromTitleCol].Value = periodFromTitle;
-                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodFromRow, ExcelConsts.EmployeeReport.PeriodFromCol].Value = generateReportModel.DateFrom;
+                worksheet.Cell(ExcelConsts.EmployeeReport.PeriodFromTitleRow, ExcelConsts.EmployeeReport.PeriodFromTitleCol).Value = periodFromTitle;
+                worksheet.Cell(ExcelConsts.EmployeeReport.PeriodFromRow, ExcelConsts.EmployeeReport.PeriodFromCol).Value = generateReportModel.DateFrom;
 
                 string periodToTitle = _outerInnerResourceLocalizationService.GetString("DateTo");
-                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodToTitleRow, ExcelConsts.EmployeeReport.PeriodToTitleCol].Value = periodToTitle;
-                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodToRow, ExcelConsts.EmployeeReport.PeriodToCol].Value = generateReportModel.DateTo;        
+                worksheet.Cell(ExcelConsts.EmployeeReport.PeriodToTitleRow, ExcelConsts.EmployeeReport.PeriodToTitleCol).Value = periodToTitle;
+                worksheet.Cell(ExcelConsts.EmployeeReport.PeriodToRow, ExcelConsts.EmployeeReport.PeriodToCol).Value = generateReportModel.DateTo;
 
                 string showDataByTitle = _outerInnerResourceLocalizationService.GetString("ShowDataBy");
-                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodTypeTitleRow, ExcelConsts.EmployeeReport.PeriodTypeTitleCol].Value = showDataByTitle;        
+                worksheet.Cell(ExcelConsts.EmployeeReport.PeriodTypeTitleRow, ExcelConsts.EmployeeReport.PeriodTypeTitleCol).Value = showDataByTitle;
                 string showDataByValue = _outerInnerResourceLocalizationService.GetString(generateReportModel.Type.ToString());
-                worksheet.Cells[ExcelConsts.EmployeeReport.PeriodTypeRow, ExcelConsts.EmployeeReport.PeriodTypeCol].Value = showDataByValue;        
-                
+                worksheet.Cell(ExcelConsts.EmployeeReport.PeriodTypeRow, ExcelConsts.EmployeeReport.PeriodTypeCol).Value = showDataByValue;
+
                 string reportTitle = _outerInnerResourceLocalizationService.GetString("Report");
-                worksheet.Cells[ExcelConsts.EmployeeReport.ReportTitleRow, ExcelConsts.EmployeeReport.ReportTitleCol].Value = reportTitle;
+                worksheet.Cell(ExcelConsts.EmployeeReport.ReportTitleRow, ExcelConsts.EmployeeReport.ReportTitleCol).Value = reportTitle;
                 string reportName = _outerInnerResourceLocalizationService.GetString(reportModel.HumanReadableName);
-                worksheet.Cells[ExcelConsts.EmployeeReport.ReportNameRow, ExcelConsts.EmployeeReport.ReportNameCol].Value = reportName;
+                worksheet.Cell(ExcelConsts.EmployeeReport.ReportNameRow, ExcelConsts.EmployeeReport.ReportNameCol).Value = reportName;
 
 //                Debugger.Break();
                 int entityPosition = 0;
@@ -90,7 +100,7 @@ namespace OuterInnerResource.Pn.Services
                     {
                         int rowIndex = ExcelConsts.EmployeeReport.EntityNameStartRow + i + entityPosition;
                         ReportEntityModel reportEntity = subReport.Entities[i];
-                        worksheet.UpdateValue(rowIndex, ExcelConsts.EmployeeReport.EntityNameStartCol, reportEntity?.EntityName, true);
+                        worksheet.Cell(rowIndex, ExcelConsts.EmployeeReport.EntityNameStartCol).Value = reportEntity?.EntityName;
                     }
 
                     // related entity names
@@ -98,8 +108,8 @@ namespace OuterInnerResource.Pn.Services
                     {
                         int rowIndex = ExcelConsts.EmployeeReport.RelatedEntityNameStartRow + i + entityPosition;
                         ReportEntityModel reportEntity = subReport.Entities[i];
-                        worksheet.UpdateValue(rowIndex, ExcelConsts.EmployeeReport.RelatedEntityNameStartCol,
-                            reportEntity?.RelatedEntityName, true);
+                        worksheet.Cell(rowIndex, ExcelConsts.EmployeeReport.RelatedEntityNameStartCol).Value =
+                            reportEntity?.RelatedEntityName;
                     }
 
                     // headers
@@ -108,7 +118,8 @@ namespace OuterInnerResource.Pn.Services
                         ReportEntityHeaderModel reportHeader = reportModel.ReportHeaders[i];
                         int colIndex = ExcelConsts.EmployeeReport.HeaderStartCol + i;
                         int rowIndex = ExcelConsts.EmployeeReport.HeaderStartRow + entityPosition;
-                        worksheet.UpdateValue(rowIndex, colIndex, reportHeader?.HeaderValue, true, true, Color.Wheat);
+                        worksheet.Cell(rowIndex, colIndex).Value = reportHeader?.HeaderValue;
+                        // , true, true, Color.Wheat)
                     }
 
                     // vertical sum
@@ -116,11 +127,14 @@ namespace OuterInnerResource.Pn.Services
                     {
                         int rowIndex = ExcelConsts.EmployeeReport.VerticalSumStartRow + i + entityPosition;
                         ReportEntityModel reportEntity = subReport.Entities[i];
-                        worksheet.UpdateValue(rowIndex, ExcelConsts.EmployeeReport.VerticalSumStartCol, reportEntity?.TotalTime, true, "0");
+                        worksheet.Cell(rowIndex, ExcelConsts.EmployeeReport.VerticalSumStartCol).Value =
+                            reportEntity?.TotalTime;
+                        // , true, "0");
                     }
 
                     // vertical sum title
-                    worksheet.UpdateValue(ExcelConsts.EmployeeReport.VerticalSumTitleRow + entityPosition, ExcelConsts.EmployeeReport.VerticalSumTitleCol, "Sum", true, true);
+                    worksheet.Cell(ExcelConsts.EmployeeReport.VerticalSumTitleRow + entityPosition, ExcelConsts.EmployeeReport.VerticalSumTitleCol).Value = "Sum";
+                        //, true, true);
 
                     // data
                     for (int i = 0; i < subReport.Entities.Count; i++)
@@ -131,7 +145,8 @@ namespace OuterInnerResource.Pn.Services
                         {
                             decimal time = reportEntity.TimePerTimeUnit[y];
                             int colIndex = ExcelConsts.EmployeeReport.DataStartCol + y;
-                            worksheet.UpdateValue(rowIndex, colIndex, time, true, "0");
+                            worksheet.Cell(rowIndex, colIndex).Value = time;
+                                //, true, "0");
                         }
                     }
 
@@ -141,26 +156,29 @@ namespace OuterInnerResource.Pn.Services
                     {
                         decimal time = subReport.TotalTimePerTimeUnit[i];
                         int colIndex = ExcelConsts.EmployeeReport.HorizontalSumStartCol + i;
-                        worksheet.UpdateValue(horizontalSumRowIndex, colIndex, time, true, "0");
+                        worksheet.Cell(horizontalSumRowIndex, colIndex).Value =  time;
+                            // , true, "0");
                     }
 
                     // Report sum
                     int totalSumRowIndex = ExcelConsts.EmployeeReport.DataStartRow + subReport.Entities.Count + entityPosition;
                     decimal totalSum = subReport.TotalTime;
-                    worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.EmployeeReport.TotalSumCol, totalSum, true);
-                    worksheet.UpdateValue(totalSumRowIndex, ExcelConsts.EmployeeReport.TotalSumTitleCol, "Sum", true);
+                    worksheet.Cell(totalSumRowIndex, ExcelConsts.EmployeeReport.TotalSumCol).Value = totalSum;
+                        // , true);
+                    worksheet.Cell(totalSumRowIndex, ExcelConsts.EmployeeReport.TotalSumTitleCol).Value = "Sum";
+                        //, true);
                     entityPosition += subReport.Entities.Count + 3;
-                } 
+                }
 
-                package.Save(); //Save the workbook.
-            }
+                wb.SaveAs(destFile); //Save the workbook.
+            // }
             return true;
         }
 
         #endregion
 
         #region Working with file system
-        
+
         private int UserId
         {
             get

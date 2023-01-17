@@ -155,7 +155,7 @@ namespace OuterInnerResource.Pn.Services
                 List<ResourceTimeRegistration> jobsList;
 
                 outerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterTotalTimeName")?.Value;
-                areaToExclude = _dbContext.OuterResources.FirstOrDefaultAsync(x => x.Name == outerResourceName).Result;
+                areaToExclude = await _dbContext.OuterResources.FirstOrDefaultAsync(x => x.Name == outerResourceName);
                 innerResourceName = _dbContext.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:InnerTotalTimeName")?.Value;
                 machineToExclude = await _dbContext.InnerResources.FirstOrDefaultAsync(x => x.Name == innerResourceName);
 

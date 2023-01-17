@@ -26,13 +26,13 @@ export class ReportPreviewTableComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.reportData && changes.reportData.currentValue) {
       this.tableHeaders = [
-        {header: this.translateService.stream('Entity'), field: 'siteUId', summary: () => `<strong>${this.translateService.instant('Sum')}</strong>`},
+        {header: this.translateService.stream('Entity'), field: 'entityName', summary: () => `<strong>${this.translateService.instant('Sum')}</strong>`},
       ];
       if (this.reportData.relationship === OuterInnerResourcePnReportRelationshipEnum.EmployeeInnerResource
         || this.reportData.relationship === OuterInnerResourcePnReportRelationshipEnum.EmployeeOuterResource) {
         this.tableHeaders = [
           ...this.tableHeaders,
-          {header: this.translateService.stream('Relationship'), field: 'relationship'},
+          {header: this.translateService.stream('Relationship'), field: 'relatedEntityName'},
         ];
       }
       this.tableHeaders = [
