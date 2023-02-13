@@ -30,7 +30,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Models.Report
     public class ReportModel
     {
         public List<ReportEntityHeaderModel> ReportHeaders { get; set; }
-        public List<SubReportModel> SubReports { get; set; } = new List<SubReportModel>();
+        public List<SubReportModel> SubReports { get; set; } = new();
         public ReportRelationshipType Relationship { get; set; }
         public string HumanReadableName { get; set; }
     }

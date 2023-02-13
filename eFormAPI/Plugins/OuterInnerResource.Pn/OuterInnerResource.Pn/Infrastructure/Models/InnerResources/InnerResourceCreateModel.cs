@@ -30,6 +30,6 @@ namespace OuterInnerResource.Pn.Infrastructure.Models.InnerResources
     {
         public string Name { get; set; }
         public int? ExternalId { get; set; }
-        public List<int> RelatedOuterResourcesIds { get; set; } = new List<int>();
+        public List<int> RelatedOuterResourcesIds { get; set; } = new();
     }
 }

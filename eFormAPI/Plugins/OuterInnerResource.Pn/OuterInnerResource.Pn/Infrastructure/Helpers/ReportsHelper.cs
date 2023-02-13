@@ -600,7 +600,7 @@ namespace OuterInnerResource.Pn.Infrastructure.Helpers
 
                     finalModel.SubReports = new List<SubReportModel>()
                     {
-                        new SubReportModel()
+                        new()
                         {
                             Entities = reportEntitiesList,
                             TotalTime = reportEntitiesList.Sum(x => x.TotalTime),

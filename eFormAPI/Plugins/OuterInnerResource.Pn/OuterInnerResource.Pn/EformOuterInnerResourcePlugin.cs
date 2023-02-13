@@ -156,8 +156,8 @@ namespace OuterInnerResource.Pn
         {
             var pluginMenu = new List<PluginMenuItemModel>
             {
-                new PluginMenuItemModel
-                    {
+                new()
+                {
                         Name = "Dropdown",
                         E2EId = "outer-inner-resource-pn",
                         Link = "",
@@ -165,19 +165,19 @@ namespace OuterInnerResource.Pn
                         Position = 0,
                         Translations = new List<PluginMenuTranslationModel>
                         {
-                            new PluginMenuTranslationModel
+                            new()
                             {
                                  LocaleName = LocaleNames.English,
                                  Name = "Outer/Inner resources",
                                  Language = LanguageNames.English,
                             },
-                            new PluginMenuTranslationModel
+                            new()
                             {
                                  LocaleName = LocaleNames.German,
                                  Name = "Maschinenbereich",
                                  Language = LanguageNames.German,
                             },
-                            new PluginMenuTranslationModel
+                            new()
                             {
                                  LocaleName = LocaleNames.Danish,
                                  Name = "Ydre/Indre resourcer",
@@ -186,7 +186,7 @@ namespace OuterInnerResource.Pn
                         },
                         ChildItems = new List<PluginMenuItemModel>
                         {
-                            new PluginMenuItemModel
+                            new()
                             {
                                 Name = _innerResourceName,
                                 E2EId = "outer-inner-resource-pn-inner-resources",
@@ -201,19 +201,19 @@ namespace OuterInnerResource.Pn
                                     Permissions = new List<PluginMenuTemplatePermissionModel>(),
                                     Translations = new List<PluginMenuTranslationModel>
                                     {
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.English,
                                             Name = "Inner resources",
                                             Language = LanguageNames.English,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.German,
                                             Name = "Interne ressourcen",
                                             Language = LanguageNames.German,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.Danish,
                                             Name = "Indre resourcer",
@@ -223,19 +223,19 @@ namespace OuterInnerResource.Pn
                                 },
                                 Translations = new List<PluginMenuTranslationModel>
                                     {
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.English,
                                             Name = "Inner resources",
                                             Language = LanguageNames.English,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.German,
                                             Name = "Interne ressourcen",
                                             Language = LanguageNames.German,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.Danish,
                                             Name = "Indre resourcer",
@@ -243,7 +243,7 @@ namespace OuterInnerResource.Pn
                                         },
                                     }
                             },
-                            new PluginMenuItemModel
+                            new()
                             {
                                 Name = _outerResourceName,
                                 E2EId = "outer-inner-resource-pn-outer-resources",
@@ -258,19 +258,19 @@ namespace OuterInnerResource.Pn
                                     Permissions = new List<PluginMenuTemplatePermissionModel>(),
                                     Translations = new List<PluginMenuTranslationModel>
                                     {
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.English,
                                             Name = "Outer resources",
                                             Language = LanguageNames.English,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.German,
                                             Name = "Externe ressourcen",
                                             Language = LanguageNames.German,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.Danish,
                                             Name = "Ydre resourcer",
@@ -280,19 +280,19 @@ namespace OuterInnerResource.Pn
                                 },
                                 Translations = new List<PluginMenuTranslationModel>
                                     {
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.English,
                                             Name = "Outer resources",
                                             Language = LanguageNames.English,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.German,
                                             Name = "Externe ressourcen",
                                             Language = LanguageNames.German,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.Danish,
                                             Name = "Ydre resourcer",
@@ -300,7 +300,7 @@ namespace OuterInnerResource.Pn
                                         },
                                     }
                             },
-                            new PluginMenuItemModel
+                            new()
                             {
                                 Name = "Reports",
                                 E2EId = "outer-inner-resource-pn-reports",
@@ -315,19 +315,19 @@ namespace OuterInnerResource.Pn
                                     Permissions = new List<PluginMenuTemplatePermissionModel>(),
                                     Translations = new List<PluginMenuTranslationModel>
                                     {
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.English,
                                             Name = "Reports",
                                             Language = LanguageNames.English,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.German,
                                             Name = "Berichte",
                                             Language = LanguageNames.German,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.Danish,
                                             Name = "Rapport",
@@ -337,19 +337,19 @@ namespace OuterInnerResource.Pn
                                 },
                                 Translations = new List<PluginMenuTranslationModel>
                                     {
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.English,
                                             Name = "Reports",
                                             Language = LanguageNames.English,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.German,
                                             Name = "Berichte",
                                             Language = LanguageNames.German,
                                         },
-                                        new PluginMenuTranslationModel
+                                        new()
                                         {
                                             LocaleName = LocaleNames.Danish,
                                             Name = "Rapport",
@@ -378,7 +378,7 @@ namespace OuterInnerResource.Pn
                 Guards = new List<string> { OuterInnerResourceClaims.AccessOuterInnerResourcePlugin },
                 MenuItems = new List<MenuItemModel>
                 {
-                    new MenuItemModel
+                    new()
                     {
                         // Name = localizationService.GetString("Machines"),
                         Name = _innerResourceName,
@@ -386,7 +386,7 @@ namespace OuterInnerResource.Pn
                         Link = "/plugins/outer-inner-resource-pn/inner-resources",
                         Position = 0,
                     },
-                    new MenuItemModel
+                    new()
                     {
                         // Name = localizationService.GetString("Areas"),
                         Name = _outerResourceName,
@@ -394,7 +394,7 @@ namespace OuterInnerResource.Pn
                         Link = "/plugins/outer-inner-resource-pn/outer-resources",
                         Position = 1,
                     },
-                    new MenuItemModel
+                    new()
                     {
                         Name = localizationService.GetString("Reports"),
                         E2EId = "outer-inner-resource-pn-reports",
