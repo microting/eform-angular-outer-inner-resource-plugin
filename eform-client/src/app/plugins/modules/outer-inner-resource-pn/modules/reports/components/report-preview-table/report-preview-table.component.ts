@@ -49,7 +49,7 @@ export class ReportPreviewTableComponent implements OnInit, OnChanges {
         ...this.reportData.reportHeaders.map((x, i): MtxGridColumn => (
           {
             header: x.headerValue,
-            field: `timePerTimeUnit[${i}]`,
+            field: `timePerTimeUnit.${i}`,
             summary: data => `<strong>${data.reduce((previousValue, currentValue) => previousValue + currentValue, 0)}</strong>`,
             type: 'number',
             typeParameter: {
