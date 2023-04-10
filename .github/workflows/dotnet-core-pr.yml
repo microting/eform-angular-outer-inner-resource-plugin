@@ -2,7 +2,7 @@ name: .NET Pull requests
 
 on:
   pull_request:
-    branches: [ master, stable ]
+    branches: [ master, stable, angular14 ]
     paths-ignore:
     - '**.md'
     - '.github/**'
@@ -29,8 +29,8 @@ jobs:
         cp -av eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-settings eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-settings
         cp -av eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-general eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-general
         cp -av eform-angular-outer-inner-resource-plugin/eform-client/e2e/Page\ objects/OuterInnerResource eform-angular-frontend/eform-client/e2e/Page\ objects/OuterInnerResource
-        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-headless-plugin-step2.conf.js eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
-        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-plugin-step2.conf.js eform-angular-frontend/eform-client/wdio-plugin-step2.conf.js
+        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-headless-plugin-step2.conf.ts  eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.ts 
+        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-plugin-step2.conf.ts  eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts 
         mkdir -p eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
         cd eform-angular-frontend/eform-client && ../../eform-angular-outer-inner-resource-plugin/testinginstallpn.sh
     - name: Get the version release
@@ -98,8 +98,8 @@ jobs:
         cp -av eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-settings eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-settings
         cp -av eform-angular-outer-inner-resource-plugin/eform-client/e2e/Tests/outer-inner-resource-general eform-angular-frontend/eform-client/e2e/Tests/outer-inner-resource-general
         cp -av eform-angular-outer-inner-resource-plugin/eform-client/e2e/Page\ objects/OuterInnerResource eform-angular-frontend/eform-client/e2e/Page\ objects/OuterInnerResource
-        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-headless-plugin-step2.conf.js eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
-        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-plugin-step2.conf.js eform-angular-frontend/eform-client/wdio-plugin-step2.conf.js
+        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-headless-plugin-step2.conf.ts  eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.ts 
+        cp -av eform-angular-outer-inner-resource-plugin/eform-client/wdio-plugin-step2.conf.ts  eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts 
         mkdir -p eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
         cd eform-angular-frontend/eform-client && ../../eform-angular-outer-inner-resource-plugin/testinginstallpn.sh
     - name: Start the newly build Docker container
@@ -111,11 +111,20 @@ jobs:
       run: cat docker_run_log
     - name: Pretest changes to work with Docker container
       run: sed -i 's/localhost/mariadbtest/g' eform-angular-frontend/eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
-    - name: NPM install
-      run: cd eform-angular-frontend/eform-client && npm install
+    - name: yarn install
+      run: cd eform-angular-frontend/eform-client && yarn install
       if: steps.cache.outputs.cache-hit != 'true'
-    - name: Configuration testing
-      run: cd eform-angular-frontend/eform-client && npm run testheadless
+    - name: DB Configuration
+      uses: cypress-io/github-action@v4
+      with:
+        start: echo 'hi'
+        wait-on: "http://localhost:4200"
+        wait-on-timeout: 120
+        browser: chrome
+        record: false
+        spec: cypress/e2e/db/*
+        config-file: cypress.config.ts
+        working-directory: eform-angular-frontend/eform-client
     - name: Change rabbitmq hostname
       run: docker exec -i mariadbtest mysql -u root --password=secretpassword -e 'update 420_SDK.Settings set Value = "my-rabbit" where Name = "rabbitMqHost"'
     - name: Plugin testing

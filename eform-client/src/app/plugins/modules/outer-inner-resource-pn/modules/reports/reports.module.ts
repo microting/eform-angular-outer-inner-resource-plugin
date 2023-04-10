@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {
   OwlDateTimeModule,
-  OwlMomentDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import {TranslateModule} from '@ngx-translate/core';
 import {
@@ -34,7 +33,6 @@ import {MatButtonModule} from '@angular/material/button';
     RouterModule,
     OwlDateTimeModule,
     ReportsRouting,
-    OwlMomentDateTimeModule,
     EformSharedModule,
     FormsModule,
     ReactiveFormsModule,
