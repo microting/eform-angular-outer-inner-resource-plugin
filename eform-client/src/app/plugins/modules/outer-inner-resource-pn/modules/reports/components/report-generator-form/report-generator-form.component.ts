@@ -1,15 +1,15 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { LocaleService } from 'src/app/common/services';
-import { ReportPnGenerateModel, ReportNamesModel} from '../../../../models';
-import { format } from 'date-fns';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OuterInnerResourcePnReportsService } from '../../../../services';
-import { OuterInnerResourcePnReportTypeEnum } from '../../../../enums';
-import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
-import { AuthStateService } from 'src/app/common/store';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {LocaleService} from 'src/app/common/services';
+import {ReportPnGenerateModel, ReportNamesModel} from '../../../../models';
+import {format} from 'date-fns';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {OuterInnerResourcePnReportsService} from '../../../../services';
+import {OuterInnerResourcePnReportTypeEnum} from '../../../../enums';
+import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
+import {AuthStateService} from 'src/app/common/store';
 import {ExcelIcon} from 'src/app/common/const';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material/icon';
 
 @Component({
   selector: 'app-machine-area-pn-report-generator-form',
@@ -27,13 +27,13 @@ export class ReportGeneratorFormComponent implements OnInit {
   get reportType() {
     return OuterInnerResourcePnReportTypeEnum;
   }
+
   // get relationshipTypes() { return OuterInnerResourcePnReportRelationshipEnum; }
 
   constructor(
     dateTimeAdapter: DateTimeAdapter<any>,
     private localeService: LocaleService,
     private reportService: OuterInnerResourcePnReportsService,
-    private formBuilder: FormBuilder,
     authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
@@ -43,10 +43,13 @@ export class ReportGeneratorFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.generateForm = this.formBuilder.group({
-      dateRange: ['', Validators.required],
-      type: [null, Validators.required],
-      relationship: [null, Validators.required],
+    this.generateForm = new FormGroup({
+      dateRange: new FormGroup({
+        dateFrom: new FormControl(null, Validators.required),
+        dateTo: new FormControl(null, Validators.required),
+      }),
+      type: new FormControl(null, Validators.required),
+      relationship: new FormControl(null, Validators.required),
     });
     this.getReportNames();
   }
@@ -75,8 +78,8 @@ export class ReportGeneratorFormComponent implements OnInit {
     return new ReportPnGenerateModel({
       type: formValue.type,
       relationship: formValue.relationship,
-      dateFrom: format(formValue.dateRange[0]._d, 'yyyy-MM-dd'),
-      dateTo: format(formValue.dateRange[1]._d, 'yyyy-MM-dd'),
+      dateFrom: format(formValue.dateRange.dateFrom, 'yyyy-MM-dd'),
+      dateTo: format(formValue.dateRange.dateTo, 'yyyy-MM-dd'),
     });
   }
 }
