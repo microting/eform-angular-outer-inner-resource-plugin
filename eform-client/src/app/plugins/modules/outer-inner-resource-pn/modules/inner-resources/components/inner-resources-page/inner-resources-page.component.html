@@ -1,0 +1,33 @@
+<eform-new-subheader [title]="machinesModel.name">
+  <button
+    *ngIf="authStateService.checkClaim(outerInnerResourcePnClaims.createMachines)"
+    mat-raised-button
+    color="accent"
+    id="newInnerResource"
+    matTooltip="{{ 'Create' | translate }}"
+    (click)="showCreateMachineModal()"
+  >
+    {{ 'New' | translate }}
+  </button>
+</eform-new-subheader>
+
+<mtx-grid
+  [data]="machinesModel.innerResourceList"
+  [columns]="tableHeaders1"
+  [showPaginator]="true"
+  [paginationTemplate]="paginatorTpl"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="false"
+  [showColumnMenuButton]="false"
+  [sortActive]="innerResourcesStateService.getActiveSort() | async"
+  [sortDirection]="innerResourcesStateService.getActiveSortDirection() | async"
+  (sortChange)="sortTable($event)">
+</mtx-grid>
+
+<ng-template #paginatorTpl>
+  <eform-pagination
+    [pagination]="innerResourcesStateService.getPagination() | async"
+    (paginationChanged)="onPaginationChanged($event)"
+  ></eform-pagination>
+</ng-template>

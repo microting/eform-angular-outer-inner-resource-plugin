@@ -51,12 +51,12 @@ namespace MachineArea.Pn.Test
             InnerResource innerResource = DbContext.InnerResources.AsNoTracking().First();
             List<InnerResource> innerResourceList = DbContext.InnerResources.AsNoTracking().ToList();
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
-            
+
             // Assert
             Assert.NotNull(innerResource);
-            Assert.AreEqual(1, innerResourceList.Count());
-            Assert.AreEqual(1, versionList.Count());
-            
+            Assert.AreEqual(1, innerResourceList.Count);
+            Assert.AreEqual(1, versionList.Count);
+
             Assert.AreEqual(newInnerResource.Name, innerResource.Name);
         }
 
@@ -69,29 +69,26 @@ namespace MachineArea.Pn.Test
                 Name = Guid.NewGuid().ToString()
             };
 
-            DbContext.InnerResources.Add(innerResource);
-            DbContext.SaveChanges();
+            await innerResource.Create(DbContext);
 
             //Act
-            InnerResource selectedInnerResource = new InnerResource
-            {
-                Name = Guid.NewGuid().ToString(),
-                Id = innerResource.Id
-            };
+            var newName = Guid.NewGuid().ToString();
+            innerResource.Name = newName;
 
-            await selectedInnerResource.Update(DbContext);
+            await innerResource.Update(DbContext);
 
             InnerResource dbInnerResource = DbContext.InnerResources.AsNoTracking().First();
             List<InnerResource> innerResourceList = DbContext.InnerResources.AsNoTracking().ToList();
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
 
             //Assert
-            
+
             Assert.NotNull(dbInnerResource);
-            Assert.AreEqual(1, innerResourceList.Count());
-            Assert.AreEqual(1, versionList.Count());
-            
-            Assert.AreEqual(selectedInnerResource.Name, dbInnerResource.Name);
+            Assert.AreEqual(1, innerResourceList.Count);
+            Assert.AreEqual(2, versionList.Count);
+
+            Assert.AreEqual(newName, dbInnerResource.Name);
+
         }
 
         [Test]
@@ -143,27 +140,28 @@ namespace MachineArea.Pn.Test
                 Name = Guid.NewGuid().ToString()
             };
 
-            DbContext.InnerResources.Add(innerResource);
-            DbContext.SaveChanges();
+            // DbContext.InnerResources.Add(innerResource);
+            // DbContext.SaveChanges();
+            await innerResource.Create(DbContext);
 
             //Act
-            InnerResource selectedInnerResource = new InnerResource
-            {
-                Name = innerResource.Name,
-                Id = innerResource.Id
-            };
+            // InnerResource selectedInnerResource = new InnerResource
+            // {
+            //     Name = innerResource.Name,
+            //     Id = innerResource.Id
+            // };
 
-            await selectedInnerResource.Delete(DbContext);
-            
+            await innerResource.Delete(DbContext);
+
             InnerResource dbInnerResource = DbContext.InnerResources.AsNoTracking().First();
             List<InnerResource> innerResourceList = DbContext.InnerResources.AsNoTracking().ToList();
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
-            
+
             // Assert
             Assert.NotNull(dbInnerResource);
-            Assert.AreEqual(1, innerResourceList.Count());
-            Assert.AreEqual(1, versionList.Count());
-            
+            Assert.AreEqual(1, innerResourceList.Count);
+            Assert.AreEqual(2, versionList.Count);
+
             Assert.AreEqual(dbInnerResource.WorkflowState, Constants.WorkflowStates.Removed);
         }
     }

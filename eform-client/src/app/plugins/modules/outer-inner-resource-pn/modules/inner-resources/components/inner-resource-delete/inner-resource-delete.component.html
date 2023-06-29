@@ -1,0 +1,26 @@
+<h3 mat-dialog-title>{{'Are you sure you want to delete' | translate}}?</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-row justify-content-between">
+    <p>ID</p>
+    <strong>{{selectedMachineModel.id}}</strong>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <p>{{'Name' | translate}}</p>
+    <strong>{{selectedMachineModel.name}}</strong>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="warn"
+    id="innerResourceDeleteDeleteBtn"
+    (click)="deleteMachine()">
+    {{'Delete' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="innerResourceDeleteCancelBtn"
+    (click)="hide()">
+    {{'Cancel' | translate}}
+  </button>
+</div>

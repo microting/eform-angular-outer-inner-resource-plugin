@@ -1,0 +1,56 @@
+<h3 mat-dialog-title>{{'New Area' | translate}}</h3>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>{{'Name' | translate}}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="newAreaModel.name"
+      type="text"
+      id="createOuterResourceName"
+      name="createOuterResourceName">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{'External ID' | translate}}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="newAreaModel.externalId"
+      type="text"
+      id="createOuterResourceExternalId"
+      name="createOuterResourceExternalId">
+  </mat-form-field>
+  <mtx-grid
+    id="userInfoTable"
+    [data]="mappingMachines.innerResourceList"
+    [columns]="tableHeaders"
+    [cellTemplate]="{relationship: relationshipTpl}"
+    [showPaginator]="false"
+    [pageOnFront]="false"
+    [rowStriped]="true"
+    [showToolbar]="false"
+    [showColumnMenuButton]="false"
+  ></mtx-grid>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    mat-raised-button
+    color="accent"
+    id="outerResourceCreateSaveBtn"
+    [disabled]="!newAreaModel.name"
+    (click)="createArea()">
+    {{'Create' | translate}}
+  </button>
+  <button
+    mat-raised-button
+    id="outerResourceCreateCancelBtn"
+    (click)="hide()">
+    {{'Cancel' | translate}}
+  </button>
+</div>
+
+<ng-template #relationshipTpl let-row>
+  <mat-checkbox
+    id="update-checkbox{{row.id}}"
+    [ngModel]="isChecked(row.id)"
+    (ngModelChange)="addToArray($event, row.id)"
+  ></mat-checkbox>
+</ng-template>
