@@ -10,7 +10,7 @@ import {
 } from './components';
 import {OuterResourcesRouting} from './outer-resources.routing';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {outerResourcesPersistProvider} from './components/store';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
@@ -34,7 +34,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     OuterResourcesRouting,
     EformSharedModule,
     FormsModule,
-    ReactiveFormsModule,
     MatTooltipModule,
     MatButtonModule,
     MtxGridModule,
