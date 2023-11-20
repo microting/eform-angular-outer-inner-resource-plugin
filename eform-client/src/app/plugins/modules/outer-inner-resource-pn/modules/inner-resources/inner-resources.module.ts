@@ -9,7 +9,6 @@ import {
 } from './components';
 import {InnerResourcesRouting} from './inner-resources.routing';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {innerResourcesPersistProvider} from './components/store';
 import {FormsModule} from '@angular/forms';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
@@ -38,7 +37,7 @@ import {MatInputModule} from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [innerResourcesPersistProvider],
+  providers: [],
 })
 export class InnerResourcesModule {
 }

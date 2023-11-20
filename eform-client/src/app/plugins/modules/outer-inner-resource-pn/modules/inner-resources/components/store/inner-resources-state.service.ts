@@ -1,122 +1,113 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  CommonPaginationState,
   OperationDataResult,
   PaginationModel,
 } from 'src/app/common/models';
-import { updateTableSort, getOffset } from 'src/app/common/helpers';
+import { updateTableSort } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
-import { InnerResourcesQuery, InnerResourcesStore } from './';
 import { OuterInnerResourcePnInnerResourceService } from '../../../../services';
 import { InnerResourcesPnModel } from '../../../../models';
+import {Store} from '@ngrx/store';
+import {
+  selectInnerResourcesPagination
+} from '../../../../state/outer-resource/outer-resource.selector';
 
 @Injectable({ providedIn: 'root' })
 export class InnerResourcesStateService {
+  private selectInnerResourcesPagination$ = this.store.select(selectInnerResourcesPagination);
   constructor(
-    private store: InnerResourcesStore,
+    private store: Store,
     private service: OuterInnerResourcePnInnerResourceService,
-    private query: InnerResourcesQuery
   ) {}
 
   getAllMachines(): Observable<OperationDataResult<InnerResourcesPnModel>> {
+    let pagination = new CommonPaginationState();
+    this.selectInnerResourcesPagination$.subscribe(
+      (state) => {
+        pagination = state;
+      }
+    ).unsubscribe();
     return this.service
       .getAllMachines({
-        ...this.query.pageSetting.pagination,
+        ...pagination,
         // ...this.query.pageSetting.filters,
-      })
-      .pipe(
+      }).pipe(
         map((response) => {
           if (response && response.success && response.model) {
-            this.store.update(() => ({
-              total: response.model.total,
-            }));
+            this.store.dispatch({
+              type: '[InnerResources] Update inner resource pagination', payload: {
+                pagination: {
+                  ...pagination,
+                  total: response.model.total,
+                }
+              }
+            });
           }
           return response;
         })
       );
   }
 
-  updatePageSize(pageSize: number) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pageSize,
-      },
-    }));
-    this.checkOffset();
-  }
-
-  getPageSize(): Observable<number> {
-    return this.query.selectPageSize$;
-  }
-
-  getActiveSort(): Observable<string> {
-    return this.query.selectActiveSort$;
-  }
-
-  getActiveSortDirection(): Observable<'desc' | 'asc'> {
-    return this.query.selectActiveSortDirection$;
-  }
-
-  changePage(offset: number) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        offset: offset,
-      },
-    }));
-  }
-
   onDelete() {
-    this.store.update((state) => ({
-      total: state.total - 1,
-    }));
-    this.checkOffset();
+    let currentPagination: CommonPaginationState;
+    this.selectInnerResourcesPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({
+      type: '[InnerResources] Update inner resource pagination', payload: {
+        pagination: {
+          ...currentPagination,
+          total: currentPagination.total - 1,
+        }
+      }
+    });
   }
 
   onSortTable(sort: string) {
+    let currentPagination: CommonPaginationState;
+    this.selectInnerResourcesPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      this.query.pageSetting.pagination.sort,
-      this.query.pageSetting.pagination.isSortDsc
+      currentPagination.sort,
+      currentPagination.isSortDsc
     );
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        isSortDsc: localPageSettings.isSortDsc,
-        sort: localPageSettings.sort,
-      },
-    }));
-  }
-
-  checkOffset() {
-    const newOffset = getOffset(
-      this.query.pageSetting.pagination.pageSize,
-      this.query.pageSetting.pagination.offset,
-      this.query.pageSetting.total
-    );
-    if (newOffset !== this.query.pageSetting.pagination.offset) {
-      this.store.update((state) => ({
+    this.store.dispatch({
+      type: '[InnerResources] Update inner resource pagination', payload: {
         pagination: {
-          ...state.pagination,
-          offset: newOffset,
-        },
-      }));
-    }
-  }
-
-  getPagination(): Observable<PaginationModel> {
-    return this.query.selectPagination$;
+          ...currentPagination,
+          sort: localPageSettings.sort,
+          isSortDsc: localPageSettings.isSortDsc,
+        }
+      }
+    });
   }
 
   updatePagination(pagination: PaginationModel) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pagination.pageSize,
-        offset: pagination.offset,
-      },
-    }));
-    // this.checkOffset();
+    let currentPagination: CommonPaginationState;
+    this.selectInnerResourcesPagination$.subscribe((pagination) => {
+      if (pagination === undefined) {
+        return;
+      }
+      currentPagination = pagination;
+    }).unsubscribe();
+    this.store.dispatch({
+      type: '[InnerResources] Update inner resource pagination', payload: {
+        pagination: {
+          ...currentPagination,
+          pageSize: pagination.pageSize,
+          offset: pagination.offset,
+        }
+      }
+    });
   }
 }

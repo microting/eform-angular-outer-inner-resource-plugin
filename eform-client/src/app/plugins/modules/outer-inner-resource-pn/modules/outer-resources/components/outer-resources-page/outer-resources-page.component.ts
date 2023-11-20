@@ -24,6 +24,12 @@ import {
   OuterResourceEditComponent,
   OuterResourceCreateComponent
 } from '../';
+import {Store} from '@ngrx/store';
+import {
+  selectInnerResourcesPagination,
+  selectInnerResourcesPaginationIsSortDsc,
+  selectInnerResourcesPaginationSort
+} from "src/app/plugins/modules/outer-inner-resource-pn/state/outer-resource/outer-resource.selector";
 
 @AutoUnsubscribe()
 @Component({
@@ -66,6 +72,9 @@ export class OuterResourcesPageComponent implements OnInit, OnDestroy {
   deleteOuterResourceSub$: Subscription;
   areaUpdatedSub$: Subscription;
   areaCreatedSub$: Subscription;
+  public selectInnerResourcesPagination$ = this.store.select(selectInnerResourcesPagination);
+  public selectInnerResourcesPaginationSort$ = this.store.select(selectInnerResourcesPaginationSort);
+  public selectInnerResourcesPaginationIsSortDsc$ = this.store.select(selectInnerResourcesPaginationIsSortDsc);
 
   constructor(
     private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
@@ -74,6 +83,7 @@ export class OuterResourcesPageComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     public dialog: MatDialog,
     private overlay: Overlay,
+    private store: Store
   ) {
   }
 

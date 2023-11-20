@@ -26,6 +26,10 @@ import {
   InnerResourceEditComponent
 } from '../';
 import {dialogConfigHelper} from 'src/app/common/helpers';
+import {Store} from '@ngrx/store';
+import {
+  selectInnerResourcesPagination, selectInnerResourcesPaginationIsSortDsc, selectInnerResourcesPaginationSort
+} from '../../../../state/inner-resource/inner-resource.selector';
 
 @AutoUnsubscribe()
 @Component({
@@ -89,6 +93,10 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     return OuterInnerResourcePnClaims;
   }
 
+  public selectInnerResourcesPagination$ = this.store.select(selectInnerResourcesPagination);
+  public selectInnerResourcesPaginationSort$ = this.store.select(selectInnerResourcesPaginationSort);
+  public selectInnerResourcesPaginationIsSortDsc$ = this.store.select(selectInnerResourcesPaginationIsSortDsc);
+
   constructor(
     private machineAreaPnMachinesService: OuterInnerResourcePnInnerResourceService,
     private machineAreaPnAreasService: OuterInnerResourcePnOuterResourceService,
@@ -97,6 +105,7 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     public dialog: MatDialog,
     private overlay: Overlay,
+    private store: Store,
   ) {}
 
   ngOnInit() {
@@ -153,10 +162,10 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     this.getAllMachines();
   }
 
-  changePage(offset: number) {
-    this.innerResourcesStateService.changePage(offset);
-    this.getAllMachines();
-  }
+  // changePage(offset: number) {
+  //   this.innerResourcesStateService.changePage(offset);
+  //   this.getAllMachines();
+  // }
 
   onMachineDeleted() {
     this.innerResourcesStateService.onDelete();
