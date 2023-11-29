@@ -18,6 +18,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatCardModule} from '@angular/material/card';
+import {StoreModule} from '@ngrx/store';
+import * as outerResourceReducer from './state/outer-resource/outer-resource.reducer';
+import * as innerResourceReducer from './state/inner-resource/inner-resource.reducer';
 
 @NgModule({
   imports: [
@@ -30,6 +33,10 @@ import {MatCardModule} from '@angular/material/card';
     MatInputModule,
     MtxSelectModule,
     MatCardModule,
+    StoreModule.forFeature('outerInnerResourcePn', {
+      outerResources: outerResourceReducer.reducer,
+      innerResources: innerResourceReducer.reducer,
+    }),
   ],
   declarations: [
     OuterInnerResourcePnLayoutComponent,

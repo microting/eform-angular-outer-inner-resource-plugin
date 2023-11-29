@@ -11,7 +11,6 @@ import {
 import {OuterResourcesRouting} from './outer-resources.routing';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {FormsModule} from '@angular/forms';
-import {outerResourcesPersistProvider} from './components/store';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MtxGridModule} from '@ng-matero/extensions/grid';
@@ -42,7 +41,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatInputModule,
     MatCheckboxModule,
   ],
-  providers: [outerResourcesPersistProvider],
+  providers: [],
 })
 export class OuterResourcesModule {
 }

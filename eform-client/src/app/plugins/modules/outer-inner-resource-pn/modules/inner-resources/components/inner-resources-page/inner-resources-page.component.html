@@ -20,14 +20,14 @@
   [rowStriped]="true"
   [showToolbar]="false"
   [showColumnMenuButton]="false"
-  [sortActive]="innerResourcesStateService.getActiveSort() | async"
-  [sortDirection]="innerResourcesStateService.getActiveSortDirection() | async"
+  [sortActive]="selectInnerResourcesPaginationSort$ | async"
+  [sortDirection]="selectInnerResourcesPaginationIsSortDsc$ | async"
   (sortChange)="sortTable($event)">
 </mtx-grid>
 
 <ng-template #paginatorTpl>
   <eform-pagination
-    [pagination]="innerResourcesStateService.getPagination() | async"
+    [pagination]="selectInnerResourcesPagination$ | async"
     (paginationChanged)="onPaginationChanged($event)"
   ></eform-pagination>
 </ng-template>
