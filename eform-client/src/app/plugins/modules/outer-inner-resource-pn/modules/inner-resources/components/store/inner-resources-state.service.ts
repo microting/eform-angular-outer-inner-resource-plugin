@@ -12,7 +12,7 @@ import { InnerResourcesPnModel } from '../../../../models';
 import {Store} from '@ngrx/store';
 import {
   selectInnerResourcesPagination
-} from '../../../../state/outer-resource/outer-resource.selector';
+} from '../../../../state/inner-resource/inner-resource.selector';
 
 @Injectable({ providedIn: 'root' })
 export class InnerResourcesStateService {
@@ -37,7 +37,7 @@ export class InnerResourcesStateService {
         map((response) => {
           if (response && response.success && response.model) {
             this.store.dispatch({
-              type: '[InnerResources] Update inner resource pagination', payload: {
+              type: '[InnerResource] Update inner resource pagination', payload: {
                 pagination: {
                   ...pagination,
                   total: response.model.total,
@@ -59,7 +59,7 @@ export class InnerResourcesStateService {
       currentPagination = pagination;
     }).unsubscribe();
     this.store.dispatch({
-      type: '[InnerResources] Update inner resource pagination', payload: {
+      type: '[InnerResource] Update inner resource pagination', payload: {
         pagination: {
           ...currentPagination,
           total: currentPagination.total - 1,
@@ -82,7 +82,7 @@ export class InnerResourcesStateService {
       currentPagination.isSortDsc
     );
     this.store.dispatch({
-      type: '[InnerResources] Update inner resource pagination', payload: {
+      type: '[InnerResource] Update inner resource pagination', payload: {
         pagination: {
           ...currentPagination,
           sort: localPageSettings.sort,
@@ -101,7 +101,7 @@ export class InnerResourcesStateService {
       currentPagination = pagination;
     }).unsubscribe();
     this.store.dispatch({
-      type: '[InnerResources] Update inner resource pagination', payload: {
+      type: '[InnerResource] Update inner resource pagination', payload: {
         pagination: {
           ...currentPagination,
           pageSize: pagination.pageSize,

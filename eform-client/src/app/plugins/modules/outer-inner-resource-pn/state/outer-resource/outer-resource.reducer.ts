@@ -29,10 +29,15 @@ export const _reducer = createReducer(
   })),
   on(updateOuterResourcePagination, (state, {payload}) => ({
     ...state,
-      ...state.pagination,
-    pagination: payload.pagination,
-    }
-  ))
+    pagination: {
+      offset: payload.pagination.offset,
+      pageSize: payload.pagination.pageSize,
+      pageIndex: payload.pagination.pageIndex,
+      sort: payload.pagination.sort,
+      isSortDsc: payload.pagination.isSortDsc,
+      total: payload.pagination.total,
+    },
+  })),
 );
 
 

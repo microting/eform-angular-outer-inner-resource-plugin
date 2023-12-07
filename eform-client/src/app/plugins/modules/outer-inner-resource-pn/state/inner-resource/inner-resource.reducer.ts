@@ -24,11 +24,16 @@ export const initialInnerResourcesState: InnerResourcesState = {
 export const _reducer = createReducer(
   initialInnerResourcesState,
   on(updateInnerResourcePagination, (state, {payload}) => ({
-      ...state,
-      ...state.pagination,
-      pagination: payload.pagination,
-    }
-  ))
+    ...state,
+    pagination: {
+      offset: payload.pagination.offset,
+      pageSize: payload.pagination.pageSize,
+      pageIndex: payload.pagination.pageIndex,
+      sort: payload.pagination.sort,
+      isSortDsc: payload.pagination.isSortDsc,
+      total: payload.pagination.total,
+    },
+  })),
 );
 
 export function reducer(state: InnerResourcesState | undefined, action: any) {
