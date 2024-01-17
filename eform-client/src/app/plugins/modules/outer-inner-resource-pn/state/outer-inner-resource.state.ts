@@ -1,9 +1,7 @@
 import {
-  OuterResourcesState
-} from './outer-resource/outer-resource.reducer';
-import {
+  OuterResourcesState,
   InnerResourcesState
-} from './inner-resource/inner-resource.reducer';
+} from './';
 
 export interface OuterInnerResourceState {
   innerResourcesState: InnerResourcesState;

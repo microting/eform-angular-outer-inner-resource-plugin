@@ -1,7 +1,7 @@
 import {CommonPaginationState} from 'src/app/common/models';
 import {createReducer, on} from '@ngrx/store';
 import {
-  updateOuterResourceFilters, updateOuterResourcePagination
+  updateOuterResourcePagination, updateOuterResourceTotal
 } from './outer-resource.actions';
 
 export interface OuterResourcesState {
@@ -21,26 +21,27 @@ export const initialOuterResourcesState: OuterResourcesState = {
   total: 0,
 };
 
-export const _reducer = createReducer(
+const _reducer = createReducer(
   initialOuterResourcesState,
-  on(updateOuterResourceFilters, (state, {payload}) => ({
-    ...state,
-    filters: payload.filters,
-  })),
   on(updateOuterResourcePagination, (state, {payload}) => ({
     ...state,
     pagination: {
-      offset: payload.pagination.offset,
-      pageSize: payload.pagination.pageSize,
-      pageIndex: payload.pagination.pageIndex,
-      sort: payload.pagination.sort,
-      isSortDsc: payload.pagination.isSortDsc,
-      total: payload.pagination.total,
+      ...state.pagination,
+      ...payload,
     },
   })),
+  on(updateOuterResourceTotal, (state, {payload}) => ({
+      ...state,
+      total: payload,
+      pagination: {
+        ...state.pagination,
+        total: payload,
+      }
+    }),
+  ),
 );
 
 
-export function reducer(state: OuterResourcesState | undefined, action: any) {
+export function outerResourceReducer(state: OuterResourcesState | undefined, action: any) {
   return _reducer(state, action);
 }

@@ -2,8 +2,9 @@ import {
   OuterInnerResourceState
 } from '../outer-inner-resource.state';
 import {createSelector} from '@ngrx/store';
+import {AppState} from 'src/app/state';
 
-export const selectInnerResourcePn = (state: {outerInnerResourcePn: OuterInnerResourceState}) => state.outerInnerResourcePn;
+const selectInnerResourcePn = (state: AppState & {outerInnerResourcePn: OuterInnerResourceState}) => state.outerInnerResourcePn;
 export const selectOuterResources =
   createSelector(selectInnerResourcePn, (state: OuterInnerResourceState) => state.outerResourcesState);
 export const selectOuterResourcesPagination =

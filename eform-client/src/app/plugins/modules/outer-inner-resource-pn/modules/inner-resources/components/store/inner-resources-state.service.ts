@@ -1,113 +1,65 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
 import {
   CommonPaginationState,
-  OperationDataResult,
   PaginationModel,
 } from 'src/app/common/models';
-import { updateTableSort } from 'src/app/common/helpers';
-import { map } from 'rxjs/operators';
-import { OuterInnerResourcePnInnerResourceService } from '../../../../services';
-import { InnerResourcesPnModel } from '../../../../models';
+import {updateTableSort} from 'src/app/common/helpers';
+import {OuterInnerResourcePnInnerResourceService} from '../../../../services';
 import {Store} from '@ngrx/store';
 import {
-  selectInnerResourcesPagination
-} from '../../../../state/inner-resource/inner-resource.selector';
+  selectInnerResourcesPagination,
+  updateInnerResourcePagination,
+  updateInnerResourceTotal,
+} from '../../../../state';
+import {tap} from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class InnerResourcesStateService {
   private selectInnerResourcesPagination$ = this.store.select(selectInnerResourcesPagination);
+  currentPagination: CommonPaginationState;
+
   constructor(
     private store: Store,
     private service: OuterInnerResourcePnInnerResourceService,
-  ) {}
+  ) {
+    this.selectInnerResourcesPagination$.subscribe(x => this.currentPagination = x);
+  }
 
-  getAllMachines(): Observable<OperationDataResult<InnerResourcesPnModel>> {
-    let pagination = new CommonPaginationState();
-    this.selectInnerResourcesPagination$.subscribe(
-      (state) => {
-        pagination = state;
-      }
-    ).unsubscribe();
+  getAllMachines() {
     return this.service
       .getAllMachines({
-        ...pagination,
-        // ...this.query.pageSetting.filters,
+        ...this.currentPagination,
       }).pipe(
-        map((response) => {
+        tap((response) => {
           if (response && response.success && response.model) {
-            this.store.dispatch({
-              type: '[InnerResource] Update inner resource pagination', payload: {
-                pagination: {
-                  ...pagination,
-                  total: response.model.total,
-                }
-              }
-            });
+            this.store.dispatch(updateInnerResourceTotal(response.model.total));
           }
-          return response;
         })
       );
   }
 
   onDelete() {
-    let currentPagination: CommonPaginationState;
-    this.selectInnerResourcesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[InnerResource] Update inner resource pagination', payload: {
-        pagination: {
-          ...currentPagination,
-          total: currentPagination.total - 1,
-        }
-      }
-    });
+
+    this.store.dispatch(updateInnerResourceTotal(this.currentPagination.total - 1));
   }
 
   onSortTable(sort: string) {
-    let currentPagination: CommonPaginationState;
-    this.selectInnerResourcesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      currentPagination.sort,
-      currentPagination.isSortDsc
+      this.currentPagination.sort,
+      this.currentPagination.isSortDsc
     );
-    this.store.dispatch({
-      type: '[InnerResource] Update inner resource pagination', payload: {
-        pagination: {
-          ...currentPagination,
-          sort: localPageSettings.sort,
-          isSortDsc: localPageSettings.isSortDsc,
-        }
-      }
-    });
+    this.store.dispatch(updateInnerResourcePagination({
+      ...this.currentPagination,
+      ...localPageSettings,
+    }));
   }
 
   updatePagination(pagination: PaginationModel) {
-    let currentPagination: CommonPaginationState;
-    this.selectInnerResourcesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[InnerResource] Update inner resource pagination', payload: {
-        pagination: {
-          ...currentPagination,
-          pageSize: pagination.pageSize,
-          offset: pagination.offset,
-        }
-      }
-    });
+    this.store.dispatch(updateInnerResourcePagination({
+      ...this.currentPagination,
+      pageSize: pagination.pageSize,
+      offset: pagination.offset,
+    }));
   }
 }

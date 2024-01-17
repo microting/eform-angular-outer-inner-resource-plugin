@@ -19,8 +19,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MtxSelectModule} from '@ng-matero/extensions/select';
 import {MatCardModule} from '@angular/material/card';
 import {StoreModule} from '@ngrx/store';
-import * as outerResourceReducer from './state/outer-resource/outer-resource.reducer';
-import * as innerResourceReducer from './state/inner-resource/inner-resource.reducer';
+import {outerResourceReducer, innerResourcesReducer} from './state';
 
 @NgModule({
   imports: [
@@ -34,8 +33,8 @@ import * as innerResourceReducer from './state/inner-resource/inner-resource.red
     MtxSelectModule,
     MatCardModule,
     StoreModule.forFeature('outerInnerResourcePn', {
-      outerResourcesState: outerResourceReducer.reducer,
-      innerResourcesState: innerResourceReducer.reducer,
+      outerResourcesState: outerResourceReducer,
+      innerResourcesState: innerResourcesReducer,
     }),
   ],
   declarations: [

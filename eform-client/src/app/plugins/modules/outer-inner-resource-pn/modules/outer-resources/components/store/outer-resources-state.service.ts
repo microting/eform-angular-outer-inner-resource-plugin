@@ -1,113 +1,63 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {tap} from 'rxjs';
 import {
   CommonPaginationState,
-  OperationDataResult,
   PaginationModel,
 } from 'src/app/common/models';
-import { updateTableSort } from 'src/app/common/helpers';
-import { map } from 'rxjs/operators';
-import { OuterInnerResourcePnOuterResourceService } from '../../../../services';
-import { OuterResourcesPnModel } from '../../../../models';
+import {updateTableSort} from 'src/app/common/helpers';
+import {OuterInnerResourcePnOuterResourceService} from '../../../../services';
 import {Store} from '@ngrx/store';
 import {
-  selectOuterResourcesPagination
-} from '../../../../state/outer-resource/outer-resource.selector';
+  selectOuterResourcesPagination,
+  updateOuterResourcePagination,
+  updateOuterResourceTotal,
+} from '../../../../state';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class OuterResourcesStateService {
   private selectOuterResourcesPagination$ = this.store.select(selectOuterResourcesPagination);
+  currentPagination: CommonPaginationState;
+
   constructor(
     private store: Store,
     private service: OuterInnerResourcePnOuterResourceService,
-  ) {}
+  ) {
+    this.selectOuterResourcesPagination$.subscribe(x => this.currentPagination = x);
+  }
 
-  getAllAreas(): Observable<OperationDataResult<OuterResourcesPnModel>> {
-    let pagination = new CommonPaginationState();
-    this.selectOuterResourcesPagination$.subscribe(
-      (state) => {
-        pagination = state;
-      }
-    ).unsubscribe();
-    return this.service
-      .getAllAreas({
-        ...pagination,
-        // ...this.query.pageSetting.filters,
-      }).pipe(
-        map((response) => {
-          if (response && response.success && response.model) {
-            this.store.dispatch({
-              type: '[OuterResource] Update outer resource pagination', payload: {
-                pagination: {
-                  ...pagination,
-                  total: response.model.total,
-                }
-              }
-            });
-          }
-          return response;
-        })
-      );
+  getAllAreas() {
+    return this.service.getAllAreas({
+      ...this.currentPagination
+    }).pipe(
+      tap((response) => {
+        if (response && response.success && response.model) {
+          this.store.dispatch(updateOuterResourceTotal(response.model.total));
+        }
+      })
+    );
   }
 
   onDelete() {
-    let currentPagination: CommonPaginationState;
-    this.selectOuterResourcesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[OuterResource] Update outer resource pagination', payload: {
-        pagination: {
-          ...currentPagination,
-          total: currentPagination.total - 1,
-        }
-      }
-    });
+    this.store.dispatch(updateOuterResourceTotal(this.currentPagination.total - 1));
   }
 
   onSortTable(sort: string) {
-    let currentPagination: CommonPaginationState;
-    this.selectOuterResourcesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
     const localPageSettings = updateTableSort(
       sort,
-      currentPagination.sort,
-      currentPagination.isSortDsc
+      this.currentPagination.sort,
+      this.currentPagination.isSortDsc
     );
-    this.store.dispatch({
-      type: '[OuterResource] Update outer resource pagination', payload: {
-        pagination: {
-          ...currentPagination,
-          sort: localPageSettings.sort,
-          isSortDsc: localPageSettings.isSortDsc,
-        }
-      }
-    });
+    this.store.dispatch(updateOuterResourcePagination({
+      ...this.currentPagination,
+      ...localPageSettings,
+    }));
   }
 
   updatePagination(pagination: PaginationModel) {
-    let currentPagination: CommonPaginationState;
-    this.selectOuterResourcesPagination$.subscribe((pagination) => {
-      if (pagination === undefined) {
-        return;
-      }
-      currentPagination = pagination;
-    }).unsubscribe();
-    this.store.dispatch({
-      type: '[OuterResource] Update outer resource pagination', payload: {
-        pagination: {
-          ...currentPagination,
-          pageSize: pagination.pageSize,
-          offset: pagination.offset,
-        }
-      }
-    });
+    this.store.dispatch(updateOuterResourcePagination({
+      ...this.currentPagination,
+      pageSize: pagination.pageSize,
+      offset: pagination.offset,
+    }));
   }
 }

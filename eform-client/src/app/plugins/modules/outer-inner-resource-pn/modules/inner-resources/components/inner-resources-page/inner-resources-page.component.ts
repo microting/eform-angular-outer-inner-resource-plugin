@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   InnerResourcePnModel,
   InnerResourcesPnModel,
@@ -9,12 +9,12 @@ import {
   OuterInnerResourcePnInnerResourceService,
   OuterInnerResourcePnOuterResourceService,
 } from '../../../../services';
-import { OuterInnerResourcePnClaims } from '../../../../enums';
-import { Subscription } from 'rxjs';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { InnerResourcesStateService } from '../store';
+import {OuterInnerResourcePnClaims} from '../../../../enums';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {InnerResourcesStateService} from '../store';
 import {PaginationModel, TableHeaderElementModel} from 'src/app/common/models';
-import { AuthStateService } from 'src/app/common/store';
+import {AuthStateService} from 'src/app/common/store';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {TranslateService} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
@@ -28,8 +28,10 @@ import {
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {Store} from '@ngrx/store';
 import {
-  selectInnerResourcesPagination, selectInnerResourcesPaginationIsSortDsc, selectInnerResourcesPaginationSort
-} from '../../../../state/inner-resource/inner-resource.selector';
+  selectInnerResourcesPagination,
+  selectInnerResourcesPaginationIsSortDsc,
+  selectInnerResourcesPaginationSort
+} from '../../../../state';
 
 @AutoUnsubscribe()
 @Component({
@@ -38,9 +40,9 @@ import {
   styleUrls: ['./inner-resources-page.component.scss'],
 })
 export class InnerResourcesPageComponent implements OnInit, OnDestroy {
-  @ViewChild('createMachineModal', { static: false }) createMachineModal;
-  @ViewChild('editMachineModal', { static: false }) editMachineModal;
-  @ViewChild('deleteMachineModal', { static: false }) deleteMachineModal;
+  @ViewChild('createMachineModal', {static: false}) createMachineModal;
+  @ViewChild('editMachineModal', {static: false}) editMachineModal;
+  @ViewChild('deleteMachineModal', {static: false}) deleteMachineModal;
   machinesModel: InnerResourcesPnModel = new InnerResourcesPnModel();
   mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();
   name: string;
@@ -49,15 +51,15 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
   getAllAreasSub$: Subscription;
 
   tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: 'idTableHeader', sortable: true },
-    { name: 'Name', elementId: 'nameTableHeader', sortable: true },
+    {name: 'Id', elementId: 'idTableHeader', sortable: true},
+    {name: 'Name', elementId: 'nameTableHeader', sortable: true},
     {
       name: 'ExternalId',
       elementId: 'externalIdTableHeader',
       sortable: true,
       visibleName: 'External ID',
     },
-    { name: 'Actions', elementId: '', sortable: false },
+    {name: 'Actions', elementId: '', sortable: false},
   ];
 
   tableHeaders1: MtxGridColumn[] = [
@@ -106,13 +108,15 @@ export class InnerResourcesPageComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private overlay: Overlay,
     private store: Store,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getAllInitialData();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   getAllInitialData() {
     this.getAllMachines();
