@@ -34,8 +34,8 @@ import * as innerResourceReducer from './state/inner-resource/inner-resource.red
     MtxSelectModule,
     MatCardModule,
     StoreModule.forFeature('outerInnerResourcePn', {
-      outerResources: outerResourceReducer.reducer,
-      innerResources: innerResourceReducer.reducer,
+      outerResourcesState: outerResourceReducer.reducer,
+      innerResourcesState: innerResourceReducer.reducer,
     }),
   ],
   declarations: [

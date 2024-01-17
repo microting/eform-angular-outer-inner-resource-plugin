@@ -11,12 +11,12 @@ import { OuterInnerResourcePnOuterResourceService } from '../../../../services';
 import { OuterResourcesPnModel } from '../../../../models';
 import {Store} from '@ngrx/store';
 import {
-  selectInnerResourcesPagination
+  selectOuterResourcesPagination
 } from '../../../../state/outer-resource/outer-resource.selector';
 
 @Injectable({ providedIn: 'root' })
 export class OuterResourcesStateService {
-  private selectInnerResourcesPagination$ = this.store.select(selectInnerResourcesPagination);
+  private selectOuterResourcesPagination$ = this.store.select(selectOuterResourcesPagination);
   constructor(
     private store: Store,
     private service: OuterInnerResourcePnOuterResourceService,
@@ -24,7 +24,7 @@ export class OuterResourcesStateService {
 
   getAllAreas(): Observable<OperationDataResult<OuterResourcesPnModel>> {
     let pagination = new CommonPaginationState();
-    this.selectInnerResourcesPagination$.subscribe(
+    this.selectOuterResourcesPagination$.subscribe(
       (state) => {
         pagination = state;
       }
@@ -37,7 +37,7 @@ export class OuterResourcesStateService {
         map((response) => {
           if (response && response.success && response.model) {
             this.store.dispatch({
-              type: '[OuterResources] Update outer resource pagination', payload: {
+              type: '[OuterResource] Update outer resource pagination', payload: {
                 pagination: {
                   ...pagination,
                   total: response.model.total,
@@ -52,14 +52,14 @@ export class OuterResourcesStateService {
 
   onDelete() {
     let currentPagination: CommonPaginationState;
-    this.selectInnerResourcesPagination$.subscribe((pagination) => {
+    this.selectOuterResourcesPagination$.subscribe((pagination) => {
       if (pagination === undefined) {
         return;
       }
       currentPagination = pagination;
     }).unsubscribe();
     this.store.dispatch({
-      type: '[OuterResources] Update outer resource pagination', payload: {
+      type: '[OuterResource] Update outer resource pagination', payload: {
         pagination: {
           ...currentPagination,
           total: currentPagination.total - 1,
@@ -70,7 +70,7 @@ export class OuterResourcesStateService {
 
   onSortTable(sort: string) {
     let currentPagination: CommonPaginationState;
-    this.selectInnerResourcesPagination$.subscribe((pagination) => {
+    this.selectOuterResourcesPagination$.subscribe((pagination) => {
       if (pagination === undefined) {
         return;
       }
@@ -82,7 +82,7 @@ export class OuterResourcesStateService {
       currentPagination.isSortDsc
     );
     this.store.dispatch({
-      type: '[OuterResources] Update outer resource pagination', payload: {
+      type: '[OuterResource] Update outer resource pagination', payload: {
         pagination: {
           ...currentPagination,
           sort: localPageSettings.sort,
@@ -94,14 +94,14 @@ export class OuterResourcesStateService {
 
   updatePagination(pagination: PaginationModel) {
     let currentPagination: CommonPaginationState;
-    this.selectInnerResourcesPagination$.subscribe((pagination) => {
+    this.selectOuterResourcesPagination$.subscribe((pagination) => {
       if (pagination === undefined) {
         return;
       }
       currentPagination = pagination;
     }).unsubscribe();
     this.store.dispatch({
-      type: '[OuterResources] Update outer resource pagination', payload: {
+      type: '[OuterResource] Update outer resource pagination', payload: {
         pagination: {
           ...currentPagination,
           pageSize: pagination.pageSize,
