@@ -1,11 +1,12 @@
 import {createAction} from '@ngrx/store';
-
-export const updateInnerResourceFilters = createAction(
-  '[InnerResource] Update inner resource filters',
-  (payload) => ({ payload })
-);
+import {CommonPaginationState} from 'src/app/common/models';
 
 export const updateInnerResourcePagination = createAction(
   '[InnerResource] Update inner resource pagination',
-  (payload) => ({ payload })
+  (payload: CommonPaginationState) => ({ payload })
+);
+
+export const updateInnerResourceTotal = createAction(
+  '[InnerResource] Update inner resource total',
+  (payload: number) => ({ payload })
 );

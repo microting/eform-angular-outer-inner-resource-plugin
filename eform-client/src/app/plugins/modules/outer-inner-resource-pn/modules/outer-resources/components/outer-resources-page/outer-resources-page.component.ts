@@ -29,7 +29,7 @@ import {
   selectOuterResourcesPagination,
   selectOuterResourcesPaginationIsSortDsc,
   selectOuterResourcesPaginationSort
-} from 'src/app/plugins/modules/outer-inner-resource-pn/state/outer-resource/outer-resource.selector';
+} from '../../../../state';
 
 @AutoUnsubscribe()
 @Component({

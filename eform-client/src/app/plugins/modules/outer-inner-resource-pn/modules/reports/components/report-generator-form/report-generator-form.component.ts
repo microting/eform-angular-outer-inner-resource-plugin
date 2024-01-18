@@ -1,17 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {LocaleService} from 'src/app/common/services';
 import {ReportPnGenerateModel, ReportNamesModel} from '../../../../models';
 import {format} from 'date-fns';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OuterInnerResourcePnReportsService} from '../../../../services';
 import {OuterInnerResourcePnReportTypeEnum} from '../../../../enums';
-import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
-import {AuthStateService} from 'src/app/common/store';
 import {ExcelIcon} from 'src/app/common/const';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
-import {selectCurrentUserLocale} from 'src/app/state/auth/auth.selector';
-import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-machine-area-pn-report-generator-form',
@@ -25,7 +20,6 @@ export class ReportGeneratorFormComponent implements OnInit {
   saveReport: EventEmitter<ReportPnGenerateModel> = new EventEmitter();
   generateForm: FormGroup;
   reportNames: ReportNamesModel = new ReportNamesModel();
-  private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
 
   get reportType() {
     return OuterInnerResourcePnReportTypeEnum;
@@ -34,18 +28,11 @@ export class ReportGeneratorFormComponent implements OnInit {
   // get relationshipTypes() { return OuterInnerResourcePnReportRelationshipEnum; }
 
   constructor(
-    dateTimeAdapter: DateTimeAdapter<any>,
-    private localeService: LocaleService,
-    private authStore: Store,
     private reportService: OuterInnerResourcePnReportsService,
-    authStateService: AuthStateService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
   ) {
     iconRegistry.addSvgIconLiteral('file-excel', sanitizer.bypassSecurityTrustHtml(ExcelIcon));
-    this.selectCurrentUserLocale$.subscribe((locale) => {
-      dateTimeAdapter.setLocale(locale);
-    });
   }
 
   ngOnInit() {

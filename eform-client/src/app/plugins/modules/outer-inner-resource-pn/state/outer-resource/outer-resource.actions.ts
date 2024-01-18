@@ -1,11 +1,12 @@
 import {createAction} from '@ngrx/store';
-
-export const updateOuterResourceFilters = createAction(
-  '[OuterResource] Update outer resource filters',
-  (payload) => ({ payload })
-);
+import {CommonPaginationState} from 'src/app/common/models';
 
 export const updateOuterResourcePagination = createAction(
   '[OuterResource] Update outer resource pagination',
-  (payload) => ({ payload })
+  (payload: CommonPaginationState) => ({ payload })
+);
+
+export const updateOuterResourceTotal = createAction(
+  '[OuterResource] Update outer resource total',
+  (payload: number) => ({ payload })
 );
