@@ -1,4 +1,5 @@
 import { PageWithNavbarPage } from '../PageWithNavbar.page';
+import { $ } from '@wdio/globals';
 import outerInnerResourceModalPage from './OuterInnerResourceModal.page';
 
 export class OuterInnerResourceInnerResourcePage extends PageWithNavbarPage {

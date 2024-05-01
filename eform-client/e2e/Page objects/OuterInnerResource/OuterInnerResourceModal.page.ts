@@ -1,4 +1,5 @@
 import Page from '../Page';
+import { $ } from '@wdio/globals';
 
 export class OuterInnerResourceModalPage extends Page {
   constructor() {
