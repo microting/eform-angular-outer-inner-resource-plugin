@@ -5,6 +5,7 @@ import outerInnerResourceModalPage from '../../../Page objects/OuterInnerResourc
 
 const expect = require('chai').expect;
 const newNameInnerResources = generateRandmString();
+import { $ } from '@wdio/globals';
 
 describe('Machine Area Area Add', function () {
   before(async () => {

@@ -4,6 +4,7 @@ import outerInnerResourceInnerResourcePage, {
 import outerInnerResourceModalPage from '../../../Page objects/OuterInnerResource/OuterInnerResourceModal.page';
 import loginPage from '../../../Page objects/Login.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 const nameInnerResource = generateRandmString();

@@ -3,6 +3,7 @@ import outerInnerResourceOuterResourcePage, {
 } from '../../../Page objects/OuterInnerResource/OuterInnerResourceOuterResource.page';
 import loginPage from '../../../Page objects/Login.page';
 import { generateRandmString } from '../../../Helpers/helper-functions';
+import { $ } from '@wdio/globals';
 
 const expect = require('chai').expect;
 const newName = generateRandmString();

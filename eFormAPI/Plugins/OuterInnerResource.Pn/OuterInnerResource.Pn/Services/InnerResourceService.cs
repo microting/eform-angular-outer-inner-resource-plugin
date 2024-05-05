@@ -299,10 +299,7 @@ namespace OuterInnerResource.Pn.Services
         {
             try
             {
-                var innerResource = new InnerResource()
-                {
-                    Id = innerResourceId
-                };
+                var innerResource = await _dbContext.InnerResources.FirstAsync(x => x.Id == innerResourceId);
 
                 await innerResource.Delete(_dbContext);
                 await _bus.SendLocal(new OuterInnerResourceDelete(new InnerResourceModel() { Id = innerResourceId }, null));

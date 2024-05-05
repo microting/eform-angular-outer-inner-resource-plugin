@@ -10,7 +10,7 @@ export class OuterInnerResourceOuterResourcePage extends PageWithNavbarPage {
 
   public async rowNum(): Promise<number> {
     await browser.pause(500);
-    return (await $$('#tableBodyOuterResources > tr')).length;
+    return (await $$('tbody > tr')).length;
   }
 
   public async outerResourceMenuPoint() {
@@ -70,6 +70,10 @@ export class OuterInnerResourceOuterResourcePage extends PageWithNavbarPage {
       });
     } else {
       await (await outerInnerResourceModalPage.outerResourceCreateCancelBtn()).click();
+      await (await $('#spinner-animation')).waitForDisplayed({
+        timeout: 20000,
+        reverse: true,
+      });
       await (await this.newOuterResourceBtn()).waitForDisplayed({ timeout: 20000 });
     }
   }
@@ -90,7 +94,7 @@ export default outerInnerResourceOuterResourcePage;
 export class ListRowObject {
   constructor() {  }
 
-  public element;
+  public row;
   public id: number;
   public name: string;
   public externalId: number;
@@ -98,22 +102,22 @@ export class ListRowObject {
   public deleteBtn;
 
   async getRow(rowNum: number): Promise<ListRowObject> {
-    this.element = (await $$('#tableBodyOuterResources > tr'))[rowNum - 1];
-    if (this.element) {
+    this.row = (await $$('tbody > tr'))[rowNum - 1];
+    if (this.row) {
       try {
-        this.name = await (await this.element.$('#outerResourceName')).getText();
+        this.id = +await (await this.row.$('.mat-column-id')).getText();
       } catch (e) {}
       try {
-        this.id = +await (await this.element.$('#outerResourceId')).getText();
+        this.name = await (await this.row.$('.mat-column-name')).getText();
       } catch (e) {}
       try {
-        this.externalId = +await (await this.element.$('#outerResourceExternalId')).getText();
+        this.externalId = +await (await this.row.$('.mat-column-externalId')).getText();
       } catch (e) {}
       try {
-        this.updateBtn = await this.element.$('#outerResourceEditBtn');
+        this.updateBtn = (await this.row.$$('.mat-column-actions button'))[0];
       } catch (e) {}
       try {
-        this.deleteBtn = await this.element.$('#outerResourceDeleteBtn');
+        this.deleteBtn = (await this.row.$$('.mat-column-actions button'))[1];
       } catch (e) {}
     }
     return this;
