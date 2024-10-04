@@ -47,7 +47,7 @@ jobs:
     - name: Build the tagged Docker image
       run: docker build . -t microtingas/outer-inner-resource-container:latest -t microtingas/outer-inner-resource-container:1.0.0 --build-arg GITVERSION=1.00 --build-arg PLUGINVERSION=1.0.0
     - run: docker save microtingas/outer-inner-resource-container:latest -o outer-inner-resource-container.tar
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: outer-inner-resource-container
         path: outer-inner-resource-container.tar
