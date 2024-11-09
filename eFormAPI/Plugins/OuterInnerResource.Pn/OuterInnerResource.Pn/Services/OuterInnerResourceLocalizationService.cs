@@ -28,16 +28,13 @@ using OuterInnerResource.Pn.Abstractions;
 
 namespace OuterInnerResource.Pn.Services
 {
-    public class OuterInnerResourceLocalizationService : IOuterInnerResourceLocalizationService
+    public class OuterInnerResourceLocalizationService(IEformLocalizerFactory factory)
+        : IOuterInnerResourceLocalizationService
     {
-        private readonly IStringLocalizer _localizer;
+        private readonly IStringLocalizer _localizer = factory.Create(typeof(EformOuterInnerResourcePlugin));
  
         // ReSharper disable once SuggestBaseTypeForParameter
-        public OuterInnerResourceLocalizationService(IEformLocalizerFactory factory)
-        {
-            _localizer = factory.Create(typeof(EformOuterInnerResourcePlugin));
-        }
- 
+
         public string GetString(string key)
         {
             LocalizedString str = _localizer[key];
