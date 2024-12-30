@@ -155,6 +155,7 @@ namespace OuterInnerResource.Pn
                 {
                     builder.EnableRetryOnFailure();
                     builder.MigrationsAssembly(PluginAssembly().FullName);
+                    builder.TranslateParameterizedCollectionsToConstants();
                 }));
 
             var contextFactory = new OuterInnerResourcePnContextFactory();
