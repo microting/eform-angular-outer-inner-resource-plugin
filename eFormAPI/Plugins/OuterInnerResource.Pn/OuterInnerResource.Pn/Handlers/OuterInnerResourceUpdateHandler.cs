@@ -105,7 +105,7 @@ namespace OuterInnerResource.Pn.Handlers
             WriteLogEntry("OuterInnerResourceUpdateHandler: UpdateSitesDeployed called");
             var siteIds = new List<int>();
 
-            if (oldName != newName)
+            if (oldName != newName || oldName == null && newName == null)
             {
                 var outerInnerResourceSites = await _dbContext.OuterInnerResourceSites.Where(
                     x => x.OuterInnerResourceId == outerInnerResource.Id
