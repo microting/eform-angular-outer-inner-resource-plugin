@@ -126,7 +126,7 @@ namespace OuterInnerResource.Pn
                 options.IsGlobalModeEnabled = true;
 
                 // This option will enable Sentry's tracing features. You still need to start transactions and spans.
-                options.EnableTracing = true;
+                //options.EnableTracing = true;
             });
 
             string pattern = @"Database=(\d+)_eform-angular-outer-inner-resource-plugin;";
