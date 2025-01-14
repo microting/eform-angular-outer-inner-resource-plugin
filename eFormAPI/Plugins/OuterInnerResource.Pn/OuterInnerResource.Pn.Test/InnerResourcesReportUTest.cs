@@ -117,25 +117,25 @@ namespace MachineArea.Pn.Test
 
             ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, (int)ReportTimeType.Minutes);
 
-            Assert.AreEqual(reportModel.SubReports.Count, 1);
-            Assert.AreEqual(reportModel.SubReports[0].TotalTime, 4200);
-            Assert.AreEqual(reportModel.SubReports[0].Entities.Count, 3);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, newMachine1.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, newMachine2.Name);
+            Assert.That(1, Is.EqualTo(reportModel.SubReports.Count));
+            Assert.That(4200, Is.EqualTo(reportModel.SubReports[0].TotalTime));
+            Assert.That(3, Is.EqualTo(reportModel.SubReports[0].Entities.Count));
+            Assert.That(newMachine.Name, Is.EqualTo(reportModel.SubReports[0].Entities[0].EntityName));
+            Assert.That(newMachine1.Name, Is.EqualTo(reportModel.SubReports[0].Entities[1].EntityName));
+            Assert.That(newMachine2.Name, Is.EqualTo(reportModel.SubReports[0].Entities[2].EntityName));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TotalTime, 1200);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TotalTime, 1800);
+            Assert.That(1200, Is.EqualTo(reportModel.SubReports[0].Entities[0].TotalTime));
+            Assert.That(1800, Is.EqualTo(reportModel.SubReports[0].Entities[1].TotalTime));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[0], 1200);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[1], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[2], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[3], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[0], 0);
+            Assert.That(1200, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[0]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[1]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[2]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[3]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[0]));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[1], 1200);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[2], 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3], 0);
+            Assert.That(1200, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[1]));
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[2]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3]));
         }
 
         [Test]
@@ -216,25 +216,25 @@ namespace MachineArea.Pn.Test
 
             ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, (int)ReportTimeType.Minutes);
 
-            Assert.AreEqual(reportModel.SubReports.Count, 1);
-            Assert.AreEqual(reportModel.SubReports[0].TotalTime, 3600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities.Count, 3);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, newMachine1.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, newMachine2.Name);
+            Assert.That(1, Is.EqualTo(reportModel.SubReports.Count));
+            Assert.That(3600, Is.EqualTo(reportModel.SubReports[0].TotalTime));
+            Assert.That(3, Is.EqualTo(reportModel.SubReports[0].Entities.Count));
+            Assert.That(newMachine.Name, Is.EqualTo(reportModel.SubReports[0].Entities[0].EntityName));
+            Assert.That(newMachine1.Name, Is.EqualTo(reportModel.SubReports[0].Entities[1].EntityName));
+            Assert.That(newMachine2.Name, Is.EqualTo(reportModel.SubReports[0].Entities[2].EntityName));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TotalTime, 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TotalTime, 1800);
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[0].TotalTime));
+            Assert.That(1800, Is.EqualTo(reportModel.SubReports[0].Entities[1].TotalTime));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[0], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[1], 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[2], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[3], 0);
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[0]));
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[1]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[2]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[3]));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[0], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[1], 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[2], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3], 1200);
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[0]));
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[1]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[2]));
+            Assert.That(1200, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3]));
         }
 
         [Test]
@@ -315,27 +315,27 @@ namespace MachineArea.Pn.Test
 
             ReportModel reportModel = ReportsHelper.GetReportData(model, jobsList, sitesList, (int)ReportTimeType.Minutes);
 
-            Assert.AreEqual(reportModel.SubReports.Count, 1);
-            Assert.AreEqual(reportModel.SubReports[0].TotalTime, 3000);
-            Assert.AreEqual(reportModel.SubReports[0].Entities.Count, 3);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].EntityName, newMachine.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].EntityName, newMachine1.Name);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[2].EntityName, newMachine2.Name);
+            Assert.That(1, Is.EqualTo(reportModel.SubReports.Count));
+            Assert.That(3000, Is.EqualTo(reportModel.SubReports[0].TotalTime));
+            Assert.That(3, Is.EqualTo(reportModel.SubReports[0].Entities.Count));
+            Assert.That(newMachine.Name, Is.EqualTo(reportModel.SubReports[0].Entities[0].EntityName));
+            Assert.That(newMachine1.Name, Is.EqualTo(reportModel.SubReports[0].Entities[1].EntityName));
+            Assert.That(newMachine2.Name, Is.EqualTo(reportModel.SubReports[0].Entities[2].EntityName));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TotalTime, 1200);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TotalTime, 1200);
+            Assert.That(1200, Is.EqualTo(reportModel.SubReports[0].Entities[0].TotalTime));
+            Assert.That(1200, Is.EqualTo(reportModel.SubReports[0].Entities[1].TotalTime));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[0], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[1], 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[2], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[3], 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[4], 0);
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[0]));
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[1]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[2]));
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[3]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[0].TimePerTimeUnit[4]));
 
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[0], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[1], 0);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[2], 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3], 600);
-            Assert.AreEqual(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[4], 0);
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[0]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[1]));
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[2]));
+            Assert.That(600, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[3]));
+            Assert.That(0, Is.EqualTo(reportModel.SubReports[0].Entities[1].TimePerTimeUnit[4]));
         }
     }
 }

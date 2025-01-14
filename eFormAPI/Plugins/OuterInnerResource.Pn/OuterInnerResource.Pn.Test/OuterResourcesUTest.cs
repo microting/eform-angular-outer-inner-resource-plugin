@@ -52,11 +52,11 @@ namespace MachineArea.Pn.Test
             List<OuterResourceVersion> versionList = DbContext.OuterResourceVersions.AsNoTracking().ToList();
 
             // Assert
-            Assert.NotNull(area);
-            Assert.AreEqual(1, areaList.Count);
-            Assert.AreEqual(1, versionList.Count);
+            Assert.That(area, Is.Not.Null);
+            Assert.That(areaList.Count, Is.EqualTo(1));
+            Assert.That(versionList.Count, Is.EqualTo(1));
 
-            Assert.AreEqual(newOuterResource.Name, area.Name);
+            Assert.That(area.Name, Is.EqualTo(newOuterResource.Name));
         }
 
         [Test]
@@ -83,11 +83,11 @@ namespace MachineArea.Pn.Test
 
             //Assert
 
-            Assert.NotNull(dbOuterResource);
-            Assert.AreEqual(1, areaList.Count);
-            Assert.AreEqual(2, versionList.Count);
+            Assert.That(dbOuterResource, Is.Not.Null);
+            Assert.That(areaList.Count, Is.EqualTo(1));
+            Assert.That(versionList.Count, Is.EqualTo(2));
 
-            Assert.AreEqual(newName, dbOuterResource.Name);
+            Assert.That(dbOuterResource.Name, Is.EqualTo(newName));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace MachineArea.Pn.Test
             await selectedOuterResource.Update(DbContext);
 
             //Assert
-            Assert.AreEqual(selectedOuterResource.OuterInnerResources.First().InnerResourceId, machine.Id);
+            Assert.That(machine.Id, Is.EqualTo(selectedOuterResource.OuterInnerResources.First().InnerResourceId));
 
         }
 
@@ -150,11 +150,11 @@ namespace MachineArea.Pn.Test
 
             // Assert
 
-            Assert.NotNull(dbOuterResource);
-            Assert.AreEqual(1, areaList.Count);
-            Assert.AreEqual(2, versionList.Count);
+            Assert.That(dbOuterResource, Is.Not.Null);
+            Assert.That(areaList.Count, Is.EqualTo(1));
+            Assert.That(versionList.Count, Is.EqualTo(2));
 
-            Assert.AreEqual(dbOuterResource.WorkflowState, Constants.WorkflowStates.Removed);
+            Assert.That(Constants.WorkflowStates.Removed, Is.EqualTo(dbOuterResource.WorkflowState));
         }
     }
 }

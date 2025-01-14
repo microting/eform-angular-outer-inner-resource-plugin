@@ -53,11 +53,11 @@ namespace MachineArea.Pn.Test
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
 
             // Assert
-            Assert.NotNull(innerResource);
-            Assert.AreEqual(1, innerResourceList.Count);
-            Assert.AreEqual(1, versionList.Count);
+            Assert.That(innerResource, Is.Not.Null);
+            Assert.That(innerResourceList.Count, Is.EqualTo(1));
+            Assert.That(versionList.Count, Is.EqualTo(1));
 
-            Assert.AreEqual(newInnerResource.Name, innerResource.Name);
+            Assert.That(innerResource.Name, Is.EqualTo(newInnerResource.Name));
         }
 
         [Test]
@@ -83,11 +83,11 @@ namespace MachineArea.Pn.Test
 
             //Assert
 
-            Assert.NotNull(dbInnerResource);
-            Assert.AreEqual(1, innerResourceList.Count);
-            Assert.AreEqual(2, versionList.Count);
+            Assert.That(dbInnerResource, Is.Not.Null);
+            Assert.That(innerResourceList.Count, Is.EqualTo(1));
+            Assert.That(versionList.Count, Is.EqualTo(2));
 
-            Assert.AreEqual(newName, dbInnerResource.Name);
+            Assert.That(dbInnerResource.Name, Is.EqualTo(newName));
 
         }
 
@@ -127,7 +127,7 @@ namespace MachineArea.Pn.Test
             await selectedInnerResource.Update(DbContext);
 
             //Assert
-            Assert.AreEqual(selectedInnerResource.OuterInnerResources.First().OuterResourceId, area.Id);
+            Assert.That(area.Id, Is.EqualTo(selectedInnerResource.OuterInnerResources.First().OuterResourceId));
 
         }
 
@@ -158,11 +158,11 @@ namespace MachineArea.Pn.Test
             List<InnerResourceVersion> versionList = DbContext.InnerResourceVersions.AsNoTracking().ToList();
 
             // Assert
-            Assert.NotNull(dbInnerResource);
-            Assert.AreEqual(1, innerResourceList.Count);
-            Assert.AreEqual(2, versionList.Count);
+            Assert.That(dbInnerResource, Is.Not.Null);
+            Assert.That(innerResourceList.Count, Is.EqualTo(1));
+            Assert.That(versionList.Count, Is.EqualTo(2));
 
-            Assert.AreEqual(dbInnerResource.WorkflowState, Constants.WorkflowStates.Removed);
+            Assert.That(Constants.WorkflowStates.Removed, Is.EqualTo(dbInnerResource.WorkflowState));
         }
     }
 }
