@@ -6,9 +6,10 @@ import {addPluginToVisited, selectPluginsVisitedPlugins} from 'src/app/state';
 import {take} from 'rxjs';
 
 @Component({
-  selector: 'app-machine-area-pn-layout',
-  template: `
+    selector: 'app-machine-area-pn-layout',
+    template: `
     <router-outlet></router-outlet>`,
+    standalone: false
 })
 export class OuterInnerResourcePnLayoutComponent implements AfterContentInit, OnInit {
   private pluginName = 'outer-inner-resource';

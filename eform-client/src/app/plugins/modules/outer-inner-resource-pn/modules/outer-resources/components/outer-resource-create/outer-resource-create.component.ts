@@ -18,9 +18,10 @@ import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-machine-area-pn-area-create',
-  templateUrl: './outer-resource-create.component.html',
-  styleUrls: ['./outer-resource-create.component.scss'],
+    selector: 'app-machine-area-pn-area-create',
+    templateUrl: './outer-resource-create.component.html',
+    styleUrls: ['./outer-resource-create.component.scss'],
+    standalone: false
 })
 export class OuterResourceCreateComponent implements OnInit, OnDestroy {
   onAreaCreated: EventEmitter<void> = new EventEmitter<void>();

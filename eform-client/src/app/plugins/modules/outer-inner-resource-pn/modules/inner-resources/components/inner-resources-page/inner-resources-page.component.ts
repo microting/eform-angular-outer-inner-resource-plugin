@@ -35,9 +35,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-machine-area-pn-machines-page',
-  templateUrl: './inner-resources-page.component.html',
-  styleUrls: ['./inner-resources-page.component.scss'],
+    selector: 'app-machine-area-pn-machines-page',
+    templateUrl: './inner-resources-page.component.html',
+    styleUrls: ['./inner-resources-page.component.scss'],
+    standalone: false
 })
 export class InnerResourcesPageComponent implements OnInit, OnDestroy {
   @ViewChild('createMachineModal', {static: false}) createMachineModal;

@@ -9,9 +9,10 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 
 @Component({
-  selector: 'app-machine-area-pn-report-generator-form',
-  templateUrl: './report-generator-form.component.html',
-  styleUrls: ['./report-generator-form.component.scss'],
+    selector: 'app-machine-area-pn-report-generator-form',
+    templateUrl: './report-generator-form.component.html',
+    styleUrls: ['./report-generator-form.component.scss'],
+    standalone: false
 })
 export class ReportGeneratorFormComponent implements OnInit {
   @Output()

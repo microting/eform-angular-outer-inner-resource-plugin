@@ -19,9 +19,10 @@ import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-machine-area-pn-area-edit',
-  templateUrl: './outer-resource-edit.component.html',
-  styleUrls: ['./outer-resource-edit.component.scss'],
+    selector: 'app-machine-area-pn-area-edit',
+    templateUrl: './outer-resource-edit.component.html',
+    styleUrls: ['./outer-resource-edit.component.scss'],
+    standalone: false
 })
 export class OuterResourceEditComponent implements OnInit, OnDestroy {
   mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();

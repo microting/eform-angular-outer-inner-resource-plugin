@@ -5,9 +5,10 @@ import {MtxGridColumn} from '@ng-matero/extensions/grid';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-machine-area-pn-report-preview-table',
-  templateUrl: './report-preview-table.component.html',
-  styleUrls: ['./report-preview-table.component.scss'],
+    selector: 'app-machine-area-pn-report-preview-table',
+    templateUrl: './report-preview-table.component.html',
+    styleUrls: ['./report-preview-table.component.scss'],
+    standalone: false
 })
 export class ReportPreviewTableComponent implements OnInit, OnChanges {
   @Input() reportData: ReportPnFullModel = new ReportPnFullModel();

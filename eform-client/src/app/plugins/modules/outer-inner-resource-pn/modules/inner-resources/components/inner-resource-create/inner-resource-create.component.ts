@@ -18,9 +18,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-machine-area-pn-machine-create',
-  templateUrl: './inner-resource-create.component.html',
-  styleUrls: ['./inner-resource-create.component.scss'],
+    selector: 'app-machine-area-pn-machine-create',
+    templateUrl: './inner-resource-create.component.html',
+    styleUrls: ['./inner-resource-create.component.scss'],
+    standalone: false
 })
 export class InnerResourceCreateComponent implements OnInit, OnDestroy {
   onMachineCreated: EventEmitter<void> = new EventEmitter<void>();

@@ -16,9 +16,10 @@ import {
 import {EFormService} from 'src/app/common/services';
 
 @Component({
-  selector: 'app-machine-area-settings',
-  templateUrl: './outer-inner-resource-settings.component.html',
-  styleUrls: ['./outer-inner-resource-settings.component.scss'],
+    selector: 'app-machine-area-settings',
+    templateUrl: './outer-inner-resource-settings.component.html',
+    styleUrls: ['./outer-inner-resource-settings.component.scss'],
+    standalone: false
 })
 export class OuterInnerResourceSettingsComponent implements OnInit {
   typeahead = new EventEmitter<string>();

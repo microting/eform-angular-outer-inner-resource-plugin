@@ -12,9 +12,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-machine-area-pn-machine-delete',
-  templateUrl: './inner-resource-delete.component.html',
-  styleUrls: ['./inner-resource-delete.component.scss'],
+    selector: 'app-machine-area-pn-machine-delete',
+    templateUrl: './inner-resource-delete.component.html',
+    styleUrls: ['./inner-resource-delete.component.scss'],
+    standalone: false
 })
 export class InnerResourceDeleteComponent implements OnInit, OnDestroy {
   onMachineDeleted: EventEmitter<void> = new EventEmitter<void>();

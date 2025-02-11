@@ -33,9 +33,10 @@ import {
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-areas-page',
-  templateUrl: './outer-resources-page.component.html',
-  styleUrls: ['./outer-resources-page.component.scss'],
+    selector: 'app-areas-page',
+    templateUrl: './outer-resources-page.component.html',
+    styleUrls: ['./outer-resources-page.component.scss'],
+    standalone: false
 })
 export class OuterResourcesPageComponent implements OnInit, OnDestroy {
   areasModel: OuterResourcesPnModel = new OuterResourcesPnModel();

@@ -19,9 +19,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-machine-area-pn-machine-edit',
-  templateUrl: './inner-resource-edit.component.html',
-  styleUrls: ['./inner-resource-edit.component.scss'],
+    selector: 'app-machine-area-pn-machine-edit',
+    templateUrl: './inner-resource-edit.component.html',
+    styleUrls: ['./inner-resource-edit.component.scss'],
+    standalone: false
 })
 export class InnerResourceEditComponent implements OnInit, OnDestroy {
   mappingAreas: OuterResourcesPnModel = new OuterResourcesPnModel();

@@ -5,9 +5,10 @@ import { saveAs } from 'file-saver';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-machine-area-pn-report-generator',
-  templateUrl: './report-generator-container.component.html',
-  styleUrls: ['./report-generator-container.component.scss'],
+    selector: 'app-machine-area-pn-report-generator',
+    templateUrl: './report-generator-container.component.html',
+    styleUrls: ['./report-generator-container.component.scss'],
+    standalone: false
 })
 export class ReportGeneratorContainerComponent implements OnInit {
   reportModel: ReportPnFullModel = new ReportPnFullModel();
