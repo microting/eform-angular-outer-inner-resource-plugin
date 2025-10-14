@@ -28,7 +28,7 @@
     <PackageReference Include="Microting.eFormApi.BasePn" Version="9.0.53" />
     <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="8.0.0" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
-    <PackageReference Include="Microting.eForm" Version="9.0.58" />
+    <PackageReference Include="Microting.eForm" Version="9.0.60" />
     <PackageReference Include="Sentry" Version="5.11.0" />
   </ItemGroup>
 
