@@ -36,6 +36,8 @@ namespace OuterInnerResource.Pn
     using System.Reflection;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
+    using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microting.eFormApi.BasePn;
@@ -162,7 +164,11 @@ namespace OuterInnerResource.Pn
 
             using (var context = contextFactory.CreateDbContext(new[] { connectionString }))
             {
-                context.Database.Migrate();
+                var historyRepo = context.GetService<IHistoryRepository>();
+                if (!historyRepo.Exists() || context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
                 try
                 {
                     _outerResourceName = context.PluginConfigurationValues.FirstOrDefault(x => x.Name == "OuterInnerResourceSettings:OuterResourceName")?.Value;
