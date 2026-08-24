@@ -33,17 +33,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
+    class="btn-cancel"
+    id="innerResourceCreateCancelBtn"
+    (click)="hide()">
+    {{'Cancel' | translate}}
+  </button>
+  <button
     class="btn-primary"
     id="innerResourceCreateSaveBtn"
     [disabled]="!newMachineModel.name"
     (click)="createMachine()">
     {{'Create' | translate}}
-  </button>
-  <button
-    class="btn-cancel"
-    id="innerResourceCreateCancelBtn"
-    (click)="hide()">
-    {{'Cancel' | translate}}
   </button>
 </div>
 

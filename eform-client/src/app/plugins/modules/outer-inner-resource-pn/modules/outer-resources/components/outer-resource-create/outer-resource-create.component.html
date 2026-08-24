@@ -32,17 +32,17 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
+    class="btn-cancel"
+    id="outerResourceCreateCancelBtn"
+    (click)="hide()">
+    {{'Cancel' | translate}}
+  </button>
+  <button
     class="btn-primary"
     id="outerResourceCreateSaveBtn"
     [disabled]="!newAreaModel.name"
     (click)="createArea()">
     {{'Create' | translate}}
-  </button>
-  <button
-    class="btn-cancel"
-    id="outerResourceCreateCancelBtn"
-    (click)="hide()">
-    {{'Cancel' | translate}}
   </button>
 </div>
 
