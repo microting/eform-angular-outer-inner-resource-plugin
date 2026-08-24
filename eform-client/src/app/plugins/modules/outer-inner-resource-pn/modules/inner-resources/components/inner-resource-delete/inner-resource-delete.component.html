@@ -11,14 +11,13 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="warn"
+    class="btn-delete"
     id="innerResourceDeleteDeleteBtn"
     (click)="deleteMachine()">
     {{'Delete' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="innerResourceDeleteCancelBtn"
     (click)="hide()">
     {{'Cancel' | translate}}
