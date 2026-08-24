@@ -34,15 +34,14 @@
 </div>
 <div mat-dialog-actions class="d-flex flex-row justify-content-end">
   <button
-    mat-raised-button
-    color="accent"
+    class="btn-primary"
     id="outerResourceEditSaveBtn"
     [disabled]="!selectedAreaModel.name"
     (click)="updateArea()">
     {{'Save' | translate}}
   </button>
   <button
-    mat-raised-button
+    class="btn-cancel"
     id="outerResourceEditCancelBtn"
     (click)="hide()">
     {{'Cancel' | translate}}
