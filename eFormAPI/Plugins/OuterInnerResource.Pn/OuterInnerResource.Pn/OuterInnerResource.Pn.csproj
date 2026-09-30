@@ -25,6 +25,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AssemblyMetadata Include="SentryDsn" Value="https://9bf9ba91ddb235518478803b2b202fc8@o4506241219428352.ingest.us.sentry.io/4508266875781120" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microting.eFormApi.BasePn" Version="10.0.36" />
     <PackageReference Include="Microting.eFormOuterInnerResourceBase" Version="10.0.38" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
