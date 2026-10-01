@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AssemblyMetadata Include="SentryDsn" Value="https://9bf9ba91ddb235518478803b2b202fc8@o4506241219428352.ingest.us.sentry.io/4508266875781120" />
+    <AssemblyMetadata Include="SentryDsn" Value="https://9bf9ba91ddb235518478803b2b202fc8@o4506241219428352.ingest.sentry.io/4508266875781120" />
   </ItemGroup>
 
   <ItemGroup>
