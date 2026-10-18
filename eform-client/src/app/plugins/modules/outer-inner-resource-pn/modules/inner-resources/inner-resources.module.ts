@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {
   InnerResourceCreateComponent,
   InnerResourceDeleteComponent,
@@ -9,6 +10,7 @@ import {InnerResourcesRouting} from './inner-resources.routing';
 
 @NgModule({
   imports: [
+    MatDialogModule,
     InnerResourceCreateComponent,
     InnerResourceDeleteComponent,
     InnerResourceEditComponent,
