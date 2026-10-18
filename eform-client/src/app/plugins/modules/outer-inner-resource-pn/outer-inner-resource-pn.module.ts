@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {
   OuterInnerResourcePnInnerResourceService,
   OuterInnerResourcePnOuterResourceService,
@@ -15,6 +16,7 @@ import {outerResourceReducer, innerResourcesReducer} from './state';
 
 @NgModule({
   imports: [
+    MatDialogModule,
     OuterInnerResourcePnRouting,
     OuterInnerResourcePnLayoutComponent,
     OuterInnerResourceSettingsComponent,
