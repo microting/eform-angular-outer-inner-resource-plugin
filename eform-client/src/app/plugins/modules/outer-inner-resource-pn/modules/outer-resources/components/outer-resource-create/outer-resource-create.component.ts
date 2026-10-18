@@ -1,3 +1,8 @@
+import {FormsModule} from '@angular/forms';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MtxGrid} from '@ng-matero/extensions/grid';
+import {MatCheckbox} from '@angular/material/checkbox';
 import {
   Component,
   EventEmitter,
@@ -13,15 +18,15 @@ import {OuterInnerResourcePnOuterResourceService} from '../../../../services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {TranslateService} from '@ngx-translate/core';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions} from '@angular/material/dialog';
+import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-machine-area-pn-area-create',
     templateUrl: './outer-resource-create.component.html',
-    styleUrls: ['./outer-resource-create.component.scss'],
-    standalone: false
+    imports: [TranslatePipe, MatDialogTitle, MatDialogContent, MatDialogActions, FormsModule, MatFormField, MatLabel, MatInput, MtxGrid, MatCheckbox],
+    styleUrls: ['./outer-resource-create.component.scss']
 })
 export class OuterResourceCreateComponent implements OnInit, OnDestroy {
   onAreaCreated: EventEmitter<void> = new EventEmitter<void>();

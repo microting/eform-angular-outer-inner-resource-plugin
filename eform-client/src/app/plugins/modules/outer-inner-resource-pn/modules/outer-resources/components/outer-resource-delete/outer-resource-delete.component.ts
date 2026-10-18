@@ -1,3 +1,4 @@
+import {TranslatePipe} from '@ngx-translate/core';
 import {
   Component,
   EventEmitter,
@@ -9,14 +10,14 @@ import {OuterInnerResourcePnOuterResourceService} from '../../../../services';
 import {OuterResourcePnModel} from '../../../../models';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions} from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-machine-area-pn-area-delete',
     templateUrl: './outer-resource-delete.component.html',
-    styleUrls: ['./outer-resource-delete.component.scss'],
-    standalone: false
+    imports: [TranslatePipe, MatDialogTitle, MatDialogContent, MatDialogActions],
+    styleUrls: ['./outer-resource-delete.component.scss']
 })
 export class OuterResourceDeleteComponent implements OnInit, OnDestroy {
   onAreaDeleted: EventEmitter<void> = new EventEmitter<void>();

@@ -1,3 +1,10 @@
+import {Sort} from '@angular/material/sort';
+import {EformNewSubheaderComponent} from 'src/app/common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import {EformPaginationComponent} from 'src/app/common/modules/eform-shared/components/eform-pagination/eform-pagination.component';
+import {AsyncPipe, NgIf} from '@angular/common';
+import {MatButton} from '@angular/material/button';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MtxGrid} from '@ng-matero/extensions/grid';
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   InnerResourcePnModel,
@@ -16,10 +23,9 @@ import {InnerResourcesStateService} from '../store';
 import {PaginationModel, TableHeaderElementModel} from 'src/app/common/models';
 import {AuthStateService} from 'src/app/common/store';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
-import {Sort} from '@angular/material/sort';
 import {
   InnerResourceCreateComponent,
   InnerResourceDeleteComponent,
@@ -37,8 +43,8 @@ import {
 @Component({
     selector: 'app-machine-area-pn-machines-page',
     templateUrl: './inner-resources-page.component.html',
-    styleUrls: ['./inner-resources-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, EformPaginationComponent, NgIf, TranslatePipe, AsyncPipe, MatButton, MatTooltip, MtxGrid],
+    styleUrls: ['./inner-resources-page.component.scss']
 })
 export class InnerResourcesPageComponent implements OnInit, OnDestroy {
   @ViewChild('createMachineModal', {static: false}) createMachineModal;

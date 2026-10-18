@@ -1,7 +1,13 @@
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatFormField, MatLabel, MatPrefix} from '@angular/material/form-field';
+import {MatDatepickerToggle, MatDateRangeInput, MatStartDate, MatEndDate, MatDateRangePicker} from '@angular/material/datepicker';
+import {MtxSelect} from '@ng-matero/extensions/select';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ReportPnGenerateModel, ReportNamesModel} from '../../../../models';
 import {format} from 'date-fns';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {OuterInnerResourcePnReportsService} from '../../../../services';
 import {OuterInnerResourcePnReportTypeEnum} from '../../../../enums';
 import {ExcelIcon} from 'src/app/common/const';
@@ -11,8 +17,8 @@ import {MatIconRegistry} from '@angular/material/icon';
 @Component({
     selector: 'app-machine-area-pn-report-generator-form',
     templateUrl: './report-generator-form.component.html',
-    styleUrls: ['./report-generator-form.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule, TranslatePipe, MatFormField, MatLabel, MatPrefix, MatDatepickerToggle, MatDateRangeInput, MatStartDate, MatEndDate, MatDateRangePicker, MtxSelect, MatButton, MatIconButton, MatIcon],
+    styleUrls: ['./report-generator-form.component.scss']
 })
 export class ReportGeneratorFormComponent implements OnInit {
   @Output()

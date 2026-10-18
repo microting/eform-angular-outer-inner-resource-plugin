@@ -1,3 +1,4 @@
+import {MtxGrid} from '@ng-matero/extensions/grid';
 import {Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef} from '@angular/core';
 import {OuterInnerResourcePnReportRelationshipEnum} from '../../../../enums';
 import {ReportEntityModel, ReportPnFullModel} from '../../../../models';
@@ -7,8 +8,8 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     selector: 'app-machine-area-pn-report-preview-table',
     templateUrl: './report-preview-table.component.html',
-    styleUrls: ['./report-preview-table.component.scss'],
-    standalone: false
+    imports: [MtxGrid],
+    styleUrls: ['./report-preview-table.component.scss']
 })
 export class ReportPreviewTableComponent implements OnInit, OnChanges {
   @Input() reportData: ReportPnFullModel = new ReportPnFullModel();

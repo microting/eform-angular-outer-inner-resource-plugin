@@ -1,3 +1,11 @@
+import {EformNewSubheaderComponent} from 'src/app/common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatButton} from '@angular/material/button';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {FormsModule} from '@angular/forms';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MtxSelect} from '@ng-matero/extensions/select';
 import {
   ChangeDetectorRef,
   Component,
@@ -18,8 +26,8 @@ import {EFormService} from 'src/app/common/services';
 @Component({
     selector: 'app-machine-area-settings',
     templateUrl: './outer-inner-resource-settings.component.html',
-    styleUrls: ['./outer-inner-resource-settings.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, TranslatePipe, MatButton, MatCard, MatCardContent, FormsModule, MatFormField, MatLabel, MatInput, MtxSelect],
+    styleUrls: ['./outer-inner-resource-settings.component.scss']
 })
 export class OuterInnerResourceSettingsComponent implements OnInit {
   typeahead = new EventEmitter<string>();

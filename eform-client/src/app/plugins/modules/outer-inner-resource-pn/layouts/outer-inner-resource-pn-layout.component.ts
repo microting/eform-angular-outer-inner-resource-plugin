@@ -1,3 +1,4 @@
+import {RouterOutlet} from '@angular/router';
 import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {translates} from '../i18n/translates';
@@ -7,9 +8,9 @@ import {take} from 'rxjs';
 
 @Component({
     selector: 'app-machine-area-pn-layout',
+    imports: [RouterOutlet],
     template: `
-    <router-outlet></router-outlet>`,
-    standalone: false
+    <router-outlet></router-outlet>`
 })
 export class OuterInnerResourcePnLayoutComponent implements AfterContentInit, OnInit {
   private pluginName = 'outer-inner-resource';

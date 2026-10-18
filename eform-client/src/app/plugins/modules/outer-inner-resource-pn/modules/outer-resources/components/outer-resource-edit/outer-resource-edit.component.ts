@@ -1,3 +1,8 @@
+import {FormsModule} from '@angular/forms';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MtxGrid} from '@ng-matero/extensions/grid';
+import {MatCheckbox} from '@angular/material/checkbox';
 import {
   Component,
   EventEmitter,
@@ -13,16 +18,16 @@ import {
 import {OuterInnerResourcePnOuterResourceService} from '../../../../services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions} from '@angular/material/dialog';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-machine-area-pn-area-edit',
     templateUrl: './outer-resource-edit.component.html',
-    styleUrls: ['./outer-resource-edit.component.scss'],
-    standalone: false
+    imports: [TranslatePipe, MatDialogTitle, MatDialogContent, MatDialogActions, FormsModule, MatFormField, MatLabel, MatInput, MtxGrid, MatCheckbox],
+    styleUrls: ['./outer-resource-edit.component.scss']
 })
 export class OuterResourceEditComponent implements OnInit, OnDestroy {
   mappingMachines: InnerResourcesPnModel = new InnerResourcesPnModel();
