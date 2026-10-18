@@ -1,3 +1,10 @@
+import {Sort} from '@angular/material/sort';
+import {EformNewSubheaderComponent} from 'src/app/common/modules/eform-shared/components/eform-new-subheader/eform-new-subheader.component';
+import {EformPaginationComponent} from 'src/app/common/modules/eform-shared/components/eform-pagination/eform-pagination.component';
+import {AsyncPipe} from '@angular/common';
+import {MatButton} from '@angular/material/button';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MtxGrid} from '@ng-matero/extensions/grid';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   OuterResourcePnModel,
@@ -13,9 +20,8 @@ import {OuterResourcesStateService} from '../store';
 import {PaginationModel} from 'src/app/common/models';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Sort} from '@angular/material/sort';
 import {MtxGridColumn} from '@ng-matero/extensions/grid';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 import {dialogConfigHelper} from 'src/app/common/helpers';
 import {MatDialog} from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
@@ -35,8 +41,8 @@ import {
 @Component({
     selector: 'app-areas-page',
     templateUrl: './outer-resources-page.component.html',
-    styleUrls: ['./outer-resources-page.component.scss'],
-    standalone: false
+    imports: [EformNewSubheaderComponent, EformPaginationComponent, TranslatePipe, AsyncPipe, MatButton, MatTooltip, MtxGrid],
+    styleUrls: ['./outer-resources-page.component.scss']
 })
 export class OuterResourcesPageComponent implements OnInit, OnDestroy {
   areasModel: OuterResourcesPnModel = new OuterResourcesPnModel();
