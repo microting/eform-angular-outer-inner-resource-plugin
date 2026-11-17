@@ -167,7 +167,7 @@ namespace OuterInnerResource.Pn
                 {
                     builder.EnableRetryOnFailure();
                     builder.MigrationsAssembly(PluginAssembly().FullName);
-                    builder.TranslateParameterizedCollectionsToConstants();
+                    builder.UseParameterizedCollectionMode(ParameterTranslationMode.Constant);
                 }));
 
             var contextFactory = new OuterInnerResourcePnContextFactory();
